@@ -33,6 +33,12 @@ button {
 .bg-white {
   background-color: white !important;
 }
+.bg-default {
+  background: #f7f9fb !important;
+}
+.h-full {
+  height: 100%;
+}
 .text-white {
   color: white !important;
 }
@@ -41,6 +47,9 @@ button {
 }
 .text-gray-dark {
   color: var(--dark-gray) !important;
+}
+.text-gray-light {
+  color: var(--gray_light) !important;
 }
 .text-default {
   color: var(--blue_darker) !important;
@@ -109,7 +118,7 @@ button {
   font-weight: 500 !important;
 }
 .text-active {
-  color: var(--primary) !important;
+  color: #29b5f6 !important;
 }
 .pointer {
   cursor: pointer;
@@ -167,4 +176,11 @@ button {
 }
 ._padding_vertical_xs {
   padding: 0.05rem auto !important;
+}
+._logo {
+  width: 160px;
+}
+._logo.mobile {
+  width: 70px !important;
+  height: 90px;
 }

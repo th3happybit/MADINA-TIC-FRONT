@@ -1,63 +1,56 @@
 import React from "react";
-import { Container, Grid, Form, Button, Divider } from "semantic-ui-react";
+import { Container, Grid, Image } from "semantic-ui-react";
 
 import "./CitoyenLogin.css";
 
-//? import Logo
-import { ReactComponent as Logo } from "../../assets/images/logo.svg";
+//? import Header
+import Header from "../../components/Header/Header.jsx";
 
+//? import Form
+import FormLogin from "../../components/FormLogin/FormLogin.jsx";
+
+import L from "../../assets/images/logo_hero.png";
 const CitoyenLogin = () => {
   return (
-    <Container fluid className="_citoyen_login">
-      <Grid>
-        <Grid.Column width={10} className="_citoyen_login_hero_section" />
-        <Grid.Column width={6}>
-          <div className="_login_citoyen_section">
-            <div className="d-flex">
-              <Logo className="_logo" />
-              <div className="d-flex _margin_vertical_md small">
-                <p>Please enter your username</p>
-                <p>and password to login</p>
+    <>
+      <Header />
+      <main
+        style={{
+          height: "100vh",
+        }}
+      >
+        <Container fluid className="_citoyen_login">
+          <Grid className="h-full">
+            <Grid.Column width={10} className="_citoyen_login_hero_section">
+              <Image src={L} className="_logo_hero_section" />
+              <div className="slogan blue">
+                <p className="text-white bold">A Simple Service</p>
               </div>
-              <Form className="_citoyen_login_form _margin_vertical_md">
-                <Form.Input
-                  placeholder="Email or username"
-                  type="text"
-                  size="large"
-                  className="_margin_vertical_sm small"
-                />
-                <Form.Input
-                  placeholder="Password"
-                  type="password"
-                  size="large"
-                  className="_margin_vertical_sm small"
-                />
-                <Button
-                  className="button_primary _margin_vertical_md"
-                  type="submit"
-                >
-                  Login
-                </Button>
-              </Form>
-              <p className="text-gray-dark semi-bold small">
-                having a trouble? <span className="underline">Click here</span>
-              </p>
+              <div className="slogan orange top">
+                <p className=" text-white ">For Better Society</p>
+              </div>
+            </Grid.Column>
+            <Grid.Column className="p-0 bg-default h-full" width={6}>
+              <FormLogin />
+            </Grid.Column>
+          </Grid>
+        </Container>
+        <Container fluid className="_citoyen_login mobile m-0">
+          <Image src={L} className="_logo_hero_section" />
+          <div className="slogan blue">
+            <p className="title text-white ">A Simple Service</p>
+          </div>
+          <div className="slogan orange">
+            <p className="title text-white bold">For Better Society</p>
+          </div>
+          <div className="citoyen_mobile_container">
+            <div className="row">
+              <FormLogin />
             </div>
           </div>
-          <Divider horizontal className="text-gray-dark semi-bold extra-small">
-            You are new here?
-          </Divider>
-          <div className="d-flex">
-            <Button
-              className="button_secondary _margin_vertical_md"
-              type="submit"
-            >
-              Signup
-            </Button>
-          </div>
-        </Grid.Column>
-      </Grid>
-    </Container>
+        </Container>
+      </main>
+    </>
   );
 };
 export default CitoyenLogin;
