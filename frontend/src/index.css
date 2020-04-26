@@ -1,11 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
 :root {
-  /* colors  */
+  --primary: #29b5f6;
+  --primary_darker: #0085c3;
+  --blue_darker: #576271;
+  --red: #ff0000;
+  --secondary: #f66a29;
+  --secondary_darker: #f15c17;
+  --gray: #707070;
+  --dark-gray: #595959;
+  --yellow: #ffcc00;
+  --green: #1eb85c;
 }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  background: #f7f9fb;
+  font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.bg-white {
+  background-color: white !important;
+}
+.text-white {
+  color: white !important;
+}
+.text-black {
+  color: #636363 !important;
+}
+.text-default {
+  color: var(--blue_darker) !important;
+}
+.header {
+  font-size: 40px !important;
+}
+.extra-text {
+  font-size: 26px !important;
+}
+.large-title {
+  font-size: 24px !important;
+}
+.title {
+  font-size: 20px !important;
+}
+.medium-text {
+  font-size: 16px !important;
+}
+.small {
+  font-size: 14px !important;
+}
+.extra-small {
+  font-size: 12px !important;
+}
+.d-none {
+  display: none !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.border-radius {
+  border-radius: 5px !important;
+}
+.button_primary {
+  background-color: var(--primary) !important;
+  color: white !important;
+}
+.button_primary:hover {
+  background-color: var(--primary_darker) !important;
+}
+.button_secondary {
+  background-color: var(--secondary) !important;
+  color: white !important;
+}
+.button_secondary:hover {
+  background-color: var(--secondary_darker) !important;
+}
+.bold {
+  font-weight: bold !important;
+}
+.text-active {
+  color: var(--primary) !important;
+}
+.pointer {
+  cursor: pointer;
+}
+.m-0 {
+  margin: 0 !important;
+}
+.p-0 {
+  padding: 0 !important;
+}
+._margin_horizontal_lg {
+  margin: auto 3rem !important;
+}
+._margin_horizontal_md {
+  margin: auto 2rem !important;
+}
+._margin_horizontal_sm {
+  margin: auto 1rem !important;
+}
+._margin_horizontal_xs {
+  margin: auto 0.5rem !important;
+}
+._margin_vertical_lg {
+  margin: 3rem auto !important;
+}
+._margin_vertical_md {
+  margin: 2rem auto !important;
+}
+._margin_vertical_sm {
+  margin: 1rem auto !important;
+}
+._margin_vertical_xs {
+  margin: 0.05rem auto !important;
+}
+._padding_horizontal_lg {
+  padding: auto 3rem !important;
+}
+._padding_horizontal_md {
+  padding: auto 2rem !important;
+}
+._padding_horizontal_sm {
+  padding: auto 1rem !important;
+}
+._padding_horizontal_xs {
+  padding: auto 0.5rem !important;
+}
+._padding_vertical_lg {
+  padding: 3rem auto !important;
+}
+._padding_vertical_md {
+  padding: 2rem auto !important;
+}
+._padding_vertical_sm {
+  padding: 1rem auto !important;
+}
+._padding_vertical_xs {
+  padding: 0.05rem auto !important;
 }
