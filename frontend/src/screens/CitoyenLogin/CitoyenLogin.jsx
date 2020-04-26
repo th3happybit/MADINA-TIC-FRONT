@@ -9,7 +9,7 @@ import Header from "../../components/Header/Header.jsx";
 //? import Form
 import FormLogin from "../../components/FormLogin/FormLogin.jsx";
 
-import L from "../../assets/images/logo_hero.png";
+import Logo from "../../assets/images/logo_hero.png";
 const CitoyenLogin = () => {
   return (
     <>
@@ -22,7 +22,7 @@ const CitoyenLogin = () => {
         <Container fluid className="_citoyen_login">
           <Grid className="h-full">
             <Grid.Column width={10} className="_citoyen_login_hero_section">
-              <Image src={L} className="_logo_hero_section" />
+              <Image src={Logo} className="_logo_hero_section" />
               <div className="slogan blue">
                 <p className="text-white bold">A Simple Service</p>
               </div>
