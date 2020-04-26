@@ -8,6 +8,7 @@
   --secondary: #f66a29;
   --secondary_darker: #f15c17;
   --gray: #707070;
+  --gray_light: #acacac;
   --dark-gray: #595959;
   --yellow: #ffcc00;
   --green: #1eb85c;
@@ -19,14 +20,36 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+p,
+h1,
+h2,
+h3,
+span,
+input,
+label,
+button {
+  margin: 0;
+}
 .bg-white {
   background-color: white !important;
+}
+.bg-default {
+  background: #f7f9fb !important;
+}
+.h-full {
+  height: 100%;
 }
 .text-white {
   color: white !important;
 }
 .text-black {
   color: #636363 !important;
+}
+.text-gray-dark {
+  color: var(--dark-gray) !important;
+}
+.text-gray-light {
+  color: var(--gray_light) !important;
 }
 .text-default {
   color: var(--blue_darker) !important;
@@ -52,6 +75,9 @@ body {
 .extra-small {
   font-size: 12px !important;
 }
+.underline {
+  text-decoration: underline;
+}
 .d-none {
   display: none !important;
 }
@@ -64,6 +90,11 @@ body {
 .button_primary {
   background-color: var(--primary) !important;
   color: white !important;
+  position: relative !important;
+  min-width: 180px !important;
+  height: none !important;
+  padding: 1rem 4rem !important;
+  font-size: 16px !important;
 }
 .button_primary:hover {
   background-color: var(--primary_darker) !important;
@@ -71,6 +102,11 @@ body {
 .button_secondary {
   background-color: var(--secondary) !important;
   color: white !important;
+  position: relative !important;
+  min-width: 180px !important;
+  height: none !important;
+  padding: 1rem 4rem !important;
+  font-size: 16px !important;
 }
 .button_secondary:hover {
   background-color: var(--secondary_darker) !important;
@@ -78,8 +114,11 @@ body {
 .bold {
   font-weight: bold !important;
 }
+.semi-bold {
+  font-weight: 500 !important;
+}
 .text-active {
-  color: var(--primary) !important;
+  color: #29b5f6 !important;
 }
 .pointer {
   cursor: pointer;
@@ -137,4 +176,11 @@ body {
 }
 ._padding_vertical_xs {
   padding: 0.05rem auto !important;
+}
+._logo {
+  width: 160px;
+}
+._logo.mobile {
+  width: 70px !important;
+  height: 90px;
 }
