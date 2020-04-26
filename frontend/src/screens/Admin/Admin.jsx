@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 
 //? import components
+import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin.jsx";
 import SidebarHeader from "../../components/SidebarHeader/SidebarHeader.jsx";
+import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin.jsx";
 
 const Admin = (props) => {
   const [visible, setVisible] = useState(false);
@@ -15,6 +16,7 @@ const Admin = (props) => {
       {visible && <Backdrop click={handleHide} />}
       <HeaderAdmin show={handleHide} />
       <SidebarHeader visible={visible} click={handleHide} />
+      <SidebarAdmin />
       <main className={props.fullscreen ? "_main h-full" : "_main"}>
         {props.childComponent}
       </main>

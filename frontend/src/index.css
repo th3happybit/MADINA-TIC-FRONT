@@ -1,4 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@font-face {
+  font-family: "Segoe_UI";
+  src: url("./assets/fonts/Segoe\ UI.woff");
+}
+@font-face {
+  font-family: "Segoe_UI_bold";
+  src: url("./assets/fonts//Segoe\ UI\ Bold.woff");
+}
 
 :root {
   --primary: #29b5f6;
