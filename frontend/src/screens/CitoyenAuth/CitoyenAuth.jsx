@@ -47,7 +47,15 @@ const CitoyenAuth = (props) => {
               </GridRow>
             </Grid>
           </Container>
-          <Container fluid className="_citoyen_login mobile m-0">
+          <Container
+            fluid
+            className={
+              islogin
+                ? "_citoyen_login mobile m-0"
+                : "_citoyen_login mobile full m-0"
+            }
+            style={{ height: "100%" }}
+          >
             <div className="slogan blue">
               <p className="title text-white ">A Simple Service</p>
             </div>
