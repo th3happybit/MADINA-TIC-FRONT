@@ -30,6 +30,9 @@ label,
 button {
   margin: 0;
 }
+a {
+  text-decoration: none !important;
+}
 .bg-white {
   background-color: white !important;
 }

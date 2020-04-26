@@ -78,7 +78,7 @@
 @media (max-width: 999px) {
   .slogan.blue {
     position: absolute !important;
-    left: 0px !important !important;
+    left: 0px !important;
     top: 1% !important;
     width: 100% !important;
     padding: 1.5rem !important;
