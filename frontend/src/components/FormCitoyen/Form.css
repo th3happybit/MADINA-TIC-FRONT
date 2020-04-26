@@ -1,5 +1,5 @@
 ._login_citoyen_section {
-  padding: 6rem 4rem;
+  padding: 2rem 4rem;
   padding-bottom: 3rem !important;
 }
 
@@ -7,6 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 0 !important;
 }
 ._citoyen_login_form .input,
 ._citoyen_login_form .input input {

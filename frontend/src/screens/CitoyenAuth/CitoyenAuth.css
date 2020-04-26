@@ -26,6 +26,9 @@
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+._citoyen_login.mobile.full {
+  height: 1000px !important;
+}
 
 .citoyen_mobile_container {
   padding: 2rem !important;
@@ -78,7 +81,7 @@
 @media (max-width: 999px) {
   .slogan.blue {
     position: absolute !important;
-    left: 0px !important !important;
+    left: 0px !important;
     top: 1% !important;
     width: 100% !important;
     padding: 1.5rem !important;
@@ -98,6 +101,6 @@
 }
 @media (max-width: 499px) {
   .citoyen_mobile_container > .row {
-    width: 300px !important;
+    width: 330px !important;
   }
 }
