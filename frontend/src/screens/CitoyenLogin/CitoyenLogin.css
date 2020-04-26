@@ -1,0 +1,38 @@
+._citoyen_login {
+  height: 100vh;
+  width: 100vw;
+}
+._citoyen_login_hero_section {
+  background-image: url("../../assets/images/login.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+._citoyen_login .d-flex {
+  flex-direction: column;
+  align-items: center;
+}
+._login_citoyen_section {
+  padding: 8rem 4rem;
+  padding-bottom: 3rem !important;
+}
+._citoyen_login .d-flex._margin_vertical_md p {
+  color: var(--gray_light);
+}
+._citoyen_login_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+._citoyen_login_form .input,
+._citoyen_login_form .input input {
+  width: 350px !important;
+  background-color: #f2f2f2 !important;
+  border: none !important;
+  border-radius: 5px;
+}
+._citoyen_login_form .input input::placeholder {
+  color: #c2c2c2 !important;
+}
