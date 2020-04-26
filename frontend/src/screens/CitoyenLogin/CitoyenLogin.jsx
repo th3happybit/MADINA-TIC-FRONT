@@ -36,7 +36,6 @@ const CitoyenLogin = () => {
           </Grid>
         </Container>
         <Container fluid className="_citoyen_login mobile m-0">
-          <Image src={L} className="_logo_hero_section" />
           <div className="slogan blue">
             <p className="title text-white ">A Simple Service</p>
           </div>

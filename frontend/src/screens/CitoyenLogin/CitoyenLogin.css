@@ -95,13 +95,6 @@
     text-align: left !important;
     bottom: 1% !important;
   }
-  ._logo_hero_section {
-    position: absolute !important;
-    left: -10% !important;
-    top: 0% !important;
-    z-index: 5 !important;
-    height: 180px !important;
-  }
 }
 @media (max-width: 499px) {
   .citoyen_mobile_container > .row {
