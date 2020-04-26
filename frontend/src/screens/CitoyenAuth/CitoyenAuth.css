@@ -1,9 +1,9 @@
 ._citoyen_login {
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 ._citoyen_login_hero_section {
-  background-image: url("../../assets/images/login.svg");
+  background-image: url("../../assets/images/hero_section_image.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -15,8 +15,8 @@
 }
 
 ._citoyen_login.mobile {
+  background-image: url("../../assets/images/hero_section_image.jpg");
   display: none;
-  background-image: url("../../assets/images/login.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -101,6 +101,6 @@
 }
 @media (max-width: 499px) {
   .citoyen_mobile_container > .row {
-    width: 330px !important;
+    width: 33 0px !important;
   }
 }
