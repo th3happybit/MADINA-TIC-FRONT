@@ -7,9 +7,6 @@ import "./CitoyenAuth.css";
 //? import logo
 import Logo from "../../assets/images/logo_hero.png";
 
-//? import Header
-import Header from "../../components/Header/Header.jsx";
-
 //? import Form
 import FormCitoyen from "../../components/FormCitoyen/FormCitoyen.jsx";
 
@@ -18,18 +15,13 @@ const CitoyenAuth = (props) => {
   useEffect(() => {
     setIsLoaded((prevState) => !prevState);
   }, []);
-  const { islogin } = props;
+  const { islogin } = props; //* if screen is for Login or Signup
   return (
     <>
-      <Header />
+      {/* Header here */}
       {isLoading ? (
         <>
-          <Container
-            fluid
-            className="_citoyen_login"
-            fluid
-            style={{ height: "100vh" }}
-          >
+          <Container fluid className="_citoyen_login">
             <Grid style={{ height: "100%" }}>
               <GridRow style={{ paddingBottom: 0 }}>
                 <GridColumn width={10} className="_citoyen_login_hero_section">
@@ -69,9 +61,7 @@ const CitoyenAuth = (props) => {
             </div>
           </Container>
         </>
-      ) : (
-        <p>test</p>
-      )}
+      ) : null}
     </>
   );
 };
