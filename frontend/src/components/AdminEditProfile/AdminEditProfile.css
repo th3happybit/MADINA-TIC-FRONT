@@ -4,6 +4,7 @@
   justify-content: space-between;
   flex-direction: column;
   padding: 2rem;
+  height: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 ._admin_edit_profile > .menu {
@@ -26,6 +27,43 @@
 ._info_menu .ui.secondary.pointing.menu {
   border-width: 0px !important;
   border-color: none !important;
+}
+._form_password {
+  display: flex;
+  flex-direction: column;
+}
+._button_edit_profile {
+  display: flex;
+  margin: 4rem 0 !important;
+}
+._button_edit_profile .button {
+  margin: 0 1.5rem;
+  padding: 1rem !important;
+  font-size: 16px !important;
+}
+._form_profile_informations .form {
+  min-height: 310px !important;
+}
+._form_profile_informations .form label {
+  font-size: 16px !important;
+  color: #707070 !important;
+  font-weight: bolder !important;
+}
+._form_profile_informations .form .fields {
+  margin-bottom: 1.6rem;
+}
+._form_profile_informations .form .fields .field {
+  padding: 0 1.5rem;
+}
+._form_profile_informations .form .fields .field .input {
+  font-size: 14px !important;
+  color: #576271 !important;
+}
+._form_profile_informations .form .fields .field .input input {
+  border: none !important;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+  border-radius: 5px !important;
+  min-width: 270px !important;
 }
 @media (max-width: 1399px) {
   ._info_menu {
