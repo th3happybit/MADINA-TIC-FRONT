@@ -1,0 +1,83 @@
+._card_admin {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+._card_admin > ._admin_profile_image {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 2rem;
+  padding-top: 3rem;
+  border: 0.5px solid #707070;
+  border-right: 0;
+  border-top: 0;
+  border-left: 0;
+}
+._card_admin > ._admin_profile_image > .profile_ > .image {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: gray;
+}
+._card_admin > ._admin_profile_image > .profile_ > ._profile_img_edit {
+  width: 35px;
+  background-color: white;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 60%;
+  right: -5%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+._profile_img_edit > label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#myInput {
+  position: absolute;
+  top: 60%;
+  right: -5%;
+}
+.profile_ {
+  position: relative;
+}
+._card_admin > ._admin_profile_image > .profile_ > ._profile_img_edit svg {
+  height: 20px;
+  width: 20px;
+}
+._card_admin > .row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 4rem 2rem;
+}
+._card_admin > .row > .col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.6rem 0;
+}
+._card_admin > .row > .col span {
+  color: #576271 !important;
+}
+.icon_card {
+  color: #576271 !important;
+}
+.social_media_profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.social_media_profile {
+  padding: 3rem;
+}

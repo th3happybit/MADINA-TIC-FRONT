@@ -11,15 +11,18 @@ import { ReactComponent as Citoyens } from "../../assets/icons/group.svg";
 
 //? import logo
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
+import { Link } from "react-router-dom";
 
 const SidebarAdmin = () => {
   return (
     <div className="_sidebar_admin">
       <div className="row">
-        <div className="part_top">
-          <Logo className="logo_h" />
-          <p className="extra-text text-active">MADINA TIC</p>
-        </div>
+        <Link to="/admin" style={{ width: "100%" }}>
+          <div className="part_top pointer">
+            <Logo className="logo_h" />
+            <p className="extra-text text-active">MADINA TIC</p>
+          </div>
+        </Link>
         <Menu text vertical>
           <div className="d-flex">
             <Dashboard className="_sidebar_icons active" />

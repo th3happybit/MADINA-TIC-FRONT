@@ -7,6 +7,7 @@ import SidebarHeader from "../../components/SidebarHeader/SidebarHeader.jsx";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin.jsx";
 
 const Admin = (props) => {
+  console.log(props);
   const [visible, setVisible] = useState(false);
   const handleHide = () => {
     setVisible((prevState) => !prevState);
@@ -17,9 +18,7 @@ const Admin = (props) => {
       <HeaderAdmin show={handleHide} />
       <SidebarHeader visible={visible} click={handleHide} />
       <SidebarAdmin />
-      <main className={props.fullscreen ? "_main h-full" : "_main"}>
-        {props.childComponent}
-      </main>
+      <main className="_admin_main">{props.childComponent}</main>
     </>
   );
 };

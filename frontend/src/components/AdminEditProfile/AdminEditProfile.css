@@ -1,0 +1,44 @@
+._admin_edit_profile {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+._admin_edit_profile > .menu {
+}
+._info_menu {
+  width: 60%;
+  margin: 0 4rem;
+}
+._info_menu .item {
+  color: #95989a !important;
+  font-size: 20px !important;
+  border-width: 1px !important;
+  border-color: #95989a !important;
+}
+._info_menu .item.active {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  border-width: 3px !important;
+}
+._info_menu .ui.secondary.pointing.menu {
+  border-width: 0px !important;
+  border-color: none !important;
+}
+@media (max-width: 1399px) {
+  ._info_menu {
+    margin: 0 !important;
+  }
+}
+@media (max-width: 1149px) {
+  ._info_menu .item {
+    font-size: 16px !important;
+  }
+}
+@media (max-width: 1080px) {
+  ._admin_edit_profile {
+    padding: 1rem 0.5rem !important;
+  }
+}
