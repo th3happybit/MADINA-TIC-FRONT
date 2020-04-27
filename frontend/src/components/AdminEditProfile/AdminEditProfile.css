@@ -74,6 +74,16 @@
   border-radius: 5px !important;
   min-width: 270px !important;
 }
+@media (max-width: 1299px) {
+  ._form_profile_informations .form .fields .field .input input {
+    min-width: 220px !important;
+  }
+}
+@media (max-width: 1179px) {
+  ._form_profile_informations .form .fields .field .input input {
+    min-width: 220px !important;
+  }
+}
 @media (max-width: 1399px) {
   ._info_menu {
     margin: 0 !important;

@@ -4,6 +4,7 @@
   right: 0;
   left: 230px;
   height: 70px;
+  z-index: 30;
 }
 ._header_admin > .row {
   display: flex;

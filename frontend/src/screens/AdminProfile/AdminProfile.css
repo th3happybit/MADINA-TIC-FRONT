@@ -17,25 +17,42 @@
 
 @media (max-width: 1500px) {
   ._admin_profile_grid > ._card {
-    width: 40% !important;
+    width: 30% !important;
   }
   ._admin_profile_grid > ._not_card {
-    width: 50% !important;
+    width: 70% !important;
+  }
+  ._admin_profile {
+    padding: 2rem !important;
   }
 }
 @media (max-width: 1299px) {
   ._admin_profile_grid > ._card {
-    width: 45% !important;
+    width: 35% !important;
   }
   ._admin_profile_grid > ._not_card {
-    width: 45% !important;
+    width: 65% !important;
   }
 }
-@media (max-width: 1099px) {
+@media (max-width: 1179px) {
   ._admin_profile_grid > ._card {
-    width: 48% !important;
+    width: 80% !important;
   }
   ._admin_profile_grid > ._not_card {
-    width: 42% !important;
+    width: 80% !important;
+  }
+  ._admin_profile_grid {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-content: center;
+  }
+}
+@media (max-width: 999px) {
+  ._admin_profile_grid > ._card {
+    width: 50% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 50% !important;
   }
 }

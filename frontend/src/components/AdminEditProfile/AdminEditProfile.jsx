@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Menu, Form, Input, Button } from "semantic-ui-react";
+import { Menu, Button } from "semantic-ui-react";
 
 //? import css
 import "./AdminEditProfile.css";
 
 //? import components
 import PasswordForm from "./PasswordForm.jsx";
+import InfosForm from "./InfosForm.jsx";
 
 const AdminEditProfile = () => {
   //? for the active item of the menu ... by the default the info is the active one
@@ -34,66 +35,7 @@ const AdminEditProfile = () => {
           />
         </Menu>
         <div className="_form_profile_informations">
-          {activeItem === "info" && (
-            <Form className="_margin_vertical_lg">
-              <Form.Group widths="equal">
-                <Form.Field
-                  id="form-input-control-first-name"
-                  control={Input}
-                  label="First name"
-                  placeholder="First name"
-                />
-                <Form.Field
-                  id="form-input-control-last-name"
-                  control={Input}
-                  label="Last name"
-                  placeholder="Last name"
-                />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Field
-                  id="form-input-control-email"
-                  control={Input}
-                  label="Email"
-                  placeholder="Email"
-                />
-                <Form.Field
-                  id="form-input-control-birthday"
-                  control={Input}
-                  label="Birthday"
-                  placeholder="Birthday"
-                />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Field
-                  id="form-input-control-address"
-                  control={Input}
-                  label="Address"
-                  placeholder="Address"
-                />
-                <Form.Field
-                  id="form-input-control-phone"
-                  control={Input}
-                  label="Phone Number"
-                  placeholder="Phone Number"
-                />
-              </Form.Group>
-              <Form.Group widths="equal">
-                <Form.Field
-                  id="form-input-control-fcb"
-                  control={Input}
-                  label="Facebok link"
-                  placeholder="Facebok link"
-                />
-                <Form.Field
-                  id="form-input-control-google"
-                  control={Input}
-                  label="Google link"
-                  placeholder="Google link"
-                />
-              </Form.Group>
-            </Form>
-          )}
+          {activeItem === "info" && <InfosForm />}
           {activeItem === "password" && <PasswordForm />}
           <div className="_button_edit_profile">
             <Button className="button_secondary ">Cancel</Button>
