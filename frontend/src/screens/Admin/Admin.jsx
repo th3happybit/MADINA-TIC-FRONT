@@ -7,7 +7,6 @@ import SidebarHeader from "../../components/SidebarHeader/SidebarHeader.jsx";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin.jsx";
 
 const Admin = (props) => {
-  console.log(props);
   const [visible, setVisible] = useState(false);
   const handleHide = () => {
     setVisible((prevState) => !prevState);

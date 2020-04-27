@@ -4,11 +4,18 @@ import { Menu, Form, Input, Button } from "semantic-ui-react";
 //? import css
 import "./AdminEditProfile.css";
 
+//? import components
+import PasswordForm from "./PasswordForm.jsx";
+
 const AdminEditProfile = () => {
+  //? for the active item of the menu ... by the default the info is the active one
   const [activeItem, setActiveItem] = useState("info");
+
+  //? change the active element of the menu on clicking
   const handleItemClick = (e) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
   };
+
   return (
     <div className="_admin_edit_profile">
       <div className="_info_menu">
@@ -87,31 +94,7 @@ const AdminEditProfile = () => {
               </Form.Group>
             </Form>
           )}
-          {activeItem === "password" && (
-            <Form className="_margin_vertical_lg">
-              <Form.Group className="_form_password">
-                <Form.Input
-                  type="texte"
-                  label="Current Password"
-                  placeholder="Current Password"
-                />
-              </Form.Group>{" "}
-              <Form.Group className="_form_password">
-                <Form.Input
-                  type="texte"
-                  label="New Password"
-                  placeholder="New Password"
-                />
-              </Form.Group>{" "}
-              <Form.Group className="_form_password">
-                <Form.Input
-                  type="texte"
-                  label="Confirm Password"
-                  placeholder="Confirm Password"
-                />
-              </Form.Group>{" "}
-            </Form>
-          )}
+          {activeItem === "password" && <PasswordForm />}
           <div className="_button_edit_profile">
             <Button className="button_secondary ">Cancel</Button>
             <Button className="button_primary ">Save</Button>

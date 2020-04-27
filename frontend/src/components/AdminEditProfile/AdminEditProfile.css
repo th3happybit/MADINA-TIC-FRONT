@@ -32,6 +32,15 @@
   display: flex;
   flex-direction: column;
 }
+.input_p {
+  position: relative;
+}
+.input_p i {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  color: #95989a !important;
+}
 ._button_edit_profile {
   display: flex;
   margin: 4rem 0 !important;
