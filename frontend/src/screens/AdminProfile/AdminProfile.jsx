@@ -22,7 +22,9 @@ const AdminProfile = () => {
           </Grid.Column>
         </Grid>
       </Container>
-      <Container fluid className="mobile_profile"></Container>
+      <Container fluid className="mobile_profile">
+        <CardAdmin />
+      </Container>
     </div>
   );
 };

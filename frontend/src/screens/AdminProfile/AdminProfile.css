@@ -17,6 +17,12 @@
 .mobile_profile {
   display: none;
 }
+.mobile_profile {
+  display: none !important;
+}
+.mobile_info_profile.hide {
+  display: none !important;
+}
 @media (max-width: 1500px) {
   ._admin_profile_grid > ._card {
     width: 30% !important;
@@ -75,5 +81,9 @@
   }
   .mobile_profile {
     display: flex !important;
+    flex-direction: column;
+  }
+  ._admin_profile .container {
+    margin: 0 !important;
   }
 }
