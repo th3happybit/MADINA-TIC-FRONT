@@ -39,6 +39,9 @@
     display: flex !important;
     justify-content: center;
   }
+  .citoyen_mobile_container > .row {
+    width: 340px !important;
+  }
   ._citoyen_login_form .input,
   ._citoyen_login_form .input input {
     width: 200px !important;
