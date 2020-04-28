@@ -1,6 +1,6 @@
 ._login_citoyen_section {
   padding: 2rem 4rem;
-  padding-bottom: 3rem !important;
+  padding-bottom: 1rem !important;
 }
 
 ._citoyen_login_form {
@@ -8,13 +8,18 @@
   flex-direction: column;
   align-items: center;
   margin-top: 0 !important;
-}
-._citoyen_login_form .input,
-._citoyen_login_form .input input {
   width: 350px !important;
+}
+
+._citoyen_login_form .field .input,
+._citoyen_login_form .error.field .input input,
+._citoyen_login_form .field .input input {
   background-color: #f2f2f2 !important;
   border: none !important;
   border-radius: 5px;
+}
+._citoyen_login_form .field {
+  width: 100% !important;
 }
 ._citoyen_login_form .input input::placeholder {
   color: #c2c2c2 !important;
@@ -26,8 +31,7 @@
 }
 
 @media (max-width: 1199px) {
-  ._citoyen_login_form .input,
-  ._citoyen_login_form .input input {
+  ._citoyen_login_form {
     width: 250px !important;
   }
 }
@@ -42,14 +46,16 @@
   .citoyen_mobile_container > .row {
     width: 340px !important;
   }
-  ._citoyen_login_form .input,
-  ._citoyen_login_form .input input {
-    width: 200px !important;
+  ._citoyen_login_form {
+    width: 260px !important;
   }
   ._citoyen_login_form {
     margin: 0rem 0 !important;
   }
   ._login_citoyen_section {
     padding: 2rem 0 !important;
+  }
+  ._form_login > ._login_citoyen_section > .d-flex {
+    min-height: 800px !important;
   }
 }

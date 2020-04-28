@@ -13,7 +13,12 @@ const FormCitoyen = (props) => {
   return (
     <div className="_form_login">
       <div className="_login_citoyen_section">
-        <div className="d-flex">
+        <div
+          className="d-flex"
+          style={{
+            minHeight: !islogin ? "1100px" : "auto",
+          }}
+        >
           <Logo className="_logo" />
           <p className="title text-active bold ">MADINA TIC</p>
           {islogin ? (
@@ -31,20 +36,24 @@ const FormCitoyen = (props) => {
             having a trouble?{" "}
             <spaan className="underline pointer">Click here</spaan>
           </p>
-        </div>
-      </div>
-      <Divider horizontal className="text-gray-dark semi-bold extra-small">
-        {islogin ? "You are new here?" : "Already have an account"}
-      </Divider>
-      <div className="d-flex">
-        <Button className="button_secondary _margin_vertical_md " type="submit">
-          <a
-            href={!islogin ? "/login" : "/signup"}
-            className="text-white medium-text"
+
+          <Divider
+            horizontal
+            className="text-gray-dark semi-bold extra-small _margin_vertical_lg"
           >
-            {!islogin ? "Login" : "Signup"}
-          </a>
-        </Button>
+            {islogin ? "You are new here?" : "Already have an account"}
+          </Divider>
+          <div className="d-flex ">
+            <Button className="button_secondary" type="submit">
+              <a
+                href={!islogin ? "/login" : "/signup"}
+                className="text-white medium-text"
+              >
+                {!islogin ? "Login" : "Signup"}
+              </a>
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
