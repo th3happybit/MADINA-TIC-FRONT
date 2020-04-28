@@ -35,16 +35,26 @@
   height: 25px;
   margin: 0 0.5rem;
   fill: #3f4853;
+  cursor: pointer;
 }
+
 ._sidebar_icons.active {
   fill: var(--primary) !important;
 }
+
 ._sidebar_admin > .row > .menu > .d-flex {
   align-items: center;
   margin: 2rem 0;
+  width: 60%;
+}
+._sidebar_admin > .row > .menu > .d-flex:hover ._sidebar_icons,
+._sidebar_admin > .row > .menu > .d-flex:hover .item {
+  color: var(--primary) !important;
+  fill: var(--primary) !important;
 }
 ._sidebar_admin > .row > .menu .item {
   font-size: 16px !important;
+  cursor: pointer;
   margin: 0 !important;
   padding: 0 !important;
   display: flex;

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Admin from "./screens/Admin/Admin.jsx";
 import AdminProfile from "./screens/AdminProfile/AdminProfile.jsx";
 import CitoyenAuth from "./screens/CitoyenAuth/CitoyenAuth.jsx";
+import AdminDashboard from "./screens/AdminDashboard/AdminDashboard.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -19,7 +20,14 @@ function App() {
           exact
           path="/admin/profile"
           component={() => (
-            <Admin childComponent={<AdminProfile />} test="sdq" />
+            <Admin active="" childComponent={<AdminProfile />} />
+          )}
+        />
+        <Route
+          exact
+          path="/admin/dashboard"
+          component={() => (
+            <Admin active="dashboard" childComponent={<AdminDashboard />} />
           )}
         />
         <Route path="/login" component={() => <CitoyenAuth islogin={true} />} />
