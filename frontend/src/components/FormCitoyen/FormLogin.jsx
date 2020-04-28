@@ -82,6 +82,21 @@ const FormLogin = () => {
       >
         Login
       </Button>
+      <p
+        className="pointer"
+        onClick={() => {
+          axios
+            .get("http://13.92.195.8/api/userinstance/", {
+              headers: {
+                Authorization: `Token  ${localStorage.getItem("token")}`,
+              },
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+        }}
+      >
+        test
+      </p>
     </Form>
   );
 };
