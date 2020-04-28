@@ -1,0 +1,15 @@
+._admin_login {
+  width: 200%;
+  height: 200%;
+}
+
+._admin_login .d-flex {
+  flex-direction: column;
+  align-items: center;
+}
+
+.h-full{
+   display: flex;
+  justify-content: center;
+  align-items: center;
+}
