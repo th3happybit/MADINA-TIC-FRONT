@@ -51,6 +51,9 @@ const CitoyenProfile = () => {
                     </GridColumn>
                 </Grid>
             </Container>
+            <Container fluid className="mobile-profile">
+                <Card/>
+            </Container>
         </main>
     );
 };
