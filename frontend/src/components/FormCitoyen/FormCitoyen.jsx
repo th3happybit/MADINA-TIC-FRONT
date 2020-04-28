@@ -18,7 +18,7 @@ const FormCitoyen = (props) => {
           <p className="title text-active bold ">MADINA TIC</p>
           {islogin ? (
             <div className="d-flex _margin_vertical_md small text-gray-light">
-              <p>Please enter your username</p>
+              <p>Please enter your email</p>
               <p>and password to login</p>
             </div>
           ) : (

@@ -5,7 +5,7 @@ const FormLogin = () => {
   return (
     <Form className="_citoyen_login_form _margin_vertical_md">
       <Form.Input
-        placeholder="Email or username"
+        placeholder="Email"
         type="text"
         size="large"
         className="_margin_vertical_sm small"
