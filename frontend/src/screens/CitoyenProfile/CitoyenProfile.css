@@ -1,4 +1,90 @@
-#card{
-    width: 300px;
+main {
+    padding: 4rem;
+}
 
+main .container {
+    margin: 2rem 0;
+}
+ 
+.citoyen-profile {
+    width: 100%;
+}
+  
+.citoyen-profile > .left {
+    width: 30% !important;
+    
+}
+  
+.citoyen-profile > .right {
+    width: 70% !important;
+}
+
+.infos-form {
+    margin-top : 70px;
+    margin-bottom: -50px;
+}
+
+.edit-profile {
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 2rem;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+._info_menu {
+  width: 60%;
+  margin: 0 4rem;
+}
+._info_menu .item {
+  color: #95989a !important;
+  font-size: 20px !important;
+  border-width: 1px !important;
+  border-color: #95989a !important;
+}
+._info_menu .item.active {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  border-width: 3px !important;
+}
+._info_menu .ui.secondary.pointing.menu {
+  border-width: 0px !important;
+  border-color: none !important;
+}
+
+#subs {
+    display: flex;
+    margin: 4rem 0 !important;
+}
+#subs .button {
+    margin: 0 1.5rem;
+    padding: 1rem !important;
+    font-size: 16px !important;
+}  
+  
+@media (max-width: 1500px) {
+    .citoyen-profile > .left {
+      width: 40% !important;
+    }
+    .citoyen-profile > .right {
+      width: 50% !important;
+    }
+}
+@media (max-width: 1299px) {
+    .citoyen-profile > .left {
+      width: 45% !important;
+    }
+    .citoyen-profile > .right {
+      width: 45% !important;
+    }
+}
+@media (max-width: 1099px) {
+    .citoyen-profile > .left {
+      width: 48% !important;
+    }
+    .citoyen-profile > .right {
+      width: 42% !important;
+    }
 }
