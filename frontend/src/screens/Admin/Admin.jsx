@@ -17,9 +17,7 @@ const Admin = (props) => {
       <HeaderAdmin show={handleHide} />
       <SidebarHeader visible={visible} click={handleHide} />
       <SidebarAdmin />
-      <main className={props.fullscreen ? "_main h-full" : "_main"}>
-        {props.childComponent}
-      </main>
+      <main className="_admin_main">{props.childComponent}</main>
     </>
   );
 };

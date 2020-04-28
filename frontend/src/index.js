@@ -4,11 +4,9 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
-import CitoyenAuth from "./screens/CitoyenAuth/CitoyenAuth.jsx";
-
 ReactDOM.render(
   <React.StrictMode>
-    <App CitoyenAuth={CitoyenAuth} />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

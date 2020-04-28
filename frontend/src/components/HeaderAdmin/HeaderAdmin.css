@@ -4,6 +4,7 @@
   right: 0;
   left: 230px;
   height: 70px;
+  z-index: 30;
 }
 ._header_admin > .row {
   display: flex;
@@ -51,6 +52,16 @@
   border-radius: 50%;
   border: 2px solid #95989a;
   width: 50px;
+}
+.profile_img .ui.dropdown .menu .item {
+  background-color: white !important;
+  color: #576271 !important;
+}
+.profile_img .ui.dropdown .menu .item:hover {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+.profile_img .ui.dropdown .menu {
+  width: 160px !important;
 }
 @media (max-width: 899px) {
   ._header_admin > .row {
