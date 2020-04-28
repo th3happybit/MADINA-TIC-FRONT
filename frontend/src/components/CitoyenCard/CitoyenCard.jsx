@@ -73,13 +73,24 @@ const Card = (props) => {
                     />
                 </div>
             </div>
-                {!isEdit && <p className="_margin_vertical_sm title">Cherkess Lite</p>}
+                {!isEdit && <p className="_margin_vertical_sm title">User Citizen</p>}
                 {isEdit && (
+                    <div className="name-input margin_vertical_sm">
                     <Input
-                    className="_profile_input_admin_mobile"
+                    className="_profile_input_admin_mobile mobile-input name-field"
+                    id = "first-name-mobile"
                     type="text"
-                    value="Cherkess LIte"
+                    value=""
+                    placeholder ="First Name..."
                     />
+                    <Input
+                    id = "family-name-mobile"
+                    className="_profiel_input_admin_mobile mobile-input name-field"
+                    type = "text"
+                    value =""
+                    placeholder = "Family Name..."
+                    />
+                    </div>
                 )}
             </div>
             <Divider horizontal>Citizen Informations</Divider>
@@ -90,7 +101,7 @@ const Card = (props) => {
                             <span className="small">
                                 <Icon name="mail" className="icon_card" /> Email
                             </span>
-                            <p className="small">l.cherkess@esi-sba.dz</p>
+                            <p className="small">u.user@esi-sba.dz</p>
                         </div>
                         <div className="col">
                             <span className="small">
@@ -114,7 +125,7 @@ const Card = (props) => {
                             <span className="small">
                                 <Icon name="id card" className="icon_card" /> National ID
                             </span>
-                            <p className="small">6969696969</p>
+                            <p className="small">123456789</p>
                         </div>
                     </div>
                     <div className="social-media">

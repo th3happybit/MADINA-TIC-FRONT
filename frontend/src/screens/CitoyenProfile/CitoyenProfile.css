@@ -1,9 +1,10 @@
 main {
-    padding: 4rem;
+    padding: 0rem;
+    width : 100%
 }
 
 main .container {
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
  
@@ -107,7 +108,7 @@ main .container {
 @media (min-width : 1000px){
     .mobile-profile{
     display : none !important;
-}
+  }
 }
   
 @media (max-width: 1500px) {
@@ -117,8 +118,6 @@ main .container {
     .citoyen-profile > .right {
       width: 70% !important;
     }
-    
-
     main{
         padding : 2rem;
     }
@@ -174,13 +173,32 @@ main .container {
 }
 
 @media (max-width: 999px) {
+
+  main{
+    padding : 1rem 0;
+  }
+
+  .mobile_profile {
+    display: flex !important;
+    flex-direction: column;
+  }
+
     .citoyen-profile > .right{
-      width : 60% !important;
+      display: none !important;
     }
+ 
+  .citoyen-profile-pic{
+    padding-top : 1rem !important;
+  }
 
     .citoyen-profile > .left {
-      width : 60% !important;
+      display: none !important;
     }
+
+    .edit-profile-pic.mobile.hide.pointer{
+      display : none !important;
+    }
+
     .infos-form .form .fields {
       display: flex;
       flex-direction: column !important;
@@ -237,33 +255,80 @@ main .container {
   .row.mobile_menu > .ui.secondary.pointing.menu {
     border: 0 !important;
   }
+
   .col_mobile {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
+  }
 
-@media (max-width: 948px) {
-  .citoyen-profile > ._card {
-    width: 60% !important;
+  .mobile-input{
+    width : 100%;
   }
-  .citoyen-profile > ._not_card {
-    width: 60% !important;
+
+  .name-input{
+    width : 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
   }
-}
+
+  .name-field{
+    padding : 0 0.5rem;
+    width : 200%;
+  }
+
 @media (max-width: 899px) {
-  .citoyen-profile {
-    display: none !important;
-  }
-  .main > p {
-    display: none !important;
-  }
+
   .mobile_profile {
     display: flex !important;
     flex-direction: column;
   }
   .main .container {
     margin: 0 !important;
+  }
+
+  .mobile-input{
+    width : 100%;
+  }
+
+  .name-input{
+    width : 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name-field{
+    padding : 0 0.5rem;
+    width : 100%;
+  }
+
+}
+
+
+@media (max-width : 500px){
+  .name-input{
+    width : 80%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name-field{
+    padding : 0 0.5rem;
+    width : 50%;
+  }
+}
+
+@media (max-width : 400px){
+  .name-input{
+    width : 70%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name-field{
+    padding : 0 0.5rem;
+    width : 50%;
   }
 }
