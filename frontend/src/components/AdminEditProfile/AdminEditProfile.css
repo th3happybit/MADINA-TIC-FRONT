@@ -99,3 +99,26 @@
     padding: 1rem 0.5rem !important;
   }
 }
+@media (max-width: 999px) {
+  ._form_profile_informations .form .fields {
+    display: flex;
+    flex-direction: column !important;
+    margin: 0 !important;
+  }
+  ._form_profile_informations .form .fields .field {
+    margin: 1rem 0;
+  }
+  ._button_edit_profile {
+    flex-direction: column-reverse !important;
+    margin: 1.5rem !important;
+  }
+  ._button_edit_profile .button {
+    margin: 1rem 0 !important;
+  }
+  .input_p i {
+    display: none;
+  }
+  ._info_menu {
+    width: 100%;
+  }
+}

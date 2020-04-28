@@ -202,7 +202,7 @@ a {
   padding-left: 230px;
   padding-top: 70px;
 }
-@media (max-width: 999px) {
+@media (max-width: 899px) {
   ._admin_main {
     padding-left: 0;
     padding-top: 85px;

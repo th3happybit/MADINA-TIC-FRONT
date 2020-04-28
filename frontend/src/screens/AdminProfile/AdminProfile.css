@@ -14,7 +14,9 @@
 ._admin_profile_grid > ._not_card {
   width: 70% !important;
 }
-
+.mobile_profile {
+  display: none;
+}
 @media (max-width: 1500px) {
   ._admin_profile_grid > ._card {
     width: 30% !important;
@@ -50,9 +52,28 @@
 }
 @media (max-width: 999px) {
   ._admin_profile_grid > ._card {
-    width: 50% !important;
+    width: 60% !important;
   }
   ._admin_profile_grid > ._not_card {
-    width: 50% !important;
+    width: 60% !important;
+  }
+}
+@media (max-width: 948px) {
+  ._admin_profile_grid > ._card {
+    width: 60% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 60% !important;
+  }
+}
+@media (max-width: 899px) {
+  ._admin_profile_grid {
+    display: none !important;
+  }
+  ._admin_profile > p {
+    display: none !important;
+  }
+  .mobile_profile {
+    display: flex !important;
   }
 }
