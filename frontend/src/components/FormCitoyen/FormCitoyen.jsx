@@ -32,10 +32,12 @@ const FormCitoyen = (props) => {
             </div>
           )}
           {islogin ? <FormLogin /> : <FormSignup />}
-          <p className="text-gray-dark semi-bold small">
-            having a trouble?{" "}
-            <spaan className="underline pointer">Click here</spaan>
-          </p>
+          {islogin && (
+            <p className="text-gray-dark semi-bold small">
+              forget your password?{" "}
+              <spaan className="underline pointer">Click here</spaan>
+            </p>
+          )}
 
           <Divider
             horizontal
