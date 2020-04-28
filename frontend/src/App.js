@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //? import screens
-import CitoyenLogin from "./screens/CitoyenLogin/CitoyenLogin.jsx";
+import Admin from "./screens/Admin/Admin.jsx";
+import AdminProfile from "./screens/AdminProfile/AdminProfile.jsx";
+import CitoyenAuth from "./screens/CitoyenAuth/CitoyenAuth.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -12,9 +14,19 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/admin" component={() => <div>admin</div>} />
-        <Route path="/login" component={() => <CitoyenLogin />} />
-        <Route path="/signup" component={() => <div>signup</div>} />
+        <Route exact path="/admin" component={() => <Admin />} />
+        <Route
+          exact
+          path="/admin/profile"
+          component={() => (
+            <Admin childComponent={<AdminProfile />} test="sdq" />
+          )}
+        />
+        <Route path="/login" component={() => <CitoyenAuth islogin={true} />} />
+        <Route
+          path="/signup"
+          component={() => <CitoyenAuth islogin={false} />}
+        />
       </Switch>
     </Router>
   );
