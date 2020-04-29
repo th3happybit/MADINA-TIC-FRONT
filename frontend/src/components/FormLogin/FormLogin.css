@@ -32,18 +32,24 @@
   }
 }
 @media (max-width: 999px) {
-  ._admin_login {
-    display: none !important;
-  }
+  
   
   ._admin_login_form .input,
   ._admin_login_form .input input {
-    width: 200px !important;
+    width:200px !important;
   }
   ._admin_login_form {
     margin: 0rem 0 !important;
   }
   ._login_admin_section {
-    padding: 2rem 0 !important;
+    padding: 5rem 0 !important;
   }
+  ._login_admin_section {
+    width :50% !important;
+  }
+  ._logo {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
 }
