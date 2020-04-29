@@ -75,12 +75,57 @@
 .new_accounts_table {
   width: 100%;
 }
+._add_account_modal ._header_modal {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+._content_modal {
+  padding: 2rem;
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+._content_modal p {
+  font-size: 16px !important;
+  color: var(--blue_darker);
+}
+._content_modal.plus {
+  width: 70% !important;
+}
+.hide_content {
+  display: none;
+}
+._content_modal .funct p {
+  margin: 1rem 0;
+  color: var(--primary);
+}
+.detail_content {
+  border-bottom: 1px solid var(--secondary);
+}
+.content_modal_btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content_modal_btns.marginTop {
+  margin-top: 4rem;
+}
+.content_modal_btns .button {
+  margin: 0 1rem;
+  padding: 1rem 2rem !important;
+  min-width: 140px !important;
+}
 @media (max-width: 999px) {
   .new_accounts_table .table_element {
     max-width: 160px !important;
     white-space: nowrap !important;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  ._content_modal {
+    width: 60%;
   }
   .element_hide_mobile {
     display: none;
@@ -98,6 +143,9 @@
     font-size: 18px !important;
     white-space: nowrap;
   }
+  ._content_modal {
+    width: 80%;
+  }
   ._new_accounts {
     padding: 1rem !important;
   }
@@ -113,5 +161,31 @@
   }
   .new_accounts_table thead {
     display: none !important;
+  }
+}
+@media (max-width: 530px) {
+  ._content_modal {
+    width: 100%;
+  }
+  ._content_modal {
+    padding: 2rem 0.5rem !important;
+  }
+  ._content_modal p {
+    font-size: 14px !important;
+  }
+  ._add_account_modal ._header_modal p {
+    font-size: 20px !important;
+  }
+  ._content_modal .funct .ui.multiple.dropdown > .label {
+    font-size: 12px !important;
+  }
+  ._content_modal .funct .ui.dropdown .menu .selected.item,
+  ._content_modal .funct .ui.dropdown.selected {
+    font-size: 12px !important;
+  }
+  .content_modal_btns .button {
+    margin: 0 1rem;
+    padding: 0.7rem 1.5rem !important;
+    min-width: 120px !important;
   }
 }

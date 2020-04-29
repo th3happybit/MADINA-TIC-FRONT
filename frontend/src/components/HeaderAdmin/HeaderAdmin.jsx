@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Search, Image, Dropdown } from "semantic-ui-react";
+import { useHistory } from "react-router";
+import axios from "axios";
 
 //? import css
 import "./HeaderAdmin.css";
@@ -22,6 +24,30 @@ const HeaderAdmin = (props) => {
   const handleFocus = () => {
     setFocus((prevState) => !prevState);
   };
+  const history = useHistory();
+  const handleLogout = () => {
+    console.log("res");
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+          },
+        },
+      })
+      .request({
+        url: "http://13.92.195.8/api/logout/",
+        method: "post",
+        // data: { email, password },
+      })
+      .then(() => {
+        localStorage.clear();
+        return history.push("/admin/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <header className="_header_admin">
@@ -36,7 +62,12 @@ const HeaderAdmin = (props) => {
           <div className="profile_img">
             <Notification className="_margin_horizontal_md pointer" />
 
-            <Dropdown trigger={trigger} pointing="top right" icon={null}>
+            <Dropdown
+              trigger={trigger}
+              pointing="top right"
+              icon={null}
+              onCLick={handleLogout}
+            >
               <Dropdown.Menu>
                 <Dropdown.Item
                   text="Account"
@@ -48,8 +79,7 @@ const HeaderAdmin = (props) => {
                 <Dropdown.Item
                   text="Sign Out"
                   icon="sign out"
-                  as={Link}
-                  to="/admin/logout"
+                  onClick={handleLogout}
                 />
               </Dropdown.Menu>
             </Dropdown>
