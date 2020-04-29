@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Message } from "semantic-ui-react";
 
 //? import components
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
@@ -7,6 +8,12 @@ import SidebarHeader from "../../components/SidebarHeader/SidebarHeader.jsx";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin.jsx";
 
 const Admin = (props) => {
+  const [isLogin, setIsLogin] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("admin_token")) {
+      setIsLogin(true);
+    }
+  }, []);
   const { active } = props;
   const [visible, setVisible] = useState(false);
   const handleHide = () => {
@@ -14,11 +21,40 @@ const Admin = (props) => {
   };
   return (
     <>
-      {visible && <Backdrop click={handleHide} />}
-      <HeaderAdmin show={handleHide} />
-      <SidebarHeader visible={visible} click={handleHide} />
-      <SidebarAdmin active={active} />
-      <main className="_admin_main">{props.childComponent}</main>
+      {isLogin ? (
+        <>
+          {visible && <Backdrop click={handleHide} />}
+          <HeaderAdmin show={handleHide} />
+          <SidebarHeader visible={visible} click={handleHide} />
+          <SidebarAdmin active={active} />
+          <main className="_admin_main">{props.childComponent}</main>
+        </>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100vw",
+            height: "100vh",
+          }}
+        >
+          {" "}
+          <Message negative>
+            <Message.Header>
+              We're sorry you can't access this route
+            </Message.Header>
+            <p
+              className="text-default title _margin_vertical_sm pointer "
+              style={{
+                ccolor: "#912d2b",
+              }}
+            >
+              Go to login page?<a href="/admin/login">click here</a>
+            </p>
+          </Message>
+        </div>
+      )}
     </>
   );
 };
