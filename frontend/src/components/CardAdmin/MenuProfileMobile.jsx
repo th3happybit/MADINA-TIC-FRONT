@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Menu, Input } from "semantic-ui-react";
+import { Menu, Input, Form, Message } from "semantic-ui-react";
 
-const MenuProfileMobile = () => {
+const MenuProfileMobile = (props) => {
+  const { email, phone, address, birthday, handleInputChange, isErr } = props;
   const [activeItem, setActiveItem] = useState("info");
   const handleItemClick = (e) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
@@ -25,38 +26,57 @@ const MenuProfileMobile = () => {
         />
       </Menu>
       {activeItem === "info" && (
-        <div className="col_mobile">
-          <Input
-            className="_profile_input_admin_mobile"
-            type="text"
-            value="s.admin@esi-sba.dz"
-          />
-          <Input
-            className="_profile_input_admin_mobile"
-            type="text"
-            value="01/02/1999"
-          />
-          <Input
-            className="_profile_input_admin_mobile"
-            type="text"
-            value="Cité 300 logts, n 400"
-          />
-          <Input
-            className="_profile_input_admin_mobile"
-            type="text"
-            value="+213 566842544"
-          />
-          <Input
-            className="_profile_input_admin_mobile"
-            type="text"
-            value="www.facebook.com"
-          />
-          <Input
-            className="_profile_input_admin_mobile"
-            type="text"
-            value="www.google.com"
-          />
-        </div>
+        <Form error={isErr}>
+          <div className="col_mobile">
+            <Input
+              className="_profile_input_admin_mobile"
+              type="text"
+              id="email"
+              placeholder="email"
+              value={email}
+              onChange={handleInputChange}
+            />
+            <Input
+              className="_profile_input_admin_mobile"
+              type="text"
+              value={birthday}
+              onChange={handleInputChange}
+              placeholder="birthday"
+            />
+            <Input
+              className="_profile_input_admin_mobile"
+              type="text"
+              placeholder="address"
+              value={address}
+              onChange={handleInputChange}
+            />
+            <Input
+              className="_profile_input_admin_mobile"
+              type="text"
+              value={phone}
+              placeholder="phone"
+              onChange={handleInputChange}
+            />
+            <Input
+              onChange={handleInputChange}
+              className="_profile_input_admin_mobile"
+              type="text"
+              placeholder="facebook link"
+              value="www.facebook.com"
+            />
+            <Input
+              onChange={handleInputChange}
+              className="_profile_input_admin_mobile"
+              type="text"
+              placeholder="google link"
+              value="www.google.com"
+            />
+          </div>
+          <Message
+            error
+            content="All the inputs are required to update the profile"
+          />{" "}
+        </Form>
       )}
       {activeItem === "password" && (
         <div className="col_mobile">

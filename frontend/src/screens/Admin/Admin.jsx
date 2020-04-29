@@ -8,10 +8,13 @@ import SidebarHeader from "../../components/SidebarHeader/SidebarHeader.jsx";
 import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin.jsx";
 
 const Admin = (props) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState("null");
   useEffect(() => {
+    console.log(localStorage);
     if (localStorage.getItem("admin_token")) {
       setIsLogin(true);
+    } else {
+      setIsLogin(false);
     }
   }, []);
   const { active } = props;

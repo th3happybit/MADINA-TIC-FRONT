@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Form } from "semantic-ui-react";
 
-const PasswordForm = () => {
+const PasswordForm = (props) => {
+  const { isShow } = props;
   //? value of passwords input in the form
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
@@ -92,6 +93,7 @@ const PasswordForm = () => {
       <Form.Group className="_form_password">
         <div className="input_p">
           <Form.Input
+            disabled={!isShow}
             id="currentPassword"
             value={currentPassword.value}
             type={currentPassword.isPassword ? "password" : "text"}
@@ -109,6 +111,7 @@ const PasswordForm = () => {
       <Form.Group className="_form_password">
         <div className="input_p">
           <Form.Input
+            disabled={!isShow}
             id="newPassword"
             value={newPassword.value}
             type={newPassword.isPassword ? "password" : "text"}
@@ -126,6 +129,7 @@ const PasswordForm = () => {
       <Form.Group className="_form_password">
         <div className="input_p">
           <Form.Input
+            disabled={!isShow}
             id="confirmPassword"
             value={confirmPassword.value}
             type={confirmPassword.isPassword ? "password" : "text"}
