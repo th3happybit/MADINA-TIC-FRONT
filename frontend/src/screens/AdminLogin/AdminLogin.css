@@ -24,21 +24,29 @@
   align-items: center;
 }
 
-@media (max-width : 1599px){
+@media (max-width: 1599px) {
   ._admin_login > .container {
     width: 60% !important;
   }
 }
 
-@media (max-width : 999px){
-  ._admin_login > .container{
+@media (max-width: 999px) {
+  ._admin_login > .container {
     width: 60% !important;
     height: 80% !important;
   }
 }
 
-@media (max-width : 799px){
+@media (max-width: 799px) {
   ._admin_login > .container {
     width: 80% !important;
+  }
+}
+._admin_login ._admin_card .row .field {
+  min-width: 280px !important;
+}
+@media (max-width: 399px) {
+  ._admin_login ._admin_card .row .field {
+    min-width: 220px !important;
   }
 }
