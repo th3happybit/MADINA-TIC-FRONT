@@ -220,6 +220,18 @@ const Card = (props) => {
             });
     }
 
+    
+    // const GetCitoyenInfos = () => {
+    //     axios
+    //         .get("http://13.91.195.8/api/users/", {
+    //             uid : uid,
+    //         }) 
+    //         .then((res) => {
+    //             const cit_infos = res.data ;
+    //         })
+        
+    // }
+
     return(
         <div
         className="card-citoyen">

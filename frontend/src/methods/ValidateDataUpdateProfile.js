@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// reg.Exp to check data is valid
+// reg.Exps to check data is valid
 
 const validateEmail = (email) => {      
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -20,6 +20,7 @@ const validateNationalID = (nid) => {
 
 const ValidateDataUpdateProfile = (data) => {
     const {
+        uid,
         first_name,
         last_name,
         email,

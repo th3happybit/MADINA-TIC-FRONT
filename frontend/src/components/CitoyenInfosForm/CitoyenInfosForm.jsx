@@ -77,7 +77,7 @@ const InfosForm = () => {
     const UpdateInfosCitoyen = () => {
         setIsLoading(true);
         axios
-          .post("http://13.92.195.8/api/", {
+          .put("http://13.92.195.8/api/users", {
             email: email,
             first_name: first_name,
             last_name: last_name,
