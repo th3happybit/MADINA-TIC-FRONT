@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
-
+import { useHistory } from "react-router";
 //? import logo
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 
 const MainForm = () => {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -48,6 +49,7 @@ const MainForm = () => {
       .then((res) => {
         setISLoading(false);
         localStorage.setItem("admin_token", res.data.key);
+        return history.push("/admin/dashboard");
       })
       .catch(() => {
         setISLoading(false);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Table, Button, Image, Modal, Dropdown } from "semantic-ui-react";
 
 //? import css
