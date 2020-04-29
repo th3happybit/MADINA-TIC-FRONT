@@ -6,8 +6,10 @@ import axios from "axios";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 
 const MainForm = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [isLoading, setISLoading] = useState(false);
 
   const [error, seterror] = useState(null);
 
@@ -16,8 +18,8 @@ const MainForm = () => {
     if (error) seterror(false);
     let id = e.currentTarget.id;
     switch (id) {
-      case "username":
-        setUsername(e.currentTarget.value);
+      case "email":
+        setEmail(e.currentTarget.value);
         break;
       case "password":
         setPassword(e.currentTarget.value);
@@ -27,24 +29,29 @@ const MainForm = () => {
     }
   };
   const Login = () => {
-    console.log("login");
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
+    //admin@madina-tic.dz
+    //blackholE
+    setISLoading(true);
     axios
-      .post(
-        "http://13.92.195.8/api/admin/",
-        { username, password },
-        axiosConfig
-      )
-      .then((res) => {
-        console.log(res);
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+          },
+        },
       })
-      .catch((err) => {
-        console.log(err);
+      .request({
+        url: "http://13.92.195.8/api/login/",
+        method: "post",
+        data: { email, password },
+      })
+      .then((res) => {
+        setISLoading(false);
+        localStorage.setItem("admin_token", res.data.key);
+      })
+      .catch(() => {
+        setISLoading(false);
+        seterror(true);
       });
   };
   return (
@@ -53,13 +60,13 @@ const MainForm = () => {
       <p className="title text-active bold ">MADINA TIC</p>
       <Form error={error} className="_admin_login_form _margin_vertical_md">
         <Form.Input
-          id="username"
+          id="email"
           onChange={handleChangeInput}
-          placeholder="username"
+          placeholder="email"
           type="text"
           size="large"
           className="_margin_vertical_sm small"
-          value={username}
+          value={email}
         />
         <Form.Input
           id="password"
@@ -70,8 +77,9 @@ const MainForm = () => {
           className="_margin_vertical_sm small"
           value={password}
         />
-        <Message error content="Please make sur that all the data is valid" />
+        <Message error content="Invalid username or password" />
         <Button
+          loading={isLoading}
           onClick={Login}
           className="button_primary _margin_vertical_md"
           type="submit"
