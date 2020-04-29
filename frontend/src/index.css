@@ -1,16 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-<<<<<<< HEAD
-=======
 @font-face {
   font-family: "Segoe_UI";
   src: url("./assets/fonts/Segoe\ UI.woff");
 }
+
 @font-face {
   font-family: "Segoe_UI_bold";
   src: url("./assets/fonts//Segoe\ UI\ Bold.woff");
 }
->>>>>>> 753aee65370654540f1428679e0b62669c75806e
-
 :root {
   --primary: #29b5f6;
   --primary_darker: #0085c3;
@@ -27,10 +24,7 @@
 body {
   background-color: #f7f9fb;
   margin: 0;
-<<<<<<< HEAD
-=======
   background: #f7f9fb;
->>>>>>> 753aee65370654540f1428679e0b62669c75806e
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -45,12 +39,9 @@ label,
 button {
   margin: 0;
 }
-<<<<<<< HEAD
-=======
 a {
   text-decoration: none !important;
 }
->>>>>>> 753aee65370654540f1428679e0b62669c75806e
 .bg-white {
   background-color: white !important;
 }
@@ -129,12 +120,9 @@ a {
   padding: 1rem 4rem !important;
   font-size: 16px !important;
 }
-<<<<<<< HEAD
-=======
 .shadow {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
 }
->>>>>>> 753aee65370654540f1428679e0b62669c75806e
 .button_secondary:hover {
   background-color: var(--secondary_darker) !important;
 }
@@ -211,8 +199,6 @@ a {
   width: 70px !important;
   height: 90px;
 }
-<<<<<<< HEAD
-=======
 ._admin_main {
   padding-left: 230px;
   padding-top: 70px;
@@ -223,4 +209,3 @@ a {
     padding-top: 85px;
   }
 }
->>>>>>> 753aee65370654540f1428679e0b62669c75806e

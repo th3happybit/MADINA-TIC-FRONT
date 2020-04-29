@@ -16,7 +16,9 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/admin" component={() => <Admin />} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/login" component={AdminLogin} />
+
         <Route
           exact
           path="/admin/profile"
