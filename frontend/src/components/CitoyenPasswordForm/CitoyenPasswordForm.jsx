@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-
-import { Form } from "semantic-ui-react";
-
+import { Form, Button, Message } from "semantic-ui-react";
+import axios from "axios";
+import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
 import "./CitoyenPasswordForm.css";
 
 const PasswordForm = () => {
@@ -18,6 +18,9 @@ const PasswordForm = () => {
     value: "",
     isPassword: true,
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [error, seterror] = useState(null);
 
   const handleShowPsw = (e) => {
     let id = e.currentTarget.attributes["data-id"].nodeValue;
@@ -90,9 +93,47 @@ const PasswordForm = () => {
     }
   };
 
+  const handleSumbit = () => {
+    if (error) seterror(null);
+    if (success) setSuccess(null);
+
+    var errors = ValidatePassword([
+      currentPassword, 
+      newPassword,
+      confirmPassword, 
+    ]);
+
+    // console.log(errors);
+
+    if (errors.length > 0){
+      seterror(true);
+    }
+    else{
+      setSuccess(true);
+      UpdatePasswordCitoyen();
+    }
+  };
+  const UpdatePasswordCitoyen = () => {
+    setIsLoading(true);
+    axios
+      .post("http://13.92.195.8/api/", {
+        password1 : currentPassword,
+        password2 : newPassword,
+
+      })
+      .then((res) => {
+        setIsLoading(false);
+        // console.log(res);
+      });
+  };
+
   return (
     <div>
-      <Form className="_margin_vertical_lg">
+      <Form
+      success = {success}
+      error = {error} 
+      id="pform" 
+      className="_margin_vertical_lg">
       <Form.Group className="input-password">
         <div className="input_p">
           <Form.Input
@@ -102,6 +143,7 @@ const PasswordForm = () => {
             label="Current Password"
             placeholder="Current Password"
             onChange={handleInputChangeValue}
+            className="required"
           />
           <i
             className="eye icon pointer"
@@ -119,6 +161,7 @@ const PasswordForm = () => {
             label="New Password"
             placeholder="New Password"
             onChange={handleInputChangeValue}
+            className="required"
           />
           <i
             className="eye icon pointer"
@@ -136,6 +179,7 @@ const PasswordForm = () => {
             label="Confirm Password"
             placeholder="Confirm Password"
             onChange={handleInputChangeValue}
+            className="required"
           />
           <i
             className="eye icon pointer"
@@ -144,6 +188,19 @@ const PasswordForm = () => {
           />
         </div>
       </Form.Group>
+      <div id="subs" className="_margin_vertical_md pbutt">
+                <Button className="button_secondary"
+                disabled={isLoading}
+                >Cancel</Button>
+                <Button 
+                type="submit"
+                onClick={handleSumbit}
+                loading={isLoading}
+                className="button_primary">Save</Button>
+            </div>
+            
+            <Message error content="Please make sur to enter a valid data" />
+            <Message success content="Your infos update request has been sent successfully" />
     </Form>
     </div>
   );

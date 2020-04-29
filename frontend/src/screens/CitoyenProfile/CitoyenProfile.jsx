@@ -1,19 +1,22 @@
 import React, { useState } from "react";
-import { Grid, GridColumn, Container, Menu, Button} from "semantic-ui-react";
+import { Grid, GridColumn, Container, Menu} from "semantic-ui-react";
 
 import InfosForm from "../../components/CitoyenInfosForm/CitoyenInfosForm.jsx"
 import Card from "../../components/CitoyenCard/CitoyenCard.jsx";
 import PasswordForm from "../../components/CitoyenPasswordForm/CitoyenPasswordForm.jsx"; 
 
+
+
 import "./CitoyenProfile.css"
-
-
 
 const CitoyenProfile = () => {
     const [activeItem, setActiveItem] = useState("info");
+    
     const handleItemClick = (e) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
     };
+
+
     return (
         <main>
             <Container fluid>
@@ -41,10 +44,6 @@ const CitoyenProfile = () => {
                                 <div className="infos-form">
                                     {(activeItem==="info" && <InfosForm></InfosForm>)}
                                     {(activeItem==="password" && <PasswordForm></PasswordForm>)}
-                                </div>
-                                <div id="subs" className="_margin_vertical_md">
-                                    <Button className="button_secondary">Cancel</Button>
-                                    <Button className="button_primary">Save</Button>
                                 </div>
                             </div>
                         </div>
