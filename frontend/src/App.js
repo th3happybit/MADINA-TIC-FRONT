@@ -10,12 +10,15 @@ import AdminDashboard from "./screens/AdminDashboard/AdminDashboard.jsx";
 //? import slick css
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import AdminLogin from "./screens/AdminLogin/AdminLogin.jsx";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/admin" component={() => <Admin />} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/login" component={AdminLogin} />
+
         <Route
           exact
           path="/admin/profile"

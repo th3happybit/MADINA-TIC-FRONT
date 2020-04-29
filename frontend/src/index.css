@@ -3,11 +3,11 @@
   font-family: "Segoe_UI";
   src: url("./assets/fonts/Segoe\ UI.woff");
 }
+
 @font-face {
   font-family: "Segoe_UI_bold";
   src: url("./assets/fonts//Segoe\ UI\ Bold.woff");
 }
-
 :root {
   --primary: #29b5f6;
   --primary_darker: #0085c3;
@@ -22,6 +22,7 @@
   --green: #1eb85c;
 }
 body {
+  background-color: #f7f9fb;
   margin: 0;
   background: #f7f9fb;
   font-family: "Open Sans", sans-serif;
@@ -76,9 +77,6 @@ a {
 }
 .title {
   font-size: 20px !important;
-}
-.not-bold {
-  font-weight: 600 !important;
 }
 .medium-text {
   font-size: 16px !important;
