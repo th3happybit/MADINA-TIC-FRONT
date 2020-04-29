@@ -7,6 +7,25 @@ import "./TableNewAccounts";
 //? import image
 import Alex from "../../assets/images/alex.jpg";
 
+const data = [
+  {
+    picture: Alex,
+    first_name: "Bengoudifa",
+    last_name: "Oussama",
+    email: "o.bengoudifa@esi-sba.dz",
+    address: "Mostaganem , rue 400 logts",
+    role: "citoyen",
+  },
+  {
+    picture: Alex,
+    first_name: "Messabih",
+    last_name: "Oussama",
+    email: "o.messabih@esi-sba.dz",
+    address: "Chlef , rue 1000 logts",
+    role: "maire",
+  },
+];
+
 const TableNewAccounts = () => {
   return (
     <Table basic="very" striped className="new_accounts_table">
@@ -46,31 +65,6 @@ const TableNewAccounts = () => {
       </Table.Header>
 
       <Table.Body>
-        <Table.Row>
-          <Table.Cell className="medium-text text-default ">
-            <div className="fullname_new_account">
-              <Image src={Alex} className="_new_account-img" />
-              <p className="medium-text text-default table_element">
-                Bensaber djamel
-              </p>
-            </div>
-          </Table.Cell>
-          <Table.Cell className="medium-text text-default ">
-            <p className="table_element"> o.bengoudifa@es-sba.dz</p>
-          </Table.Cell>
-          <Table.Cell className="medium-text text-default element_hide_mobile">
-            <p className="table_element"> Mostaganem,rue 400 logts</p>
-          </Table.Cell>
-          <Table.Cell className="medium-text text-default ">
-            <p className="table_element">Citoyens</p>
-          </Table.Cell>{" "}
-          <Table.Cell className="medium-text text-default ">
-            {" "}
-            <Button className="button_primary btn_account_detail">
-              Account Details
-            </Button>
-          </Table.Cell>
-        </Table.Row>
         <Table.Row>
           <Table.Cell className="medium-text text-default ">
             <div className="fullname_new_account">
