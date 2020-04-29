@@ -3,7 +3,6 @@
   padding-bottom: 3rem !important;
 }
 
-
 ._admin_login_form {
   display: flex;
   flex-direction: column;
@@ -35,7 +34,7 @@
   ._admin_login {
     display: none !important;
   }
-  
+
   ._admin_login_form .input,
   ._admin_login_form .input input {
     width: 200px !important;
