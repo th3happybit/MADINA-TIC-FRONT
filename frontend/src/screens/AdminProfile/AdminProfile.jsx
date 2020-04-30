@@ -51,7 +51,7 @@ const AdminProfile = () => {
           </Grid>
         </Container>
         <Container fluid className="mobile_profile">
-          <CardAdmin data_user={data} />
+          <CardAdmin data_user={data} refresh={GetDataProfile} />
         </Container>
       </div>
     </Segment>

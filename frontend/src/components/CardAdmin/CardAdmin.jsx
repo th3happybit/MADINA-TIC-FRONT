@@ -24,8 +24,14 @@ const CardAdmin = (props) => {
   const [birthday, setBirthday] = useState(null);
   const [address, setAddress] = useState(null);
   const [phone, setPhone] = useState(null);
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [messageErr, setMessageErr] = useState("");
+
   const [isErr, setIsErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeItem, setActiveItem] = useState("info");
 
   //! componentdidmount
   useEffect(() => {
@@ -36,7 +42,6 @@ const CardAdmin = (props) => {
     setAddress(data_user.address);
     setBirthday(data_user.date_of_birth);
   }, [data_user]);
-
   const handleInputChange = (e) => {
     if (isErr) setIsErr(false);
     let value = e.currentTarget.value;
@@ -61,6 +66,15 @@ const CardAdmin = (props) => {
       case "address":
         setAddress(value);
         break;
+      case "password":
+        setPassword(value);
+        break;
+      case "new_password":
+        setNewPassword(value);
+        break;
+      case "confirm_password":
+        setConfirmPassword(value);
+        break;
       default:
         break;
     }
@@ -68,37 +82,80 @@ const CardAdmin = (props) => {
   const handleEdit = () => {
     setEdit((prevState) => !prevState);
   };
+  const handleItemClick = (e) => {
+    setActiveItem(e.currentTarget.attributes["data-name"].value);
+  };
   const fileSelectedHandler = (event) => {
     console.log(event.target.files[0]);
   };
+
   const handleUpdate = () => {
     setIsLoading(true);
-    Axios.create({
-      headers: {
-        put: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("admin_token")}`,
-        },
-      },
-    })
-      .request({
-        url: "http://13.92.195.8/api/user/",
-        method: "put",
-        data: {
-          first_name,
-          last_name,
-          email,
-          address,
-          phone,
-          date_of_birth: birthday,
+    if (activeItem === "info") {
+      Axios.create({
+        headers: {
+          put: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
         },
       })
-      .then((res) => {
-        setIsLoading(false);
-        isEdit((prevState) => !prevState);
-        props.refresh();
+        .request({
+          url: "http://13.92.195.8/api/user/",
+          method: "put",
+          data: {
+            first_name,
+            last_name,
+            email,
+            address,
+            phone,
+            date_of_birth: birthday,
+          },
+        })
+        .then((res) => {
+          setIsLoading(false);
+          handleEdit();
+          props.refresh();
+        })
+        .catch(() => setIsErr(true));
+    } else {
+      Axios.create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
       })
-      .catch(() => setIsErr(true));
+        .request({
+          url: "http://13.92.195.8/api/password/change/",
+          method: "post",
+          data: {
+            new_password1: newPassword,
+            new_password2: confirmPassword,
+            old_password: password,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          handleEdit();
+          props.refresh();
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          let resErrOldPassword = err.response.data.old_password
+            ? err.response.data.old_password[0]
+            : "";
+          let resErrNewPassw = err.response.data.new_password2
+            ? err.response.data.new_password2[0]
+            : "";
+          if (resErrOldPassword !== "") {
+            setMessageErr(resErrOldPassword);
+          } else setMessageErr(resErrNewPassw);
+          setIsErr(true);
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -164,6 +221,7 @@ const CardAdmin = (props) => {
                 <Input
                   className="_profile_input_admin_mobile"
                   type="text"
+                  id="first_name"
                   value={first_name}
                   onChange={handleInputChange}
                   placeholder="first name"
@@ -172,6 +230,7 @@ const CardAdmin = (props) => {
                   className="_profile_input_admin_mobile"
                   type="text"
                   value={last_name}
+                  id="last_name"
                   placeholder="last name"
                   onChange={handleInputChange}
                 />
@@ -249,6 +308,12 @@ const CardAdmin = (props) => {
               birthday={birthday}
               handleInputChange={handleInputChange}
               isErr={isErr}
+              activeItem={activeItem}
+              handleItemClick={handleItemClick}
+              password={password}
+              confirmPassword={confirmPassword}
+              newPassword={newPassword}
+              messageErr={messageErr}
             />
           )}
         </div>

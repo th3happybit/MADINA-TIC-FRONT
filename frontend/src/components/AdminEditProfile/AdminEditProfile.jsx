@@ -34,6 +34,10 @@ const AdminEditProfile = (props) => {
   const [phone, setPhone] = useState(null);
   const [isErr, setIsErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [messageErr, setMessageErr] = useState("");
 
   //? handle input changes
   const handleInputChange = (e) => {
@@ -60,6 +64,15 @@ const AdminEditProfile = (props) => {
       case "address":
         setAddress(value);
         break;
+      case "password":
+        setPassword(value);
+        break;
+      case "new_password":
+        setNewPassword(value);
+        break;
+      case "confirm_password":
+        setConfirmPassword(value);
+        break;
       default:
         break;
     }
@@ -75,32 +88,71 @@ const AdminEditProfile = (props) => {
 
   const handleUpdate = () => {
     setIsLoading(true);
-    Axios.create({
-      headers: {
-        put: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("admin_token")}`,
-        },
-      },
-    })
-      .request({
-        url: "http://13.92.195.8/api/user/",
-        method: "put",
-        data: {
-          first_name,
-          last_name,
-          email,
-          address,
-          phone,
-          date_of_birth: birthday,
+    if (activeItem === "info") {
+      Axios.create({
+        headers: {
+          put: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
         },
       })
-      .then((res) => {
-        setIsLoading(false);
-        setisShow((prevState) => !prevState);
-        props.refresh();
+        .request({
+          url: "http://13.92.195.8/api/user/",
+          method: "put",
+          data: {
+            first_name,
+            last_name,
+            email,
+            address,
+            phone,
+            date_of_birth: birthday,
+          },
+        })
+        .then((res) => {
+          setIsLoading(false);
+          setisShow((prevState) => !prevState);
+          props.refresh();
+        })
+        .catch(() => setIsErr(true));
+    } else {
+      Axios.create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
       })
-      .catch(() => setIsErr(true));
+        .request({
+          url: "http://13.92.195.8/api/password/change/",
+          method: "post",
+          data: {
+            new_password1: newPassword,
+            new_password2: confirmPassword,
+            old_password: password,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsLoading(false);
+          handleEditShowing();
+          props.refresh();
+        })
+        .catch((err) => {
+          let resErrOldPassword = err.response.data.old_password
+            ? err.response.data.old_password[0]
+            : "";
+          let resErrNewPassw = err.response.data.new_password2
+            ? err.response.data.new_password2[0]
+            : "";
+          if (resErrOldPassword !== "") {
+            setMessageErr(resErrOldPassword);
+          } else setMessageErr(resErrNewPassw);
+          setIsErr(true);
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -134,7 +186,17 @@ const AdminEditProfile = (props) => {
               isErr={isErr}
             />
           )}
-          {activeItem === "password" && <PasswordForm isShow={isShow} />}
+          {activeItem === "password" && (
+            <PasswordForm
+              isShow={isShow}
+              password={password}
+              confirmPassword={confirmPassword}
+              newPassword={newPassword}
+              handleInputChange={handleInputChange}
+              isErr={isErr}
+              messageErr={messageErr}
+            />
+          )}
           {isShow && (
             <div className="_button_edit_profile">
               <Button className="button_secondary " onClick={handleEditShowing}>
