@@ -101,6 +101,9 @@
   .add_account_container .input_with_label .field .input input {
     width: 100% !important;
   }
+  .add_account_container .input_with_label .field {
+    width: 90% !important;
+  }
   .input_with_label {
     display: flex;
     justify-content: center;
@@ -110,5 +113,13 @@
   }
   .input_with_label.role .fields.select_box .field {
     padding: 0.75rem 0;
+  }
+  .input_with_label {
+    padding: 1rem 0 !important;
+    display: flex;
+    justify-content: flex-start !important;
+  }
+  .input_with_label.role {
+    padding: 1rem 1.5rem !important;
   }
 }
