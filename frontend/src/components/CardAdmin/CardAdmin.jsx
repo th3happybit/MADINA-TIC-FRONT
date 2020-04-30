@@ -161,7 +161,7 @@ const CardAdmin = (props) => {
   return (
     <>
       {data_user && (
-        <div className="_card_admin">
+        <div className="_card_admin shadow">
           <div
             className={
               !isEdit
