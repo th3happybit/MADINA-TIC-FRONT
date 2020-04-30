@@ -10,14 +10,14 @@ RUN mkdir -p /opt/frontend
 WORKDIR /opt/frontend
 
 # Install dependencies
-COPY ./frontend/package.json /opt/frontend
-COPY ./frontend/yarn.lock /opt/frontend
-RUN yarn install
+COPY ./frontend/package.json .
+COPY ./frontend/yarn.lock .
+RUN yarn install --network-timeout 1000000
 # RUN yarn upgrade
 
 # Add rest of the client code
-COPY ./frontend/ /opt/frontend/
-COPY ./entrypoint_dev.sh /opt/frontend/
+COPY ./frontend .
+COPY ./entrypoint_dev.sh .
 
 RUN chmod u+x entrypoint_dev.sh
 
