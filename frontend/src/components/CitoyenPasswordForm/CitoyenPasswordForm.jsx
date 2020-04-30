@@ -188,7 +188,7 @@ const PasswordForm = () => {
           />
         </div>
       </Form.Group>
-      <div id="subs" className="_margin_vertical_md pbutt">
+      <div  className="_margin_vertical_md pbutt subs">
                 <Button className="button_secondary"
                 disabled={isLoading}
                 >Cancel</Button>

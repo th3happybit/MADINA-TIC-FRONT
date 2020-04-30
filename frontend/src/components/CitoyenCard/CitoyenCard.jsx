@@ -16,6 +16,7 @@ const Card = (props) => {
 
     const [isEdit, setEdit] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [activeItem, setActiveItem] = useState("info");
     const [success, setSuccess] = useState(null);
     const [error, seterror] = useState(null);
     const [first_name, setfirst_name] = useState("");
@@ -28,16 +29,16 @@ const Card = (props) => {
     const [currentPassword, setCurrentPassword] = useState({
         value: "",
         isPassword: true,
-      });
-      const [newPassword, setNewPassword] = useState({
+    });
+    const [newPassword, setNewPassword] = useState({
         value: "",
         isPassword: true,
-      });
-      const [confirmPassword, setConfirmPassword] = useState({
+    });
+    const [confirmPassword, setConfirmPassword] = useState({
         value: "",
         isPassword: true,
-      });
-      const handleShowPsw = (e) => {
+    });
+    const handleShowPsw = (e) => {
         let id = e.currentTarget.attributes["data-id"].nodeValue;
         switch (id) {
           case "currentPassword":
@@ -73,9 +74,8 @@ const Card = (props) => {
           default:
             break;
         }
-      };
-
-      const handleInputChangeValue = (event) => {
+    };
+    const handleInputChangeValue = (event) => {
         let value = event.currentTarget.value;
         let id = event.currentTarget.id;
         switch (id) {
@@ -106,21 +106,16 @@ const Card = (props) => {
           default:
             break;
         }
-      };
-
+    };
     const handleEdit = () => {
         setEdit((prevState) => !prevState);
-    };
-    
+    };  
     const fileSelectedHandler = (event) => {
         console.log(event.target.files[0]);
     };
-
-    const [activeItem, setActiveItem] = useState("info");
     const handleItemClick = (e) => {
         setActiveItem(e.currentTarget.attributes["data-name"].value);
     };
-
     const handleChangeInput = (e) => {
         if (error) seterror(false);
         let id = e.currentTarget.id;

@@ -9,6 +9,7 @@ const InfosForm = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(null);
+    const [isEditing, setEditing] = useState(true);
     const [error, seterror] = useState(null);
     const [first_name, setfirst_name] = useState("");
     const [last_name, setlast_name] = useState("");
@@ -19,7 +20,7 @@ const InfosForm = () => {
     const [national_id, setnational_id] = useState("");
 
     //? function for changing data in inputs
-  const handleChangeInput = (e) => {
+    const handleChangeInput = (e) => {
     if (error) seterror(false);
     let id = e.currentTarget.id;
     switch (id) {
@@ -47,8 +48,7 @@ const InfosForm = () => {
       default:
         break;
     }
-  };
-
+    };
     const handleSumbit = () => {
         // let login = false;
         if (error) seterror(null);
@@ -73,7 +73,6 @@ const InfosForm = () => {
           UpdateInfosCitoyen();
         }
       };
-
     const UpdateInfosCitoyen = () => {
         setIsLoading(true);
         axios
@@ -89,7 +88,9 @@ const InfosForm = () => {
             setIsLoading(false);
           });
       };
-
+    const handelEditClick = () => {
+        setEditing((prevState) => !prevState);      
+      }
     return(
         <Form 
         success = {success}
@@ -160,14 +161,23 @@ const InfosForm = () => {
                     placeholder="National ID..." />
                 </Form.Field>
             </Form.Group>
-            <div id="subs" className="_margin_vertical_md">
-                <Button className="button_secondary" disabled={isLoading}>Cancel</Button>
+            {!isEditing && (
+            <div className="_margin_vertical_md subs">
+                <Button className="button_secondary" disabled={isLoading} onClick={handelEditClick} >Cancel</Button>
                 <Button 
                 type="submit"
                 onClick={handleSumbit}
                 loading={isLoading}
                 className="button_primary">Save</Button>
             </div>
+            )}
+            {isEditing && (
+              <div className="subs">
+                <Button onClick={handelEditClick} className="button_primary">
+                  Edit
+                </Button>
+              </div>
+            )}
             <Message error content="Please make sur to enter a valid data" />
             <Message success content="Your infos update request has been sent successfully" />
         </Form>

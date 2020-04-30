@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import profile from "./screens/CitoyenProfile/CitoyenProfile.jsx"
+import profile from "./screens/CitoyenProfile/CitoyenProfile.jsx"
 
 
 //? import screens
@@ -20,6 +20,7 @@ function App() {
       <Switch>
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
+        <Route path="/citoyen/profile" component={profile}/ >
 
         <Route
           exact
