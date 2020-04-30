@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Image, Modal, Dropdown } from "semantic-ui-react";
+import axios from "axios";
 
 //? import css
 import "./TableNewAccounts";
@@ -7,27 +8,6 @@ import "./TableNewAccounts";
 //? import image
 import Alex from "../../assets/images/alex.jpg";
 
-const data = [
-  {
-    picture: Alex,
-    first_name: "Bengoudifa",
-    last_name: "Oussama",
-    email: "o.bengoudifa@esi-sba.dz",
-    address: "Mostaganem , rue 400 logts",
-    role: "citoyen",
-    phone: "0555027759",
-    date_inscription: "2020-01-01",
-  },
-  {
-    picture: Alex,
-    first_name: "Messabih",
-    last_name: "Oussama",
-    email: "o.messabih@esi-sba.dz",
-    address: "Chlef , rue 1000 logts",
-    role: "maire",
-    date_inscription: "2020-03-03",
-  },
-];
 const options = [
   {
     key: "0",
@@ -39,6 +19,26 @@ const options = [
 ];
 
 const TableNewAccounts = () => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
+      })
+      .request({
+        url: "http://13.92.195.8/api/users/",
+        method: "get",
+      })
+
+      .then((res) => setData(res.data.results))
+      .catch((err) => console.log(err.response));
+  }, []);
+  console.log(data);
   return (
     <>
       <Table basic="very" striped className="new_accounts_table">
@@ -88,12 +88,13 @@ const TableNewAccounts = () => {
               role,
               date_inscription,
               phone,
+              image,
             } = element;
             return (
               <Table.Row key={index}>
                 <Table.Cell className="medium-text text-default ">
                   <div className="fullname_new_account">
-                    <Image src={picture} className="_new_account-img" />
+                    <Image src={image} className="_new_account-img" />
                     <p className="medium-text text-default table_element">
                       {first_name + " " + last_name}
                     </p>
