@@ -19,8 +19,8 @@ import { Link } from "react-router-dom";
 const trigger = <Image src={Alex} size="small" className="pointer" />;
 
 const HeaderAdmin = (props) => {
+  const { active } = props;
   const [isFocus, setFocus] = useState(false); //? if the input is focused or not
-
   const handleFocus = () => {
     setFocus((prevState) => !prevState);
   };
@@ -61,8 +61,14 @@ const HeaderAdmin = (props) => {
         <div className="right_part">
           <div className="profile_img">
             {" "}
-            <div className="btn_segment">
-              <Button className="">Add account</Button>
+            <div
+              className={
+                active === "account" ? "btn_segment active" : "btn_segment"
+              }
+            >
+              <a href="/admin/create/account">
+                <Button disabled={active === "account"}>Add account</Button>
+              </a>
             </div>
             <Notification className="_margin_horizontal_md pointer" />
             <Dropdown
