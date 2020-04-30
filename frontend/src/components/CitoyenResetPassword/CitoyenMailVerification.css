@@ -1,6 +1,7 @@
 ._form_reset_password {
+  width: 100vw;
+  height: 100vh;
   background-color: #0085c3 !important;
-  height: 730px !important;
 }
 
 ._reset_password_section {
