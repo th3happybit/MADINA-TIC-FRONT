@@ -11,11 +11,14 @@ import AdminDashboard from "./screens/AdminDashboard/AdminDashboard.jsx";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AdminLogin from "./screens/AdminLogin/AdminLogin.jsx";
-
+import CitoyenMailVerification from "./components/CitoyenResetPassword/CitoyenMailVerification.jsx"
+import CitoyenResetPassword from "./components/CitoyenResetPassword/CitoyenResetPassword.jsx"
 function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/CitoyenResetPassword" component={CitoyenResetPassword} />
+        <Route exact path="/mailVerification" component={CitoyenMailVerification} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
 
