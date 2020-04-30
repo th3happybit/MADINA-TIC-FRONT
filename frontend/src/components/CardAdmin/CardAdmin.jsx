@@ -28,10 +28,11 @@ const CardAdmin = (props) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [messageErr, setMessageErr] = useState("");
-
   const [isErr, setIsErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("info");
+  const [image, setImage] = useState(null);
+  const [upload, setUpload] = useState(false);
 
   //! componentdidmount
   useEffect(() => {
@@ -86,9 +87,29 @@ const CardAdmin = (props) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
   };
   const fileSelectedHandler = (event) => {
-    console.log(event.target.files[0]);
+    setImage(event.target.files[0]);
+    setUpload((prevState) => !prevState);
   };
-
+  const uploadImageHandler = () => {
+    setUpload((prevState) => !prevState);
+    Axios.create({
+      headers: {
+        patch: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("admin_token")}`,
+        },
+      },
+    })
+      .request({
+        url: "http://13.92.195.8/api/user/",
+        method: "patch",
+        data: {
+          image,
+        },
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err.response));
+  };
   const handleUpdate = () => {
     setIsLoading(true);
     if (activeItem === "info") {
@@ -157,7 +178,6 @@ const CardAdmin = (props) => {
         });
     }
   };
-
   return (
     <>
       {data_user && (
@@ -171,6 +191,11 @@ const CardAdmin = (props) => {
             onClick={handleEdit}
           >
             <Icon name="edit" size="big" />
+          </div>
+          <div className={upload ? "save_img" : "save_img hide"}>
+            <Button className="button_primary" onClick={uploadImageHandler}>
+              Upload
+            </Button>
           </div>
           <div className={isEdit ? "_buttons_mobile " : "_buttons_mobile hide"}>
             <Button className="secondary" onClick={handleEdit}>
@@ -205,7 +230,8 @@ const CardAdmin = (props) => {
                 <input
                   id="myInput"
                   style={{ display: "none" }}
-                  type={"file"}
+                  type="file"
+                  accept="image/png, image/jpeg"
                   className="pointer"
                   onChange={fileSelectedHandler}
                 />

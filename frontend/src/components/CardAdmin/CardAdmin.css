@@ -7,13 +7,28 @@
   height: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
+.save_img {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  visibility: hidden !important;
+}
+.save_img.hide {
+  visibility: visible !important;
+}
+.save_img .button {
+  min-width: 80px !important;
+  padding: 0.7rem 1rem !important;
+}
 ._card_admin > ._admin_profile_image {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   padding: 1rem 2rem;
-  padding-top: 3rem;
+  padding-top: 1rem;
   border: 0.5px solid #707070;
   border-right: 0;
   border-top: 0;
