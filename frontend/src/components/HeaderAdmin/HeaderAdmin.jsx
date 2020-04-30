@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Image, Dropdown } from "semantic-ui-react";
+import { Search, Image, Dropdown, Button } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import axios from "axios";
 
@@ -60,8 +60,11 @@ const HeaderAdmin = (props) => {
         />
         <div className="right_part">
           <div className="profile_img">
+            {" "}
+            <div className="btn_segment">
+              <Button className="">Add account</Button>
+            </div>
             <Notification className="_margin_horizontal_md pointer" />
-
             <Dropdown
               trigger={trigger}
               pointing="top right"

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Table, Button, Image, Modal, Dropdown } from "semantic-ui-react";
-import axios from "axios";
 
 //? import css
 import "./TableNewAccounts";
-
-//? import image
-import Alex from "../../assets/images/alex.jpg";
+import axios from "axios";
+import { useState } from "react";
 
 const options = [
   {
@@ -18,27 +16,43 @@ const options = [
   { key: "2", text: "Remove declarations", value: "remove declarations" },
 ];
 
-const TableNewAccounts = () => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    axios
-      .create({
-        headers: {
-          get: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+const TableNewAccounts = (props) => {
+  const { data } = props;
+  const [open, setOpen] = useState(false);
+  const [isHandled, setIsHandled] = useState(false);
+  const handleApprove = (e) => {
+    let type = parseInt(e.currentTarget.attributes["data_reject"].value);
+    let uid =
+      e.currentTarget.offsetParent.children[1].children[1].attributes[
+        "data_uid"
+      ].value;
+    //? 0 approve
+    //? 1 reject
+    if (type === 0) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            },
           },
-        },
-      })
-      .request({
-        url: "http://13.92.195.8/api/users/",
-        method: "get",
-      })
+        })
+        .request({
+          url: "http://13.92.195.8/api/users/" + uid + "/",
+          method: "patch",
+          data: {
+            is_approved: false,
+          },
+        })
+        .then((res) => {
+          setIsHandled(true);
+          setOpen(false);
+        })
+        .catch((err) => console.log(err.response));
+    }
+  };
 
-      .then((res) => setData(res.data.results))
-      .catch((err) => console.log(err.response));
-  }, []);
-  console.log(data);
   return (
     <>
       <Table basic="very" striped className="new_accounts_table">
@@ -58,13 +72,13 @@ const TableNewAccounts = () => {
             </Table.HeaderCell>
             <Table.HeaderCell
               width={3}
-              className="medium-text text-default not-bold element_hide_mobile"
+              className="medium-text text-default not-bold element_hide_mobile address"
             >
               Address
             </Table.HeaderCell>
             <Table.HeaderCell
               width={3}
-              className="medium-text text-default not-bold"
+              className="medium-text text-default not-bold role"
             >
               Rôle
             </Table.HeaderCell>
@@ -80,15 +94,15 @@ const TableNewAccounts = () => {
         <Table.Body>
           {data.map((element, index) => {
             const {
-              picture,
               first_name,
               last_name,
               email,
               address,
               role,
-              date_inscription,
+              created_on,
               phone,
               image,
+              uid,
             } = element;
             return (
               <Table.Row key={index}>
@@ -114,12 +128,26 @@ const TableNewAccounts = () => {
                 <Table.Cell className="medium-text text-default ">
                   {" "}
                   <Modal
+                    open={open}
+                    onClose={() => setOpen(false)}
                     closeIcon
                     className="_add_account_modal"
                     trigger={
-                      <Button className="button_primary btn_account_detail pointer">
-                        Account Details
-                      </Button>
+                      !isHandled ? (
+                        <Button
+                          className="button_primary btn_account_detail pointer"
+                          onClick={() => setOpen(true)}
+                        >
+                          Account Details
+                        </Button>
+                      ) : (
+                        <Button
+                          disabled
+                          className="button_primary btn_account_detail pointer"
+                        >
+                          Account Handled
+                        </Button>
+                      )
                     }
                   >
                     <Modal.Content>
@@ -145,35 +173,46 @@ const TableNewAccounts = () => {
                             <p>{phone}</p>
                             <p>{address}</p>
                             <p>{role}</p>
-                            <p>{date_inscription}</p>
+                            <p>{created_on.slice(0, 10)}</p>
                           </div>
                         </div>
                       </Modal.Content>
-                      <Modal.Content
-                        className={role === "citoyen" ? "hide_content" : ""}
-                      >
-                        <div className="_content_modal plus">
-                          <div className="funct">
-                            <p className="bold">Functionnalities</p>
-                            <Dropdown
-                              placeholder="Functionnalities"
-                              fluid
-                              multiple
-                              selection
-                              options={options}
-                            />
+                      {role !== "Client" && (
+                        <Modal.Content
+                          className={role === "citoyen" ? "hide_content" : ""}
+                        >
+                          <div className="_content_modal plus">
+                            <div className="funct">
+                              <p className="bold">Functionnalities</p>
+                              <Dropdown
+                                placeholder="Functionnalities"
+                                fluid
+                                multiple
+                                selection
+                                options={options}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </Modal.Content>
+                        </Modal.Content>
+                      )}
                       <Modal.Content
-                        className={
-                          role === "citoyen"
-                            ? "content_modal_btns marginTop"
-                            : "content_modal_btns"
-                        }
+                        className="content_modal_btns marginTop"
+                        data_uid={uid}
                       >
-                        <Button className="button_primary">Approve</Button>
-                        <Button className="button_secondary">Reject</Button>
+                        <Button
+                          className="button_primary"
+                          onClick={handleApprove}
+                          data_reject={0}
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          onClick={handleApprove}
+                          className="button_secondary"
+                          data_reject={1}
+                        >
+                          Reject
+                        </Button>
                       </Modal.Content>
                     </Modal.Content>
                   </Modal>
