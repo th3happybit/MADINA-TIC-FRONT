@@ -33,6 +33,7 @@ const CardAdmin = (props) => {
   const [activeItem, setActiveItem] = useState("info");
   const [image, setImage] = useState(null);
   const [upload, setUpload] = useState(true);
+  const [profileImage, setProfileImage] = useState(null);
 
   //! componentdidmount
   useEffect(() => {
@@ -42,6 +43,7 @@ const CardAdmin = (props) => {
     setPhone(data_user.phone);
     setAddress(data_user.address);
     setBirthday(data_user.date_of_birth);
+    setProfileImage(data_user.image);
   }, [data_user]);
   const handleInputChange = (e) => {
     if (isErr) setIsErr(false);
@@ -92,11 +94,13 @@ const CardAdmin = (props) => {
   };
   const uploadImageHandler = () => {
     setUpload((prevState) => !prevState);
-    console.log(image);
+    const file = new Blob([image], { type: "image/png" });
+    const formData = new FormData();
+    formData.append("image", file, file.name);
     Axios.create({
       headers: {
         patch: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
           Authorization: `Token ${localStorage.getItem("admin_token")}`,
         },
       },
@@ -105,7 +109,7 @@ const CardAdmin = (props) => {
         url: "http://13.92.195.8/api/user/",
         method: "patch",
         data: {
-          image: image,
+          image: formData,
         },
       })
       .then((res) => console.log(res))
@@ -179,6 +183,7 @@ const CardAdmin = (props) => {
         });
     }
   };
+
   return (
     <>
       {data_user && (
@@ -217,7 +222,7 @@ const CardAdmin = (props) => {
             }}
           >
             <div className="profile_">
-              <Image src={Alex} alt="alex" />
+              <Image src={profileImage} alt="alex" />
               <div
                 className={
                   isEdit
