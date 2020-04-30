@@ -1,5 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@font-face {
+  font-family: "Segoe_UI";
+  src: url("./assets/fonts/Segoe\ UI.woff");
+}
 
+@font-face {
+  font-family: "Segoe_UI_bold";
+  src: url("./assets/fonts//Segoe\ UI\ Bold.woff");
+}
 :root {
   --primary: #29b5f6;
   --primary_darker: #0085c3;
@@ -14,6 +22,7 @@
   --green: #1eb85c;
 }
 body {
+  background-color: #f7f9fb;
   margin: 0;
   background: #f7f9fb;
   font-family: "Open Sans", sans-serif;
@@ -111,6 +120,9 @@ a {
   padding: 1rem 4rem !important;
   font-size: 16px !important;
 }
+.shadow {
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
 .button_secondary:hover {
   background-color: var(--secondary_darker) !important;
 }
@@ -186,4 +198,14 @@ a {
 ._logo.mobile {
   width: 70px !important;
   height: 90px;
+}
+._admin_main {
+  padding-left: 230px;
+  padding-top: 70px;
+}
+@media (max-width: 899px) {
+  ._admin_main {
+    padding-left: 0;
+    padding-top: 85px;
+  }
 }
