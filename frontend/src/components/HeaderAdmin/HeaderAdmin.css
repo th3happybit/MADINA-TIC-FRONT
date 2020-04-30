@@ -13,6 +13,18 @@
   justify-content: space-between;
   align-items: center;
 }
+.right_part > .profile_img > .btn_segment > .button {
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+  background-color: white;
+  font-size: 15px !important;
+  padding: 0.571429em 1.2em !important;
+}
+.right_part > .profile_img > .btn_segment > .button:hover {
+  border: none;
+  background-color: var(--primary) !important ;
+  color: white !important;
+}
 ._header_admin > .row.mobile {
   display: none;
   box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
