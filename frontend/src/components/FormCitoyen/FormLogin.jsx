@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
+import { useHistory } from "react-router";
 
 const FormLogin = () => {
+  const history = useHistory();
+
   //? for loading while post request
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,6 +42,7 @@ const FormLogin = () => {
         localStorage.setItem("token", res.data.key);
         //getItem
         setIsLoading(false);
+        return history.push("/profile");
       })
       .catch((err) => {
         console.log(err);
@@ -82,21 +86,6 @@ const FormLogin = () => {
       >
         Login
       </Button>
-      <p
-        className="pointer"
-        onClick={() => {
-          axios
-            .get("http://13.92.195.8/api/userinstance/", {
-              headers: {
-                Authorization: `Token  ${localStorage.getItem("token")}`,
-              },
-            })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
-        }}
-      >
-        test
-      </p>
     </Form>
   );
 };
