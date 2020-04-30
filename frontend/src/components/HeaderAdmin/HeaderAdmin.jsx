@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Search, Image, Dropdown, Button } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import axios from "axios";

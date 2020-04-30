@@ -5,7 +5,7 @@
   align-items: center;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
 }
 .save_img {
   display: flex;
@@ -14,6 +14,13 @@
   width: 100%;
   padding: 1rem;
   visibility: hidden !important;
+}
+.ui.segment {
+  border: none !important;
+}
+._admin_edit_profile {
+  border: none !important;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
 }
 .save_img.hide {
   visibility: visible !important;

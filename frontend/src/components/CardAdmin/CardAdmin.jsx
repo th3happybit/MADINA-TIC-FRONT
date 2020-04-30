@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, Icon, Button, Input } from "semantic-ui-react";
+import { Image, Icon, Button, Input, Segment } from "semantic-ui-react";
 import Axios from "axios";
 
 //? import css
@@ -7,9 +7,6 @@ import "./CardAdmin.css";
 
 //? import components
 import MenuProfileMobile from "./MenuProfileMobile.jsx";
-
-//? import Image
-import Alex from "../../assets/images/alex.jpg";
 
 //? import icons
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
@@ -34,6 +31,7 @@ const CardAdmin = (props) => {
   const [image, setImage] = useState(null);
   const [upload, setUpload] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
+  const [cardLoading, setCardLoading] = useState(false);
 
   //! componentdidmount
   useEffect(() => {
@@ -95,7 +93,8 @@ const CardAdmin = (props) => {
   const uploadImageHandler = () => {
     setUpload((prevState) => !prevState);
     const formData = new FormData();
-    formData.append('image', image, image.name);
+    formData.append("image", image, image.name);
+    setCardLoading(true);
     Axios.create({
       headers: {
         patch: {
@@ -109,7 +108,10 @@ const CardAdmin = (props) => {
         method: "patch",
         data: formData,
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        setProfileImage(res.data.image);
+        setCardLoading(false);
+      })
       .catch((err) => console.log(err.response));
   };
   const handleUpdate = () => {
@@ -184,7 +186,7 @@ const CardAdmin = (props) => {
   return (
     <>
       {data_user && (
-        <div className="_card_admin">
+        <Segment loading={cardLoading} className="_card_admin">
           <div
             className={
               !isEdit
@@ -345,7 +347,7 @@ const CardAdmin = (props) => {
               messageErr={messageErr}
             />
           )}
-        </div>
+        </Segment>
       )}
     </>
   );
