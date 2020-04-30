@@ -13,11 +13,27 @@ const AdminAddAccountForm = () => {
   const handleChangeRole = (e, { value }) => {
     setSelectedRole(value);
   };
+  const handleChange = (e, { name, value }) => {
+    switch (name) {
+      case "email":
+        break;
+      case "address":
+        break;
+      case "phone":
+        break;
+      case "password":
+        break;
+      default:
+        break;
+      //TODO fetch api of post /api/users/
+    }
+  };
+
   return (
     <div className="profile_seg ">
       <p className="extra-text text-active bold">Add Account</p>
       <Segment className="border-none shadow">
-        <div className="seg_no_border ">
+        <div className="seg_no_border">
           <div className="add_account_container">
             <Form>
               <div className="input_with_label">
