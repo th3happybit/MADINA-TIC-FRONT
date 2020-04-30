@@ -37,7 +37,7 @@ const AdminProfile = () => {
     GetDataProfile();
   }, []);
   return (
-    <Segment loading={isLoading}>
+    <Segment loading={isLoading} className="profile_seg">
       <div className="_admin_profile">
         <p className="extra-text text-active bold">Account</p>
         <Container fluid>

@@ -11,7 +11,13 @@
   width: 30% !important;
   min-height: 715px !important;
 }
-
+.profile_seg {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
 ._admin_profile_grid > ._not_card {
   width: 70% !important;
   min-height: 715px !important;
