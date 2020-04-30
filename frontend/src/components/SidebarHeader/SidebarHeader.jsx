@@ -68,7 +68,7 @@ const SidebarHeader = (props) => {
       </List>
       <div className="_logout_header _margin_vertical_sm">
         <p
-          onCLick={handleLogout}
+          onClick={handleLogout}
           className="_logout_button_header _margin_horizontal_md  button_primary  medium-text border-radius-bg"
         >
           Logout

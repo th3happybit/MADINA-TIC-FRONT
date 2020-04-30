@@ -94,9 +94,8 @@ const CardAdmin = (props) => {
   };
   const uploadImageHandler = () => {
     setUpload((prevState) => !prevState);
-    const file = new Blob([image], { type: "image/png" });
     const formData = new FormData();
-    formData.append("image", file, file.name);
+    formData.append('image', image, image.name);
     Axios.create({
       headers: {
         patch: {
@@ -108,9 +107,7 @@ const CardAdmin = (props) => {
       .request({
         url: "http://13.92.195.8/api/user/",
         method: "patch",
-        data: {
-          image: formData,
-        },
+        data: formData,
       })
       .then((res) => console.log(res))
       .catch((err) => console.log(err.response));

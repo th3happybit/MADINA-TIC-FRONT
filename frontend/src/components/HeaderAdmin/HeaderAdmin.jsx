@@ -66,7 +66,7 @@ const HeaderAdmin = (props) => {
               trigger={trigger}
               pointing="top right"
               icon={null}
-              onCLick={handleLogout}
+              onClick={handleLogout}
             >
               <Dropdown.Menu>
                 <Dropdown.Item
