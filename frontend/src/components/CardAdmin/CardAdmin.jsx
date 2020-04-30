@@ -32,7 +32,7 @@ const CardAdmin = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("info");
   const [image, setImage] = useState(null);
-  const [upload, setUpload] = useState(false);
+  const [upload, setUpload] = useState(true);
 
   //! componentdidmount
   useEffect(() => {
@@ -92,6 +92,7 @@ const CardAdmin = (props) => {
   };
   const uploadImageHandler = () => {
     setUpload((prevState) => !prevState);
+    console.log(image);
     Axios.create({
       headers: {
         patch: {
@@ -104,7 +105,7 @@ const CardAdmin = (props) => {
         url: "http://13.92.195.8/api/user/",
         method: "patch",
         data: {
-          image,
+          image: image,
         },
       })
       .then((res) => console.log(res))
