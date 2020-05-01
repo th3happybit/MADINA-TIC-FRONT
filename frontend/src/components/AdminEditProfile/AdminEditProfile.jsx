@@ -134,7 +134,7 @@ const AdminEditProfile = (props) => {
           },
         })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           setIsLoading(false);
           handleEditShowing();
           props.refresh();
@@ -156,7 +156,7 @@ const AdminEditProfile = (props) => {
   };
 
   return (
-    <div className="_admin_edit_profile">
+    <div className="_admin_edit_profile shadow">
       <div className="_info_menu">
         <Menu pointing secondary>
           <Menu.Item

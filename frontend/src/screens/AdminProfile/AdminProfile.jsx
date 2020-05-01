@@ -9,7 +9,7 @@ import "./AdminProfile.css";
 import CardAdmin from "../../components/CardAdmin/CardAdmin.jsx";
 import AdminEditProfile from "../../components/AdminEditProfile/AdminEditProfile.jsx";
 
-const AdminProfile = () => {
+const AdminProfile = (props) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const GetDataProfile = () => {
