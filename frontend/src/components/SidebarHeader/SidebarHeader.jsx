@@ -52,11 +52,6 @@ const SidebarHeader = (props) => {
         </List.Item>
         <List.Item>
           <a href="/" className="medium-text text-default ">
-            Rôles
-          </a>
-        </List.Item>
-        <List.Item>
-          <a href="/" className="medium-text text-default ">
             Profile
           </a>
         </List.Item>{" "}
