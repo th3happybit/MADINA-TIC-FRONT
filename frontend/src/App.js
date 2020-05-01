@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import profile from "./screens/CitoyenProfile/CitoyenProfile.jsx"
 
-
 //? import screens
 import Admin from "./screens/Admin/Admin.jsx";
 import AdminProfile from "./screens/AdminProfile/AdminProfile.jsx";
