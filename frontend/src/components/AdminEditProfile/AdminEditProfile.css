@@ -7,8 +7,7 @@
   height: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
-._admin_edit_profile > .menu {
-}
+
 ._info_menu {
   width: 60%;
   margin: 0 4rem;
@@ -61,14 +60,22 @@
 ._form_profile_informations .form .fields {
   margin-bottom: 1.6rem;
 }
-._form_profile_informations .form .fields .field {
+._form_profile_informations .form .fields .field,
+._form_profile_informations .form .fields .disabled.field {
   padding: 0 1.5rem;
+}
+._form_profile_informations .form .fields .disabled.field {
+  opacity: 1 !important;
+}
+._form_profile_informations .form .fields .disabled.field .input {
+  opacity: 1 !important;
 }
 ._form_profile_informations .form .fields .field .input {
   font-size: 14px !important;
   color: #576271 !important;
 }
-._form_profile_informations .form .fields .field .input input {
+._form_profile_informations .form .fields .field .input input,
+.label_input {
   border: none !important;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
   border-radius: 5px !important;

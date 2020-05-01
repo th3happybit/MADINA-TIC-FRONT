@@ -1,4 +1,4 @@
-import React ,{useState} from "react";
+import React ,{useState, useEffect} from "react";
 import {Image, Icon, Divider, Button, Input, Menu, Message, Form} from "semantic-ui-react";
 import axios from "axios";
 
@@ -14,11 +14,17 @@ import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 
 const Card = (props) => {
 
+    useEffect(() =>{
+      GetCitoyenInfos();
+    })
+    
+
     const [isEdit, setEdit] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [activeItem, setActiveItem] = useState("info");
     const [success, setSuccess] = useState(null);
     const [error, seterror] = useState(null);
+    const [errMEssage, seterrMessage] = useState(null);
     const [first_name, setfirst_name] = useState("");
     const [last_name, setlast_name] = useState("");
     const [birthday, setbirthday] = useState("");
@@ -144,10 +150,9 @@ const Card = (props) => {
           default:
             break;
         }
-      };
+    };
+    const handleSumbit = () => {
 
-      const handleSumbit = () => {
-        // let login = false;
         if (error) seterror(null);
         if (success) setSuccess(null);
 
@@ -185,306 +190,340 @@ const Card = (props) => {
                 UpdatePasswordCitoyen();
             }
         }
-      };
-
+    };
     const UpdateInfosCitoyen = () => {
         setIsLoading(true);
         axios
-          .post("http://13.92.195.8/api/", {
-            email: email,
-            first_name: first_name,
-            last_name: last_name,
-            phone: phone,
+          .put("http://13.92.195.8/api/user/", {
+            headers :{
+              "Content-Type": "application/json",
+              Authorization : `Token $localStorage.getItem("token")`
+            },
+            data :{
+            first_name,
+            last_name,
+            email,
+            phone,
             date_of_birth: birthday,
-            address: address,
+            address
+            },
           })
           .then((res) => {
+            setSuccess(true);
             setIsLoading(false);
+          })
+          .catch((err) => {
+            seterror(true);
+            setIsLoading(true);
           });
-      };
-
+    };
     const UpdatePasswordCitoyen = () => {
         setIsLoading(true);
         axios
-            .post("http://13.92.195.8/api/", {
-                passowrd1 : currentPassword,
-                password2 : newPassword,
+            .post("http://13.92.195.8/api/password/change", {
+                headers : {
+                  "Content-Type": "application/json",
+                  Authorization : `Token ${localStorage.getItem("token")}`
+                },
+                data : {
+                  old_password : currentPassword,
+                  new_passowrd1 : newPassword,
+                  new_password2 : confirmPassword,
+                },
             })
             .then((res) => {
-                setIsLoading(false)
+                setSuccess(true);
+                setIsLoading(false);
+                props.refresh();
+            })
+            .catch((err) => {
+              let resErrOldPassword = err.response.data.old_password ? err.response.data.old_password[0] : "";
+              let resErrNewPassw = err.response.data.new_password2 ? err.response.data.new_password2[0] : "";
+                if (resErrOldPassword !== "") {
+                  seterrMessage(resErrOldPassword);
+                } else seterrMessage(resErrNewPassw);
+                seterror(true);
+                setIsLoading(false);
             });
+          } 
+    const GetCitoyenInfos = () => {
+        axios
+            .get("http://13.91.195.8/api/user/", {
+              headers : {
+                "Content-Type": "application/json",
+                Authorization : `Token : ${localStorage.getItem("token")}`
+              },
+            }) 
+            .then((res) => {
+                // eslint-disable-next-line no-unused-vars
+                const cit_infos = res.data ;
+            })
+            .catch((err) => {
+              
+            })
+        
     }
 
-    
-    // const GetCitoyenInfos = () => {
-    //     axios
-    //         .get("http://13.91.195.8/api/users/", {
-    //             uid : uid,
-    //         }) 
-    //         .then((res) => {
-    //             const cit_infos = res.data ;
-    //         })
-        
-    // }
-
     return(
-        <div
-        className="card-citoyen">
-            <div className={
-                    !isEdit
-                        ? "edit-profile-pic mobile  pointer"
-                        : "edit-profile-pic mobile hide pointer"
-                    }
-                    onClick={handleEdit}
-                >
-                    <Icon name="edit" size="big" />
-            </div>
-            <div className={isEdit ? "_buttons_mobile " : "_buttons_mobile hide"}>
-                <Button className="secondary" onClick={handleEdit} disabled={isLoading}>
-                    Cancel
-                </Button>
-                <Button className="primary" onClick={handleSumbit} loading={isLoading} type="submit">
-                    Done
-                </Button>
-            </div>
-            <div
-                className="citoyen-profile-pic"
-                style={{
-                border: isEdit ? "0" : "auto",
-                }}
-            >
-            <div className="profile">
-                <Image circular src={pic} alt="" />
-                <div
-                    className={
-                    isEdit
-                    ? "edit-profile-pic pointer"
-                        : "edit-profile-pic hide pointer"
-                    }
-                >
-                    <label htmlFor="myInput" className="pointer">
-                        <Edit className="pointer" />
-                    </label>
-                    <input
-                    id="myInput"
-                    style={{ display: "none" }}
-                    type={"file"}
-                    className="pointer"
-                    onChange={fileSelectedHandler}
-                    />
-                </div>
-            </div>
-                {!isEdit && <p className="_margin_vertical_sm title">User Citizen</p>}
-                {isEdit && (
-                    <div className="name-input margin_vertical_sm">
-                    <Input
-                    className="_profile_input_admin_mobile mobile-input name-field"
-                    id = "first_name"
-                    type="text"
-                    value={first_name}
-                    onChange={handleChangeInput}
-                    placeholder ="First Name..."
-                    />
-                    <Input
-                    id = "last_name"
-                    className="_profiel_input_admin_mobile mobile-input name-field"
-                    type = "text"
-                    value={last_name}
-                    onChange={handleChangeInput}
-                    placeholder = "Family Name..."
-                    />
-                    </div>
-                )}
-            </div>
-            <Divider horizontal>Citizen Informations</Divider>
-            {!isEdit && (
-                <>
-                    <div className="row">
-                        <div className="col">
-                            <span className="small">
-                                <Icon name="mail" className="icon_card" /> Email
-                            </span>
-                            <p className="small">u.user@esi-sba.dz</p>
-                        </div>
-                        <div className="col">
-                            <span className="small">
-                                <Icon name="birthday" className="icon_card" /> Birthday
-                            </span>
-                            <p className=" small">30/02/0001</p>
-                        </div>
-                        <div className="col">
-                            <span className=" small">
-                                <Icon name="map marker alternate" className="icon_card" /> Address
-                            </span>
-                            <p className="small">Homeless</p>
-                        </div>
-                        <div className="col">
-                            <span className="small">
-                                <Icon name="phone" flipped={"horizontally"}className="icon_card" /> Phone Number
-                            </span>
-                            <p className="small">+213 123456789</p>
-                        </div>
-                        <div className="col">
-                            <span className="small">
-                                <Icon name="id card" className="icon_card" /> National ID
-                            </span>
-                            <p className="small">123456789</p>
-                        </div>
-                    </div>
-                    <div className="social-media">
-                        <Icon
-                        name="facebook f"
-                        size="big"
-                        style={{
-                            color: "#385898",
-                        }}
-                        className="_margin_horizontal_sm"
-                        />
-                        <Icon
-                        name="google plus g"
-                        size="big"
-                        style={{
-                            color: "#DD4B39",
-                        }}
-                        className="_margin_horizontal_sm"
-                        />
-                        <Icon
-                        name="twitter"
-                        size="big"
-                        style={{
-                            color: "#1da1f2",
-                        }}
-                        className="_margin_horizontal_sm"
-                        />
-                    </div>
-                </>
-            )}
-            {isEdit && <div className="row mobile_menu">
-                            <Menu pointing secondary>
-                                <Menu.Item
-                                name="Update Infos"
-                                data-name="info"
-                                active={activeItem === "info"}
-                                onClick={handleItemClick}
-                                className="pointer"
-                                />
-                                <Menu.Item
-                                name="Update Password"
-                                data-name="password"
-                                className="pointer"
-                                active={activeItem === "password"}
-                                onClick={handleItemClick}
-                                />
-                            </Menu>
-                            {activeItem === "info" && (
-                                <div className="col_mobile">
-                                <Form
-                                success = {success}
-                                error = {error}>
-                                <Input
-                                    className="mobile-input"
-                                    type="text"
-                                    id="email"
-                                    value={email}
-                                    onChange={handleChangeInput}
-                                    placeholder="Email ..."
-                                />
-                                <Input
-                                    className="mobile-input"
-                                    type="text"
-                                    id="birthday"
-                                    value={birthday}
-                                    onChange={handleChangeInput}
-                                    placeholder = "Birthday ..."
-                                />
-                                <Input
-                                    className="mobile-input"
-                                    type="text"
-                                    id="address"
-                                    value={address}
-                                    onChange={handleChangeInput}
-                                    placeholder="Address ..."
-                                />
-                                <Input
-                                    className="mobile-input"
-                                    type="text"
-                                    id="phone"
-                                    value={phone}
-                                    onChange={handleChangeInput}
-                                    placeholder = "Phone Number ..."
-                                />
-                                <Input
-                                    className="mobile-input"
-                                    type="text"
-                                    id="national_id"
-                                    value={national_id}
-                                    onChange={handleChangeInput}
-                                    placeholder = "National ID ..."
-                                />
-                                <Message error content="Please make sur to enter a valid data" />
-                                <Message success content="Your infos update request has been sent successfully" />
-                                </Form>
-                                </div>
-                            )}
-                            {activeItem === "password" && (
-                                <Form
-                                success = {success}
-                                error = {error}
-                                >
-                                    <div className="col_mobile">
-                                        <div className="input_p">
-                                        <Input
-                                            id="currentPassword"
-                                            className="mobile-input"
-                                            value={currentPassword.value}
-                                            type={currentPassword.isPassword ? "password" : "text"}
-                                            onChange={handleInputChangeValue}
-                                            placeholder="Current password"
-                                        />
-                                        <i
-                                            className="eye icon pointer"
-                                            data-id="currentPassword"
-                                            onClick={handleShowPsw}
-                                        />
-                                        </div>
-                                        <div className="input_p">
-                                        <Input
-                                            id="newPassword"
-                                            className="mobile-input"
-                                            value={newPassword.value}
-                                            type={newPassword.isPassword ? "password" : "text"}
-                                            onChange={handleInputChangeValue}
-                                            placeholder="New password"
-                                        />
-                                        <i
-                                            className="eye icon pointer"
-                                            data-id="currentPassword"
-                                            onClick={handleShowPsw}
-                                        />
-                                        </div>
-                                        <div className="input_p">
-                                        <Input
-                                            id="confirpassword"
-                                            className="mobile-input"
-                                            value={confirmPassword.value}
-                                            type={confirmPassword.isPassword ? "password" : "text"}
-                                            onChange={handleInputChangeValue}
-                                            placeholder="Confirm password"
-                                        />
-                                        <i
-                                            className="eye icon pointer"
-                                            data-id="currentPassword"
-                                            onClick={handleShowPsw}
-                                        />
-                                        </div>
-                                        <Message error content="Please make sur to enter a valid data" />
-                                        <Message success content="Your infos update request has been sent successfully" />
-                                    </div>
-                                </Form>            
-                            )}
-                            
-                </div>}
-        </div>	    
+        <>
+          <div
+          className="card-citoyen">
+              <div className={
+                      !isEdit
+                          ? "edit-profile-pic mobile  pointer"
+                          : "edit-profile-pic mobile hide pointer"
+                      }
+                      onClick={handleEdit}
+                  >
+                      <Icon name="edit" size="big" />
+              </div>
+              <div className={isEdit ? "_buttons_mobile " : "_buttons_mobile hide"}>
+                  <Button className="secondary" onClick={handleEdit} disabled={isLoading}>
+                      Cancel
+                  </Button>
+                  <Button className="primary" onClick={handleSumbit} loading={isLoading} type="submit">
+                      Done
+                  </Button>
+              </div>
+              <div
+                  className="citoyen-profile-pic"
+                  style={{
+                  border: isEdit ? "0" : "auto",
+                  }}
+              >
+              <div className="profile">
+                  <Image circular src={pic} alt="" />
+                  <div
+                      className={
+                      isEdit
+                      ? "edit-profile-pic pointer"
+                          : "edit-profile-pic hide pointer"
+                      }
+                  >
+                      <label htmlFor="myInput" className="pointer">
+                          <Edit className="pointer" />
+                      </label>
+                      <input
+                      id="myInput"
+                      style={{ display: "none" }}
+                      type={"file"}
+                      className="pointer"
+                      onChange={fileSelectedHandler}
+                      />
+                  </div>
+              </div>
+                  {!isEdit && <p className="_margin_vertical_sm title">User Citizen</p>}
+                  {isEdit && (
+                      <div className="name-input margin_vertical_sm">
+                      <Input
+                      className="_profile_input_admin_mobile mobile-input name-field"
+                      id = "first_name"
+                      type="text"
+                      value={first_name}
+                      onChange={handleChangeInput}
+                      placeholder ="First Name..."
+                      />
+                      <Input
+                      id = "last_name"
+                      className="_profiel_input_admin_mobile mobile-input name-field"
+                      type = "text"
+                      value={last_name}
+                      onChange={handleChangeInput}
+                      placeholder = "Family Name..."
+                      />
+                      </div>
+                  )}
+              </div>
+              <Divider horizontal>Citizen Informations</Divider>
+              {!isEdit && (
+                  <>
+                      <div className="row">
+                          <div className="col">
+                              <span className="small">
+                                  <Icon name="mail" className="icon_card" /> Email
+                              </span>
+                              <p className="small">u.user@esi-sba.dz</p>
+                          </div>
+                          <div className="col">
+                              <span className="small">
+                                  <Icon name="birthday" className="icon_card" /> Birthday
+                              </span>
+                              <p className=" small">30/02/0001</p>
+                          </div>
+                          <div className="col">
+                              <span className=" small">
+                                  <Icon name="map marker alternate" className="icon_card" /> Address
+                              </span>
+                              <p className="small">Homeless</p>
+                          </div>
+                          <div className="col">
+                              <span className="small">
+                                  <Icon name="phone" flipped={"horizontally"}className="icon_card" /> Phone Number
+                              </span>
+                              <p className="small">+213 123456789</p>
+                          </div>
+                          <div className="col">
+                              <span className="small">
+                                  <Icon name="id card" className="icon_card" /> National ID
+                              </span>
+                              <p className="small">123456789</p>
+                          </div>
+                      </div>
+                      <div className="social-media">
+                          <Icon
+                          name="facebook f"
+                          size="big"
+                          style={{
+                              color: "#385898",
+                          }}
+                          className="_margin_horizontal_sm"
+                          />
+                          <Icon
+                          name="google plus g"
+                          size="big"
+                          style={{
+                              color: "#DD4B39",
+                          }}
+                          className="_margin_horizontal_sm"
+                          />
+                          <Icon
+                          name="twitter"
+                          size="big"
+                          style={{
+                              color: "#1da1f2",
+                          }}
+                          className="_margin_horizontal_sm"
+                          />
+                      </div>
+                  </>
+              )}
+              {isEdit && <div className="row mobile_menu">
+                              <Menu pointing secondary>
+                                  <Menu.Item
+                                  name="Update Infos"
+                                  data-name="info"
+                                  active={activeItem === "info"}
+                                  onClick={handleItemClick}
+                                  className="pointer"
+                                  />
+                                  <Menu.Item
+                                  name="Update Password"
+                                  data-name="password"
+                                  className="pointer"
+                                  active={activeItem === "password"}
+                                  onClick={handleItemClick}
+                                  />
+                              </Menu>
+                              {activeItem === "info" && (
+                                  <div className="col_mobile">
+                                  <Form
+                                  success = {success}
+                                  error = {error}>
+                                  <Input
+                                      className="mobile-input"
+                                      type="text"
+                                      id="email"
+                                      value={email}
+                                      onChange={handleChangeInput}
+                                      placeholder="Email ..."
+                                  />
+                                  <Input
+                                      className="mobile-input"
+                                      type="text"
+                                      id="birthday"
+                                      value={birthday}
+                                      onChange={handleChangeInput}
+                                      placeholder = "Birthday ..."
+                                  />
+                                  <Input
+                                      className="mobile-input"
+                                      type="text"
+                                      id="address"
+                                      value={address}
+                                      onChange={handleChangeInput}
+                                      placeholder="Address ..."
+                                  />
+                                  <Input
+                                      className="mobile-input"
+                                      type="text"
+                                      id="phone"
+                                      value={phone}
+                                      onChange={handleChangeInput}
+                                      placeholder = "Phone Number ..."
+                                  />
+                                  <Input
+                                      className="mobile-input"
+                                      type="text"
+                                      id="national_id"
+                                      value={national_id}
+                                      onChange={handleChangeInput}
+                                      placeholder = "National ID ..."
+                                  />
+                                  <Message error content="Please make sur to enter a valid data" />
+                                  <Message success content="Your infos update request has been sent successfully" />
+                                  </Form>
+                                  </div>
+                              )}
+                              {activeItem === "password" && (
+                                  <Form
+                                  success = {success}
+                                  error = {error}
+                                  >
+                                      <div className="col_mobile">
+                                          <div className="input_p">
+                                          <Input
+                                              id="currentPassword"
+                                              className="mobile-input"
+                                              value={currentPassword.value}
+                                              type={currentPassword.isPassword ? "password" : "text"}
+                                              onChange={handleInputChangeValue}
+                                              placeholder="Current password"
+                                          />
+                                          <i
+                                              className="eye icon pointer"
+                                              data-id="currentPassword"
+                                              onClick={handleShowPsw}
+                                          />
+                                          </div>
+                                          <div className="input_p">
+                                          <Input
+                                              id="newPassword"
+                                              className="mobile-input"
+                                              value={newPassword.value}
+                                              type={newPassword.isPassword ? "password" : "text"}
+                                              onChange={handleInputChangeValue}
+                                              placeholder="New password"
+                                          />
+                                          <i
+                                              className="eye icon pointer"
+                                              data-id="currentPassword"
+                                              onClick={handleShowPsw}
+                                          />
+                                          </div>
+                                          <div className="input_p">
+                                          <Input
+                                              id="confirpassword"
+                                              className="mobile-input"
+                                              value={confirmPassword.value}
+                                              type={confirmPassword.isPassword ? "password" : "text"}
+                                              onChange={handleInputChangeValue}
+                                              placeholder="Confirm password"
+                                          />
+                                          <i
+                                              className="eye icon pointer"
+                                              data-id="currentPassword"
+                                              onClick={handleShowPsw}
+                                          />
+                                          </div>
+                                          <Message error content={errMEssage} />
+                                          <Message success content="Your infos update request has been sent successfully" />
+                                      </div>
+                                  </Form>            
+                              )}
+                              
+                  </div>}
+          </div>
+        </>	    
     );
 };
 

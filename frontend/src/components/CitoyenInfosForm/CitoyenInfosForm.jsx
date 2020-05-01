@@ -5,8 +5,9 @@ import axios from "axios";
 
 import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 
-const InfosForm = () => {
+const InfosForm = (props) => {
 
+    
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(null);
     const [isEditing, setEditing] = useState(true);
@@ -69,7 +70,6 @@ const InfosForm = () => {
         if (errors.length > 0) {
           seterror(true);
         } else {
-          setSuccess(true);
           UpdateInfosCitoyen();
         }
       };
@@ -77,15 +77,29 @@ const InfosForm = () => {
         setIsLoading(true);
         axios
           .put("http://13.92.195.8/api/users", {
-            email: email,
-            first_name: first_name,
-            last_name: last_name,
-            phone: phone,
-            date_of_birth: birthday,
-            address: address,
+            headers : {
+              "Content-Type": "application/json",
+              Authorization : `Token : $localStorage.getItem("token")`
+            },
+            data : {
+              email,
+              first_name,
+              last_name,
+              phone,
+              date_of_birth: birthday,
+              address
+            },
           })
           .then((res) => {
+            setSuccess(true);
             setIsLoading(false);
+            handelEditClick();
+            // console.log(res);
+          })
+          .catch((err) => {
+            seterror(true);
+            setIsLoading(false);
+            // console.log(err);
           });
       };
     const handelEditClick = () => {
@@ -98,7 +112,7 @@ const InfosForm = () => {
         id="iform" 
         className="_margin_vertical_lg">
             <Form.Group widths="equal">
-                <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>First Name</label>
                     <Input fluid 
                     placeholder="First Name..."
@@ -106,7 +120,7 @@ const InfosForm = () => {
                     value={first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"
@@ -116,7 +130,7 @@ const InfosForm = () => {
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
-                <Form.Field required>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Email</label>
                     <Input fluid 
                     id="email"
@@ -124,7 +138,7 @@ const InfosForm = () => {
                     onChange={handleChangeInput}
                     placeholder="Email..." />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>Birthday</label>
                     <Input fluid 
                     id="birthday"
@@ -134,7 +148,7 @@ const InfosForm = () => {
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
-                <Form.Field required>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Phone Number</label>
                     <Input fluid 
                     id="phone"
@@ -142,7 +156,7 @@ const InfosForm = () => {
                     onChange={handleChangeInput}
                     placeholder="Phone Number..." />
                 </Form.Field>
-                <Form.Field required>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Address</label>
                     <Input fluid 
                     id="address"
@@ -152,7 +166,7 @@ const InfosForm = () => {
                 </Form.Field>
             </Form.Group>
             <Form.Group>
-            <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>National ID</label>
                     <Input fluid 
                     id="national_id"

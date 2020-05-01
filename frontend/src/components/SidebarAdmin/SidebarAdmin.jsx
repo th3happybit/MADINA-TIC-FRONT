@@ -61,6 +61,8 @@ const SidebarAdmin = (props) => {
               }
             />
             <Menu.Item
+              as={Link}
+              to="/admin/citoyen"
               name="Citoyens"
               className={props.active === "citoyens" ? "active" : ""}
             />

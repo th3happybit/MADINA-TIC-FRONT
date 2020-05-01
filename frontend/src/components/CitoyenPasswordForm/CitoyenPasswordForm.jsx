@@ -21,6 +21,7 @@ const PasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [error, seterror] = useState(null);
+  const [errMessage, seterrMessage] = useState(null);
 
   const handleShowPsw = (e) => {
     let id = e.currentTarget.attributes["data-id"].nodeValue;
@@ -109,21 +110,36 @@ const PasswordForm = () => {
       seterror(true);
     }
     else{
-      setSuccess(true);
       UpdatePasswordCitoyen();
     }
   };
   const UpdatePasswordCitoyen = () => {
     setIsLoading(true);
     axios
-      .post("http://13.92.195.8/api/", {
-        password1 : currentPassword,
-        password2 : newPassword,
-
+      .post("http://13.92.195.8/api/password/change", {
+        headers : {
+          "Content-Type": "application/json",
+          Authorization : 'Token : $localStorage.getItem("token")'
+        },
+        data : {
+        old_password : currentPassword,
+        new_password1 : newPassword,
+        new_password2 : confirmPassword
+        },
       })
       .then((res) => {
+        setSuccess(true);
         setIsLoading(false);
         // console.log(res);
+      })
+      .catch((err) => {
+        let resErrOldPassword = err.response.data.old_password ? err.response.data.old_password[0] : "";
+        let resErrNewPassw = err.response.data.new_password2 ? err.response.data.new_password2[0] : "";
+          if (resErrOldPassword !== "") {
+            seterrMessage(resErrOldPassword);
+          } else seterrMessage(resErrNewPassw);
+        seterror(true);
+        setIsLoading(false);
       });
   };
 
@@ -199,7 +215,7 @@ const PasswordForm = () => {
                 className="button_primary">Save</Button>
             </div>
             
-            <Message error content="Please make sur to enter a valid data" />
+            <Message error content={errMessage} />
             <Message success content="Your infos update request has been sent successfully" />
     </Form>
     </div>

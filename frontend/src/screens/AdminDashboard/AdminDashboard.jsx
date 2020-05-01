@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid, Container, Segment } from "semantic-ui-react";
 
 //? import css
@@ -8,9 +8,6 @@ import "./AdminDashboard.css";
 import AdminNewAccounts from "../../components/AdminNewAccounts/AdminNewAccounts.jsx";
 
 const AdminDashboard = () => {
-  useEffect(() => {
-    console.log(localStorage.getItem("admin_token"));
-  }, []);
   return (
     <div className="_admin_profile">
       <Container fluid>
