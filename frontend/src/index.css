@@ -129,6 +129,19 @@ a {
 .bold {
   font-weight: bold !important;
 }
+.field.error input {
+  background: white !important;
+  border-color: var(--red) !important;
+}
+.ui.form .field .prompt.label {
+  background: #434343 !important;
+  border-color: #434343 !important;
+  color: white !important;
+}
+.ui.error.form .ui.error.message {
+  border-color: var(--red) !important;
+  color: var(--red) !important;
+}
 .semi-bold {
   font-weight: 500 !important;
 }

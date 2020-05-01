@@ -1,0 +1,148 @@
+._admin_accounts {
+    margin-top : 3rem;
+    width : 95.7%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none !important;
+    border-radius : 5px;
+    min-height: 400px !important;
+    max-height: 700px !important;
+    overflow-x: scroll;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    -ms-overflow-style: none;
+    background-color:  white !important;
+}
+._admin_accounts::-webkit-scrollbar {
+    display: none;
+}
+._admin_accounts > .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 2rem;
+}
+._admin_accounts > .row > .title_segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+._admin_accounts > .row > .btn_segment > .button {
+    border: 2px solid var(--primary) !important;
+    color: var(--primary) !important;
+    background-color: white;
+    font-size: 15px !important;
+    padding: 0.571429em 1.2em !important;
+}
+._admin_accounts > .row > .btn_segment > .button:hover {
+    border: none;
+    background-color: var(--primary) !important ;
+    color: white !important;
+}
+._admin_accounts > .ui.table thead th {
+    border-bottom: 1px solid var(--secondary) !important;
+}
+._admin_accounts > .ui.table tr td {
+    border: none !important;
+}
+._admin_accounts > .ui.basic.striped.table tbody tr:nth-child(2n) {
+    background-color: #b3b8bb1e !important;
+}
+
+._admin_accounts {
+    padding : 1rem 2rem;
+}
+
+.divide_head{
+    width : 100%;
+    padding-top: 0;
+    color: rgba(34,36,38,.1);
+}
+
+._citoyens_accounts_table {
+    width : 100%;
+}
+
+._infos_btn{
+    background: white;
+}
+
+._confirm_action_citoyen {
+    text-align: center;
+}
+
+._content_modal_approve{
+    padding : 2rem;
+}
+
+._content_modal_approve p {
+    font-size: 16px !important;
+    color: var(--blue_darker);
+  }
+  
+.filtred {
+    display : none !important;
+}
+
+._approve_btn{
+    /* background-color : red !important; */
+    color : white !important;
+}
+
+._reject_btn{
+    /* background-color: var(--green) !important; */
+    color : white !important;
+}
+
+#manage_cell{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+._admin_citoyen_pagin{
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+    margin-left : auto !important;
+    margin-right : auto !important;
+}
+
+._hide_on_mobile{
+    border-radius: 5px !important;
+}
+
+._show_on_mobile{
+    display: none !important;
+    border-radius: 5px !important;
+}
+
+.infos_button{
+    padding-right: 1rem;
+}
+
+@media (max-width : 766px){
+    
+    .citoyens_accounts_table thead {
+        display: none !important;
+    }
+
+    ._show_on_mobile{
+        display: flex !important;
+    }
+
+    ._hide_on_mobile{
+        display : none !important;
+    }
+
+    #manage_cell{
+        display: flex !important;
+    }
+
+    ._mobile_actions{
+        width : 120px !important;
+        justify-content: center;
+    }
+
+    .infos_button > button{
+        background : var(--primary) !important;
+        color : white !important;
+    }
+}
