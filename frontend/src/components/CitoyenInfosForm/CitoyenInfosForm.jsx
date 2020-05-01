@@ -5,10 +5,12 @@ import axios from "axios";
 
 import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 
-const InfosForm = () => {
+const InfosForm = (props) => {
 
+    
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(null);
+    const [isEditing, setEditing] = useState(true);
     const [error, seterror] = useState(null);
     const [first_name, setfirst_name] = useState("");
     const [last_name, setlast_name] = useState("");
@@ -19,7 +21,7 @@ const InfosForm = () => {
     const [national_id, setnational_id] = useState("");
 
     //? function for changing data in inputs
-  const handleChangeInput = (e) => {
+    const handleChangeInput = (e) => {
     if (error) seterror(false);
     let id = e.currentTarget.id;
     switch (id) {
@@ -47,8 +49,7 @@ const InfosForm = () => {
       default:
         break;
     }
-  };
-
+    };
     const handleSumbit = () => {
         // let login = false;
         if (error) seterror(null);
@@ -69,27 +70,41 @@ const InfosForm = () => {
         if (errors.length > 0) {
           seterror(true);
         } else {
-          setSuccess(true);
           UpdateInfosCitoyen();
         }
       };
-
     const UpdateInfosCitoyen = () => {
         setIsLoading(true);
         axios
           .put("http://13.92.195.8/api/users", {
-            email: email,
-            first_name: first_name,
-            last_name: last_name,
-            phone: phone,
-            date_of_birth: birthday,
-            address: address,
+            headers : {
+              "Content-Type": "application/json",
+              Authorization : `Token : $localStorage.getItem("token")`
+            },
+            data : {
+              email,
+              first_name,
+              last_name,
+              phone,
+              date_of_birth: birthday,
+              address
+            },
           })
           .then((res) => {
+            setSuccess(true);
             setIsLoading(false);
+            handelEditClick();
+            // console.log(res);
+          })
+          .catch((err) => {
+            seterror(true);
+            setIsLoading(false);
+            // console.log(err);
           });
       };
-
+    const handelEditClick = () => {
+        setEditing((prevState) => !prevState);      
+      }
     return(
         <Form 
         success = {success}
@@ -97,7 +112,7 @@ const InfosForm = () => {
         id="iform" 
         className="_margin_vertical_lg">
             <Form.Group widths="equal">
-                <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>First Name</label>
                     <Input fluid 
                     placeholder="First Name..."
@@ -105,7 +120,7 @@ const InfosForm = () => {
                     value={first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"
@@ -115,7 +130,7 @@ const InfosForm = () => {
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
-                <Form.Field required>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Email</label>
                     <Input fluid 
                     id="email"
@@ -123,7 +138,7 @@ const InfosForm = () => {
                     onChange={handleChangeInput}
                     placeholder="Email..." />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>Birthday</label>
                     <Input fluid 
                     id="birthday"
@@ -133,7 +148,7 @@ const InfosForm = () => {
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
-                <Form.Field required>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Phone Number</label>
                     <Input fluid 
                     id="phone"
@@ -141,7 +156,7 @@ const InfosForm = () => {
                     onChange={handleChangeInput}
                     placeholder="Phone Number..." />
                 </Form.Field>
-                <Form.Field required>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Address</label>
                     <Input fluid 
                     id="address"
@@ -151,7 +166,7 @@ const InfosForm = () => {
                 </Form.Field>
             </Form.Group>
             <Form.Group>
-            <Form.Field>
+                <Form.Field disabled={isEditing}>
                     <label>National ID</label>
                     <Input fluid 
                     id="national_id"
@@ -160,14 +175,23 @@ const InfosForm = () => {
                     placeholder="National ID..." />
                 </Form.Field>
             </Form.Group>
-            <div id="subs" className="_margin_vertical_md">
-                <Button className="button_secondary" disabled={isLoading}>Cancel</Button>
+            {!isEditing && (
+            <div className="_margin_vertical_md subs">
+                <Button className="button_secondary" disabled={isLoading} onClick={handelEditClick} >Cancel</Button>
                 <Button 
                 type="submit"
                 onClick={handleSumbit}
                 loading={isLoading}
                 className="button_primary">Save</Button>
             </div>
+            )}
+            {isEditing && (
+              <div className="subs">
+                <Button onClick={handelEditClick} className="button_primary">
+                  Edit
+                </Button>
+              </div>
+            )}
             <Message error content="Please make sur to enter a valid data" />
             <Message success content="Your infos update request has been sent successfully" />
         </Form>

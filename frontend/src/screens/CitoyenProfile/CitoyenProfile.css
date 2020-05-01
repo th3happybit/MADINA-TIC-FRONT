@@ -57,11 +57,11 @@ main .container {
 }
 
 
-#subs {
+.subs {
   display: flex;
   margin: 2rem 0;
 }
-#subs .button {
+.subs .button {
   margin: 0 1.5rem;
   padding: 1rem !important;
   font-size: 16px !important;
@@ -197,11 +197,11 @@ main .container {
     .infos-form .form .fields .field {
       margin: 1rem 0;
     }
-    #subs {
+    .subs {
       flex-direction: column-reverse !important;
       margin: 1.5rem !important;
     }
-    #subs .button {
+    .subs .button {
       margin: 1rem 0 !important;
     }
     .input_p i {

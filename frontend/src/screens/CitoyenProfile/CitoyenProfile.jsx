@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import { Grid, GridColumn, Container, Menu} from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Grid, GridColumn, Container, Menu, Message} from "semantic-ui-react";
 
 import InfosForm from "../../components/CitoyenInfosForm/CitoyenInfosForm.jsx"
 import Card from "../../components/CitoyenCard/CitoyenCard.jsx";
 import PasswordForm from "../../components/CitoyenPasswordForm/CitoyenPasswordForm.jsx"; 
 
-
-
 import "./CitoyenProfile.css"
 
 const CitoyenProfile = () => {
     const [activeItem, setActiveItem] = useState("info");
+    const [isLogin, setIsLogin] = useState("null");
+    useEffect(() => {
+    //   console.log(localStorage);
+      if (localStorage.getItem("token")) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    }, []);
     
     const handleItemClick = (e) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
@@ -18,7 +25,10 @@ const CitoyenProfile = () => {
 
 
     return (
+        <>
+        {isLogin ? (
         <main>
+            
             <Container fluid>
                 <Grid className="citoyen-profile">
                     <GridColumn className="left">
@@ -53,7 +63,34 @@ const CitoyenProfile = () => {
             <Container fluid className="mobile-profile">
                 <Card/>
             </Container>
-        </main>
+        
+        </main> )
+            : 
+        (<div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100vw",
+              height: "100vh",
+            }}
+          >
+            {" "}
+            <Message negative>
+              <Message.Header>
+                We're sorry you can't access this route
+              </Message.Header>
+              <p
+                className="text-default title _margin_vertical_sm pointer "
+                style={{
+                  ccolor: "#912d2b",
+                }}
+              >
+                Go to login page?<a href="/login">click here</a>
+              </p>
+            </Message>
+          </div>)}
+        </>
     );
 };
 

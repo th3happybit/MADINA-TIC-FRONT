@@ -1,0 +1,26 @@
+._confirm_action_modal {
+    text-align: center;
+}
+
+._content_modal_c {
+    padding : 2rem;
+}
+
+._content_modal_c {
+    font-size: 16px !important;
+    color: var(--blue_darker);
+  }
+
+.content_modal_btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content_modal_btns.marginTop {
+    margin-top: 4rem;
+}
+.content_modal_btns .button {
+    margin: 0 1rem;
+    padding: 1rem 2rem !important;
+    min-width: 140px !important;
+}
