@@ -14,6 +14,7 @@ import CitoyenAuth from "./screens/CitoyenAuth/CitoyenAuth.jsx";
 import AdminDashboard from "./screens/AdminDashboard/AdminDashboard.jsx";
 import CitoyenProfile from "./screens/CitoyenProfile/CitoyenProfile.jsx";
 import AdminCitoyen from "./screens/AdminCitoyen/AdminCitoyen.jsx";
+import AdminCreateAccount from "./screens/AdminCreateAccount/AdminCreateAccount.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";

@@ -22,14 +22,11 @@ const AdminAddAccountForm = () => {
   const [phoneError, setPhoneError] = useState(null);
   const [addressError, setAddressError] = useState(null);
   const [roleError, setRoleError] = useState(null);
-  const [isOpen, setIsOpen] = useState(true);
 
   const handleChangeRole = (e, { value }) => {
     setSelectedRole(value);
   };
-  const handleClose = () => {
-    setIsOpen((prevState) => !prevState);
-  };
+
   const handleChange = (e, { id, value }) => {
     if (emailError) setEmailError(null);
     if (addressError) setAddressError(null);
@@ -76,7 +73,11 @@ const AdminAddAccountForm = () => {
       .then((res) => {
         setSucces(true);
         setIsLoading(false);
-        setIsOpen(true);
+        setMail("");
+        setPhone("");
+        setAddress("");
+        setSelectedRole("");
+        setF([]);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -145,7 +146,9 @@ const AdminAddAccountForm = () => {
                   onChange={handleChange}
                 />
               </div>
-              <Message success content="Congrats ,account added" />
+              <div className="_succes_add">
+                <Message success content="Congrats ,account added" />
+              </div>
             </Form>
           </div>
           <div className="col">

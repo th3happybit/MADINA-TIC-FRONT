@@ -89,6 +89,14 @@
   background-color: transparent !important;
   border: 1px solid var(--red) !important;
 }
+._succes_add {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 3rem;
+  align-items: center;
+  width: 80%;
+  white-space: nowrap;
+}
 .role_err span {
   padding: 0 !important;
   color: var(--red) !important;
@@ -139,6 +147,9 @@
   }
 }
 @media (max-width: 499px) {
+  ._succes_add {
+    padding-left: 0 !important;
+  }
   .input_with_label > label {
     display: none !important;
   }
