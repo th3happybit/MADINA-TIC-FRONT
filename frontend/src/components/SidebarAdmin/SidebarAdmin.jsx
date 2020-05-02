@@ -6,7 +6,6 @@ import "./SidebarAdmin.css";
 
 //? import icons
 import { ReactComponent as Dashboard } from "../../assets/icons/dashboard.svg";
-import { ReactComponent as Roles } from "../../assets/icons/role_icon.svg";
 import { ReactComponent as Citoyens } from "../../assets/icons/group.svg";
 
 //? import logo
