@@ -35,7 +35,10 @@ const FormCitoyen = (props) => {
           {islogin && (
             <p className="text-gray-dark semi-bold small">
               forget your password?{" "}
-              <spaan className="underline pointer">Click here</spaan>
+              <a href="/mailVerification" className="text-gray-dark">
+                {" "}
+                <spaan className="underline pointer">Click here</spaan>
+              </a>
             </p>
           )}
 

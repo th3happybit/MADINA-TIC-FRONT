@@ -1,36 +1,15 @@
-var checkPassword = function (password) {
- return /^(?=.*?[a-z]).{8,}$/.test(String(password));
-};
-
-const CheckingPassword = (data) => {
- const {
-  New_Password,
-  Confirm_New_Password,
- } = data;
- let errors = [];
-
- if (New_Password.length > 0) {
-  if (!checkPassword(New_Password)) {
-   errors.push({
-    id: "New_Password",
-    error:"password must be at least six characters , one letter uppercase , one letter lowercase and one letter a number",
-   });
-  } else if (New_Password !== Confirm_New_Password) {
-   errors.push({
-    id: "New_Password",
-    error: "Your password and confirmation password do not match",
-   });
+const CheckingPassword = (password1, password2) => {
+  const password = String(password1);
+  const confirm_password = String(password2);
+  let arrayErrors = "";
+  if (password.length <= 0) {
+    arrayErrors = "password is required";
+  } else if (password !== confirm_password) {
+    arrayErrors = "password and confirm password don't match";
+  } else if (password.length < 8) {
+    arrayErrors = "password must be at least 8 caracters";
   }
- } else {
-  errors.push({
-   id: "New_Password",
-   error: "password is required",
-  });
- }
- return errors;
+  return arrayErrors;
 };
-
-
-
 
 export default CheckingPassword;

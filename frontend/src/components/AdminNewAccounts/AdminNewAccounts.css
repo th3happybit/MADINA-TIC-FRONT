@@ -31,7 +31,10 @@
   color: white;
   margin-bottom: 1.2rem;
 }
-
+._reset_password_form {
+  display: flex;
+  justify-content: flex-start !important;
+}
 ._new_accounts > .ui.table thead th {
   border-bottom: 1px solid var(--secondary) !important;
 }

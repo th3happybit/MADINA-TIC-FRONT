@@ -7,19 +7,21 @@
   align-items: center;
 }
 
-._reset_password_section{
+._reset_password_section {
   width: 60% !important;
 }
 
-._card_mail_verification{
- display: flex;
- flex-direction: column !important;
- justify-content: center;
- align-items: center;
- padding: 50px;
- background-color: white;
+._card_mail_verification {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  background-color: white;
 }
-
+._reset_password_form.mail_verif {
+  min-height: 246px !important;
+}
 ._reset_password_form {
   display: flex;
   flex-direction: column;
@@ -41,43 +43,40 @@
   padding-bottom: 10px;
 }
 
-._titre{
+._titre {
   display: flex;
   flex-direction: column;
   align-items: center;
- padding: 25px !important;
- font-size: medium;
+  padding: 25px !important;
+  font-size: medium;
 }
-
-
-
 
 @media (max-width: 999px) {
-  ._reset_password_section{
-  width: 100vw !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-  ._card_mail_verification{
+  ._reset_password_section {
+    width: 100vw !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  ._card_mail_verification {
     width: 80% !important;
   }
 
   ._titre {
-  display: flex;
-  text-align: center !important;
-  width: 100% !important;
-}
+    display: flex;
+    text-align: center !important;
+    width: 100% !important;
+  }
 
- ._sous_titre {
-  display: flex !important;
-  flex-direction: column !important;
-  text-align: center !important;
-}
+  ._sous_titre {
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: center !important;
+  }
 
   ._reset_password_form .input,
   ._reset_password_form .input input {
-  width: 100% !important;
+    width: 100% !important;
   }
 
   ._logo {
@@ -86,10 +85,8 @@
   }
 }
 
-@media (max-width : 799px) {
-._reset_password_section{
-  width: 100vw !important;
-}
-
-
+@media (max-width: 799px) {
+  ._reset_password_section {
+    width: 100vw !important;
+  }
 }
