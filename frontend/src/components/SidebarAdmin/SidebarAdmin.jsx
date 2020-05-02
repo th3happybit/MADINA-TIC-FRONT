@@ -39,19 +39,7 @@ const SidebarAdmin = (props) => {
               className={props.active === "dashboard" ? "active" : ""}
             />
           </div>
-          <div className="d-flex">
-            <Roles
-              className={
-                props.active === "roles"
-                  ? "_sidebar_icons active"
-                  : "_sidebar_icons"
-              }
-            />
-            <Menu.Item
-              name="Rôles"
-              className={props.active === "roles" ? "active" : ""}
-            />
-          </div>
+
           <div className="d-flex">
             <Citoyens
               className={
@@ -61,6 +49,8 @@ const SidebarAdmin = (props) => {
               }
             />
             <Menu.Item
+              as={Link}
+              to="/admin/citoyen"
               name="Citoyens"
               className={props.active === "citoyens" ? "active" : ""}
             />
