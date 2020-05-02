@@ -7,7 +7,9 @@ import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile
 
 const InfosForm = (props) => {
 
-    
+
+  const {cit_infos, loading} = props;
+
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(null);
     const [isEditing, setEditing] = useState(true);
@@ -79,7 +81,7 @@ const InfosForm = (props) => {
           .put("http://13.92.195.8/api/users", {
             headers : {
               "Content-Type": "application/json",
-              Authorization : `Token : $localStorage.getItem("token")`
+              Authorization : `Token : ${localStorage.getItem("token")}`
             },
             data : {
               email,
@@ -106,7 +108,8 @@ const InfosForm = (props) => {
         setEditing((prevState) => !prevState);      
       }
     return(
-        <Form 
+        <Form
+        loading={loading}
         success = {success}
         error = {error}
         id="iform" 
@@ -115,7 +118,7 @@ const InfosForm = (props) => {
                 <Form.Field disabled={isEditing}>
                     <label>First Name</label>
                     <Input fluid 
-                    placeholder="First Name..."
+                    placeholder={ !isEditing ? "First Name..." : cit_infos.first_name}
                     id="first_name"
                     value={first_name}
                     onChange={handleChangeInput} />
@@ -126,7 +129,7 @@ const InfosForm = (props) => {
                     id="last_name"
                     value={last_name}
                     onChange={handleChangeInput}
-                    placeholder="Last Name..." />
+                    placeholder={ !isEditing ? "Last Name..." : cit_infos.last_name} />
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
@@ -136,7 +139,7 @@ const InfosForm = (props) => {
                     id="email"
                     value={email}
                     onChange={handleChangeInput}
-                    placeholder="Email..." />
+                    placeholder={ !isEditing ? "Email..." : cit_infos.last_name}/>
                 </Form.Field>
                 <Form.Field disabled={isEditing}>
                     <label>Birthday</label>
@@ -144,7 +147,7 @@ const InfosForm = (props) => {
                     id="birthday"
                     value={birthday}
                     onChange={handleChangeInput}
-                    placeholder="Birthday..." />
+                    placeholder={ !isEditing ? "Birthday..." : cit_infos.date_of_birth} />
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
@@ -154,7 +157,7 @@ const InfosForm = (props) => {
                     id="phone"
                     value={phone}
                     onChange={handleChangeInput}
-                    placeholder="Phone Number..." />
+                    placeholder={!isEditing ? "Phone Number..." : cit_infos.phone}/>
                 </Form.Field>
                 <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Address</label>
@@ -162,7 +165,7 @@ const InfosForm = (props) => {
                     id="address"
                     value={address}
                     onChange={handleChangeInput}
-                    placeholder="Address..." />
+                    placeholder={!isEditing ? "Address..." : cit_infos.address} />
                 </Form.Field>
             </Form.Group>
             <Form.Group>
@@ -172,7 +175,7 @@ const InfosForm = (props) => {
                     id="national_id"
                     value={national_id}
                     onChange={handleChangeInput}
-                    placeholder="National ID..." />
+                    placeholder={!isEditing ? "National ID..." : cit_infos.national_id}/>
                 </Form.Field>
             </Form.Group>
             {!isEditing && (

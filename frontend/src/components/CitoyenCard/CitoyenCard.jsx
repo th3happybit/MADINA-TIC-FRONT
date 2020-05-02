@@ -1,8 +1,6 @@
 import React ,{useState, useEffect} from "react";
-import {Image, Icon, Divider, Button, Input, Menu, Message, Form} from "semantic-ui-react";
+import {Image, Icon, Divider, Button, Input, Menu, Message, Form, Segment} from "semantic-ui-react";
 import axios from "axios";
-
-import pic from "./Untitled.png";
 
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
 
@@ -14,23 +12,26 @@ import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 
 const Card = (props) => {
 
-    useEffect(() =>{
-      GetCitoyenInfos();
-    })
-    
+  const {cit_infos, loading } = props
 
+    
     const [isEdit, setEdit] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [activeItem, setActiveItem] = useState("info");
     const [success, setSuccess] = useState(null);
     const [error, seterror] = useState(null);
     const [errMEssage, seterrMessage] = useState(null);
+    const [image, setimage] = useState(null);
+    const [upload, setUpload] = useState(true);
+    const [cardLoading, setCardLoading] = useState(false);
+
     const [first_name, setfirst_name] = useState("");
     const [last_name, setlast_name] = useState("");
     const [birthday, setbirthday] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setaddress] = useState("");
     const [email, setEmail] = useState("");
+    const [imageP, setimageP] = useState("");
     const [national_id, setnational_id] = useState("");
     const [currentPassword, setCurrentPassword] = useState({
         value: "",
@@ -44,6 +45,16 @@ const Card = (props) => {
         value: "",
         isPassword: true,
     });
+    useEffect(() => {
+      setfirst_name(cit_infos.first_name);
+      setlast_name(cit_infos.last_name);
+      setnational_id(cit_infos.national_id);
+      setbirthday(cit_infos.date_of_birth);
+      setEmail(cit_infos.email);
+      setaddress(cit_infos.address);
+      setPhone(cit_infos.phone);
+      setimageP(cit_infos.image)
+    }, [cit_infos])
     const handleShowPsw = (e) => {
         let id = e.currentTarget.attributes["data-id"].nodeValue;
         switch (id) {
@@ -117,7 +128,9 @@ const Card = (props) => {
         setEdit((prevState) => !prevState);
     };  
     const fileSelectedHandler = (event) => {
-        console.log(event.target.files[0]);
+      console.log("zebi")
+      setimage(event.target.files[0]);
+      setUpload((prevState) => !prevState)
     };
     const handleItemClick = (e) => {
         setActiveItem(e.currentTarget.attributes["data-name"].value);
@@ -197,7 +210,7 @@ const Card = (props) => {
           .put("http://13.92.195.8/api/user/", {
             headers :{
               "Content-Type": "application/json",
-              Authorization : `Token $localStorage.getItem("token")`
+              Authorization : `Token ${localStorage.getItem("token")}`
             },
             data :{
             first_name,
@@ -245,29 +258,39 @@ const Card = (props) => {
                 seterror(true);
                 setIsLoading(false);
             });
-          } 
-    const GetCitoyenInfos = () => {
-        axios
-            .get("http://13.91.195.8/api/user/", {
-              headers : {
-                "Content-Type": "application/json",
-                Authorization : `Token : ${localStorage.getItem("token")}`
+          }
+    const uploadImageHandler = () => {
+            setUpload((prevState) => !prevState);
+            const formData = new FormData();
+            formData.append("image", image, image.name);
+            setCardLoading(true);
+            axios.create({
+              headers: {
+                patch: {
+                  "Content-Type": "multipart/form-data",
+                  Authorization: `Token ${localStorage.getItem("token")}`,
+                },
               },
-            }) 
-            .then((res) => {
-                // eslint-disable-next-line no-unused-vars
-                const cit_infos = res.data ;
             })
-            .catch((err) => {
-              
-            })
-        
-    }
+              .request({
+                url: "http://13.92.195.8/api/user/",
+                method: "patch",
+                data: formData,
+              })
+              .then((res) => {
+                // console.log("done !!")
+                setimage(res.data.image);
+                setCardLoading(false);
+              })
+              .catch((err) => console.log(err.response));
+    };
 
     return(
         <>
-          <div
-          className="card-citoyen">
+        
+          <Segment loading={cardLoading && loading}
+          className="card-citoyen shadow">
+            { (cit_infos ) && ( <>
               <div className={
                       !isEdit
                           ? "edit-profile-pic mobile  pointer"
@@ -275,7 +298,12 @@ const Card = (props) => {
                       }
                       onClick={handleEdit}
                   >
-                      <Icon name="edit" size="big" />
+                      <Icon name="edit" size="big"/>
+              </div>
+              <div className={upload ? "save_img" : "save_img hide"}>
+                <Button className="button_primary" onClick={uploadImageHandler}>
+                  Upload
+                </Button>
               </div>
               <div className={isEdit ? "_buttons_mobile " : "_buttons_mobile hide"}>
                   <Button className="secondary" onClick={handleEdit} disabled={isLoading}>
@@ -292,7 +320,7 @@ const Card = (props) => {
                   }}
               >
               <div className="profile">
-                  <Image circular src={pic} alt="" />
+                  <Image circular src={imageP} alt="" />
                   <div
                       className={
                       isEdit
@@ -306,13 +334,14 @@ const Card = (props) => {
                       <input
                       id="myInput"
                       style={{ display: "none" }}
-                      type={"file"}
+                      type="file"
+                      accept="image/png, image/jpeg"
                       className="pointer"
                       onChange={fileSelectedHandler}
                       />
                   </div>
               </div>
-                  {!isEdit && <p className="_margin_vertical_sm title">User Citizen</p>}
+                  {!isEdit && !loading && <p className="_margin_vertical_sm title">{first_name + " " + last_name}</p>}
                   {isEdit && (
                       <div className="name-input margin_vertical_sm">
                       <Input
@@ -342,31 +371,31 @@ const Card = (props) => {
                               <span className="small">
                                   <Icon name="mail" className="icon_card" /> Email
                               </span>
-                              <p className="small">u.user@esi-sba.dz</p>
+                              <p className="small">{email}</p>
                           </div>
                           <div className="col">
                               <span className="small">
                                   <Icon name="birthday" className="icon_card" /> Birthday
                               </span>
-                              <p className=" small">30/02/0001</p>
+                              <p className=" small">{birthday}</p>
                           </div>
                           <div className="col">
                               <span className=" small">
                                   <Icon name="map marker alternate" className="icon_card" /> Address
                               </span>
-                              <p className="small">Homeless</p>
+                              <p className="small">{address}</p>
                           </div>
                           <div className="col">
                               <span className="small">
                                   <Icon name="phone" flipped={"horizontally"}className="icon_card" /> Phone Number
                               </span>
-                              <p className="small">+213 123456789</p>
+                              <p className="small">{phone}</p>
                           </div>
                           <div className="col">
                               <span className="small">
                                   <Icon name="id card" className="icon_card" /> National ID
                               </span>
-                              <p className="small">123456789</p>
+                              <p className="small">{national_id}</p>
                           </div>
                       </div>
                       <div className="social-media">
@@ -522,7 +551,8 @@ const Card = (props) => {
                               )}
                               
                   </div>}
-          </div>
+                  </>)}
+          </Segment> 
         </>	    
     );
 };

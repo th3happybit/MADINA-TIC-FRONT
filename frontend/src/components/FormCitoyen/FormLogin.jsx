@@ -42,7 +42,7 @@ const FormLogin = () => {
         localStorage.setItem("token", res.data.key);
         //getItem
         setIsLoading(false);
-        return history.push("/profile");
+        return history.push("/citoyen/profile");
       })
       .catch((err) => {
         console.log(err);

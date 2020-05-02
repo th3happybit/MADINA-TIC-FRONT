@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border : 0px !important;
 }
   
 .card-citoyen > .citoyen-profile-pic {
@@ -13,7 +13,6 @@
     justify-content: space-around;
     align-items: center;
     padding: 1rem 2rem;
-    padding-top: 3rem;
 }
 
 .divider{
@@ -68,7 +67,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 4rem 2rem;
+    padding: 2rem 2rem;
 }
   
 .card-citoyen > .row > .col {
@@ -93,7 +92,7 @@
 }
   
 .social-media {
-    padding: 3rem;
+    padding: 2rem;
 }
 
 .edit-profile-pict.hide {
@@ -129,7 +128,23 @@
     border-radius: 5px;
 }
 
+.card-citoyen > .save_img {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    visibility: hidden !important;   
+}
 
+.card-citoyen > .save_img.hide {
+    visibility: visible !important;
+  }
+  
+.card-citoyen > .save_img .button {
+    min-width: 80px !important;
+    padding: 0.7rem 1rem !important;
+}
 
 .row.mobile_menu {
     padding-top: 1rem !important;

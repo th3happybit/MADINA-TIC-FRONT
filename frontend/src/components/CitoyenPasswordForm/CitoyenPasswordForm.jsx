@@ -119,7 +119,7 @@ const PasswordForm = () => {
       .post("http://13.92.195.8/api/password/change", {
         headers : {
           "Content-Type": "application/json",
-          Authorization : 'Token : $localStorage.getItem("token")'
+          Authorization : `Token : ${localStorage.getItem("token")}`
         },
         data : {
         old_password : currentPassword,
