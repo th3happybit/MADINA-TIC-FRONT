@@ -1,5 +1,5 @@
 import React ,{useState, useEffect} from "react";
-import {Divider, Dropdown, Pagination, Segment} from "semantic-ui-react";
+import {Dropdown, Pagination, Segment} from "semantic-ui-react";
 import axios from "axios";
 
 import CitoyenList from "../../components/AdminCitoyenList/AdminCitoyenList.jsx";
@@ -13,8 +13,13 @@ const AdminCitoyen = (props) => {
     const [Data, setData] = useState([]);
     const [count, setcount] = useState(0);
     const [activeFilter, setactiveFilter] = useState("All Citizens");
+    const [page, setpage] = useState(1);
+    const [url, seturl] = useState("http://13.92.195.8/api/users/");
 
-
+    const onChange = (e, pageInfos) => {
+            setpage(pageInfos.page);
+            seturl("http://13.92.195.8/api/users/?page=" + String(page));
+    }
     useEffect(() => {
         axios
         .get( "http://13.92.195.8/api/users/",{
@@ -24,15 +29,15 @@ const AdminCitoyen = (props) => {
             }
         })
         .then((res) => {
-            // console.log(res.data)
+            console.log(res.data)
             setData(res.data.results.filter((user) => {
                 return user.role === "Client"
             }))
-            if (Data.length % 6 === 0){
-                setcount(Data.length % 6)
+            if (Data.length % 2 === 0){
+                setcount(Data.length / 2)
             }
             else {
-                setcount(parseInt(Data.length / 6) + 1)
+                setcount(parseInt(Data.length / 2) + 1)
             }
             setisloading(false);
 
@@ -41,7 +46,7 @@ const AdminCitoyen = (props) => {
         .catch((err) => {
             console.log(err.response)
         })
-    })
+    }, [])
     const [allUsers, setallUsers] = useState(true);
     const [validatedOnly, setvalidatedOnly] = useState(false);
     const [notValidatedOnly, setnotValidatedOnly] = useState(false);
@@ -70,7 +75,6 @@ const AdminCitoyen = (props) => {
         console.log("Click handeled");
     }
 
-
     return (
         
         <Segment className="_admin_accounts shadow" loading={isloading}>
@@ -88,7 +92,7 @@ const AdminCitoyen = (props) => {
                     button
                     className='icon filter_admin_citoyen'
                 >
-                    <Dropdown.Menu>
+                    <Dropdown.Menu id="filter_menu">
                     <Dropdown.Item
                         label={{ color: 'blue', empty: true, circular: true }}
                         text='All Users'
@@ -110,7 +114,6 @@ const AdminCitoyen = (props) => {
 
                 </div>
             </div>
-            <Divider className="divide_head">{}</Divider>
             { !isloading &&
             (<div className="row_t">
                 <CitoyenList 
@@ -122,11 +125,10 @@ const AdminCitoyen = (props) => {
                 <Pagination className="_admin_citoyen_pagin"
                 boundaryRange={0}
                 defaultActivePage={1}
-                ellipsisItem={null}
+                onChange={onChange}
                 firstItem={null}
                 lastItem={null}
-                siblingRange={1}
-                totalPages={count}
+                totalPages={2}
             />
             </div>)}
             
