@@ -1,69 +1,47 @@
 import React ,{useState, useEffect} from "react";
-import {Divider, Dropdown, Pagination} from "semantic-ui-react";
+import {Divider, Dropdown, Pagination, Segment} from "semantic-ui-react";
 import axios from "axios";
 
 import CitoyenList from "../../components/AdminCitoyenList/AdminCitoyenList.jsx";
 
 import "./AdminCitoyen.css"; 
 
-// import Alex from "../../assets/images/alex.jpg";
-
-
-
-// const data = [
-//     {
-//       uid : "45646-dqsd5-qsojdoizajkdop",
-//       picture: Alex,
-//       first_name: "Moncef",
-//       last_name: "Reggam",
-//       email: "m.reggam@esi-sba.dz",
-//       address: "Guelma ,cité 202",
-//       role: "Citizen",
-//       phone: "055555555",
-//       date_inscription: "0001-01-01",
-//       is_approved : false,
-//     },
-//     {
-//       uid : "45646-dqsd5-delaa3333izajkdop",
-//       picture: Alex,
-//       first_name: "Bengoudifa",
-//       last_name: "Oussama",
-//       email: "o.bengoudifa@esi-sba.dz",
-//       address: "Mosta , rue 2222 logts",
-//       role: "Citizen",
-//       date_inscription: "0001-02-02",
-//       is_approved : true
-//     },
-//   ];
-
 
 const AdminCitoyen = (props) => {
 
-    const [isloading, setisloading] = useState(false);
+    const [isloading, setisloading] = useState(true);
     const [Data, setData] = useState([]);
+    const [count, setcount] = useState(0);
+    const [activeFilter, setactiveFilter] = useState("All Citizens");
 
-    // setData(data)
 
     useEffect(() => {
         axios
         .get( "http://13.92.195.8/api/users/",{
-            header : {
+            headers : {
                 "Content-Type": "application/json",
-                Authorization: `Token ${localStorage.getItem("admin_token")}`
+                Authorization: `Token ${localStorage.getItem("admin_token")}`,
             }
         })
         .then((res) => {
-            setData(res.data.results)
-            let len_pag = parseInt(res.count / 6);
-            if (res.count % len_pag > 0) len_pag++
-            setisloading(false)
+            // console.log(res.data)
+            setData(res.data.results.filter((user) => {
+                return user.role === "Client"
+            }))
+            if (Data.length % 6 === 0){
+                setcount(Data.length % 6)
+            }
+            else {
+                setcount(parseInt(Data.length / 6) + 1)
+            }
+            setisloading(false);
+
             
         })
         .catch((err) => {
             console.log(err.response)
         })
     })
-
     const [allUsers, setallUsers] = useState(true);
     const [validatedOnly, setvalidatedOnly] = useState(false);
     const [notValidatedOnly, setnotValidatedOnly] = useState(false);
@@ -72,6 +50,7 @@ const AdminCitoyen = (props) => {
         setallUsers(true);
         setnotValidatedOnly(false);
         setvalidatedOnly(false);
+        setactiveFilter("All Citizens");
         console.log("Click handeled");
     }
 
@@ -79,6 +58,7 @@ const AdminCitoyen = (props) => {
         setallUsers(false);
         setnotValidatedOnly(false);
         setvalidatedOnly(true);
+        setactiveFilter("Approved")
         console.log("Click handeled");
     }
 
@@ -86,24 +66,27 @@ const AdminCitoyen = (props) => {
         setallUsers(false);
         setnotValidatedOnly(true);
         setvalidatedOnly(false);
+        setactiveFilter("Not Approved")
         console.log("Click handeled");
     }
 
+
     return (
-        <div className="_admin_accounts shadow">
+        
+        <Segment className="_admin_accounts shadow" loading={isloading}>
                 <div className="row">
                 <div className="title_segment">
-                <p className="extra-text text-default">Citoyens List</p>
+                <p className="extra-text text-default">Citizens List</p>
                 </div>
                 <div className="">
                     
                 <Dropdown
-                    text='Filter'
-                    icon='filter'
+                    text={activeFilter}
+                    icon='angle down'
                     floating
                     labeled
                     button
-                    className='icon'
+                    className='icon filter_admin_citoyen'
                 >
                     <Dropdown.Menu>
                     <Dropdown.Item
@@ -143,12 +126,12 @@ const AdminCitoyen = (props) => {
                 firstItem={null}
                 lastItem={null}
                 siblingRange={1}
-                totalPages={1}
+                totalPages={count}
             />
             </div>)}
             
         
-        </div>
+        </Segment>
     )
 }
 

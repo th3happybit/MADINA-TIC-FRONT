@@ -11,48 +11,50 @@ const AccountsList = (props) => {
     const {data} = props
     
     const handelApprove = (id) => {
-        
-        // console.log(String(id) + "approved")
         axios
-            .patch(
-                "http://13.92.195.8/api/users/" + String(id) + "/", {
-                    headers : {
-                        "Content-Type": "application/json",
-                        Authorization : `Token : ${localStorage.getItem("admin_token")}`
-                    },
-                    data : {
-                        is_approved : true
-                    }
-                }
-            )
-            .then((res) => {
-                window.location.reload(false)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://13.92.195.8/api/users/" + id + "/",
+          method: "patch",
+          data: {
+            is_approved: true,
+          },
+        })
+        .then((res) => {
+        window.location.reload(false)
+        })
+        .catch((err) => console.log(err.response));
     }
 
     const handelBan = (id) => {
         // console.log(String(id) + "Banned")
         axios
-            .patch(
-                "http://13.92.195.8/api/users/" + String(id) + "/", {
-                    headers : {
-                        "Content-Type": "application/json",
-                        Authorization : `Token : ${localStorage.getItem("admin_token")}`
-                    },
-                    data : {
-                        is_approved : false
-                    }
-                }
-            )
-            .then((res) => {
-                window.location.reload(false)
-            })
-            .catch((err) => {
-                console.log(err.response)
-            })
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://13.92.195.8/api/users/" + id + "/",
+          method: "patch",
+          data: {
+            is_approved: false,
+          },
+        })
+        .then((res) => {
+        window.location.reload(false)
+        })
+        .catch((err) => console.log(err.response));
     }
         return (
             <>
@@ -81,13 +83,13 @@ const AccountsList = (props) => {
                         width={2}
                         className="medium-text text-default not-bold"
                         >
-                        Joined
+                        Joined On
                         </Table.HeaderCell>
                         <Table.HeaderCell
                         width={2}
                         className="medium-text text-default not-bold"
                         >
-                        Account Type
+                        Account Status
                         </Table.HeaderCell>
                         <Table.HeaderCell
                         width={2}
@@ -102,13 +104,13 @@ const AccountsList = (props) => {
                     {data.map((element, index) => {
                         const {
                         uid,
-                        picture,
+                        image,
                         first_name,
                         last_name,
                         email,
                         address,
                         role,
-                        date_inscription,
+                        created_on,
                         phone,
                         is_approved
                         } = element;
@@ -117,7 +119,7 @@ const AccountsList = (props) => {
                         <Table.Row key={index}>
                             <Table.Cell className="medium-text text-default ">
                             <div className="fullname_new_account">
-                                <Image src={picture} className="_new_account-img" />
+                                <Image src={image} className="_new_account-img" />
                                 <p className="medium-text text-default table_element">
                                 {first_name + " " + last_name}
                                 </p>
@@ -130,7 +132,7 @@ const AccountsList = (props) => {
                             <p className="table_element">{address}</p>
                             </Table.Cell>
                             <Table.Cell className="medium-text text-default ">
-                            <p className="table_element">{date_inscription}</p>
+                            <p className="table_element">{created_on.slice(0,10)}</p>
                             </Table.Cell>
                             <Table.Cell className="medium-text text-default ">
                             <p className="table_element">
@@ -148,7 +150,7 @@ const AccountsList = (props) => {
                                 role = {role}
                                 uid = {uid}
                                 address = {address}
-                                date_inscription = {date_inscription}
+                                date_inscription = {created_on.slice(0,10)}
                                 handelApprove = {handelApprove}
                             />
                             <ModalC

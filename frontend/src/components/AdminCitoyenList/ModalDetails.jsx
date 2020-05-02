@@ -34,7 +34,7 @@ const ModalD = (props) => {
                                     <Button.Group onClick={()=>{
                                         setOpen(true);
                                     }} className="infos_button">
-                                    <Button icon className="shadow _hide_on_mobile">
+                                    <Button icon className="shadow _hide_on_mobile _infos_btn_desktop">
                                         <Icon
                                         name="info"
                                         color= "black"

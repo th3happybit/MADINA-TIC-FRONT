@@ -1,15 +1,16 @@
 ._admin_accounts {
-    margin-top : 3rem;
-    width : 95.7%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-top : 3rem !important;
+    width : 95.7%  !important;
+    height: 650px !important;
+    margin-left: auto  !important;
+    margin-right: auto  !important;
     border: none !important;
-    border-radius : 5px;
+    border-radius : 5px  !important;
     min-height: 400px !important;
     max-height: 700px !important;
-    overflow-x: scroll;
+    overflow-x: scroll  !important;
     overflow-x: hidden; /* Hide horizontal scrollbar */
-    -ms-overflow-style: none;
+    -ms-overflow-style: none  !important;
     background-color:  white !important;
 }
 ._admin_accounts::-webkit-scrollbar {
@@ -84,12 +85,10 @@
 }
 
 ._approve_btn{
-    /* background-color : red !important; */
     color : white !important;
 }
 
 ._reject_btn{
-    /* background-color: var(--green) !important; */
     color : white !important;
 }
 
@@ -99,14 +98,33 @@
 }
 
 ._admin_citoyen_pagin{
-    margin-top: 1rem !important;
-    margin-bottom: 1rem !important;
-    margin-left : auto !important;
-    margin-right : auto !important;
+    margin-top: 12rem !important;
+    /* margin-bottom: 1rem !important; */
+    margin-left : 1rem !important;
+    /* margin-right : auto !important; */
+}
+
+.filter_admin_citoyen{
+    color : var(--primary) !important;
+    border-radius: 0px !important;
+    width : 180px !important;
+    text-align : center !important;
+    border: 2px solid !important;
+    /* border-color: var(--primary); */
+    background-color: white !important;
+}
+  
+.filter_admin_citoyen > i {
+    border-right: solid var(--primary) !important;
+    background-color: transparent !important;
 }
 
 ._hide_on_mobile{
     border-radius: 5px !important;
+}
+
+._infos_btn_desktop {
+    background: white !important;
 }
 
 ._show_on_mobile{
@@ -119,6 +137,16 @@
 }
 
 @media (max-width : 766px){
+
+    ._admin_accounts {
+        height: 100% !important;
+    }
+
+    ._admin_accounts > .row {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 6px;
+    } 
     
     .citoyens_accounts_table thead {
         display: none !important;
@@ -145,4 +173,28 @@
         background : var(--primary) !important;
         color : white !important;
     }
+
+.filter_admin_citoyen{
+    color : var(--primary) !important;
+    border-radius: 0px !important;
+    width : 180px !important;
+    text-align : center !important;
+    border: 2px solid !important;
+    border-color: var(--primary);
+    background-color: transparent !important;
+    margin-top: 10px !important;
+}
+  
+.filter_admin_citoyen > i {
+    border-right: solid var(--primary) !important;
+    background-color: transparent !important;
+}
+
+._admin_citoyen_pagin{
+    margin-top: 1rem !important;
+    /* margin-bottom: 1rem !important; */
+    margin-left : 1rem !important;
+    /* margin-right : auto !important; */
+}
+
 }
