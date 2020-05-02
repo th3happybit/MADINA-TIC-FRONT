@@ -1,5 +1,5 @@
 import React ,{useState, useEffect} from "react";
-import {Divider, Dropdown, Pagination} from "semantic-ui-react";
+import {Divider, Dropdown, Pagination, Segment} from "semantic-ui-react";
 import axios from "axios";
 
 import CitoyenList from "../../components/AdminCitoyenList/AdminCitoyenList.jsx";
@@ -9,9 +9,9 @@ import "./AdminCitoyen.css";
 
 const AdminCitoyen = (props) => {
 
-    const [isloading, setisloading] = useState(false);
+    const [isloading, setisloading] = useState(true);
     const [Data, setData] = useState([]);
-    // const [count, setcount] = useState(0);
+    const [count, setcount] = useState(0);
     const [activeFilter, setactiveFilter] = useState("All Citizens");
 
 
@@ -28,10 +28,14 @@ const AdminCitoyen = (props) => {
             setData(res.data.results.filter((user) => {
                 return user.role === "Client"
             }))
-            let len_pag = parseInt(res.count / 6);
-            if (res.count % len_pag > 0) len_pag++
-            // setcount(len_pag);
-            setisloading(false)
+            if (Data.length % 6 === 0){
+                setcount(Data.length % 6)
+            }
+            else {
+                setcount(parseInt(Data.length / 6) + 1)
+            }
+            setisloading(false);
+
             
         })
         .catch((err) => {
@@ -66,8 +70,10 @@ const AdminCitoyen = (props) => {
         console.log("Click handeled");
     }
 
+
     return (
-        <div className="_admin_accounts shadow">
+        
+        <Segment className="_admin_accounts shadow" loading={isloading}>
                 <div className="row">
                 <div className="title_segment">
                 <p className="extra-text text-default">Citizens List</p>
@@ -120,12 +126,12 @@ const AdminCitoyen = (props) => {
                 firstItem={null}
                 lastItem={null}
                 siblingRange={1}
-                totalPages={1}
+                totalPages={count}
             />
             </div>)}
             
         
-        </div>
+        </Segment>
     )
 }
 

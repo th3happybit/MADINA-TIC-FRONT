@@ -11,48 +11,50 @@ const AccountsList = (props) => {
     const {data} = props
     
     const handelApprove = (id) => {
-        
-        // console.log(String(id) + "approved")
         axios
-            .patch(
-                "http://13.92.195.8/api/users/" + String(id) + "/", {
-                    headers : {
-                        "Content-Type": "application/json",
-                        Authorization : `Token : ${localStorage.getItem("admin_token")}`
-                    },
-                    data : {
-                        is_approved : true
-                    }
-                }
-            )
-            .then((res) => {
-                window.location.reload(false)
-            })
-            .catch((err) => {
-                console.log(err.response)
-            })
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://13.92.195.8/api/users/" + id + "/",
+          method: "patch",
+          data: {
+            is_approved: true,
+          },
+        })
+        .then((res) => {
+        window.location.reload(false)
+        })
+        .catch((err) => console.log(err.response));
     }
 
     const handelBan = (id) => {
         // console.log(String(id) + "Banned")
         axios
-            .patch(
-                "http://13.92.195.8/api/users/" + String(id) + "/", {
-                    headers : {
-                        "Content-Type": "application/json",
-                        Authorization : `Token : ${localStorage.getItem("admin_token")}`
-                    },
-                    data : {
-                        is_approved : false
-                    }
-                }
-            )
-            .then((res) => {
-                window.location.reload(false)
-            })
-            .catch((err) => {
-                console.log(err.response)
-            })
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://13.92.195.8/api/users/" + id + "/",
+          method: "patch",
+          data: {
+            is_approved: false,
+          },
+        })
+        .then((res) => {
+        window.location.reload(false)
+        })
+        .catch((err) => console.log(err.response));
     }
         return (
             <>
@@ -81,13 +83,13 @@ const AccountsList = (props) => {
                         width={2}
                         className="medium-text text-default not-bold"
                         >
-                        Joined
+                        Joined On
                         </Table.HeaderCell>
                         <Table.HeaderCell
                         width={2}
                         className="medium-text text-default not-bold"
                         >
-                        Account Type
+                        Account Status
                         </Table.HeaderCell>
                         <Table.HeaderCell
                         width={2}
