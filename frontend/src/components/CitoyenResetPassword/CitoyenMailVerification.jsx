@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button, Container } from "semantic-ui-react";
+import { Form, Button} from "semantic-ui-react";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import "./CitoyenMailVerification.css";
 
@@ -10,14 +10,16 @@ handleClick(){
 render() {
  return(
   <div className="_form_reset_password ">
-   <Container className="_reset_password_section">
+   <div className="_reset_password_section">
     <div className="d-flex shadow _card_mail_verification">
      <Logo className="_logo" />
      <p className="title text-active bold ">MADINA TIC</p>
      <p className="text-active _titre">
       Reset your Password</p>
-      <p className="text-gray-dark semi-bold small" >enter your Email adress and we will</p>
-     <p className="text-gray-dark semi-bold small"> send you a reset password link</p>
+      <div className="_sous_titre">
+       <p className="text-gray-dark semi-bold small" >enter your Email adress and we will</p>
+       <p className="text-gray-dark semi-bold small"> send you a reset password link</p>
+      </div>
      <Form className="_reset_password_form _margin_vertical_md">
       <Form.Input
        placeholder="Email"
@@ -31,7 +33,7 @@ render() {
      </Form>
     
     </div>
-   </Container>
+   </div>
   </div>
  )
 }

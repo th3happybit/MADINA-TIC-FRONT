@@ -2,12 +2,15 @@
   width: 100vw;
   height: 100vh;
   background-color: #0085c3 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-._reset_password_section {
-  padding: 6rem 4rem;
-  padding-bottom: 3rem !important;
+._reset_password_section{
+  width: 60% !important;
 }
+
 ._card_mail_verification{
  display: flex;
  flex-direction: column !important;
@@ -15,7 +18,6 @@
  align-items: center;
  padding: 50px;
  background-color: white;
- width: 100% !important;
 }
 
 ._reset_password_form {
@@ -26,7 +28,6 @@
 }
 ._reset_password_form .input,
 ._reset_password_form .input input {
-  width: 350px !important;
   background-color: #f2f2f2 !important;
   border: none !important;
   border-radius: 5px;
@@ -41,24 +42,38 @@
 }
 
 ._titre{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
  padding: 25px !important;
  font-size: medium;
 }
 
-  @media (max-width: 1199px) {
-    ._reset_password_form .input,
-    ._reset_password_form .input input {
-      width: 100% !important;
-    }
-}
+
+
+
 @media (max-width: 999px) {
-  ._form_reset_pasword {
-   display: flex;
+  ._reset_password_section{
+  width: 100vw !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+  ._card_mail_verification{
+    width: 80% !important;
   }
-  
-  ._card_mail_verification {
-   display: flex;
-  }
+
+  ._titre {
+  display: flex;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+ ._sous_titre {
+  display: flex !important;
+  flex-direction: column !important;
+  text-align: center !important;
+}
 
   ._reset_password_form .input,
   ._reset_password_form .input input {
@@ -71,3 +86,10 @@
   }
 }
 
+@media (max-width : 799px) {
+._reset_password_section{
+  width: 100vw !important;
+}
+
+
+}
