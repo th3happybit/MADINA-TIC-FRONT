@@ -27,7 +27,7 @@ const Admin = (props) => {
       {isLogin ? (
         <>
           {visible && <Backdrop click={handleHide} />}
-          <HeaderAdmin show={handleHide} />
+          <HeaderAdmin active={active} show={handleHide} />
           <SidebarHeader visible={visible} click={handleHide} />
           <SidebarAdmin active={active} />
           <main className="_admin_main">{props.childComponent}</main>

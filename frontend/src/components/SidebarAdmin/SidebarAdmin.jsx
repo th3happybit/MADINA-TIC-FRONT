@@ -6,7 +6,6 @@ import "./SidebarAdmin.css";
 
 //? import icons
 import { ReactComponent as Dashboard } from "../../assets/icons/dashboard.svg";
-import { ReactComponent as Roles } from "../../assets/icons/role_icon.svg";
 import { ReactComponent as Citoyens } from "../../assets/icons/group.svg";
 
 //? import logo
@@ -39,19 +38,7 @@ const SidebarAdmin = (props) => {
               className={props.active === "dashboard" ? "active" : ""}
             />
           </div>
-          <div className="d-flex">
-            <Roles
-              className={
-                props.active === "roles"
-                  ? "_sidebar_icons active"
-                  : "_sidebar_icons"
-              }
-            />
-            <Menu.Item
-              name="Rôles"
-              className={props.active === "roles" ? "active" : ""}
-            />
-          </div>
+
           <div className="d-flex">
             <Citoyens
               className={

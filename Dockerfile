@@ -10,10 +10,10 @@ RUN mkdir -p /opt/frontend
 WORKDIR /opt/frontend
 
 # Install dependencies
-COPY ./frontend/ /opt/frontend
-COPY ./entrypoint.sh /opt/frontend/
+COPY ./frontend/ .
+COPY ./entrypoint.sh .
 
-RUN yarn install
+RUN yarn install --network-timeout 1000000
 
 RUN yarn global add serve
 

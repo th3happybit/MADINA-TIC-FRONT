@@ -20,5 +20,5 @@ a react based frontend for madina-tic project
 		- dev: `sudo docker build -t madina-tic/frontend:0.1 . -f Dockerfile.dev`
 		- prod: `sudo docker build -t madina-tic/frontend:0.2 .`
 	2. run the container:
-		- dev: `sudo docker run -d -p 3000:3000 madina-tic/frontend:0.1`
-		- prod: `sudo docker run -d -p 3000:3000 madina-tic/frontend:0.2`
+		- dev: `sudo docker run -it -p 3000:3000 madina-tic/frontend:0.1`
+		- prod: `sudo docker run -d -p 5000:5000 madina-tic/frontend:0.2`
