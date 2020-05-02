@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import { Segment, Form, Dropdown, Button, Message } from "semantic-ui-react";
+import { Segment, Form, Button, Message } from "semantic-ui-react";
 import Axios from "axios";
 
 import "./AdminAddAccountForm.css";
 
 const AdminAddAccountForm = () => {
-  const options = [
-    { key: "m", value: "maire", text: "Maire" },
-    { key: "s", value: "service", text: "Service" },
-    { key: "c", value: "client", text: "Client" },
-  ];
   const [selectedRole, setSelectedRole] = useState("");
   const [email, setMail] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-  const [functionnalities, setF] = useState(null);
   const [succes, setSucces] = useState(false);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,9 +41,7 @@ const AdminAddAccountForm = () => {
         break;
     }
   };
-  const handleFunctions = (e, { value }) => {
-    setF(value);
-  };
+
   const handleCreateAccount = () => {
     setIsLoading(true);
     Axios.create({
@@ -77,7 +69,6 @@ const AdminAddAccountForm = () => {
         setPhone("");
         setAddress("");
         setSelectedRole("");
-        setF([]);
       })
       .catch((err) => {
         setIsLoading(false);
@@ -151,7 +142,13 @@ const AdminAddAccountForm = () => {
               </div>
             </Form>
           </div>
-          <div className="col">
+          <div
+            className="col"
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+            }}
+          >
             <div className="input_with_label role _padding_vertical_lg">
               <p>Assign Role</p>
               <Form error={roleError !== null}>
@@ -185,18 +182,6 @@ const AdminAddAccountForm = () => {
                   </span>
                 </Message>
               </Form>
-            </div>
-            <div className="input_with_label role _padding_vertical_lg">
-              <p>Functionnalities</p>
-              <Dropdown
-                placeholder="Functionnalities"
-                fluid
-                multiple
-                selection
-                onChange={handleFunctions}
-                options={options}
-                value={functionnalities}
-              />
             </div>
           </div>{" "}
         </div>

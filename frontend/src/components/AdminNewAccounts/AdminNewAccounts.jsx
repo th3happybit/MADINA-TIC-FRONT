@@ -14,6 +14,9 @@ const AdminNewAccounts = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    getData();
+  }, []);
+  const getData = () => {
     axios
       .create({
         headers: {
@@ -37,7 +40,7 @@ const AdminNewAccounts = () => {
         setIsLoading(false);
       })
       .catch((err) => console.log(err.response));
-  }, []);
+  };
   console.log(data);
   return (
     <Segment loading={isLoading} className="_new_accounts shadow">
@@ -52,7 +55,7 @@ const AdminNewAccounts = () => {
         </div>
       </div>
       <div className="row_t">
-        <TableNewAccounts data={data} />
+        <TableNewAccounts data={data} refresh={getData} />
       </div>
     </Segment>
   );

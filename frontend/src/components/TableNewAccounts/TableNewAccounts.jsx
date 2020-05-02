@@ -1,25 +1,19 @@
-import React from "react";
-import { Table, Button, Image, Modal, Dropdown } from "semantic-ui-react";
+import React, { useEffect } from "react";
+import { Table, Button, Image, Modal } from "semantic-ui-react";
 
 //? import css
 import "./TableNewAccounts";
 import axios from "axios";
 import { useState } from "react";
 
-const options = [
-  {
-    key: "0",
-    text: "Consultation declarations",
-    value: "consolutation declaration",
-  },
-  { key: "1", text: "Add declarations", value: "add declarations" },
-  { key: "2", text: "Remove declarations", value: "remove declarations" },
-];
-
 const TableNewAccounts = (props) => {
-  const { data } = props;
-  const [open, setOpen] = useState(false);
-  const [isHandled, setIsHandled] = useState(false);
+  const [data, setData] = useState(null);
+  const [isopen, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setData(props.data);
+  }, [props]);
   const handleApprove = (e) => {
     let type = parseInt(e.currentTarget.attributes["data_reject"].value);
     let uid =
@@ -29,6 +23,7 @@ const TableNewAccounts = (props) => {
     //? 0 approve
     //? 1 reject
     if (type === 0) {
+      setLoading(true);
       axios
         .create({
           headers: {
@@ -42,114 +37,121 @@ const TableNewAccounts = (props) => {
           url: "http://13.92.195.8/api/users/" + uid + "/",
           method: "patch",
           data: {
-            is_approved: false,
+            is_approved: true,
           },
         })
         .then((res) => {
-          setIsHandled(true);
+          props.refresh();
+          setLoading(false);
           setOpen(false);
         })
         .catch((err) => console.log(err.response));
+    } else if (type === 1) {
+      setOpen(false);
     }
   };
 
   return (
     <>
-      <Table basic="very" striped className="new_accounts_table">
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell
-              width={3}
-              className="medium-text text-default not-bold "
-            >
-              Fullname
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              width={3}
-              className="medium-text text-default not-bold"
-            >
-              Email
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              width={3}
-              className="medium-text text-default not-bold element_hide_mobile address"
-            >
-              Address
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              width={3}
-              className="medium-text text-default not-bold role"
-            >
-              Rôle
-            </Table.HeaderCell>
-            <Table.HeaderCell
-              width={3}
-              className="medium-text text-default not-bold"
-            >
-              Manage
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      {data && (
+        <Table basic="very" striped className="new_accounts_table">
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell
+                width={3}
+                className="medium-text text-default not-bold "
+              >
+                Fullname
+              </Table.HeaderCell>
+              <Table.HeaderCell
+                width={3}
+                className="medium-text text-default not-bold"
+              >
+                Email
+              </Table.HeaderCell>
+              <Table.HeaderCell
+                width={3}
+                className="medium-text text-default not-bold element_hide_mobile address"
+              >
+                Address
+              </Table.HeaderCell>
+              <Table.HeaderCell
+                width={3}
+                className="medium-text text-default not-bold role"
+              >
+                Rôle
+              </Table.HeaderCell>
+              <Table.HeaderCell
+                width={3}
+                className="medium-text text-default not-bold"
+              >
+                Manage
+              </Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
 
-        <Table.Body>
-          {data.map((element, index) => {
-            const {
-              first_name,
-              last_name,
-              email,
-              address,
-              role,
-              created_on,
-              phone,
-              image,
-              uid,
-            } = element;
-            return (
-              <Table.Row key={index}>
-                <Table.Cell className="medium-text text-default ">
-                  <div className="fullname_new_account">
-                    <Image src={image} className="_new_account-img" />
-                    <p className="medium-text text-default table_element">
-                      {first_name + " " + last_name}
-                    </p>
-                  </div>
-                </Table.Cell>
-                <Table.Cell className="medium-text text-default ">
-                  <p className="table_element">{email}</p>
-                </Table.Cell>
-                <Table.Cell className="medium-text text-default element_hide_mobile">
-                  <p className="table_element">{address}</p>
-                </Table.Cell>
-                <Table.Cell className="medium-text text-default ">
-                  <p className="table_element">
-                    {role.charAt(0).toUpperCase() + role.substring(1)}
-                  </p>
-                </Table.Cell>{" "}
-                <Table.Cell className="medium-text text-default ">
-                  {" "}
-                  <Modal
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    closeIcon
-                    className="_add_account_modal"
-                    trigger={
-                      !isHandled ? (
-                        <Button
-                          className="button_primary btn_account_detail pointer"
-                          onClick={() => setOpen(true)}
-                        >
-                          Account Details
-                        </Button>
-                      ) : (
-                        <Button
-                          disabled
-                          className="button_primary btn_account_detail pointer"
-                        >
-                          Account Handled
-                        </Button>
-                      )
-                    }
-                  >
+          <Table.Body>
+            {data.map((element, index) => {
+              const {
+                first_name,
+                last_name,
+                email,
+                address,
+                role,
+                created_on,
+                phone,
+                image,
+                uid,
+              } = element;
+              return (
+                <>
+                  <Table.Row key={index}>
+                    <Table.Cell className="medium-text text-default ">
+                      {(first_name || last_name) && (
+                        <div className="fullname_new_account">
+                          <Image src={image} className="_new_account-img" />
+                          <p className="medium-text text-default table_element">
+                            {first_name + " " + last_name}
+                          </p>
+                        </div>
+                      )}
+                      {!(first_name || last_name) && (
+                        <div className="fullname_new_account">
+                          <Image src={image} className="_new_account-img" />
+                          <p
+                            className="medium-text text-default table_element"
+                            style={{
+                              marginLeft: "2rem",
+                            }}
+                          >
+                            /
+                          </p>
+                        </div>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell className="medium-text text-default ">
+                      <p className="table_element">{email}</p>
+                    </Table.Cell>
+                    <Table.Cell className="medium-text text-default element_hide_mobile">
+                      <p className="table_element">{address}</p>
+                    </Table.Cell>
+                    <Table.Cell className="medium-text text-default ">
+                      <p className="table_element">
+                        {role.charAt(0).toUpperCase() + role.substring(1)}
+                      </p>
+                    </Table.Cell>{" "}
+                    <Table.Cell className="medium-text text-default ">
+                      {" "}
+                      <Button
+                        className="button_primary btn_account_detail pointer"
+                        onClick={() => setOpen(true)}
+                      >
+                        Account Details
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+
+                  <Modal open={isopen} onClose={() => setOpen(false)} closeIcon>
                     <Modal.Content>
                       <Modal.Content className="detail_content">
                         {" "}
@@ -158,8 +160,8 @@ const TableNewAccounts = (props) => {
                         </div>
                         <div className="_content_modal">
                           <div>
-                            <p>First Name</p>
-                            <p>Last Name</p>
+                            {first_name && <p>First Name</p>}
+                            {last_name && <p>Last Name</p>}
                             <p>Email</p>
                             <p>Phone</p>
                             <p>Adress</p>
@@ -167,8 +169,8 @@ const TableNewAccounts = (props) => {
                             <p>Inscription date</p>
                           </div>
                           <div>
-                            <p>{first_name}</p>
-                            <p>{last_name}</p>
+                            {first_name && <p>{first_name}</p>}
+                            {last_name && <p>{last_name}</p>}
                             <p>{email}</p>
                             <p>{phone}</p>
                             <p>{address}</p>
@@ -177,24 +179,6 @@ const TableNewAccounts = (props) => {
                           </div>
                         </div>
                       </Modal.Content>
-                      {role !== "Client" && (
-                        <Modal.Content
-                          className={role === "citoyen" ? "hide_content" : ""}
-                        >
-                          <div className="_content_modal plus">
-                            <div className="funct">
-                              <p className="bold">Functionnalities</p>
-                              <Dropdown
-                                placeholder="Functionnalities"
-                                fluid
-                                multiple
-                                selection
-                                options={options}
-                              />
-                            </div>
-                          </div>
-                        </Modal.Content>
-                      )}
                       <Modal.Content
                         className="content_modal_btns marginTop"
                         data_uid={uid}
@@ -203,6 +187,7 @@ const TableNewAccounts = (props) => {
                           className="button_primary"
                           onClick={handleApprove}
                           data_reject={0}
+                          loading={isLoading}
                         >
                           Approve
                         </Button>
@@ -216,12 +201,12 @@ const TableNewAccounts = (props) => {
                       </Modal.Content>
                     </Modal.Content>
                   </Modal>
-                </Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
+                </>
+              );
+            })}
+          </Table.Body>
+        </Table>
+      )}
     </>
   );
 };
