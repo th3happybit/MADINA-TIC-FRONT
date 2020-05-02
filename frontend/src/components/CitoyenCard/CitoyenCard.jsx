@@ -128,7 +128,7 @@ const Card = (props) => {
         setEdit((prevState) => !prevState);
     };  
     const fileSelectedHandler = (event) => {
-      console.log("zebi")
+      // console.log("zebi")
       setimage(event.target.files[0]);
       setUpload((prevState) => !prevState)
     };
@@ -278,17 +278,19 @@ const Card = (props) => {
                 data: formData,
               })
               .then((res) => {
-                // console.log("done !!")
+                console.log("done !!")
                 setimage(res.data.image);
                 setCardLoading(false);
               })
-              .catch((err) => console.log(err.response));
+              .catch((err) =>  {
+                console.log("error")
+                console.log(err.response) });
     };
 
     return(
         <>
         
-          <Segment loading={cardLoading && loading}
+          <Segment loading={loading && !cardLoading}
           className="card-citoyen shadow">
             { (cit_infos ) && ( <>
               <div className={
