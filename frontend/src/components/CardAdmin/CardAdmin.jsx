@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, Icon, Button, Input } from "semantic-ui-react";
+import { Image, Icon, Button, Input, Segment } from "semantic-ui-react";
 import Axios from "axios";
 
 //? import css
@@ -7,9 +7,6 @@ import "./CardAdmin.css";
 
 //? import components
 import MenuProfileMobile from "./MenuProfileMobile.jsx";
-
-//? import Image
-import Alex from "../../assets/images/alex.jpg";
 
 //? import icons
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
@@ -28,10 +25,13 @@ const CardAdmin = (props) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [messageErr, setMessageErr] = useState("");
-
   const [isErr, setIsErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("info");
+  const [image, setImage] = useState(null);
+  const [upload, setUpload] = useState(true);
+  const [profileImage, setProfileImage] = useState(null);
+  const [cardLoading, setCardLoading] = useState(false);
 
   //! componentdidmount
   useEffect(() => {
@@ -41,6 +41,7 @@ const CardAdmin = (props) => {
     setPhone(data_user.phone);
     setAddress(data_user.address);
     setBirthday(data_user.date_of_birth);
+    setProfileImage(data_user.image);
   }, [data_user]);
   const handleInputChange = (e) => {
     if (isErr) setIsErr(false);
@@ -86,9 +87,33 @@ const CardAdmin = (props) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
   };
   const fileSelectedHandler = (event) => {
-    console.log(event.target.files[0]);
+    setImage(event.target.files[0]);
+    setUpload((prevState) => !prevState);
   };
-
+  const uploadImageHandler = () => {
+    setUpload((prevState) => !prevState);
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    setCardLoading(true);
+    Axios.create({
+      headers: {
+        patch: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Token ${localStorage.getItem("admin_token")}`,
+        },
+      },
+    })
+      .request({
+        url: "http://13.92.195.8/api/user/",
+        method: "patch",
+        data: formData,
+      })
+      .then((res) => {
+        setProfileImage(res.data.image);
+        setCardLoading(false);
+      })
+      .catch((err) => console.log(err.response));
+  };
   const handleUpdate = () => {
     setIsLoading(true);
     if (activeItem === "info") {
@@ -161,7 +186,7 @@ const CardAdmin = (props) => {
   return (
     <>
       {data_user && (
-        <div className="_card_admin">
+        <Segment loading={cardLoading} className="_card_admin">
           <div
             className={
               !isEdit
@@ -171,6 +196,11 @@ const CardAdmin = (props) => {
             onClick={handleEdit}
           >
             <Icon name="edit" size="big" />
+          </div>
+          <div className={upload ? "save_img" : "save_img hide"}>
+            <Button className="button_primary" onClick={uploadImageHandler}>
+              Upload
+            </Button>
           </div>
           <div className={isEdit ? "_buttons_mobile " : "_buttons_mobile hide"}>
             <Button className="secondary" onClick={handleEdit}>
@@ -191,7 +221,7 @@ const CardAdmin = (props) => {
             }}
           >
             <div className="profile_">
-              <Image src={Alex} alt="alex" />
+              <Image src={profileImage} alt="alex" />
               <div
                 className={
                   isEdit
@@ -205,7 +235,8 @@ const CardAdmin = (props) => {
                 <input
                   id="myInput"
                   style={{ display: "none" }}
-                  type={"file"}
+                  type="file"
+                  accept="image/png, image/jpeg"
                   className="pointer"
                   onChange={fileSelectedHandler}
                 />
@@ -316,7 +347,7 @@ const CardAdmin = (props) => {
               messageErr={messageErr}
             />
           )}
-        </div>
+        </Segment>
       )}
     </>
   );
