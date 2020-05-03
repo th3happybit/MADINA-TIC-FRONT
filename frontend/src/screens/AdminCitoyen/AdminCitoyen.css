@@ -96,10 +96,9 @@
 }
 
 ._admin_citoyen_pagin{
-    margin-top: 9rem !important;
-    /* margin-bottom: 1rem !important; */
-    margin-left : 1rem !important;
-    /* margin-right : auto !important; */
+    position : absolute !important;
+    bottom: 3%;
+    left : 3%;
 }
 
 .filter_admin_citoyen{
@@ -213,6 +212,7 @@
 }
 
 ._admin_citoyen_pagin{
+    position : relative !important;
     margin-top: 1rem !important;
     /* margin-bottom: 1rem !important; */
     margin-left : 1rem !important;

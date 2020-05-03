@@ -62,13 +62,13 @@ const ModalD = (props) => {
                                             <p>Status</p>
                                         </div>
                                         <div>
-                                            <p>{first_name}</p>
-                                            <p>{last_name}</p>
-                                            <p>{email}</p>
-                                            <p>{phone}</p>
-                                            <p>{address}</p>
-                                            <p>{role}</p>
-                                            <p>{date_inscription}</p>
+                                            <p>{first_name ? first_name : " / "}</p>
+                                            <p>{last_name ? first_name : " / "}</p>
+                                            <p>{email ? email : " / "}</p>
+                                            <p>{phone ? phone : " / "}</p>
+                                            <p>{address ? address : " / "}</p>
+                                            <p>{role ? role : " / "}</p>
+                                            <p>{date_inscription ? date_inscription : " / "}</p>
                                             <p>{ is_approved ? "Validated" : "Not Validated"}</p>
                                         </div>
                                         </div>
@@ -78,7 +78,7 @@ const ModalD = (props) => {
                                         className="content_modal_btns marginTop"
                                         d_uid = {uid}
                                     >
-                                        <Button className="button_primary" onClick={() => {handelApprove(uid)}}>Approve</Button>
+                                        <Button className="button_primary" onClick={() => {handelApprove(uid); setOpen(false)}}>Approve</Button>
                                         <Button className="button_secondary" onClick={() => {
                                             setOpen(false)
                                         }}>Reject</Button>

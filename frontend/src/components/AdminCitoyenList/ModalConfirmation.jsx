@@ -59,7 +59,7 @@ const ModalC = (props) => {
                                     className="content_modal_btns"
                                 >
                                     <Button className="button_primary" onClick={ () => {
-                                        if (openC) onConfirm(uid)}
+                                        if (openC) {onConfirm(uid); setopenC(false)}}
                                     }>Confirm</Button>
                                     <Button className="button_secondary" onClick={
                                         () => {

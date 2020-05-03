@@ -28,7 +28,7 @@ const AccountsList = (props) => {
           },
         })
         .then((res) => {
-        window.location.reload(false)
+        // window.location.reload(false)
         })
         .catch((err) => console.log(err.response));
     }
@@ -52,7 +52,7 @@ const AccountsList = (props) => {
           },
         })
         .then((res) => {
-        window.location.reload(false)
+        // window.location.reload(false)
         })
         .catch((err) => console.log(err.response));
     }
