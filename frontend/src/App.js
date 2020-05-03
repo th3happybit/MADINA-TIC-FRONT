@@ -27,8 +27,8 @@ function App() {
     <Router>
       <Switch>
         <Route
-          exact
-          path="/CitoyenResetPassword"
+          
+          path="/account/reset-password/confirm/:uid/:token"
           component={CitoyenResetPassword}
         />
         <Route
