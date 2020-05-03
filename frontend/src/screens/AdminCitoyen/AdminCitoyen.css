@@ -8,10 +8,9 @@
     border-radius : 5px  !important;
     min-height: 400px !important;
     max-height: 700px !important;
-    overflow-x: scroll  !important;
-    overflow-x: hidden; /* Hide horizontal scrollbar */
     -ms-overflow-style: none  !important;
     background-color:  white !important;
+    padding : 2rem !important;
 }
 ._admin_accounts::-webkit-scrollbar {
     display: none;
@@ -93,12 +92,11 @@
 }
 
 #manage_cell{
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    text-align: center;
 }
 
 ._admin_citoyen_pagin{
-    margin-top: 12rem !important;
+    margin-top: 9rem !important;
     /* margin-bottom: 1rem !important; */
     margin-left : 1rem !important;
     /* margin-right : auto !important; */
@@ -115,16 +113,34 @@
 }
   
 .filter_admin_citoyen > i {
-    border-right: solid var(--primary) !important;
-    background-color: transparent !important;
+    border-right: solid 2px var(--primary) !important;
+    border-left: solid 1px var(--primary) !important;
+    background-color: white !important;
+    /* color : white; */
 }
+
+.filter_admin_citoyen:hover > i{
+    background-color: var(--primary) !important;
+    color : white !important;
+    border : solid 0.5px var(white);
+}
+
+#filter_menu {
+    margin-top: 0.2rem !important;
+
+}
+
 
 ._hide_on_mobile{
     border-radius: 5px !important;
 }
 
-._infos_btn_desktop {
+.infos_button > .ui.button {
     background: white !important;
+}
+
+.infos_button > .ui.button:hover {
+    background: var(--gray_light) !important;
 }
 
 ._show_on_mobile{
@@ -140,6 +156,8 @@
 
     ._admin_accounts {
         height: 100% !important;
+        overflow-x: scroll  !important;
+        overflow-x: hidden;
     }
 
     ._admin_accounts > .row {
@@ -174,6 +192,10 @@
         color : white !important;
     }
 
+
+    .infos_button > .ui.button {
+        background: var(--primary) !important;
+    }
 .filter_admin_citoyen{
     color : var(--primary) !important;
     border-radius: 0px !important;
