@@ -139,7 +139,7 @@ const InfosForm = (props) => {
                     id="email"
                     value={email}
                     onChange={handleChangeInput}
-                    placeholder={ !isEditing ? "Email..." : cit_infos.last_name}/>
+                    placeholder={ !isEditing ? "Email..." : cit_infos.email}/>
                 </Form.Field>
                 <Form.Field disabled={isEditing}>
                     <label>Birthday</label>

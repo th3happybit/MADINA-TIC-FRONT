@@ -12,9 +12,7 @@ import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 
 const Card = (props) => {
 
-  const {cit_infos, loading } = props
-
-    
+    const {cit_infos, loading } = props
     const [isEdit, setEdit] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [activeItem, setActiveItem] = useState("info");
@@ -213,21 +211,24 @@ const Card = (props) => {
               Authorization : `Token ${localStorage.getItem("token")}`
             },
             data :{
-            first_name,
-            last_name,
-            email,
-            phone,
+            first_name : first_name,
+            last_name : last_name,
+            email : email,
+            phone : phone,
             date_of_birth: birthday,
-            address
+            address : address,
+            national_id : national_id
             },
           })
           .then((res) => {
             setSuccess(true);
             setIsLoading(false);
+            props.refresh();
           })
           .catch((err) => {
             seterror(true);
-            setIsLoading(true);
+            setIsLoading(false);
+            console.log(err)
           });
     };
     const UpdatePasswordCitoyen = () => {
@@ -262,7 +263,9 @@ const Card = (props) => {
     const uploadImageHandler = () => {
             setUpload((prevState) => !prevState);
             const formData = new FormData();
+            // console.log(image)
             formData.append("image", image, image.name);
+            // console.log(formData);
             setCardLoading(true);
             axios.create({
               headers: {
@@ -279,12 +282,12 @@ const Card = (props) => {
               })
               .then((res) => {
                 console.log("done !!")
-                setimage(res.data.image);
+                setimageP(res.data.image);
                 setCardLoading(false);
               })
               .catch((err) =>  {
                 console.log("error")
-                console.log(err.response) });
+                console.log(err) });
     };
 
     return(

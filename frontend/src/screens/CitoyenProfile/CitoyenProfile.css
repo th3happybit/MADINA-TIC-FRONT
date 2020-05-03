@@ -3,8 +3,9 @@ main {
     width : 100%
 }
 
-main .container {
-    margin: 1rem 0;
+main > #container_profile {
+    margin-left: 10px !important;
+    margin-top: 20px;
 }
 
  
