@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Container, Segment } from "semantic-ui-react";
+import { Grid, Container } from "semantic-ui-react";
 
 //? import css
 import "./AdminDashboard.css";
@@ -15,16 +15,6 @@ const AdminDashboard = () => {
           <Grid.Row>
             <Grid.Column>
               <AdminNewAccounts />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row>
-            <Grid.Column>
-              {" "}
-              <Segment>TODO later</Segment>
-            </Grid.Column>
-            <Grid.Column>
-              {" "}
-              <Segment>TODO later</Segment>
             </Grid.Column>
           </Grid.Row>
         </Grid>

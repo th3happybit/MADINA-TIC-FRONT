@@ -109,6 +109,17 @@
   padding: 1rem 2rem !important;
   min-width: 140px !important;
 }
+.ui.secondary.pointing.menu .active.item {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+.ui.secondary.pointing.menu .actitemive:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary);
+}
+.ui.secondary.pointing.menu .item {
+  color: var(--blue_darker) !important;
+}
 @media (max-width: 999px) {
   .new_accounts_table .table_element {
     max-width: 160px !important;
