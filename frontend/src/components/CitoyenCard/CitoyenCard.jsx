@@ -293,7 +293,7 @@ const Card = (props) => {
     return(
         <>
         
-          <Segment loading={loading && !cardLoading}
+        <Segment loading={loading ? loading : cardLoading}
           className="card-citoyen shadow">
             { (cit_infos ) && ( <>
               <div className={

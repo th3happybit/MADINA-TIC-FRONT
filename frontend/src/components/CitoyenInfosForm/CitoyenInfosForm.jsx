@@ -118,18 +118,18 @@ const InfosForm = (props) => {
                 <Form.Field disabled={isEditing}>
                     <label>First Name</label>
                     <Input fluid 
-                    placeholder={ !isEditing ? "First Name..." : cit_infos.first_name}
+                    placeholder={"First Name..."}
                     id="first_name"
-                    value={first_name}
+                    value={isEditing ? cit_infos.first_name : first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
                 <Form.Field disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"
-                    value={last_name}
+                    value={isEditing ? cit_infos.last_name : last_name}
                     onChange={handleChangeInput}
-                    placeholder={ !isEditing ? "Last Name..." : cit_infos.last_name} />
+                    placeholder={"Last Name..."} />
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
@@ -137,17 +137,17 @@ const InfosForm = (props) => {
                     <label>Email</label>
                     <Input fluid 
                     id="email"
-                    value={email}
+                    value={isEditing ? cit_infos.email : email}
                     onChange={handleChangeInput}
-                    placeholder={ !isEditing ? "Email..." : cit_infos.email}/>
+                    placeholder={"Email ..."}/>
                 </Form.Field>
                 <Form.Field disabled={isEditing}>
                     <label>Birthday</label>
                     <Input fluid 
                     id="birthday"
-                    value={birthday}
+                    value={isEditing ? cit_infos.date_of_birth : birthday}
                     onChange={handleChangeInput}
-                    placeholder={ !isEditing ? "Birthday..." : cit_infos.date_of_birth} />
+                    placeholder={"Birthday..."} />
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
@@ -155,17 +155,17 @@ const InfosForm = (props) => {
                     <label>Phone Number</label>
                     <Input fluid 
                     id="phone"
-                    value={phone}
+                    value={isEditing ? cit_infos.phone : phone}
                     onChange={handleChangeInput}
-                    placeholder={!isEditing ? "Phone Number..." : cit_infos.phone}/>
+                    placeholder={"Phone number ..."}/>
                 </Form.Field>
                 <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Address</label>
                     <Input fluid 
                     id="address"
-                    value={address}
+                    value={isEditing ? cit_infos.address : address}
                     onChange={handleChangeInput}
-                    placeholder={!isEditing ? "Address..." : cit_infos.address} />
+                    placeholder={"Address ..."} />
                 </Form.Field>
             </Form.Group>
             <Form.Group>
@@ -173,9 +173,9 @@ const InfosForm = (props) => {
                     <label>National ID</label>
                     <Input fluid 
                     id="national_id"
-                    value={national_id}
+                    value={isEditing ? cit_infos.national_id : national_id}
                     onChange={handleChangeInput}
-                    placeholder={!isEditing ? "National ID..." : cit_infos.national_id}/>
+                    placeholder={"National ID ..."}/>
                 </Form.Field>
             </Form.Group>
             {!isEditing && (

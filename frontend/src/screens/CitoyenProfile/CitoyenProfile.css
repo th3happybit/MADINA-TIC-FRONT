@@ -22,6 +22,8 @@ main > #container_profile {
     width: 70% !important;
 }
 
+
+
 .infos-form {
     margin-top : 70px;
     margin-bottom: -50px;
@@ -90,6 +92,11 @@ main > #container_profile {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
   border-radius: 5px !important;
   min-width: 270px !important;
+}
+
+.infos-form > form > .fields > .disabled.field {
+  opacity : 3 !important;
+  
 }
 
 .edit-profile-pic.mobile {
