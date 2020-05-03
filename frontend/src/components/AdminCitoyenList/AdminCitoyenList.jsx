@@ -118,12 +118,13 @@ const AccountsList = (props) => {
                         return (
                         <Table.Row key={index}>
                             <Table.Cell className="medium-text text-default ">
+                              { (first_name || last_name) && 
                             <div className="fullname_new_account">
                                 <Image src={image} className="_new_account-img" />
                                 <p className="medium-text text-default table_element">
                                 {first_name + " " + last_name}
                                 </p>
-                            </div>
+                              </div> }
                             </Table.Cell>
                             <Table.Cell className="medium-text text-default ">
                             <p className="table_element">{email}</p>
