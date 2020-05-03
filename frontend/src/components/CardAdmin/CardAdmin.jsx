@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Image, Icon, Button, Input, Segment } from "semantic-ui-react";
 import Axios from "axios";
+import UserContext from "../../screens/Admin/AdminContext.jsx";
 
 //? import css
 import "./CardAdmin.css";
@@ -32,6 +33,7 @@ const CardAdmin = (props) => {
   const [upload, setUpload] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
   const [cardLoading, setCardLoading] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   //! componentdidmount
   useEffect(() => {
@@ -43,6 +45,7 @@ const CardAdmin = (props) => {
     setBirthday(data_user.date_of_birth);
     setProfileImage(data_user.image);
   }, [data_user]);
+
   const handleInputChange = (e) => {
     if (isErr) setIsErr(false);
     let value = e.currentTarget.value;
@@ -89,12 +92,12 @@ const CardAdmin = (props) => {
   const fileSelectedHandler = (event) => {
     setImage(event.target.files[0]);
     setUpload((prevState) => !prevState);
+    props.updateImage(event.target.files[0]);
   };
   const uploadImageHandler = () => {
     setUpload((prevState) => !prevState);
     const formData = new FormData();
     formData.append("image", image, image.name);
-    console.log({ form: formData });
     setCardLoading(true);
     Axios.create({
       headers: {
@@ -112,31 +115,33 @@ const CardAdmin = (props) => {
       .then((res) => {
         setProfileImage(res.data.image);
         setCardLoading(false);
+        setUser((prevState) => !prevState);
       })
       .catch((err) => console.log(err.response));
   };
   const handleUpdate = () => {
+    const formData = new FormData();
+    props.image && formData.append("image", props.image, props.image.name);
+    formData.append("first_name", first_name);
+    formData.append("last_name", last_name);
+    formData.append("email", email);
+    formData.append("address", address);
+    formData.append("date_of_birth", birthday);
+
     setIsLoading(true);
     if (activeItem === "info") {
       Axios.create({
         headers: {
-          put: {
-            "Content-Type": "application/json",
+          patch: {
+            "Content-Type": "multipart/form-data",
             Authorization: `Token ${localStorage.getItem("admin_token")}`,
           },
         },
       })
         .request({
           url: "http://13.92.195.8/api/user/",
-          method: "put",
-          data: {
-            first_name,
-            last_name,
-            email,
-            address,
-            phone,
-            date_of_birth: birthday,
-          },
+          method: "patch",
+          data: formData,
         })
         .then((res) => {
           setIsLoading(false);
@@ -222,7 +227,7 @@ const CardAdmin = (props) => {
             }}
           >
             <div className="profile_">
-              <Image src={profileImage} alt="alex" />
+              <Image src={profileImage} />
               <div
                 className={
                   isEdit

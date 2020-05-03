@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Table, Button, Image, Modal } from "semantic-ui-react";
+import { Table, Button, Image, Modal, Pagination } from "semantic-ui-react";
 
 //? import css
 import "./TableNewAccounts";
@@ -10,6 +10,12 @@ const TableNewAccounts = (props) => {
   const [data, setData] = useState(null);
   const [isopen, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
+
+  const handlePagination = (e, { activePage }) => {
+    setActivePage(activePage);
+    props.update(activePage);
+  };
 
   useEffect(() => {
     setData(props.data);
@@ -60,6 +66,25 @@ const TableNewAccounts = (props) => {
               <Table.HeaderCell
                 width={3}
                 className="medium-text text-default not-bold "
+                onClick={() => {
+                  axios
+                    .create({
+                      headers: {
+                        get: {
+                          "Content-Type": "application/json",
+                          Authorization: `Token ${localStorage.getItem(
+                            "admin_token"
+                          )}`,
+                        },
+                      },
+                    })
+                    .request({
+                      url: props.next,
+                      method: "get",
+                    })
+                    .then((res) => console.log(res))
+                    .catch((err) => console.log(err.response));
+                }}
               >
                 Fullname
               </Table.HeaderCell>
@@ -90,7 +115,7 @@ const TableNewAccounts = (props) => {
             </Table.Row>
           </Table.Header>
 
-          <Table.Body>
+          <Table.Body className="table_body_new_users">
             {data.map((element, index) => {
               const {
                 first_name,
@@ -205,6 +230,16 @@ const TableNewAccounts = (props) => {
               );
             })}
           </Table.Body>
+          <Pagination
+            className="_margin_vertical_lg"
+            activePage={activePage}
+            onPageChange={handlePagination}
+            totalPages={props.count}
+            firstItem={null}
+            lastItem={null}
+            pointing
+            secondary
+          />
         </Table>
       )}
     </>

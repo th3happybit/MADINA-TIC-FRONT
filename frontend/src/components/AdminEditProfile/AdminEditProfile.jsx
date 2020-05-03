@@ -12,19 +12,9 @@ import Axios from "axios";
 const AdminEditProfile = (props) => {
   const { data_user } = props;
 
-  //! componentdidmount
-  useEffect(() => {
-    setFirstName(data_user.first_name);
-    setLastName(data_user.last_name);
-    setEmail(data_user.email);
-    setPhone(data_user.phone);
-    setAddress(data_user.address);
-    setBirthday(data_user.date_of_birth);
-  }, [data_user]);
-
   //? for the active item of the menu ... by the default the info is the active one
   const [activeItem, setActiveItem] = useState("info");
-  const [isShow, setisShow] = useState(true);
+  const [isShow, setisShow] = useState(false);
   //? data inputs
   const [first_name, setFirstName] = useState(null);
   const [last_name, setLastName] = useState(null);
@@ -38,6 +28,16 @@ const AdminEditProfile = (props) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [messageErr, setMessageErr] = useState("");
+
+  //! componentdidmount
+  useEffect(() => {
+    setFirstName(data_user.first_name);
+    setLastName(data_user.last_name);
+    setEmail(data_user.email);
+    setPhone(data_user.phone);
+    setAddress(data_user.address);
+    setBirthday(data_user.date_of_birth);
+  }, [data_user]);
 
   //? handle input changes
   const handleInputChange = (e) => {

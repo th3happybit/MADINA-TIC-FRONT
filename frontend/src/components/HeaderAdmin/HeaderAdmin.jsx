@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Search, Image, Dropdown, Button } from "semantic-ui-react";
+import UserContext from "../../screens/Admin/AdminContext.jsx";
+
 import { useHistory } from "react-router";
 import axios from "axios";
-
 //? import css
 import "./HeaderAdmin.css";
 
@@ -12,8 +13,9 @@ import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 
 import { Link } from "react-router-dom";
-
+//sfc shortcut
 const HeaderAdmin = (props) => {
+  const { isUploaded } = useContext(UserContext);
   const [image, setImage] = useState(null);
   useEffect(() => {
     axios
@@ -33,7 +35,7 @@ const HeaderAdmin = (props) => {
         setImage(res.data.image);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [isUploaded]);
   const trigger = <Image src={image} size="small" className="pointer" />;
   const { active } = props;
   const [isFocus, setFocus] = useState(false); //? if the input is focused or not

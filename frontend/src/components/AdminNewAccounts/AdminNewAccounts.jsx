@@ -11,7 +11,30 @@ import TableNewAccounts from "../TableNewAccounts/TableNewAccounts.jsx";
 const AdminNewAccounts = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [count, setCount] = useState(null);
 
+  const updateData = (pageNumber) => {
+    let url = `http://13.92.195.8/api/users/?page=${pageNumber}`;
+    setIsLoading(true);
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
+      })
+      .request({
+        url: url,
+        method: "get",
+      })
+      .then((res) => {
+        setData(res.data.results);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err.response));
+  };
   useEffect(() => {
     setIsLoading(true);
     getData();
@@ -27,21 +50,18 @@ const AdminNewAccounts = () => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/users/",
+        url: "http://13.92.195.8/api/users/?is_approved=false",
         method: "get",
       })
-
       .then((res) => {
-        setData(
-          res.data.results.filter((elm) => {
-            return elm.is_approved === false;
-          })
-        );
+        setData(res.data.results);
         setIsLoading(false);
+        if (res.data.count % 5 !== 0) {
+          setCount(Math.floor(res.data.count / 5) + 1);
+        } else setCount(Math.floor(res.data.count / 5));
       })
       .catch((err) => console.log(err.response));
   };
-  console.log(data);
   return (
     <Segment loading={isLoading} className="_new_accounts shadow">
       <div className="row">
@@ -55,7 +75,12 @@ const AdminNewAccounts = () => {
         </div>
       </div>
       <div className="row_t">
-        <TableNewAccounts data={data} refresh={getData} />
+        <TableNewAccounts
+          data={data}
+          count={count}
+          refresh={getData}
+          update={updateData}
+        />
       </div>
     </Segment>
   );

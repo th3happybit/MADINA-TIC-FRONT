@@ -10,8 +10,14 @@ import CardAdmin from "../../components/CardAdmin/CardAdmin.jsx";
 import AdminEditProfile from "../../components/AdminEditProfile/AdminEditProfile.jsx";
 
 const AdminProfile = (props) => {
+  const [image, setImage] = useState(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const updateImage = (img) => {
+    setImage(img);
+  };
+
   const GetDataProfile = () => {
     axios
       .create({
@@ -27,7 +33,7 @@ const AdminProfile = (props) => {
         method: "get",
       })
       .then((res) => {
-        console.log(res.data);
+        setImage(res.data.image);
         setData(res.data);
         setIsLoading(false);
       })
@@ -43,7 +49,11 @@ const AdminProfile = (props) => {
         <Container fluid>
           <Grid className="_admin_profile_grid">
             <Grid.Column className="_card">
-              <CardAdmin data_user={data} />
+              <CardAdmin
+                data_user={data}
+                updateImage={updateImage}
+                image={image}
+              />
             </Grid.Column>
             <Grid.Column className="_not_card">
               <AdminEditProfile data_user={data} refresh={GetDataProfile} />
@@ -51,7 +61,12 @@ const AdminProfile = (props) => {
           </Grid>
         </Container>
         <Container fluid className="mobile_profile">
-          <CardAdmin data_user={data} refresh={GetDataProfile} />
+          <CardAdmin
+            data_user={data}
+            refresh={GetDataProfile}
+            updateImage={updateImage}
+            image={image}
+          />
         </Container>
       </div>
     </Segment>
