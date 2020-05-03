@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React ,{useState, useEffect} from "react";
 import {Dropdown, Pagination, Segment} from "semantic-ui-react";
 import axios from "axios";
@@ -46,7 +47,7 @@ const AdminCitoyen = (props) => {
         .catch((err) => {
             console.log(err.response)
         })
-    }, [])
+    })
     const [allUsers, setallUsers] = useState(true);
     const [validatedOnly, setvalidatedOnly] = useState(false);
     const [notValidatedOnly, setnotValidatedOnly] = useState(false);
