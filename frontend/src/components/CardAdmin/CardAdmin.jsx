@@ -94,6 +94,7 @@ const CardAdmin = (props) => {
     setUpload((prevState) => !prevState);
     const formData = new FormData();
     formData.append("image", image, image.name);
+    console.log({ form: formData });
     setCardLoading(true);
     Axios.create({
       headers: {
