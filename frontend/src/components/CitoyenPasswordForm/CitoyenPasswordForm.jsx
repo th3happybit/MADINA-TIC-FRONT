@@ -104,8 +104,6 @@ const PasswordForm = () => {
       confirmPassword, 
     ]);
 
-    // console.log(errors);
-
     if (errors.length > 0){
       seterror(true);
     }
@@ -116,11 +114,17 @@ const PasswordForm = () => {
   const UpdatePasswordCitoyen = () => {
     setIsLoading(true);
     axios
-      .post("http://13.92.195.8/api/password/change", {
-        headers : {
-          "Content-Type": "application/json",
-          Authorization : `Token : ${localStorage.getItem("token")}`
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
         },
+      })
+      .request({
+        url: "http://13.92.195.8/api/password/change/",
+        method: "post",
         data : {
         old_password : currentPassword,
         new_password1 : newPassword,
@@ -130,7 +134,6 @@ const PasswordForm = () => {
       .then((res) => {
         setSuccess(true);
         setIsLoading(false);
-        // console.log(res);
       })
       .catch((err) => {
         let resErrOldPassword = err.response.data.old_password ? err.response.data.old_password[0] : "";

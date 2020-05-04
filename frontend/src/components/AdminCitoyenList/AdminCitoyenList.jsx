@@ -6,8 +6,6 @@ import ModalC from "./ModalConfirmation.jsx";
 
 const AccountsList = (props) => {
         
-    // var {AllUsers, ValidatedOnly, NotValidatedOnly} = props
-
     const {data} = props
     
     const handelApprove = (id) => {
@@ -34,7 +32,6 @@ const AccountsList = (props) => {
     }
 
     const handelBan = (id) => {
-        // console.log(String(id) + "Banned")
         axios
         .create({
           headers: {

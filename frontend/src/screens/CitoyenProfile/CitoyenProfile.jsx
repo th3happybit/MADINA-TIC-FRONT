@@ -14,6 +14,11 @@ const CitoyenProfile = () => {
     const [activeItem, setActiveItem] = useState("info");
     const [isLogin, setIsLogin] = useState("null");
     const [isLoading, setIsLoading] = useState(true);
+    const [image, setImage] = useState(null);
+    const updateImage = (img) => {
+      setImage(img);
+    };
+  
     useEffect(() => {
       if (localStorage.getItem("token")) {
         setIsLogin(true);
@@ -42,7 +47,9 @@ const CitoyenProfile = () => {
           method: "get",
         })
         .then((res) => {
+          console.log(res.data)
           setInfos(res.data);
+          setImage(res.data.image)
           setIsLoading(false);
         })
         .catch((err) => console.log(err));
@@ -63,7 +70,10 @@ const CitoyenProfile = () => {
                     <GridColumn className="left">
                         <Card
                         cit_infos={Infos}
-                        loading = {isLoading}/>
+                        loading = {isLoading}
+                        updateImage={updateImage}
+                        image={image}
+                        />
                     </GridColumn>
                     <GridColumn className="right">
                         <div className="edit-profile shadow">
@@ -94,7 +104,10 @@ const CitoyenProfile = () => {
             <Container fluid className="mobile-profile">
                 <Card
                 cit_infos = {Infos}
-                loading = {isLoading}/>
+                loading = {isLoading}
+                updateImage={updateImage}
+                image={image}
+                />
             </Container>
         </main> )
             : 

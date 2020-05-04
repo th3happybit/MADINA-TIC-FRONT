@@ -51,7 +51,7 @@ const Card = (props) => {
       setEmail(cit_infos.email);
       setaddress(cit_infos.address);
       setPhone(cit_infos.phone);
-      setimageP(cit_infos.image)
+      setimageP(cit_infos.image);
     }, [cit_infos])
     const handleShowPsw = (e) => {
         let id = e.currentTarget.attributes["data-id"].nodeValue;
@@ -126,9 +126,9 @@ const Card = (props) => {
         setEdit((prevState) => !prevState);
     };  
     const fileSelectedHandler = (event) => {
-      // console.log("zebi")
       setimage(event.target.files[0]);
-      setUpload((prevState) => !prevState)
+      setUpload((prevState) => !prevState);
+      props.updateImage(event.target.files[0]);
     };
     const handleItemClick = (e) => {
         setActiveItem(e.currentTarget.attributes["data-name"].value);
@@ -164,6 +164,15 @@ const Card = (props) => {
     };
     const handleSumbit = () => {
 
+      const formData = new FormData();
+      props.image && formData.append("image", props.image, props.image.name);
+      formData.append("first_name", first_name);
+      formData.append("last_name", last_name);
+      formData.append("email", email);
+      formData.append("address", address);
+      formData.append("date_of_birth", birthday);
+  
+
         if (error) seterror(null);
         if (success) setSuccess(null);
 
@@ -183,7 +192,29 @@ const Card = (props) => {
             seterror(true);
             } else {
             setSuccess(true);
-            UpdateInfosCitoyen();
+            setIsLoading(true);
+        axios
+        .create({
+          headers : {
+            patch :{
+              "Content-Type": "application/json",
+              Authorization : `Token ${localStorage.getItem("token")}`
+            },
+          },
+        })
+          .request({
+            url : "http://13.92.195.8/api/user/", 
+            method : "patch",
+            data : formData,
+          })
+          .then((res) => {
+            setSuccess(true);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            seterror(true);
+            setIsLoading(false);
+          });
             }
         }
         else {
@@ -202,43 +233,21 @@ const Card = (props) => {
             }
         }
     };
-    const UpdateInfosCitoyen = () => {
-        setIsLoading(true);
-        axios
-          .put("http://13.92.195.8/api/user/", {
-            headers :{
-              "Content-Type": "application/json",
-              Authorization : `Token ${localStorage.getItem("token")}`
-            },
-            data :{
-            first_name : first_name,
-            last_name : last_name,
-            email : email,
-            phone : phone,
-            date_of_birth: birthday,
-            address : address,
-            national_id : national_id
-            },
-          })
-          .then((res) => {
-            setSuccess(true);
-            setIsLoading(false);
-            props.refresh();
-          })
-          .catch((err) => {
-            seterror(true);
-            setIsLoading(false);
-            console.log(err)
-          });
-    };
+    
     const UpdatePasswordCitoyen = () => {
         setIsLoading(true);
         axios
-            .post("http://13.92.195.8/api/password/change", {
-                headers : {
+            .create({
+              headers: {
+                post: {
                   "Content-Type": "application/json",
-                  Authorization : `Token ${localStorage.getItem("token")}`
+                  Authorization: `Token ${localStorage.getItem("token")}`,
                 },
+              },
+            })
+              .request({
+                url: "http://13.92.195.8/api/password/change/",
+                method: "post",
                 data : {
                   old_password : currentPassword,
                   new_passowrd1 : newPassword,
@@ -263,9 +272,7 @@ const Card = (props) => {
     const uploadImageHandler = () => {
             setUpload((prevState) => !prevState);
             const formData = new FormData();
-            // console.log(image)
             formData.append("image", image, image.name);
-            // console.log(formData);
             setCardLoading(true);
             axios.create({
               headers: {
@@ -281,12 +288,10 @@ const Card = (props) => {
                 data: formData,
               })
               .then((res) => {
-                console.log("done !!")
                 setimageP(res.data.image);
                 setCardLoading(false);
               })
               .catch((err) =>  {
-                console.log("error")
                 console.log(err.response) });
     };
 

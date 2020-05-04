@@ -1,4 +1,4 @@
-import React ,{ useState }from "react";
+import React ,{ useState, useEffect }from "react";
 import {Form, Input, Button, Message} from "semantic-ui-react";
 
 import axios from "axios";
@@ -22,9 +22,19 @@ const InfosForm = (props) => {
     const [email, setEmail] = useState("");
     const [national_id, setnational_id] = useState("");
 
+    useEffect(() => {
+      setfirst_name(cit_infos.first_name);
+      setlast_name(cit_infos.last_name);
+      setbirthday(cit_infos.date_of_birth);
+      setaddress(cit_infos.address);
+      setnational_id(cit_infos.national_id);
+      setPhone(cit_infos.phone);
+      setEmail(cit_infos.email);
+    }, [cit_infos])
     //? function for changing data in inputs
     const handleChangeInput = (e) => {
     if (error) seterror(false);
+
     let id = e.currentTarget.id;
     switch (id) {
       case "first_name":
@@ -66,8 +76,6 @@ const InfosForm = (props) => {
           phone,
           national_id,
         });
-
-        // console.log(errors)
             
         if (errors.length > 0) {
           seterror(true);
@@ -78,30 +86,35 @@ const InfosForm = (props) => {
     const UpdateInfosCitoyen = () => {
         setIsLoading(true);
         axios
-          .put("http://13.92.195.8/api/users", {
-            headers : {
+        .create({
+          headers : {
+            put :{
               "Content-Type": "application/json",
-              Authorization : `Token : ${localStorage.getItem("token")}`
+              Authorization : `Token ${localStorage.getItem("token")}`
             },
+          },
+        })
+          .request({
+            url : "http://13.92.195.8/api/user/", 
+            method : "put",
             data : {
-              email,
-              first_name,
-              last_name,
-              phone,
+              email : email,
+              first_name : first_name,
+              last_name : last_name,
+              phone : phone,
               date_of_birth: birthday,
-              address
+              address : address,
+              national_id : national_id
             },
           })
           .then((res) => {
             setSuccess(true);
             setIsLoading(false);
             handelEditClick();
-            // console.log(res);
           })
           .catch((err) => {
             seterror(true);
             setIsLoading(false);
-            // console.log(err);
           });
       };
     const handelEditClick = () => {
@@ -120,14 +133,14 @@ const InfosForm = (props) => {
                     <Input fluid 
                     placeholder={"First Name..."}
                     id="first_name"
-                    value={isEditing ? cit_infos.first_name : first_name}
+                    value={first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
                 <Form.Field disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"
-                    value={isEditing ? cit_infos.last_name : last_name}
+                    value={last_name}
                     onChange={handleChangeInput}
                     placeholder={"Last Name..."} />
                 </Form.Field>
@@ -137,7 +150,7 @@ const InfosForm = (props) => {
                     <label>Email</label>
                     <Input fluid 
                     id="email"
-                    value={isEditing ? cit_infos.email : email}
+                    value={email}
                     onChange={handleChangeInput}
                     placeholder={"Email ..."}/>
                 </Form.Field>
@@ -145,7 +158,7 @@ const InfosForm = (props) => {
                     <label>Birthday</label>
                     <Input fluid 
                     id="birthday"
-                    value={isEditing ? cit_infos.date_of_birth : birthday}
+                    value={birthday}
                     onChange={handleChangeInput}
                     placeholder={"Birthday..."} />
                 </Form.Field>
@@ -155,7 +168,7 @@ const InfosForm = (props) => {
                     <label>Phone Number</label>
                     <Input fluid 
                     id="phone"
-                    value={isEditing ? cit_infos.phone : phone}
+                    value={phone}
                     onChange={handleChangeInput}
                     placeholder={"Phone number ..."}/>
                 </Form.Field>
@@ -163,7 +176,7 @@ const InfosForm = (props) => {
                     <label>Address</label>
                     <Input fluid 
                     id="address"
-                    value={isEditing ? cit_infos.address : address}
+                    value={address}
                     onChange={handleChangeInput}
                     placeholder={"Address ..."} />
                 </Form.Field>
@@ -173,7 +186,7 @@ const InfosForm = (props) => {
                     <label>National ID</label>
                     <Input fluid 
                     id="national_id"
-                    value={isEditing ? cit_infos.national_id : national_id}
+                    value={national_id}
                     onChange={handleChangeInput}
                     placeholder={"National ID ..."}/>
                 </Form.Field>

@@ -124,11 +124,22 @@
     border : solid 0.5px var(white);
 }
 
-#filter_menu {
+#filter_menu_sort {
     margin-top: 0.2rem !important;
-
 }
 
+
+#filter_menu_ {
+    margin-top: 0.2rem !important;
+}
+
+#sort_filter{
+    margin-right: 40px !important;
+}
+
+._filters + div {
+    margin-right: 40px !important ;
+}
 
 ._hide_on_mobile{
     border-radius: 5px !important;
@@ -217,6 +228,10 @@
     /* margin-bottom: 1rem !important; */
     margin-left : 1rem !important;
     /* margin-right : auto !important; */
+}
+
+#sort_filter{
+    margin-right: 0px !important;
 }
 
 }

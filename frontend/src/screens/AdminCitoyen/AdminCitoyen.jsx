@@ -36,13 +36,13 @@ const AdminCitoyen = (props) => {
         }
 
         if (sortP==="Name A-Z")
-            pa["ordering"] = "first_name"
+            pa["ordering"] = "first_name";
         else if (sortP==="Name Z-A")
-            pa["ordering"] = "-first_name"
+            pa["ordering"] = "-first_name";
         else if (sortP==="Newer First")
-            pa["ordering"] = "creation_on"
+            pa["ordering"] = "-created_on";
         else if (sortP==="Oldest First")
-            pa["ordering"] = "-creation_on"
+            pa["ordering"] = "created_on";
 
         pa["role"] = "Client"
         
@@ -57,9 +57,6 @@ const AdminCitoyen = (props) => {
         .then((res) => {
             console.log(res)
             setData(res.data.results)
-            // console.log(Data)
-            // console.log(res.data.count)
-            // if ( > 0){
             if (res.data.count % 5 === 0){
                 setcount(parseInt(res.data.count / 5))
                 console.log(count)
@@ -67,7 +64,6 @@ const AdminCitoyen = (props) => {
             else {
                 setcount(parseInt(res.data.count / 5) + 1)
             }
-        // }
         
             setisloading(false);  
         })
@@ -116,16 +112,16 @@ const AdminCitoyen = (props) => {
                 </div>
                 <div className="">
 
-                <div>  
+                <div class="_filters">  
                 <Dropdown
                     text={sort}
                     icon='angle down'
                     floating
                     labeled
                     button
-                    className='icon filter_admin_citoyen'
+                    className='icon filter_admin_citoyen' id="sort_filter"
                 >
-                    <Dropdown.Menu id="filter_menu">
+                    <Dropdown.Menu id="filter_menu_sort">
                     <Dropdown.Item
                         label={{ color: 'blue', empty: true, circular: true }}
                         text='Random'
@@ -161,7 +157,7 @@ const AdminCitoyen = (props) => {
                     button
                     className='icon filter_admin_citoyen'
                 >
-                    <Dropdown.Menu id="filter_menu">
+                    <Dropdown.Menu id="filter_menu_">
                     <Dropdown.Item
                         label={{ color: 'blue', empty: true, circular: true }}
                         text='All Users'
