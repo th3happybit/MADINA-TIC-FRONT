@@ -69,6 +69,7 @@
   border-radius: 50%;
   border: 2px solid #95989a;
   width: 50px;
+  height: 50px;
 }
 .profile_img .ui.dropdown .menu .item {
   background-color: white !important;

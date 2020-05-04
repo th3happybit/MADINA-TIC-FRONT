@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Message } from "semantic-ui-react";
-
+import { UserProvider } from "./AdminContext.jsx";
 //? import components
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin.jsx";
@@ -10,7 +10,6 @@ import SidebarAdmin from "../../components/SidebarAdmin/SidebarAdmin.jsx";
 const Admin = (props) => {
   const [isLogin, setIsLogin] = useState("null");
   useEffect(() => {
-    // console.log(localStorage);
     if (localStorage.getItem("admin_token")) {
       setIsLogin(true);
     } else {
@@ -19,19 +18,23 @@ const Admin = (props) => {
   }, []);
   const { active } = props;
   const [visible, setVisible] = useState(false);
+
+  //? data of context
+  const dataContext = { isUploaded: false };
+
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
   return (
     <>
       {isLogin ? (
-        <>
+        <UserProvider value={dataContext}>
           {visible && <Backdrop click={handleHide} />}
           <HeaderAdmin active={active} show={handleHide} />
           <SidebarHeader visible={visible} click={handleHide} />
           <SidebarAdmin active={active} />
           <main className="_admin_main">{props.childComponent}</main>
-        </>
+        </UserProvider>
       ) : (
         <div
           style={{
