@@ -1,251 +1,251 @@
 ._admin_accounts {
-    margin-top : 3rem !important;
-    width : 95.7%  !important;
-    height: 650px !important;
-    margin-left: auto  !important;
-    margin-right: auto  !important;
-    border: none !important;
-    border-radius : 5px  !important;
-    min-height: 400px !important;
-    max-height: 700px !important;
-    -ms-overflow-style: none  !important;
-    background-color:  white !important;
-    padding : 2rem !important;
+  margin-top: 3rem !important;
+  width: 95.7% !important;
+  height: 650px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  border: none !important;
+  border-radius: 5px !important;
+  min-height: 400px !important;
+  max-height: 700px !important;
+  -ms-overflow-style: none !important;
+  background-color: white !important;
+  padding: 2rem !important;
 }
 ._admin_accounts::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
+
 ._admin_accounts > .row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
 }
 ._admin_accounts > .row > .title_segment {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 ._admin_accounts > .row > .btn_segment > .button {
-    border: 2px solid var(--primary) !important;
-    color: var(--primary) !important;
-    background-color: white;
-    font-size: 15px !important;
-    padding: 0.571429em 1.2em !important;
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+  background-color: white;
+  font-size: 15px !important;
+  padding: 0.571429em 1.2em !important;
 }
 ._admin_accounts > .row > .btn_segment > .button:hover {
-    border: none;
-    background-color: var(--primary) !important ;
-    color: white !important;
+  border: none;
+  background-color: var(--primary) !important ;
+  color: white !important;
 }
 ._admin_accounts > .ui.table thead th {
-    border-bottom: 1px solid var(--secondary) !important;
+  border-bottom: 1px solid var(--secondary) !important;
 }
 ._admin_accounts > .ui.table tr td {
-    border: none !important;
+  border: none !important;
 }
 ._admin_accounts > .ui.basic.striped.table tbody tr:nth-child(2n) {
-    background-color: #b3b8bb1e !important;
+  background-color: #b3b8bb1e !important;
 }
 
 ._admin_accounts {
-    padding : 1rem 2rem;
+  padding: 1rem 2rem;
 }
 
-.divide_head{
-    width : 100%;
-    padding-top: 0;
-    color: rgba(34,36,38,.1);
+.divide_head {
+  width: 100%;
+  padding-top: 0;
+  color: rgba(34, 36, 38, 0.1);
 }
 
 ._citoyens_accounts_table {
-    width : 100%;
+  width: 100%;
 }
 
-._infos_btn{
-    background: white;
+._infos_btn {
+  background: white;
 }
 
 ._confirm_action_citoyen {
-    text-align: center;
+  text-align: center;
 }
 
-._content_modal_approve{
-    padding : 2rem;
+._content_modal_approve {
+  padding: 2rem;
 }
 
 ._content_modal_approve p {
-    font-size: 16px !important;
-    color: var(--blue_darker);
-  }
-
-._approve_btn{
-    color : white !important;
+  font-size: 16px !important;
+  color: var(--blue_darker);
 }
 
-._reject_btn{
-    color : white !important;
+._approve_btn {
+  color: white !important;
 }
 
-#manage_cell{
-    text-align: center;
+._reject_btn {
+  color: white !important;
 }
 
-._admin_citoyen_pagin{
-    position : absolute !important;
-    bottom: 7% !important;
-    left : 3% !important;
-    border-bottom: 2px solid rgba(34,36,38,.15) !important;
+#manage_cell {
+  text-align: center;
 }
 
-._filters{
-    display : flex !important;
+._admin_citoyen_pagin {
+  position: absolute !important;
+  bottom: 7% !important;
+  left: 3% !important;
+  border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
 }
 
-.filter_admin_citoyen{
-    color : var(--primary) !important;
-    border-radius: 0px !important;
-    width : 180px !important;
-    text-align : center !important;
-    border: 2px solid !important;
-    /* border-color: var(--primary); */
-    background-color: white !important;
+._filters {
+  display: flex !important;
 }
-  
+
+.filter_admin_citoyen {
+  color: var(--primary) !important;
+  border-radius: 0px !important;
+  width: 180px !important;
+  text-align: center !important;
+  border: 2px solid !important;
+  /* border-color: var(--primary); */
+  background-color: white !important;
+}
+
 .filter_admin_citoyen > i {
-    border-right: solid 2px var(--primary) !important;
-    border-left: solid 1px var(--primary) !important;
-    background-color: white !important;
-    /* color : white; */
+  border-right: solid 2px var(--primary) !important;
+  border-left: solid 1px var(--primary) !important;
+  background-color: white !important;
+  /* color : white; */
 }
 
-.filter_admin_citoyen:hover > i{
-    background-color: var(--primary) !important;
-    color : white !important;
-    border : solid 0.5px var(white);
+.filter_admin_citoyen:hover > i {
+  background-color: var(--primary) !important;
+  color: white !important;
+  border: solid 0.5px var(white);
 }
 
 #filter_menu_sort {
-    margin-top: 0.2rem !important;
+  margin-top: 0.2rem !important;
 }
-
 
 #filter_menu_ {
-    margin-top: 0.2rem !important;
+  margin-top: 0.2rem !important;
 }
 
-#sort_filter{
-    margin-right: 40px !important;
+#sort_filter {
+  margin-right: 40px !important;
 }
 
 ._filters + div {
-    margin-right: 40px !important ;
+  margin-right: 40px !important ;
 }
 
 #search_filter {
-    margin-right: 40px;
+  margin-right: 40px;
 }
 
-._hide_on_mobile{
-    border-radius: 5px !important;
+._hide_on_mobile {
+  border-radius: 5px !important;
 }
 
 .infos_button > .ui.button {
-    background: white !important;
+  background: white !important;
 }
 
 .infos_button > .ui.button:hover {
-    background: var(--gray_light) !important;
+  background: var(--gray_light) !important;
 }
 
-._show_on_mobile{
+._show_on_mobile {
+  display: none !important;
+  border-radius: 5px !important;
+}
+
+.infos_button {
+  padding-right: 1rem;
+}
+
+@media (max-width: 766px) {
+  ._admin_accounts {
+    height: 100% !important;
+    overflow-x: scroll !important;
+    overflow-x: hidden;
+  }
+
+  ._admin_accounts > .row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 6px;
+  }
+
+  .citoyens_accounts_table thead {
     display: none !important;
-    border-radius: 5px !important;
-}
+  }
 
-.infos_button{
-    padding-right: 1rem;
-}
+  ._show_on_mobile {
+    display: flex !important;
+  }
 
-@media (max-width : 766px){
+  ._hide_on_mobile {
+    display: none !important;
+  }
 
-    ._admin_accounts {
-        height: 100% !important;
-        overflow-x: scroll  !important;
-        overflow-x: hidden;
-    }
+  #manage_cell {
+    display: flex !important;
+  }
 
-    ._admin_accounts > .row {
-        flex-direction: column;
-        align-items: flex-start;
-        padding-bottom: 6px;
-    } 
-    
-    .citoyens_accounts_table thead {
-        display: none !important;
-    }
+  ._mobile_actions {
+    width: 120px !important;
+    justify-content: center;
+  }
 
-    ._show_on_mobile{
-        display: flex !important;
-    }
+  .infos_button > button {
+    background: var(--primary) !important;
+    color: white !important;
+  }
 
-    ._hide_on_mobile{
-        display : none !important;
-    }
+  .infos_button > .ui.button {
+    background: var(--primary) !important;
+  }
 
-    #manage_cell{
-        display: flex !important;
-    }
+  ._filters {
+    flex-direction: column !important;
+    margin-top: 30px;
+  }
 
-    ._mobile_actions{
-        width : 120px !important;
-        justify-content: center;
-    }
-
-    .infos_button > button{
-        background : var(--primary) !important;
-        color : white !important;
-    }
-
-
-    .infos_button > .ui.button {
-        background: var(--primary) !important;
-    }
-
-    ._filters {
-        flex-direction: column !important;
-        margin-top: 30px;
-    }
-
-
-.filter_admin_citoyen{
-    color : var(--primary) !important;
+  .filter_admin_citoyen {
+    color: var(--primary) !important;
     border-radius: 0px !important;
-    width : 180px !important;
-    text-align : center !important;
+    width: 180px !important;
+    text-align: center !important;
     border: 2px solid !important;
     border-color: var(--primary);
     background-color: transparent !important;
     margin-top: 10px !important;
-}
-  
-.filter_admin_citoyen > i {
+  }
+
+  .filter_admin_citoyen > i {
     border-right: solid var(--primary) !important;
     background-color: transparent !important;
-}
+  }
 
-._admin_citoyen_pagin{
-    position : relative !important;
+  ._admin_citoyen_pagin {
+    position: relative !important;
     margin-top: 1rem !important;
     /* margin-bottom: 1rem !important; */
-    margin-left : 1rem !important;
+    margin-left: 1rem !important;
     /* margin-right : auto !important; */
-}
+  }
 
-#sort_filter{
+  #sort_filter {
     margin-right: 0px !important;
-    margin-top : 25px !important;
+    margin-top: 25px !important;
     margin-bottom: 25px;
-}
-
+  }
+  .btn_account_detail.button {
+    display: flex !important;
+    align-items: center !important;
+  }
 }

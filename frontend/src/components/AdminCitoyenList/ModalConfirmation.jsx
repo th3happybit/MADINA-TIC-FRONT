@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Icon } from "semantic-ui-react";
 
-
 const ModalC = (props) => {
 
     const [openC, setopenC] = useState(false);

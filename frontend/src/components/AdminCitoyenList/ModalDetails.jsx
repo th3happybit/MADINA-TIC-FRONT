@@ -6,8 +6,7 @@ import { Modal, Button, Icon } from "semantic-ui-react";
 
 
 const ModalD = (props) => {
-
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
 
     const handelApp = () => {
