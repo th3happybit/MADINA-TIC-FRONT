@@ -10,10 +10,10 @@ import CardAdmin from "../../components/CardAdmin/CardAdmin.jsx";
 import AdminEditProfile from "../../components/AdminEditProfile/AdminEditProfile.jsx";
 
 const AdminProfile = (props) => {
-  const [image, setImage] = useState(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [image, setImage] = useState(null);
   const updateImage = (img) => {
     setImage(img);
   };

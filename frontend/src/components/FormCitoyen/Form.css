@@ -42,6 +42,7 @@
   ._citoyen_login.mobile {
     display: flex !important;
     justify-content: center;
+    height: 1000px !important;
   }
   .citoyen_mobile_container > .row {
     width: 340px !important;

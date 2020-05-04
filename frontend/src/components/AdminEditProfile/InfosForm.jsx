@@ -97,7 +97,17 @@ const InfosForm = (props) => {
           </Form.Group>
           <Message
             error
-            content="All the inputs are required to update the profile"
+            content={
+              first_name &&
+              first_name.length > 0 &&
+              last_name.length > 0 &&
+              address.length > 0 &&
+              email.length > 0 &&
+              birthday.length > 0 &&
+              phone.length > 0
+                ? "Please make sur that all the data is valid"
+                : "All the inputs are required to update the profile"
+            }
           />
         </Form>
       )}
