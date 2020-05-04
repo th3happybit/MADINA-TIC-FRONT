@@ -43,6 +43,7 @@ const HeaderAdmin = (props) => {
     setFocus((prevState) => !prevState);
   };
   const history = useHistory();
+
   const handleLogout = () => {
     axios
       .create({

@@ -84,7 +84,7 @@ const AdminAddAccountForm = () => {
               setAddressError(element[1][0]);
               break;
             case "role":
-              setRoleError(element[1][0]);
+              setRoleError("you must enter a valid role choice");
               break;
             default:
               break;
@@ -152,20 +152,23 @@ const AdminAddAccountForm = () => {
             <div className="input_with_label role _padding_vertical_lg">
               <p>Assign Role</p>
               <Form error={roleError !== null}>
-                <Form.Group inline className="select_box">
+                <Form.Group inline className="select_box text-default">
                   <Form.Radio
+                    className="text-default"
                     label="Client"
                     value="Client"
                     checked={selectedRole === "Client"}
                     onClick={handleChangeRole}
                   />
                   <Form.Radio
+                    className="text-default"
                     label="Maire"
                     value="Maire"
                     checked={selectedRole === "Maire"}
                     onClick={handleChangeRole}
                   />
                   <Form.Radio
+                    className="text-default"
                     label="Service"
                     value="Service"
                     checked={selectedRole === "Service"}

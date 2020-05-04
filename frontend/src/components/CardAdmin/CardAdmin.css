@@ -136,6 +136,9 @@
   .col_mobile {
     align-items: flex-start !important;
   }
+  .row.mobile_menu {
+    align-items: center !important;
+  }
   .save_img {
     display: none !important;
   }

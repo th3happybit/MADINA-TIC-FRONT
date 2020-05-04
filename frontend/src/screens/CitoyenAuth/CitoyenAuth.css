@@ -98,6 +98,9 @@
     text-align: left !important;
     bottom: 1% !important;
   }
+  .citoyen_mobile_container {
+    top: 5% !important;
+  }
 }
 @media (max-width: 499px) {
   .citoyen_mobile_container > .row {

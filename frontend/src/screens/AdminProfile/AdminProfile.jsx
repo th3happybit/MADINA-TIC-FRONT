@@ -10,12 +10,16 @@ import CardAdmin from "../../components/CardAdmin/CardAdmin.jsx";
 import AdminEditProfile from "../../components/AdminEditProfile/AdminEditProfile.jsx";
 
 const AdminProfile = (props) => {
-  const [image, setImage] = useState(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [pictureUpdated, setPictureUpdated] = useState(false);
+  const handlePictureUpdated = () => {
+    setPictureUpdated((prevState) => !prevState);
+  };
+  const [image, setImage] = useState(null);
   const updateImage = (img) => {
     setImage(img);
+    setPictureUpdated(true);
   };
 
   const GetDataProfile = () => {
@@ -53,6 +57,8 @@ const AdminProfile = (props) => {
                 data_user={data}
                 updateImage={updateImage}
                 image={image}
+                handlePictureUpdated={handlePictureUpdated}
+                pictureUpdated={pictureUpdated}
               />
             </Grid.Column>
             <Grid.Column className="_not_card">
@@ -62,6 +68,8 @@ const AdminProfile = (props) => {
         </Container>
         <Container fluid className="mobile_profile">
           <CardAdmin
+            handlePictureUpdated={handlePictureUpdated}
+            pictureUpdated={pictureUpdated}
             data_user={data}
             refresh={GetDataProfile}
             updateImage={updateImage}

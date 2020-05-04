@@ -9,7 +9,6 @@ import "./CitoyenCard.css";
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js"; 
 
-
 const Card = (props) => {
 
     const {cit_infos, loading } = props
@@ -167,7 +166,7 @@ const Card = (props) => {
     const handleSumbit = () => {
 
       const formData = new FormData();
-      console.log(props.image)
+      // console.log(props.image)
       imagesub && formData.append("image", props.image, props.image.name);
       formData.append("first_name", first_name);
       formData.append("last_name", last_name);
@@ -570,5 +569,4 @@ const Card = (props) => {
         </>	    
     );
 };
-
 export default Card;

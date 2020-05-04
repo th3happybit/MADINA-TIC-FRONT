@@ -84,12 +84,14 @@ const CardAdmin = (props) => {
     }
   };
   const handleEdit = () => {
+    props.handlePictureUpdated();
     setEdit((prevState) => !prevState);
   };
   const handleItemClick = (e) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
   };
   const fileSelectedHandler = (event) => {
+    props.handlePictureUpdated();
     setImage(event.target.files[0]);
     setUpload((prevState) => !prevState);
     props.updateImage(event.target.files[0]);
@@ -121,13 +123,17 @@ const CardAdmin = (props) => {
   };
   const handleUpdate = () => {
     const formData = new FormData();
-    props.image && formData.append("image", props.image, props.image.name);
+    if (props.pictureUpdated) {
+      console.log("s");
+      props.image && formData.append("image", props.image, props.image.name);
+    }
+
     formData.append("first_name", first_name);
     formData.append("last_name", last_name);
     formData.append("email", email);
     formData.append("address", address);
     formData.append("date_of_birth", birthday);
-
+    props.handlePictureUpdated();
     setIsLoading(true);
     if (activeItem === "info") {
       Axios.create({

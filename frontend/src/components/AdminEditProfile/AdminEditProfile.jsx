@@ -83,6 +83,27 @@ const AdminEditProfile = (props) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
   };
   const handleEditShowing = () => {
+    if (password !== "") setPassword("");
+    if (setNewPassword !== "") setNewPassword("");
+    if (setConfirmPassword !== "") setConfirmPassword("");
+    if (isErr) {
+      setIsErr(false);
+      setFirstName(data_user.first_name);
+      setLastName(data_user.last_name);
+      setEmail(data_user.email);
+      setPhone(data_user.phone);
+      setAddress(data_user.address);
+      setBirthday(data_user.date_of_birth);
+    } else {
+      if (first_name !== data_user.first_name)
+        setFirstName(data_user.first_name);
+      if (last_name !== data_user.last_name) setLastName(data_user.last_name);
+      if (data_user.email !== email) setEmail(data_user.email);
+      if (phone !== data_user.phone) setPhone(data_user.phone);
+      if (address !== data_user.address) setAddress(data_user.address);
+      if (birthday !== data_user.date_of_birth)
+        setBirthday(data_user.date_of_birth);
+    }
     setisShow((prevState) => !prevState);
   };
 
@@ -114,7 +135,10 @@ const AdminEditProfile = (props) => {
           setisShow((prevState) => !prevState);
           props.refresh();
         })
-        .catch(() => setIsErr(true));
+        .catch((err) => {
+          setIsLoading(false);
+          setIsErr(true);
+        });
     } else {
       Axios.create({
         headers: {
