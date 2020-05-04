@@ -83,6 +83,9 @@ const AdminEditProfile = (props) => {
     setActiveItem(e.currentTarget.attributes["data-name"].value);
   };
   const handleEditShowing = () => {
+    if (password !== "") setPassword("");
+    if (setNewPassword !== "") setNewPassword("");
+    if (setConfirmPassword !== "") setConfirmPassword("");
     if (isErr) {
       setIsErr(false);
       setFirstName(data_user.first_name);
