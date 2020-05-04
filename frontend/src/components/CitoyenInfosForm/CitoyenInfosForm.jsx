@@ -63,7 +63,6 @@ const InfosForm = (props) => {
     }
     };
     const handleSumbit = () => {
-        // let login = false;
         if (error) seterror(null);
         if (success) setSuccess(null);
     
@@ -118,7 +117,7 @@ const InfosForm = (props) => {
           });
       };
     const handelEditClick = () => {
-        setEditing((prevState) => !prevState);      
+        setEditing((prevState) => !prevState);     
       }
     return(
         <Form
@@ -136,7 +135,7 @@ const InfosForm = (props) => {
                     value={first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
-                <Form.Field disabled={isEditing}>
+                <Form.Field  disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"

@@ -78,10 +78,6 @@
     font-size: 16px !important;
     color: var(--blue_darker);
   }
-  
-.filtred {
-    display : none !important;
-}
 
 ._approve_btn{
     color : white !important;
@@ -97,8 +93,13 @@
 
 ._admin_citoyen_pagin{
     position : absolute !important;
-    bottom: 3%;
-    left : 3%;
+    bottom: 7% !important;
+    left : 3% !important;
+    border-bottom: 2px solid rgba(34,36,38,.15) !important;
+}
+
+._filters{
+    display : flex !important;
 }
 
 .filter_admin_citoyen{
@@ -139,6 +140,10 @@
 
 ._filters + div {
     margin-right: 40px !important ;
+}
+
+#search_filter {
+    margin-right: 40px;
 }
 
 ._hide_on_mobile{
@@ -206,6 +211,13 @@
     .infos_button > .ui.button {
         background: var(--primary) !important;
     }
+
+    ._filters {
+        flex-direction: column !important;
+        margin-top: 30px;
+    }
+
+
 .filter_admin_citoyen{
     color : var(--primary) !important;
     border-radius: 0px !important;
@@ -232,6 +244,8 @@
 
 #sort_filter{
     margin-right: 0px !important;
+    margin-top : 25px !important;
+    margin-bottom: 25px;
 }
 
 }

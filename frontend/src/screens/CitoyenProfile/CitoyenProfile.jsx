@@ -47,7 +47,6 @@ const CitoyenProfile = () => {
           method: "get",
         })
         .then((res) => {
-          console.log(res.data)
           setInfos(res.data);
           setImage(res.data.image)
           setIsLoading(false);

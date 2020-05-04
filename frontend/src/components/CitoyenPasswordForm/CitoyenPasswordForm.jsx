@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
@@ -22,6 +22,7 @@ const PasswordForm = () => {
   const [success, setSuccess] = useState(null);
   const [error, seterror] = useState(null);
   const [errMessage, seterrMessage] = useState(null);
+  const [isEditing, setisediting] = useState(false);
 
   const handleShowPsw = (e) => {
     let id = e.currentTarget.attributes["data-id"].nodeValue;
@@ -94,25 +95,32 @@ const PasswordForm = () => {
     }
   };
 
+  useEffect(() => {
+
+  }, [])
+
   const handleSumbit = () => {
+    setIsLoading(true);
     if (error) seterror(null);
     if (success) setSuccess(null);
-
+    
     var errors = ValidatePassword([
       currentPassword, 
       newPassword,
       confirmPassword, 
     ]);
 
+
     if (errors.length > 0){
       seterror(true);
+      seterrMessage(errors[0].error)  
+      setIsLoading(false)
     }
     else{
       UpdatePasswordCitoyen();
     }
   };
   const UpdatePasswordCitoyen = () => {
-    setIsLoading(true);
     axios
       .create({
         headers: {
@@ -126,9 +134,9 @@ const PasswordForm = () => {
         url: "http://13.92.195.8/api/password/change/",
         method: "post",
         data : {
-        old_password : currentPassword,
-        new_password1 : newPassword,
-        new_password2 : confirmPassword
+        old_password : currentPassword.value,
+        new_password1 : newPassword.value,
+        new_password2 : confirmPassword.value
         },
       })
       .then((res) => {
@@ -143,6 +151,7 @@ const PasswordForm = () => {
           } else seterrMessage(resErrNewPassw);
         seterror(true);
         setIsLoading(false);
+        console.log(err.response)
       });
   };
 
@@ -156,6 +165,7 @@ const PasswordForm = () => {
       <Form.Group className="input-password">
         <div className="input_p">
           <Form.Input
+            disabled={!isEditing}
             id="currentPassword"
             value={currentPassword.value}
             type={currentPassword.isPassword ? "password" : "text"}
@@ -174,6 +184,7 @@ const PasswordForm = () => {
       <Form.Group className="input-password">
         <div className="input_p">
           <Form.Input
+            disabled={!isEditing}
             id="newPassword"
             value={newPassword.value}
             type={newPassword.isPassword ? "password" : "text"}
@@ -192,6 +203,7 @@ const PasswordForm = () => {
       <Form.Group className="input-password">
         <div className="input_p">
           <Form.Input
+            disabled={!isEditing}
             id="confirmPassword"
             value={confirmPassword.value}
             type={confirmPassword.isPassword ? "password" : "text"}
@@ -207,16 +219,33 @@ const PasswordForm = () => {
           />
         </div>
       </Form.Group>
+      { isEditing ?
       <div  className="_margin_vertical_md pbutt subs">
+
+                
                 <Button className="button_secondary"
                 disabled={isLoading}
+                onClick={() => setisediting(false)}
                 >Cancel</Button>
+                
                 <Button 
                 type="submit"
                 onClick={handleSumbit}
                 loading={isLoading}
                 className="button_primary">Save</Button>
             </div>
+        :
+
+        <div  className="_margin_vertical_md pbutt subs">
+          <Button 
+          type="submit"
+          onClick={() => setisediting(true)}
+          loading={isLoading}
+          className="button_primary">
+            Edit
+          </Button>
+        </div>
+        }
             
             <Message error content={errMessage} />
             <Message success content="Your infos update request has been sent successfully" />

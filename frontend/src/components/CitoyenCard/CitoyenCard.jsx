@@ -30,6 +30,7 @@ const Card = (props) => {
     const [address, setaddress] = useState("");
     const [email, setEmail] = useState("");
     const [imageP, setimageP] = useState("");
+    const [imagesub, setimagesub] = useState(false);
     const [national_id, setnational_id] = useState("");
     const [currentPassword, setCurrentPassword] = useState({
         value: "",
@@ -129,6 +130,7 @@ const Card = (props) => {
       setimage(event.target.files[0]);
       setUpload((prevState) => !prevState);
       props.updateImage(event.target.files[0]);
+      setimagesub(true);
     };
     const handleItemClick = (e) => {
         setActiveItem(e.currentTarget.attributes["data-name"].value);
@@ -165,7 +167,8 @@ const Card = (props) => {
     const handleSumbit = () => {
 
       const formData = new FormData();
-      props.image && formData.append("image", props.image, props.image.name);
+      console.log(props.image)
+      imagesub && formData.append("image", props.image, props.image.name);
       formData.append("first_name", first_name);
       formData.append("last_name", last_name);
       formData.append("email", email);
@@ -210,10 +213,12 @@ const Card = (props) => {
           .then((res) => {
             setSuccess(true);
             setIsLoading(false);
+            setEdit(false)
           })
           .catch((err) => {
             seterror(true);
             setIsLoading(false);
+            setEdit(false);
           });
             }
         }
@@ -233,7 +238,6 @@ const Card = (props) => {
             }
         }
     };
-    
     const UpdatePasswordCitoyen = () => {
         setIsLoading(true);
         axios
@@ -268,7 +272,7 @@ const Card = (props) => {
                 seterror(true);
                 setIsLoading(false);
             });
-          }
+          };
     const uploadImageHandler = () => {
             setUpload((prevState) => !prevState);
             const formData = new FormData();

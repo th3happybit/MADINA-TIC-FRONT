@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React ,{useState, useEffect} from "react";
-import {Dropdown, Pagination, Segment} from "semantic-ui-react";
+import {Dropdown, Pagination, Segment, Search} from "semantic-ui-react";
 import axios from "axios";
 
 import CitoyenList from "../../components/AdminCitoyenList/AdminCitoyenList.jsx";
@@ -17,11 +17,18 @@ const AdminCitoyen = (props) => {
     const [activeFilter, setactiveFilter] = useState("All Citizens");
     const [page, setpage] = useState(1);
     const [sort, setsort] = useState("Sort");
+    const [term, setterm] = useState("");
+    const [searchLoading, setSearchLoading] = useState(false);
 
     const onChange = (e, pageInfo) => {
-            setpage(pageInfo.activePage);
+        setSearchLoading(true)
+        setpage(pageInfo.activePage);
     }
 
+    const handel_search = (e) => {
+        setSearchLoading(true);
+        setterm(e.currentTarget.value);
+    }
     const getData = (p, filter, sortP) => {
         
         let pa = {
@@ -44,7 +51,13 @@ const AdminCitoyen = (props) => {
         else if (sortP==="Oldest First")
             pa["ordering"] = "created_on";
 
+        if (term!==""){
+            pa["search"] = term;
+        }
+
         pa["role"] = "Client"
+
+
         
         axios
         .get( "http://13.92.195.8/api/users/" , {
@@ -55,16 +68,14 @@ const AdminCitoyen = (props) => {
             }
         })
         .then((res) => {
-            console.log(res)
             setData(res.data.results)
             if (res.data.count % 5 === 0){
                 setcount(parseInt(res.data.count / 5))
-                console.log(count)
             }
             else {
                 setcount(parseInt(res.data.count / 5) + 1)
             }
-        
+            setSearchLoading(false);
             setisloading(false);  
         })
         .catch((err) => {
@@ -73,7 +84,7 @@ const AdminCitoyen = (props) => {
     }
     useEffect(() => {
         getData(page, activeFilter, sort)
-    }, [page, activeFilter, sort])
+    }, [page, activeFilter, sort, term])
 
     const handel_all = () => {
         setactiveFilter("All Citizens");
@@ -110,9 +121,17 @@ const AdminCitoyen = (props) => {
                 <div className="title_segment">
                 <p className="extra-text text-default">Citizens List</p>
                 </div>
-                <div className="">
-
-                <div class="_filters">  
+                           
+                <div class="_filters">
+                <Search
+                id = "search_filter"
+                loading={searchLoading}
+                onSearchChange={handel_search}
+                value={term}
+                showNoResults={false}
+                results={null}
+                placeholder="Search for users..."
+                input={{ icon: "search", iconPosition: "left" }}/> 
                 <Dropdown
                     text={sort}
                     icon='angle down'
@@ -176,9 +195,6 @@ const AdminCitoyen = (props) => {
                     </Dropdown.Menu>
                 </Dropdown>
                 </div>
-
-
-                </div>
             </div>
             { !isloading &&
             (<div className="row_t">
@@ -192,6 +208,8 @@ const AdminCitoyen = (props) => {
                 firstItem={null}
                 lastItem={null}
                 totalPages={count}
+                pointing
+                secondary
             />
             </div>)}
             
