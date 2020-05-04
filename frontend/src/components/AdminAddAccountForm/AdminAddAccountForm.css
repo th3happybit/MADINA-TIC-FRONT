@@ -78,7 +78,9 @@
 ._add_account_admin_btn .button {
   font-size: 18px !important;
 }
-
+.input_with_label.role .ui.radio.checkbox label {
+  color: var(--blue_darker) !important;
+}
 .input_with_label {
   max-height: 76px !important;
   margin: 3rem 0;

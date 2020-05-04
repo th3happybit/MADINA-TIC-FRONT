@@ -20,17 +20,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
-._new_accounts > .row > .title_segment > .number_new_accounts {
-  background-color: var(--primary);
-  padding: 0.1rem 0.5rem;
-  border-radius: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  margin-bottom: 1.2rem;
-}
+
 ._reset_password_form {
   display: flex;
   justify-content: flex-start !important;
@@ -101,6 +93,9 @@
   justify-content: center;
   align-items: center;
 }
+.search_table {
+  margin-left: auto;
+}
 .content_modal_btns.marginTop {
   margin-top: 4rem;
 }
@@ -109,6 +104,7 @@
   padding: 1rem 2rem !important;
   min-width: 140px !important;
 }
+
 .ui.secondary.pointing.menu .active.item {
   border-color: var(--primary) !important;
   color: var(--primary) !important;
@@ -119,6 +115,12 @@
 }
 .ui.secondary.pointing.menu .item {
   color: var(--blue_darker) !important;
+}
+@media (max-width: 1050px) {
+  .element_hide_mobile.address,
+  .element_hide_mobile {
+    display: none !important;
+  }
 }
 @media (max-width: 999px) {
   .new_accounts_table .table_element {
@@ -166,9 +168,27 @@
     display: none !important;
   }
 }
+@media (max-width: 767px) {
+  .element_hide_mobile.address,
+  .element_hide_mobile {
+    display: block !important;
+  }
+}
 @media (max-width: 530px) {
   ._content_modal {
     width: 100%;
+  }
+
+  .search_table {
+    padding-top: 2rem;
+  }
+
+  ._new_accounts > .row > .title_segment {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .search_table {
+    margin: 0;
   }
   ._content_modal {
     padding: 2rem 0.5rem !important;
