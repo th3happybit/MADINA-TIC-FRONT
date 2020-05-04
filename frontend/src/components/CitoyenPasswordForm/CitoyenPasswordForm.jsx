@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
@@ -95,10 +95,6 @@ const PasswordForm = () => {
     }
   };
 
-  useEffect(() => {
-
-  }, [])
-
   const handleSumbit = () => {
     setIsLoading(true);
     if (error) seterror(null);
@@ -109,7 +105,6 @@ const PasswordForm = () => {
       newPassword,
       confirmPassword, 
     ]);
-
 
     if (errors.length > 0){
       seterror(true);

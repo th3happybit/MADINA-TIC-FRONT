@@ -91,6 +91,8 @@ const Card = (props) => {
         }
     };
     const handleInputChangeValue = (event) => {
+        if (error) seterror(false)
+        if (success) setSuccess(false)
         let value = event.currentTarget.value;
         let id = event.currentTarget.id;
         switch (id) {
@@ -136,6 +138,7 @@ const Card = (props) => {
     };
     const handleChangeInput = (e) => {
         if (error) seterror(false);
+        if (success) setSuccess(false);
         let id = e.currentTarget.id;
         switch (id) {
           case "first_name":
@@ -166,7 +169,6 @@ const Card = (props) => {
     const handleSumbit = () => {
 
       const formData = new FormData();
-      // console.log(props.image)
       imagesub && formData.append("image", props.image, props.image.name);
       formData.append("first_name", first_name);
       formData.append("last_name", last_name);
@@ -193,46 +195,45 @@ const Card = (props) => {
             if (errorsPr.length > 0) {
             seterror(true);
             } else {
-            setSuccess(true);
             setIsLoading(true);
-        axios
-        .create({
-          headers : {
-            patch :{
-              "Content-Type": "application/json",
-              Authorization : `Token ${localStorage.getItem("token")}`
-            },
-          },
-        })
-          .request({
-            url : "http://13.92.195.8/api/user/", 
-            method : "patch",
-            data : formData,
-          })
-          .then((res) => {
-            setSuccess(true);
-            setIsLoading(false);
-            setEdit(false)
-          })
-          .catch((err) => {
-            seterror(true);
-            setIsLoading(false);
-            setEdit(false);
-          });
+            axios
+            .create({
+              headers : {
+                patch :{
+                  "Content-Type": "multipart/form-data",
+                  Authorization : `Token ${localStorage.getItem("token")}`
+                },
+              },
+            })
+              .request({
+                url : "http://13.92.195.8/api/user/", 
+                method : "patch",
+                data : formData,
+              })
+              .then((res) => {
+                setSuccess(true);
+                setIsLoading(false);
+                setEdit(false)
+              })
+              .catch((err) => {
+                seterror(true);
+                setIsLoading(false);
+                setEdit(false);
+              });
+                }
             }
-        }
         else {
-            var errorsPa = ValidateUpdatePassword({
+            var errorsPa = ValidateUpdatePassword([
                 currentPassword,
                 newPassword,
                 confirmPassword,
-            })
+            ])
 
             if (errorsPa.length > 0){
                 seterror(true);
+                seterrMessage(errorsPa[0].error)
             }
             else {
-                setSuccess(true)
                 UpdatePasswordCitoyen();
             }
         }
@@ -252,9 +253,9 @@ const Card = (props) => {
                 url: "http://13.92.195.8/api/password/change/",
                 method: "post",
                 data : {
-                  old_password : currentPassword,
-                  new_passowrd1 : newPassword,
-                  new_password2 : confirmPassword,
+                  old_password : currentPassword.value ,
+                  new_passowrd1 : newPassword.value ,
+                  new_password2 : confirmPassword.value ,
                 },
             })
             .then((res) => {
@@ -544,7 +545,7 @@ const Card = (props) => {
                                           </div>
                                           <div className="input_p">
                                           <Input
-                                              id="confirpassword"
+                                              id="confirmPassword"
                                               className="mobile-input"
                                               value={confirmPassword.value}
                                               type={confirmPassword.isPassword ? "password" : "text"}

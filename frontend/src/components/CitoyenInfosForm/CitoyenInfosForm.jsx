@@ -21,6 +21,7 @@ const InfosForm = (props) => {
     const [address, setaddress] = useState("");
     const [email, setEmail] = useState("");
     const [national_id, setnational_id] = useState("");
+    const [errorMessage, seterrorMessage] = useState(null)
 
     useEffect(() => {
       setfirst_name(cit_infos.first_name);
@@ -65,6 +66,7 @@ const InfosForm = (props) => {
     const handleSumbit = () => {
         if (error) seterror(null);
         if (success) setSuccess(null);
+        if (errorMessage) seterrorMessage(null);
     
         const errors = ValidationDataUpdateProfile({
           first_name,
@@ -74,10 +76,10 @@ const InfosForm = (props) => {
           address,
           phone,
           national_id,
-        });
-            
+    });
         if (errors.length > 0) {
           seterror(true);
+          seterrorMessage(errors[0].error)
         } else {
           UpdateInfosCitoyen();
         }
@@ -113,6 +115,7 @@ const InfosForm = (props) => {
           })
           .catch((err) => {
             seterror(true);
+            seterrorMessage("Something went wrong during your request.")
             setIsLoading(false);
           });
       };
@@ -207,7 +210,7 @@ const InfosForm = (props) => {
                 </Button>
               </div>
             )}
-            <Message error content="Please make sur to enter a valid data" />
+            <Message error content={errorMessage} />
             <Message success content="Your infos update request has been sent successfully" />
         </Form>
     );

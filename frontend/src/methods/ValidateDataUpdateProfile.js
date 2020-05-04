@@ -20,7 +20,6 @@ const validateNationalID = (nid) => {
 
 const ValidateDataUpdateProfile = (data) => {
     const {
-        uid,
         first_name,
         last_name,
         email,
@@ -80,7 +79,7 @@ const ValidateDataUpdateProfile = (data) => {
         }
 
         if (national_id.length > 0){
-            if (!validateNationalID(national_id)){
+            if (!validateNationalID(national_id) || national_id.length > 10){
                 errors.push({
                     id : "national_id",
                     error : "Please, enter a valid national id",
