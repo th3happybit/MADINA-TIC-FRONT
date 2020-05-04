@@ -71,8 +71,12 @@ const AdminNewAccounts = () => {
       })
       .then((res) => {
         setData(res.data.results);
+        setIsLoading(false);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        console.log(err.response);
+        setIsLoading(false);
+      });
   };
   useEffect(() => {
     setIsLoading(true);
