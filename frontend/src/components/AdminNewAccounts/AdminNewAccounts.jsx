@@ -17,42 +17,39 @@ const AdminNewAccounts = () => {
 
   const handleSearch = (e, { value }) => {
     setsearchValue(value);
-    searchRequest();
   };
-
-  const searchRequest = () => {
-    if (searchValue.length > 3 || searchValue.length === 1) {
-      setSearchLoading(true);
-      axios
-        .create({
-          headers: {
-            get: {
-              "Content-Type": "application/json",
-              Authorization: `Token ${localStorage.getItem("admin_token")}`,
-            },
+  useEffect(() => {
+    setSearchLoading(true);
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
           },
-        })
-        .request({
-          url: `http://13.92.195.8/api/users/?search=${searchValue}?is_approved=false`,
-          method: "get",
-        })
-        .then((res) => {
-          if (res.count <= 5) {
-            setCount(res.data.count);
-          } else {
-            if (res.data.count % 5 !== 0) {
-              setCount(Math.floor(res.data.count / 5) + 1);
-            } else setCount(Math.floor(res.data.count / 5));
-          }
-          setData(res.data.results);
-          setSearchLoading(false);
-        })
-        .catch((err) => {
-          console.log(err.response);
-          setSearchLoading(false);
-        });
-    }
-  };
+        },
+      })
+      .request({
+        url: `http://13.92.195.8/api/users/?search=${searchValue}&?is_approved=false`,
+        method: "get",
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.count <= 5) {
+          setCount(res.data.count);
+        } else {
+          if (res.data.count % 5 !== 0) {
+            setCount(Math.floor(res.data.count / 5) + 1);
+          } else setCount(Math.floor(res.data.count / 5));
+        }
+        setData(res.data.results);
+        setSearchLoading(false);
+      })
+      .catch((err) => {
+        setSearchLoading(false);
+      });
+  }, [searchValue]);
+
   const updateData = (pageNumber) => {
     let url = `http://13.92.195.8/api/users/?page=${pageNumber}`;
     setIsLoading(true);
