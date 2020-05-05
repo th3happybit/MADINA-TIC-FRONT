@@ -44,9 +44,11 @@ const AdminCitoyen = (props) => {
                 },
             })
             .then((res) => {
-                setstat(true)
+                setstat(true);
+                if (activeFilter !== "All Citizens")
+                setpage(1);
             })
-            .catch((err) => console.log(err.response));
+            .catch((err) => {});
     }
 
     const handelBan = (id) => {
@@ -67,7 +69,9 @@ const AdminCitoyen = (props) => {
                 },
             })
             .then((res) => {
-                setstat(true)
+                setstat(true);
+                if (activeFilter !== "All Citizens")
+                setpage(1);
             })
             .catch((err) => {});
     }
