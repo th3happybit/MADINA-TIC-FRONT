@@ -24,6 +24,27 @@ const PasswordForm = () => {
   const [errMessage, seterrMessage] = useState(null);
   const [isEditing, setisediting] = useState(false);
 
+
+  const reset = () => {
+    if (currentPassword.value !== "") setCurrentPassword({
+      value: "",
+      isPassword: true,
+    });
+    if (newPassword.value !== "") setNewPassword({
+      value: "",
+      isPassword: true,
+    })
+    if (confirmPassword.value !== "") setConfirmPassword({
+      value: "",
+      isPassword: true,
+    })
+    
+  }
+  const handleedit = () => {
+    reset()
+    setisediting((prevState) => !prevState);
+  }
+
   const handleShowPsw = (e) => {
     let id = e.currentTarget.attributes["data-id"].nodeValue;
     switch (id) {
@@ -63,6 +84,8 @@ const PasswordForm = () => {
   };
 
   const handleInputChangeValue = (event) => {
+    if (error) seterror(null)
+    if (success) setSuccess(null)
     let value = event.currentTarget.value;
     let id = event.currentTarget.id;
     switch (id) {
@@ -108,8 +131,9 @@ const PasswordForm = () => {
 
     if (errors.length > 0){
       seterror(true);
-      seterrMessage(errors[0].error)  
-      setIsLoading(false)
+      seterrMessage(errors[0].error);  
+      setIsLoading(false);
+      reset();
     }
     else{
       UpdatePasswordCitoyen();
@@ -146,7 +170,7 @@ const PasswordForm = () => {
           } else seterrMessage(resErrNewPassw);
         seterror(true);
         setIsLoading(false);
-        console.log(err.response)
+        reset();
       });
   };
 
@@ -220,7 +244,7 @@ const PasswordForm = () => {
                 
                 <Button className="button_secondary"
                 disabled={isLoading}
-                onClick={() => setisediting(false)}
+                onClick={handleedit}
                 >Cancel</Button>
                 
                 <Button 
@@ -234,7 +258,7 @@ const PasswordForm = () => {
         <div  className="_margin_vertical_md pbutt subs">
           <Button 
           type="submit"
-          onClick={() => setisediting(true)}
+          onClick={handleedit}
           loading={isLoading}
           className="button_primary">
             Edit

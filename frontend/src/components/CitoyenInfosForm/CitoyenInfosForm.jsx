@@ -112,6 +112,7 @@ const InfosForm = (props) => {
             setSuccess(true);
             setIsLoading(false);
             handelEditClick();
+            props.refresh();
           })
           .catch((err) => {
             seterror(true);
@@ -120,6 +121,13 @@ const InfosForm = (props) => {
           });
       };
     const handelEditClick = () => {
+      if (email !== cit_infos.email) setEmail(cit_infos.email)
+      if (first_name !== cit_infos.first_name)  setfirst_name(cit_infos.first_name);
+      if (last_name !== cit_infos.last_name) setlast_name(cit_infos.last_name);
+      if (national_id !== cit_infos.national_id)  setnational_id(cit_infos.national_id);
+      if (birthday !== cit_infos.date_of_birth) setbirthday(cit_infos.date_of_birth);
+      if (address !== cit_infos.address) setaddress(cit_infos.address);
+      if (phone !== cit_infos.phone) setPhone(cit_infos.phone);
         setEditing((prevState) => !prevState);     
       }
     return(

@@ -21,6 +21,7 @@ const Card = (props) => {
     const [image, setimage] = useState(null);
     const [upload, setUpload] = useState(true);
     const [cardLoading, setCardLoading] = useState(false);
+    const [updated, setupdated] = useState(false)
 
     const [first_name, setfirst_name] = useState("");
     const [last_name, setlast_name] = useState("");
@@ -52,7 +53,7 @@ const Card = (props) => {
       setaddress(cit_infos.address);
       setPhone(cit_infos.phone);
       setimageP(cit_infos.image);
-    }, [cit_infos])
+    }, [cit_infos, updated])
     const handleShowPsw = (e) => {
         let id = e.currentTarget.attributes["data-id"].nodeValue;
         switch (id) {
@@ -125,6 +126,16 @@ const Card = (props) => {
         }
     };
     const handleEdit = () => {
+        if (currentPassword !== "") setCurrentPassword("");
+        if (newPassword !== "") setNewPassword("");
+        if (confirmPassword !== "") setConfirmPassword("");
+        if (email !== cit_infos.email) setEmail(cit_infos.email)
+        if (first_name !== cit_infos.first_name)  setfirst_name(cit_infos.first_name);
+        if (last_name !== cit_infos.last_name) setlast_name(cit_infos.last_name);
+        if (national_id !== cit_infos.national_id)  setnational_id(cit_infos.national_id);
+        if (birthday !== cit_infos.date_of_birth) setbirthday(cit_infos.date_of_birth);
+        if (address !== cit_infos.address) setaddress(cit_infos.address);
+        if (phone !== cit_infos.phone) setPhone(cit_infos.phone);
         setEdit((prevState) => !prevState);
     };  
     const fileSelectedHandler = (event) => {
@@ -211,6 +222,7 @@ const Card = (props) => {
                 data : formData,
               })
               .then((res) => {
+                props.refresh()
                 setSuccess(true);
                 setIsLoading(false);
                 setEdit(false)
@@ -294,9 +306,10 @@ const Card = (props) => {
               .then((res) => {
                 setimageP(res.data.image);
                 setCardLoading(false);
+                setupdated((prevState) => !prevState);
               })
               .catch((err) =>  {
-                console.log(err.response) });
+              setCardLoading(false) });
     };
 
     return(
@@ -355,7 +368,7 @@ const Card = (props) => {
                       />
                   </div>
               </div>
-                  {!isEdit && !loading && <p className="_margin_vertical_sm title">{first_name + " " + last_name}</p>}
+                  {!isEdit && !loading && <p className="_margin_vertical_sm title">{cit_infos.first_name + " " + cit_infos.last_name}</p>}
                   {isEdit && (
                       <div className="name-input margin_vertical_sm">
                       <Input
@@ -385,31 +398,31 @@ const Card = (props) => {
                               <span className="small">
                                   <Icon name="mail" className="icon_card" /> Email
                               </span>
-                              <p className="small">{email}</p>
+                              <p className="small">{cit_infos.email}</p>
                           </div>
                           <div className="col">
                               <span className="small">
                                   <Icon name="birthday" className="icon_card" /> Birthday
                               </span>
-                              <p className=" small">{birthday}</p>
+                              <p className=" small">{cit_infos.date_of_birth}</p>
                           </div>
                           <div className="col">
                               <span className=" small">
                                   <Icon name="map marker alternate" className="icon_card" /> Address
                               </span>
-                              <p className="small">{address}</p>
+                              <p className="small">{cit_infos.address}</p>
                           </div>
                           <div className="col">
                               <span className="small">
                                   <Icon name="phone" flipped={"horizontally"}className="icon_card" /> Phone Number
                               </span>
-                              <p className="small">{phone}</p>
+                              <p className="small">{cit_infos.phone}</p>
                           </div>
                           <div className="col">
                               <span className="small">
                                   <Icon name="id card" className="icon_card" /> National ID
                               </span>
-                              <p className="small">{national_id}</p>
+                              <p className="small">{cit_infos.national_id}</p>
                           </div>
                       </div>
                       <div className="social-media">

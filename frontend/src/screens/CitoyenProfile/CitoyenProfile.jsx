@@ -22,6 +22,7 @@ const CitoyenProfile = () => {
     useEffect(() => {
       if (localStorage.getItem("token")) {
         setIsLogin(true);
+        GetCitoyenInfos();
       } else {
         setIsLogin(false);
       }
@@ -51,13 +52,9 @@ const CitoyenProfile = () => {
           setImage(res.data.image)
           setIsLoading(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
         
     }
-
-    useEffect(() => {
-      GetCitoyenInfos();
-    }, [])
 
 
     return (
@@ -72,6 +69,7 @@ const CitoyenProfile = () => {
                         loading = {isLoading}
                         updateImage={updateImage}
                         image={image}
+                        refresh={GetCitoyenInfos}
                         />
                     </GridColumn>
                     <GridColumn className="right">
@@ -92,7 +90,9 @@ const CitoyenProfile = () => {
                                 />
                                 </Menu>                    
                                 <div className="infos-form">
-                                    {(activeItem==="info" && <InfosForm cit_infos={Infos} loading={isLoading}/>)}
+                                    {(activeItem==="info" && <InfosForm cit_infos={Infos} 
+                                                                        refresh={GetCitoyenInfos} 
+                                                                        loading={isLoading}/>)}
                                     {(activeItem==="password" && <PasswordForm/>)}
                                 </div>
                             </div>
@@ -106,6 +106,7 @@ const CitoyenProfile = () => {
                 loading = {isLoading}
                 updateImage={updateImage}
                 image={image}
+                refresh={GetCitoyenInfos}
                 />
             </Container>
         </main> )

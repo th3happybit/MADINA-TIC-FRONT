@@ -167,6 +167,12 @@
   padding-right: 1rem;
 }
 
+@media (max-width : 1400px) {
+  ._admin_accounts .element_hide_mobile {
+    display: none;
+  }
+}
+
 @media (max-width: 766px) {
   ._admin_accounts {
     height: 100% !important;
