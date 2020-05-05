@@ -25,7 +25,6 @@ const PasswordForm = (props) => {
             placeholder="Current Password"
             onChange={handleInputChange}
           />
-          <i className="eye icon pointer" data-id="password" />
         </div>
       </Form.Group>{" "}
       <Form.Group className="_form_password">
@@ -39,7 +38,6 @@ const PasswordForm = (props) => {
             placeholder="New Password"
             onChange={handleInputChange}
           />
-          <i className="eye icon pointer" data-id="new_password" />
         </div>
       </Form.Group>{" "}
       <Form.Group className="_form_password">
@@ -53,7 +51,6 @@ const PasswordForm = (props) => {
             placeholder="Confirm Password"
             onChange={handleInputChange}
           />
-          <i className="eye icon pointer" data-id="confirm_password" />
         </div>
       </Form.Group>{" "}
       <Message error content={messageErr} />

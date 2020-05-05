@@ -27,7 +27,6 @@ function App() {
     <Router>
       <Switch>
         <Route
-          
           path="/account/reset-password/confirm/:uid/:token"
           component={CitoyenResetPassword}
         />
@@ -50,7 +49,7 @@ function App() {
           exact
           path="/admin/profile"
           component={() => (
-            <Admin active="" childComponent={<AdminProfile />} />
+            <Admin active="profile" childComponent={<AdminProfile />} />
           )}
         />
         <Route

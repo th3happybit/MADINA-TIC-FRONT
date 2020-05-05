@@ -167,7 +167,7 @@
   padding-right: 1rem;
 }
 
-@media (max-width : 1400px) {
+@media (max-width: 1400px) {
   ._admin_accounts .element_hide_mobile {
     display: none;
   }
@@ -254,4 +254,7 @@
     display: flex !important;
     align-items: center !important;
   }
+}
+.infos_button > .shadow.btn_account_detail.pointer._show_on_mobile:hover {
+  background: var(--primary_darker) !important;
 }

@@ -151,7 +151,11 @@
   ._content_modal {
     width: 80%;
   }
+  ._admin_accounts {
+    scrollbar-width: none !important;
+  }
   ._new_accounts {
+    scrollbar-width: none !important;
     padding: 1rem !important;
   }
   ._new_accounts > .row > .btn_segment > .button {

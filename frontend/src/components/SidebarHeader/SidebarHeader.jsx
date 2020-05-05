@@ -1,9 +1,9 @@
 import React from "react";
 import { List } from "semantic-ui-react";
 import "./SidebarHeader.css";
-import SearchInput from "../SearchInput/SearchInput.jsx";
 import axios from "axios";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 //? import toggle
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
@@ -38,33 +38,70 @@ const SidebarHeader = (props) => {
       <Toggle className="_header_logo pointer" onClick={props.click} />
       <List className="_sidebar_list">
         <List.Item>
-          <SearchInput />
-        </List.Item>
-        <List.Item>
-          <a href="/" className="medium-text text-default text-active">
+          <Link
+            to="/admin/dashboard"
+            className={
+              props.active === "dashboard"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
             Dashboard
-          </a>
+          </Link>
         </List.Item>
         <List.Item>
-          <a href="/" className="medium-text text-default ">
+          <Link
+            to="/admin/citoyen"
+            className={
+              props.active === "citoyens"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
             Citoyens
-          </a>
+          </Link>
         </List.Item>
         <List.Item>
-          <a href="/" className="medium-text text-default ">
+          <Link
+            to="/admin/create/account"
+            className={
+              props.active === "account"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Add account
+          </Link>
+        </List.Item>
+        <List.Item>
+          <a
+            href="/admin/profile"
+            className={
+              props.active === "profile"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
             Profile
           </a>
         </List.Item>{" "}
         <List.Item>
-          <a href="/" className="medium-text text-default">
+          <Link
+            to="/admin/notifications"
+            className={
+              props.active === "notifications"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
             Notification
-          </a>
+          </Link>
         </List.Item>
       </List>
       <div className="_logout_header _margin_vertical_sm">
         <p
           onClick={handleLogout}
-          className="_logout_button_header _margin_horizontal_md  button_primary  medium-text border-radius-bg"
+          className="_logout_button_header _margin_horizontal_md  button_primary  medium-text border-radius-bg pointer"
         >
           Logout
         </p>

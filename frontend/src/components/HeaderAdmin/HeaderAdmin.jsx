@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Search, Image, Dropdown, Button } from "semantic-ui-react";
+import { Image, Dropdown, Button } from "semantic-ui-react";
 import UserContext from "../../screens/Admin/AdminContext.jsx";
 
 import { useHistory } from "react-router";
@@ -38,10 +38,7 @@ const HeaderAdmin = (props) => {
   }, [isUploaded]);
   const trigger = <Image src={image} size="small" className="pointer" />;
   const { active } = props;
-  const [isFocus, setFocus] = useState(false); //? if the input is focused or not
-  const handleFocus = () => {
-    setFocus((prevState) => !prevState);
-  };
+
   const history = useHistory();
 
   const handleLogout = () => {
@@ -71,13 +68,7 @@ const HeaderAdmin = (props) => {
     <>
       {image && (
         <header className="_header_admin">
-          <div className={isFocus ? "row focus" : "row"}>
-            <Search
-              onFocus={handleFocus}
-              onBlur={handleFocus}
-              placeholder="Search for anything"
-              input={{ icon: "search", iconPosition: "left" }}
-            />
+          <div className="row">
             <div className="right_part">
               <div className="profile_img">
                 {" "}

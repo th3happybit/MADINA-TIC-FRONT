@@ -20,6 +20,9 @@
   flex-direction: column;
   display: flex;
 }
+._sidebar_list .item a:hover {
+  color: var(--primary) !important;
+}
 ._sidebar_list > .item {
   margin: 1.5rem 0 !important;
 }

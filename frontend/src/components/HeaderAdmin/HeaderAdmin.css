@@ -10,7 +10,7 @@
   display: flex;
   padding: 0.6rem 0;
   background-color: white;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 }
 .right_part > .profile_img > .btn_segment .button {
@@ -100,7 +100,7 @@
     height: 60px;
   }
 }
-@media (max-width: 530px) {
+@media (max-width: 730px) {
   ._header_logo {
     width: 40px;
     height: 40px;

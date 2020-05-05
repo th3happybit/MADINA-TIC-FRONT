@@ -31,7 +31,7 @@ const Admin = (props) => {
         <UserProvider value={dataContext}>
           {visible && <Backdrop click={handleHide} />}
           <HeaderAdmin active={active} show={handleHide} />
-          <SidebarHeader visible={visible} click={handleHide} />
+          <SidebarHeader visible={visible} active={active} click={handleHide} />
           <SidebarAdmin active={active} />
           <main className="_admin_main">{props.childComponent}</main>
         </UserProvider>

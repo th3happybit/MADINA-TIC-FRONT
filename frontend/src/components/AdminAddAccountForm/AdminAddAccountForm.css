@@ -150,6 +150,9 @@
     width: 220px !important;
     margin: 0 !important;
   }
+  ._add_account_admin_btn {
+    justify-content: center !important;
+  }
 }
 @media (max-width: 499px) {
   ._succes_add {
