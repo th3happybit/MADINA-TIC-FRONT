@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Grid, GridColumn, Container, Menu, Message} from "semantic-ui-react";
+import axios from "axios";
 
 import InfosForm from "../../components/CitoyenInfosForm/CitoyenInfosForm.jsx"
 import Card from "../../components/CitoyenCard/CitoyenCard.jsx";
@@ -8,12 +9,20 @@ import PasswordForm from "../../components/CitoyenPasswordForm/CitoyenPasswordFo
 import "./CitoyenProfile.css"
 
 const CitoyenProfile = () => {
+
+    const [Infos, setInfos] = useState([]);
     const [activeItem, setActiveItem] = useState("info");
     const [isLogin, setIsLogin] = useState("null");
+    const [isLoading, setIsLoading] = useState(true);
+    const [image, setImage] = useState(null);
+    const updateImage = (img) => {
+      setImage(img);
+    };
+  
     useEffect(() => {
-    //   console.log(localStorage);
       if (localStorage.getItem("token")) {
         setIsLogin(true);
+        GetCitoyenInfos();
       } else {
         setIsLogin(false);
       }
@@ -24,18 +33,47 @@ const CitoyenProfile = () => {
     };
 
 
+    const GetCitoyenInfos = () => {
+        axios
+        .create({
+          headers: {
+            get: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://13.92.195.8/api/user/",
+          method: "get",
+        })
+        .then((res) => {
+          setInfos(res.data);
+          setImage(res.data.image)
+          setIsLoading(false);
+        })
+        .catch((err) => {});
+        
+    }
+
+
     return (
         <>
         {isLogin ? (
         <main>
-            
-            <Container fluid>
+            <Container fluid id="container_profile">
                 <Grid className="citoyen-profile">
                     <GridColumn className="left">
-                        <Card/>
+                        <Card
+                        cit_infos={Infos}
+                        loading = {isLoading}
+                        updateImage={updateImage}
+                        image={image}
+                        refresh={GetCitoyenInfos}
+                        />
                     </GridColumn>
                     <GridColumn className="right">
-                        <div className="edit-profile">
+                        <div className="edit-profile shadow">
                             <div className="_info_menu">
                                 <Menu pointing secondary>
                                 <Menu.Item
@@ -52,8 +90,10 @@ const CitoyenProfile = () => {
                                 />
                                 </Menu>                    
                                 <div className="infos-form">
-                                    {(activeItem==="info" && <InfosForm></InfosForm>)}
-                                    {(activeItem==="password" && <PasswordForm></PasswordForm>)}
+                                    {(activeItem==="info" && <InfosForm cit_infos={Infos} 
+                                                                        refresh={GetCitoyenInfos} 
+                                                                        loading={isLoading}/>)}
+                                    {(activeItem==="password" && <PasswordForm/>)}
                                 </div>
                             </div>
                         </div>
@@ -61,9 +101,14 @@ const CitoyenProfile = () => {
                 </Grid>
             </Container>
             <Container fluid className="mobile-profile">
-                <Card/>
+                <Card
+                cit_infos = {Infos}
+                loading = {isLoading}
+                updateImage={updateImage}
+                image={image}
+                refresh={GetCitoyenInfos}
+                />
             </Container>
-        
         </main> )
             : 
         (<div
@@ -78,7 +123,7 @@ const CitoyenProfile = () => {
             {" "}
             <Message negative>
               <Message.Header>
-                We're sorry you can't access this route
+                We're sorry you are not logged in :(
               </Message.Header>
               <p
                 className="text-default title _margin_vertical_sm pointer "
@@ -87,6 +132,7 @@ const CitoyenProfile = () => {
                 }}
               >
                 Go to login page?<a href="/login">click here</a>
+                You don't have account?<a href="/signup">click here</a>
               </p>
             </Message>
           </div>)}

@@ -1,4 +1,4 @@
-import React ,{ useState }from "react";
+import React ,{ useState, useEffect }from "react";
 import {Form, Input, Button, Message} from "semantic-ui-react";
 
 import axios from "axios";
@@ -7,7 +7,9 @@ import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile
 
 const InfosForm = (props) => {
 
-    
+
+  const {cit_infos, loading} = props;
+
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState(null);
     const [isEditing, setEditing] = useState(true);
@@ -19,10 +21,21 @@ const InfosForm = (props) => {
     const [address, setaddress] = useState("");
     const [email, setEmail] = useState("");
     const [national_id, setnational_id] = useState("");
+    const [errorMessage, seterrorMessage] = useState(null)
 
+    useEffect(() => {
+      setfirst_name(cit_infos.first_name);
+      setlast_name(cit_infos.last_name);
+      setbirthday(cit_infos.date_of_birth);
+      setaddress(cit_infos.address);
+      setnational_id(cit_infos.national_id);
+      setPhone(cit_infos.phone);
+      setEmail(cit_infos.email);
+    }, [cit_infos])
     //? function for changing data in inputs
     const handleChangeInput = (e) => {
     if (error) seterror(false);
+
     let id = e.currentTarget.id;
     switch (id) {
       case "first_name":
@@ -51,9 +64,9 @@ const InfosForm = (props) => {
     }
     };
     const handleSumbit = () => {
-        // let login = false;
         if (error) seterror(null);
         if (success) setSuccess(null);
+        if (errorMessage) seterrorMessage(null);
     
         const errors = ValidationDataUpdateProfile({
           first_name,
@@ -63,12 +76,10 @@ const InfosForm = (props) => {
           address,
           phone,
           national_id,
-        });
-
-        // console.log(errors)
-            
+    });
         if (errors.length > 0) {
           seterror(true);
+          seterrorMessage(errors[0].error)
         } else {
           UpdateInfosCitoyen();
         }
@@ -76,57 +87,72 @@ const InfosForm = (props) => {
     const UpdateInfosCitoyen = () => {
         setIsLoading(true);
         axios
-          .put("http://13.92.195.8/api/users", {
-            headers : {
+        .create({
+          headers : {
+            put :{
               "Content-Type": "application/json",
-              Authorization : `Token : $localStorage.getItem("token")`
+              Authorization : `Token ${localStorage.getItem("token")}`
             },
+          },
+        })
+          .request({
+            url : "http://13.92.195.8/api/user/", 
+            method : "put",
             data : {
-              email,
-              first_name,
-              last_name,
-              phone,
+              email : email,
+              first_name : first_name,
+              last_name : last_name,
+              phone : phone,
               date_of_birth: birthday,
-              address
+              address : address,
+              national_id : national_id
             },
           })
           .then((res) => {
             setSuccess(true);
             setIsLoading(false);
             handelEditClick();
-            // console.log(res);
+            props.refresh();
           })
           .catch((err) => {
             seterror(true);
+            seterrorMessage("Something went wrong during your request.")
             setIsLoading(false);
-            // console.log(err);
           });
       };
     const handelEditClick = () => {
-        setEditing((prevState) => !prevState);      
+      if (email !== cit_infos.email) setEmail(cit_infos.email)
+      if (first_name !== cit_infos.first_name)  setfirst_name(cit_infos.first_name);
+      if (last_name !== cit_infos.last_name) setlast_name(cit_infos.last_name);
+      if (national_id !== cit_infos.national_id)  setnational_id(cit_infos.national_id);
+      if (birthday !== cit_infos.date_of_birth) setbirthday(cit_infos.date_of_birth);
+      if (address !== cit_infos.address) setaddress(cit_infos.address);
+      if (phone !== cit_infos.phone) setPhone(cit_infos.phone);
+        setEditing((prevState) => !prevState);     
       }
     return(
-        <Form 
+        <Form
+        loading={loading}
         success = {success}
         error = {error}
         id="iform" 
         className="_margin_vertical_lg">
             <Form.Group widths="equal">
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>First Name</label>
                     <Input fluid 
-                    placeholder="First Name..."
+                    placeholder={"First Name..."}
                     id="first_name"
                     value={first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"
                     value={last_name}
                     onChange={handleChangeInput}
-                    placeholder="Last Name..." />
+                    placeholder={"Last Name..."} />
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
@@ -136,15 +162,15 @@ const InfosForm = (props) => {
                     id="email"
                     value={email}
                     onChange={handleChangeInput}
-                    placeholder="Email..." />
+                    placeholder={"Email ..."}/>
                 </Form.Field>
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Birthday</label>
                     <Input fluid 
                     id="birthday"
                     value={birthday}
                     onChange={handleChangeInput}
-                    placeholder="Birthday..." />
+                    placeholder={"Birthday..."} />
                 </Form.Field>
             </Form.Group>
             <Form.Group widths="equal">
@@ -154,7 +180,7 @@ const InfosForm = (props) => {
                     id="phone"
                     value={phone}
                     onChange={handleChangeInput}
-                    placeholder="Phone Number..." />
+                    placeholder={"Phone number ..."}/>
                 </Form.Field>
                 <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Address</label>
@@ -162,17 +188,17 @@ const InfosForm = (props) => {
                     id="address"
                     value={address}
                     onChange={handleChangeInput}
-                    placeholder="Address..." />
+                    placeholder={"Address ..."} />
                 </Form.Field>
             </Form.Group>
             <Form.Group>
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>National ID</label>
                     <Input fluid 
                     id="national_id"
                     value={national_id}
                     onChange={handleChangeInput}
-                    placeholder="National ID..." />
+                    placeholder={"National ID ..."}/>
                 </Form.Field>
             </Form.Group>
             {!isEditing && (
@@ -192,7 +218,7 @@ const InfosForm = (props) => {
                 </Button>
               </div>
             )}
-            <Message error content="Please make sur to enter a valid data" />
+            <Message error content={errorMessage} />
             <Message success content="Your infos update request has been sent successfully" />
         </Form>
     );

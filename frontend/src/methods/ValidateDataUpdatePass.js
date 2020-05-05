@@ -10,9 +10,6 @@ const ValidateDataUpdatePass = (data) => {
             new_pass,
             confirm_pass ] = data;
 
-    console.log(new_pass.value);
-
-
     let errors = [];
 
 
@@ -20,26 +17,26 @@ const ValidateDataUpdatePass = (data) => {
         if(!validatePassword(new_pass.value)){
             errors.push({
                 id : "passoword",
-                error : "Password must be at least 8 charcaters and contain at least one upercase letter and one number ",
+                error : "Password must be at least 8 charcaters and contain at least one upercase letter and one number.",
             });
         }
         if (new_pass.value !== confirm_pass.value){
             errors.push({
                 id : "password",
-                error : "Password are note identical",
+                error : "Password are note identical.",
             });
         }
              if (new_pass.value.length > 128){
             errors.push({
                 id : "password",
-                error : "Password is too long",
+                error : "Password is too long.",
             });
         }
     }
     else {
         errors.push({
             id : "Password",
-            error : "Nothing to submit",
+            error : "Nothing to submit.",
         })
     }
 
