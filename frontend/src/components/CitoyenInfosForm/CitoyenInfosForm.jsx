@@ -138,7 +138,7 @@ const InfosForm = (props) => {
         id="iform" 
         className="_margin_vertical_lg">
             <Form.Group widths="equal">
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>First Name</label>
                     <Input fluid 
                     placeholder={"First Name..."}
@@ -146,7 +146,7 @@ const InfosForm = (props) => {
                     value={first_name}
                     onChange={handleChangeInput} />
                 </Form.Field>
-                <Form.Field  disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Last Name</label>
                     <Input fluid 
                     id="last_name"
@@ -164,7 +164,7 @@ const InfosForm = (props) => {
                     onChange={handleChangeInput}
                     placeholder={"Email ..."}/>
                 </Form.Field>
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>Birthday</label>
                     <Input fluid 
                     id="birthday"
@@ -192,7 +192,7 @@ const InfosForm = (props) => {
                 </Form.Field>
             </Form.Group>
             <Form.Group>
-                <Form.Field disabled={isEditing}>
+                <Form.Field required={!isEditing} disabled={isEditing}>
                     <label>National ID</label>
                     <Input fluid 
                     id="national_id"

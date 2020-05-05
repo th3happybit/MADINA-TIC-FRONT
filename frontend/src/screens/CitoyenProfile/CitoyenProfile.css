@@ -176,6 +176,8 @@ main > #container_profile {
     padding : 1rem 0;
   }
 
+  .mobile-input
+
   .mobile_profile {
     display: flex !important;
     flex-direction: column;
@@ -209,7 +211,7 @@ main > #container_profile {
       margin: 1rem 0 !important;
     }
     .input_p i {
-      top : 40%;
+      top : 30%;
     }
     ._info_menu {
       width: 100%;
@@ -250,10 +252,10 @@ main > #container_profile {
     border: 0 !important;
   }
 
-  .col_mobile {
+  .mobile-profile .col_mobile {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    align-items: center !important;
     flex-direction: column;
   }
 
@@ -283,10 +285,9 @@ main > #container_profile {
     margin: 0 !important;
   }
 
-  .mobile-input{
-    width : 100%;
+  .mobile-profile i{
+    display: inline !important;
   }
-
   .name-input{
     width : 100%;
     display: flex;

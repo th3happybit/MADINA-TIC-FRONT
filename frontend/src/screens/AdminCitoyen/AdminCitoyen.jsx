@@ -69,12 +69,13 @@ const AdminCitoyen = (props) => {
             .then((res) => {
                 setstat(true)
             })
-            .catch((err) => console.log(err.response));
+            .catch((err) => {});
     }
 
     const handel_search = (e) => {
         setSearchLoading(true);
         setterm(e.currentTarget.value);
+        setpage(1)
     }
     const getData = (p, filter, sortP) => {
 
@@ -84,13 +85,9 @@ const AdminCitoyen = (props) => {
 
         if (filter === "Not Approved") {
             pa["is_approved"] = false;
-            // pa["page"] = 1;
-            // setpage(1);
         }
         else if (filter === "Approved") {
             pa["is_approved"] = true;
-            // pa["page"] = 1;
-            // setpage(1);
         }
 
         if (sortP === "Name A-Z")
@@ -123,12 +120,17 @@ const AdminCitoyen = (props) => {
             .then((res) => {
                 // console.log(res)
                 setData(res.data.results)
+                if ((res.data.count) < 6) {
+                    setpage(1);
+                    setcount(1);
+                } else {
                 if (res.data.count % 5 === 0) {
                     setcount(parseInt(res.data.count / 5))
                 }
                 else {
                     setcount(parseInt(res.data.count / 5) + 1)
                 }
+            }
                 setSearchLoading(false);
                 setisloading(false);
             })
@@ -146,11 +148,13 @@ const AdminCitoyen = (props) => {
     }
 
     const handel_onlyvalidated = () => {
-        setactiveFilter("Approved")
+        setactiveFilter("Approved");
+        setpage(1);
     }
 
     const handel_notvalidated = () => {
-        setactiveFilter("Not Approved")
+        setactiveFilter("Not Approved");
+        setpage(1);
     }
 
     const sortNameAZ = () => {

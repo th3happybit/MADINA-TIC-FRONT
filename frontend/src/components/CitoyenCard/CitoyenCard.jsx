@@ -17,7 +17,7 @@ const Card = (props) => {
     const [activeItem, setActiveItem] = useState("info");
     const [success, setSuccess] = useState(null);
     const [error, seterror] = useState(null);
-    const [errMEssage, seterrMessage] = useState(null);
+    const [errMessage, seterrMessage] = useState(null);
     const [image, setimage] = useState(null);
     const [upload, setUpload] = useState(true);
     const [cardLoading, setCardLoading] = useState(false);
@@ -126,9 +126,18 @@ const Card = (props) => {
         }
     };
     const handleEdit = () => {
-        if (currentPassword !== "") setCurrentPassword("");
-        if (newPassword !== "") setNewPassword("");
-        if (confirmPassword !== "") setConfirmPassword("");
+        if (currentPassword.value !== "") setCurrentPassword({
+          value : "",
+          isPassword : true,
+        });
+        if (newPassword.value !== "") setNewPassword({
+          value : "",
+          isPassword : true,
+        });
+        if (confirmPassword.value !== "") setConfirmPassword({
+          value : "",
+          isPassword : true,
+        });
         if (email !== cit_infos.email) setEmail(cit_infos.email)
         if (first_name !== cit_infos.first_name)  setfirst_name(cit_infos.first_name);
         if (last_name !== cit_infos.last_name) setlast_name(cit_infos.last_name);
@@ -186,6 +195,8 @@ const Card = (props) => {
       formData.append("email", email);
       formData.append("address", address);
       formData.append("date_of_birth", birthday);
+      formData.append("national_id", national_id);
+      formData.append("phone", phone);
   
 
         if (error) seterror(null);
@@ -205,6 +216,7 @@ const Card = (props) => {
         
             if (errorsPr.length > 0) {
             seterror(true);
+            seterrMessage(errorsPr[0].value)
             } else {
             setIsLoading(true);
             axios
@@ -571,7 +583,7 @@ const Card = (props) => {
                                               onClick={handleShowPsw}
                                           />
                                           </div>
-                                          <Message error content={errMEssage} />
+                                          <Message error content={errMessage} />
                                           <Message success content="Your infos update request has been sent successfully" />
                                       </div>
                                   </Form>            
