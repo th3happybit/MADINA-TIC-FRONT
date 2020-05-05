@@ -14,72 +14,19 @@ const AdminNewAccounts = () => {
   const [count, setCount] = useState(null);
   const [searchValue, setsearchValue] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
+
+  const handlePagination = (e, { activePage }) => {
+    setActivePage(activePage);
+  };
 
   const handleSearch = (e, { value }) => {
     setsearchValue(value);
   };
-  useEffect(() => {
-    setSearchLoading(true);
-    axios
-      .create({
-        headers: {
-          get: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("admin_token")}`,
-          },
-        },
-      })
-      .request({
-        url: `http://13.92.195.8/api/users/?search=${searchValue}&?is_approved=false`,
-        method: "get",
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.count <= 5) {
-          setCount(res.data.count);
-        } else {
-          if (res.data.count % 5 !== 0) {
-            setCount(Math.floor(res.data.count / 5) + 1);
-          } else setCount(Math.floor(res.data.count / 5));
-        }
-        setData(res.data.results);
-        setSearchLoading(false);
-      })
-      .catch((err) => {
-        setSearchLoading(false);
-      });
-  }, [searchValue]);
 
-  const updateData = (pageNumber) => {
-    let url = `http://13.92.195.8/api/users/?page=${pageNumber}`;
-    setIsLoading(true);
-    axios
-      .create({
-        headers: {
-          get: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("admin_token")}`,
-          },
-        },
-      })
-      .request({
-        url: url,
-        method: "get",
-      })
-      .then((res) => {
-        setData(res.data.results);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        setIsLoading(false);
-      });
-  };
   useEffect(() => {
     setIsLoading(true);
-    getData();
-  }, []);
-  const getData = () => {
+    let url = `http://13.92.195.8/api/users/`;
     axios
       .create({
         headers: {
@@ -90,8 +37,13 @@ const AdminNewAccounts = () => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/users/?is_approved=false",
+        url,
         method: "get",
+        params: {
+          page: activePage,
+          search: searchValue,
+          is_approved: false,
+        },
       })
       .then((res) => {
         console.log(res);
@@ -100,9 +52,11 @@ const AdminNewAccounts = () => {
         if (res.data.count % 5 !== 0) {
           setCount(Math.floor(res.data.count / 5) + 1);
         } else setCount(Math.floor(res.data.count / 5));
+        setSearchLoading(false);
       })
       .catch((err) => console.log(err.response));
-  };
+  }, [searchValue, activePage]);
+
   return (
     <Segment loading={isLoading} className="_new_accounts shadow">
       <div className="row">
@@ -125,8 +79,8 @@ const AdminNewAccounts = () => {
         <TableNewAccounts
           data={data}
           count={count}
-          refresh={getData}
-          update={updateData}
+          activePage={activePage}
+          handlePagination={handlePagination}
         />
       </div>
     </Segment>

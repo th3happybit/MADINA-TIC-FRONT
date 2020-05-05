@@ -8,13 +8,6 @@ import axios from "axios";
 
 const TableNewAccounts = (props) => {
   const [data, setData] = useState(null);
-  const [activePage, setActivePage] = useState(1);
-
-  const handlePagination = (e, { activePage }) => {
-    setActivePage(activePage);
-    props.update(activePage);
-  };
-
   useEffect(() => {
     setData(props.data);
   }, [props]);
@@ -90,8 +83,8 @@ const TableNewAccounts = (props) => {
           </Table.Body>
           <Pagination
             className="_margin_vertical_lg"
-            activePage={activePage}
-            onPageChange={handlePagination}
+            activePage={props.activePage}
+            onPageChange={props.handlePagination}
             totalPages={props.count}
             firstItem={null}
             lastItem={null}
