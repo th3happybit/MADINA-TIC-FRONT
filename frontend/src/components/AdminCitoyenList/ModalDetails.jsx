@@ -73,14 +73,14 @@ const ModalD = (props) => {
               <p>{address ? address : " / "}</p>
               <p>{role ? role : " / "}</p>
               <p>{date_inscription ? date_inscription : " / "}</p>
-              <p>{is_active ? "Validated" : "Not Validated"}</p>
+              <p>{is_active ? "Activated" : "Desactivated"}</p>
             </div>
           </div>
         </Modal.Content>
         {!is_active && (
           <Modal.Content className="content_modal_btns marginTop" d_uid={uid}>
             <Button className="button_primary" onClick={handelApp}>
-              Approve
+              Activate
             </Button>
             <Button className="button_secondary" onClick={handleclose}>
               Reject

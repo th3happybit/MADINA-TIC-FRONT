@@ -60,7 +60,7 @@ const ModalC = (props) => {
                     <p>Confirm Your Action</p>
                 </div>
                 <div className="_content_modal_approve">
-                    <p>Confirm {is_active ? "Ban" : "Approve"} {first_name}  {last_name} ?</p>
+                    <p>Confirm {is_active ? "Ban" : "Activate"} {first_name}  {last_name} ?</p>
                 </div>
                 <div className="content_modal_btns">
                     <Button className="button_primary" onClick={handelConfirm}>
