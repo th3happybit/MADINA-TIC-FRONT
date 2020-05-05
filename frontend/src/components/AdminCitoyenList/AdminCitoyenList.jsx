@@ -63,7 +63,7 @@ const AccountsList = (props) => {
               role,
               created_on,
               phone,
-              is_approved
+              is_active
             } = element;
 
             return (
@@ -88,7 +88,7 @@ const AccountsList = (props) => {
                 </Table.Cell>
                 <Table.Cell className="medium-text text-default ">
                   <p className="table_element">
-                    {is_approved ? "Validated" : "Not Validated"}
+                    {is_active ? "Active" : "Descativated"}
                   </p>
                 </Table.Cell>{" "}
                 <Table.Cell className="medium-text text-default " id="manage_cell" >
@@ -98,7 +98,7 @@ const AccountsList = (props) => {
                     last_name={last_name}
                     email={email}
                     phone={phone}
-                    is_approved={is_approved}
+                    is_active={is_active}
                     role={role}
                     uid={uid}
                     address={address}
@@ -108,8 +108,8 @@ const AccountsList = (props) => {
                   <ModalC
                     first_name={first_name}
                     last_name={last_name}
-                    is_approved={is_approved}
-                    onConfirm={is_approved ? handelBan : handelApprove}
+                    is_active={is_active}
+                    onConfirm={is_active ? handelBan : handelApprove}
                     uid={uid}
                   />
                 </Table.Cell>

@@ -6,7 +6,7 @@ const ModalC = (props) => {
     const [openC, setopenC] = useState(false);
 
     const {
-        is_approved,
+        is_active,
         first_name,
         last_name,
         onConfirm,
@@ -35,7 +35,7 @@ const ModalC = (props) => {
             onClose={handleclose}
             className="_change_approval"
             trigger={
-                !is_approved ?
+                !is_active ?
                     (
                         <Button.Group onClick={handleopen}>
                             <Button icon color="green" className="_reject_btn shadow _hide_on_mobile" >
@@ -60,7 +60,7 @@ const ModalC = (props) => {
                     <p>Confirm Your Action</p>
                 </div>
                 <div className="_content_modal_approve">
-                    <p>Confirm {is_approved ? "Ban" : "Approve"} {first_name}  {last_name} ?</p>
+                    <p>Confirm {is_active ? "Ban" : "Approve"} {first_name}  {last_name} ?</p>
                 </div>
                 <div className="content_modal_btns">
                     <Button className="button_primary" onClick={handelConfirm}>
