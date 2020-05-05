@@ -1,0 +1,145 @@
+._card_admin {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
+.save_img {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  visibility: hidden !important;
+}
+.ui.segment {
+  border: none !important;
+}
+._admin_edit_profile {
+  border: none !important;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
+.save_img.hide {
+  visibility: visible !important;
+}
+.save_img .button {
+  min-width: 80px !important;
+  padding: 0.7rem 1rem !important;
+}
+._card_admin > ._admin_profile_image {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 2rem;
+  padding-top: 1rem;
+  border: 0.5px solid #707070;
+  border-right: 0;
+  border-top: 0;
+  border-left: 0;
+}
+._card_admin > ._admin_profile_image > .profile_ > .image {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: gray;
+}
+._card_admin > ._admin_profile_image > .profile_ > ._profile_img_edit {
+  width: 35px;
+  background-color: white;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 60%;
+  right: -5%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+._profile_img_edit > label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#myInput {
+  position: absolute;
+  top: 60%;
+  right: -5%;
+}
+.profile_ {
+  position: relative;
+}
+._card_admin > ._admin_profile_image > .profile_ > ._profile_img_edit svg {
+  height: 20px;
+  width: 20px;
+}
+._card_admin > .row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 4rem 2rem;
+}
+._card_admin > .row > .col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.6rem 0;
+}
+._card_admin > .row > .col span {
+  color: #576271 !important;
+}
+.icon_card {
+  color: #576271 !important;
+}
+.social_media_profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.social_media_profile {
+  padding: 3rem;
+}
+._profile_img_edit.mobile.hide {
+  display: none !important;
+}
+._profile_img_edit.mobile,
+._buttons_mobile {
+  min-height: 66px !important;
+}
+._buttons_mobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+}
+._buttons_mobile.hide {
+  display: none !important;
+}
+._buttons_mobile .secondary {
+  background-color: var(--secondary) !important;
+  color: white !important;
+  font-size: 14px !important;
+}
+._buttons_mobile .primary {
+  background-color: var(--primary) !important;
+  color: white !important;
+  font-size: 14px !important;
+  border-radius: 5px;
+}
+@media (max-width: 999px) {
+  .col_mobile {
+    align-items: flex-start !important;
+  }
+  .row.mobile_menu {
+    align-items: center !important;
+  }
+  .save_img {
+    display: none !important;
+  }
+}

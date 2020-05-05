@@ -1,0 +1,89 @@
+import React, { useState, useEffect } from "react";
+import { Segment, Search } from "semantic-ui-react";
+import axios from "axios";
+
+//? import css
+import "./AdminNewAccounts.css";
+
+//? import components
+import TableNewAccounts from "../TableNewAccounts/TableNewAccounts.jsx";
+
+const AdminNewAccounts = () => {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [count, setCount] = useState(null);
+  const [searchValue, setsearchValue] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
+  const [activePage, setActivePage] = useState(1);
+
+  const handlePagination = (e, { activePage }) => {
+    setActivePage(activePage);
+  };
+
+  const handleSearch = (e, { value }) => {
+    setsearchValue(value);
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    let url = `http://13.92.195.8/api/users/`;
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
+      })
+      .request({
+        url,
+        method: "get",
+        params: {
+          page: activePage,
+          search: searchValue,
+          is_approved: false,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setData(res.data.results);
+        setIsLoading(false);
+        if (res.data.count % 5 !== 0) {
+          setCount(Math.floor(res.data.count / 5) + 1);
+        } else setCount(Math.floor(res.data.count / 5));
+        setSearchLoading(false);
+      })
+      .catch((err) => console.log(err.response));
+  }, [searchValue, activePage]);
+
+  return (
+    <Segment loading={isLoading} className="_new_accounts shadow">
+      <div className="row">
+        <div className="title_segment">
+          <p className="extra-text text-default">New Accounts</p>
+
+          <Search
+            loading={searchLoading}
+            className="search_table"
+            onSearchChange={handleSearch}
+            value={searchValue}
+            showNoResults={false}
+            results={null}
+            placeholder="Search for anything"
+            input={{ icon: "search", iconPosition: "left" }}
+          />
+        </div>
+      </div>
+      <div className="row_t">
+        <TableNewAccounts
+          data={data}
+          count={count}
+          activePage={activePage}
+          handlePagination={handlePagination}
+        />
+      </div>
+    </Segment>
+  );
+};
+export default AdminNewAccounts;

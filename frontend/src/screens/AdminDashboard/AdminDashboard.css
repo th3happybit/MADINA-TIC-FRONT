@@ -1,0 +1,6 @@
+.new_accounts_table .address {
+  width: 25% !important;
+}
+.new_accounts_table .role {
+  width: auto !important;
+}

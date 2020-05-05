@@ -1,0 +1,218 @@
+._new_accounts {
+  padding: 2rem !important;
+  border: none !important;
+  min-height: 400px !important;
+  max-height: 700px !important;
+  overflow-x: scroll;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  -ms-overflow-style: none;
+}
+._new_accounts::-webkit-scrollbar {
+  display: none;
+}
+._new_accounts > .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+._new_accounts > .row > .title_segment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+._reset_password_form {
+  display: flex;
+  justify-content: flex-start !important;
+}
+._new_accounts > .ui.table thead th {
+  border-bottom: 1px solid var(--secondary) !important;
+}
+._new_accounts > .ui.table tr td {
+  border: none !important;
+}
+
+._new_accounts > .ui.basic.striped.table tbody tr:nth-child(2n) {
+  background-color: #b3b8bb1e !important;
+}
+.btn_account_detail {
+  padding: 0.5rem 1rem !important;
+  min-width: 20px !important;
+}
+._new_account-img {
+  width: 50px;
+  height: 50px;
+}
+.fullname_new_account {
+  display: flex;
+  align-items: center;
+}
+.fullname_new_account p {
+  margin-left: 0.5rem;
+}
+
+.row_t {
+  padding: 1rem 0;
+}
+.new_accounts_table {
+  width: 100%;
+}
+._add_account_modal ._header_modal {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+._content_modal {
+  padding: 2rem;
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+._content_modal p {
+  font-size: 16px !important;
+  color: var(--blue_darker);
+}
+._content_modal.plus {
+  width: 70% !important;
+}
+.hide_content {
+  display: none;
+}
+._content_modal .funct p {
+  margin: 1rem 0;
+  color: var(--primary);
+}
+.detail_content {
+  border-bottom: 1px solid var(--secondary);
+}
+.content_modal_btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search_table {
+  margin-left: auto;
+}
+.content_modal_btns.marginTop {
+  margin-top: 4rem;
+}
+.content_modal_btns .button {
+  margin: 0 1rem;
+  padding: 1rem 2rem !important;
+  min-width: 140px !important;
+}
+
+.ui.secondary.pointing.menu .active.item {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+}
+.ui.secondary.pointing.menu .actitemive:hover {
+  border-color: var(--primary) !important;
+  color: var(--primary);
+}
+.ui.secondary.pointing.menu .item {
+  color: var(--blue_darker) !important;
+}
+@media (max-width: 1050px) {
+  .element_hide_mobile.address,
+  .element_hide_mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 999px) {
+  .new_accounts_table .table_element {
+    max-width: 160px !important;
+    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  ._content_modal {
+    width: 60%;
+  }
+  .element_hide_mobile {
+    display: none;
+  }
+  .new_accounts_table p,
+  .new_accounts_table .button {
+    font-size: 14px !important;
+  }
+  .new_accounts_table th {
+    font-size: 16px !important;
+  }
+}
+@media (max-width: 699px) {
+  ._new_accounts > .row > .title_segment p {
+    font-size: 18px !important;
+    white-space: nowrap;
+  }
+  ._content_modal {
+    width: 80%;
+  }
+  ._admin_accounts {
+    scrollbar-width: none !important;
+  }
+  ._new_accounts {
+    scrollbar-width: none !important;
+    padding: 1rem !important;
+  }
+  ._new_accounts > .row > .btn_segment > .button {
+    white-space: nowrap;
+    font-size: 14px !important;
+  }
+  .element_hide_mobile {
+    display: flex !important;
+  }
+  .new_accounts_table .table_element {
+    max-width: 100% !important;
+  }
+  .new_accounts_table thead {
+    display: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .element_hide_mobile.address,
+  .element_hide_mobile {
+    display: block !important;
+  }
+}
+@media (max-width: 530px) {
+  ._content_modal {
+    width: 100%;
+  }
+
+  .search_table {
+    padding-top: 2rem;
+  }
+
+  ._new_accounts > .row > .title_segment {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .search_table {
+    margin: 0;
+  }
+  ._content_modal {
+    padding: 2rem 0.5rem !important;
+  }
+  ._content_modal p {
+    font-size: 14px !important;
+  }
+  ._add_account_modal ._header_modal p {
+    font-size: 20px !important;
+  }
+  ._content_modal .funct .ui.multiple.dropdown > .label {
+    font-size: 12px !important;
+  }
+  ._content_modal .funct .ui.dropdown .menu .selected.item,
+  ._content_modal .funct .ui.dropdown.selected {
+    font-size: 12px !important;
+  }
+  .content_modal_btns .button {
+    margin: 0 1rem;
+    padding: 0.7rem 1.5rem !important;
+    min-width: 120px !important;
+  }
+}

@@ -1,0 +1,108 @@
+._header_admin {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 230px;
+  height: 70px;
+  z-index: 30;
+}
+._header_admin > .row {
+  display: flex;
+  padding: 0.6rem 0;
+  background-color: white;
+  justify-content: flex-end;
+  align-items: center;
+}
+.right_part > .profile_img > .btn_segment .button {
+  border: 2px solid var(--primary) !important;
+  color: var(--primary) !important;
+  background-color: white;
+  font-size: 15px !important;
+  padding: 0.571429em 1.2em !important;
+}
+.right_part > .profile_img > .btn_segment.active .button {
+  background-color: var(--primary) !important ;
+  color: white !important;
+  cursor: default !important;
+}
+.right_part > .profile_img > .btn_segment .button:hover {
+  border: none;
+  background-color: var(--primary) !important ;
+  color: white !important;
+}
+._header_admin > .row.mobile {
+  display: none;
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
+}
+._header_admin > .row > .search > .input > .prompt,
+._header_admin > .row > .search > .input {
+  border: none;
+}
+._header_admin > .row > .search,
+._header_admin > .row > .search.focus {
+  margin: 0 3rem;
+}
+._header_admin > .row.focus > .search > .input {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  width: 300px;
+  color: #576271;
+  border-radius: 4px;
+}
+._header_admin > .row.focus > .search > .input input::placeholder,
+._header_admin > .row.focus > .search > .input input:-moz-placeholder {
+  color: #576271 !important;
+}
+._header_admin .right_part {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 3rem;
+}
+._header_admin .right_part > .profile_img {
+  display: flex;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+._header_admin .right_part > .profile_img img {
+  border-radius: 50%;
+  border: 2px solid #95989a;
+  width: 50px;
+  height: 50px;
+}
+.profile_img .ui.dropdown .menu .item {
+  background-color: white !important;
+  color: #576271 !important;
+}
+.profile_img .ui.dropdown .menu .item:hover {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+.profile_img .ui.dropdown .menu {
+  width: 160px !important;
+}
+@media (max-width: 899px) {
+  ._header_admin > .row {
+    display: none !important;
+  }
+  ._header_admin {
+    left: 0px !important;
+    height: 70px;
+  }
+  ._header_admin > .row.mobile {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+  }
+  ._header_logo {
+    width: 60px;
+    height: 60px;
+  }
+}
+@media (max-width: 730px) {
+  ._header_logo {
+    width: 40px;
+    height: 40px;
+  }
+}

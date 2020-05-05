@@ -1,0 +1,103 @@
+._admin_profile {
+  padding: 1rem 2rem;
+}
+._admin_profile .container {
+  margin: 2rem 0;
+}
+._admin_profile_grid {
+  width: 100%;
+}
+._admin_profile_grid > ._card {
+  width: 30% !important;
+  min-height: 715px !important;
+}
+.profile_seg {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+._admin_profile_grid > ._not_card {
+  width: 70% !important;
+  min-height: 715px !important;
+}
+.mobile_profile {
+  display: none;
+}
+.mobile_profile {
+  display: none !important;
+}
+.mobile_info_profile.hide {
+  display: none !important;
+}
+@media (max-width: 1500px) {
+  ._admin_profile_grid > ._card {
+    width: 30% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 70% !important;
+  }
+  ._admin_profile {
+    padding: 2rem !important;
+  }
+}
+@media (max-width: 1299px) {
+  ._admin_profile_grid > ._card {
+    width: 35% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 65% !important;
+  }
+}
+@media (max-width: 1179px) {
+  ._admin_profile_grid > ._card {
+    width: 80% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 80% !important;
+  }
+  ._admin_profile_grid {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-content: center;
+  }
+}
+@media (max-width: 999px) {
+  ._admin_profile_grid > ._card {
+    width: 60% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 60% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    display: none !important;
+  }
+}
+@media (max-width: 948px) {
+  ._admin_profile_grid > ._card {
+    width: 60% !important;
+  }
+  ._admin_profile_grid > ._not_card {
+    width: 60% !important;
+  }
+}
+@media (max-width: 899px) {
+  ._admin_profile_grid {
+    display: none !important;
+  }
+  ._admin_profile > p {
+    display: none !important;
+  }
+  .mobile_profile {
+    display: flex !important;
+    flex-direction: column;
+  }
+  ._admin_profile .container {
+    margin: 0 !important;
+  }
+  ._card_admin > .row {
+    padding: 4rem 1rem !important;
+  }
+}

@@ -1,0 +1,197 @@
+.seg_no_border {
+  display: flex;
+  justify-content: center;
+  border: none !important;
+}
+.add_account_container {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  padding: 1rem;
+}
+.border-none {
+  border: none !important;
+}
+.input_with_label {
+  align-items: center;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.input_with_label label {
+  font-size: 16px !important;
+  color: var(--blue_darker);
+}
+.add_account_container .ui.form .fields {
+  margin-bottom: 4rem;
+}
+.input_with_label.role .fields.select_box {
+  display: flex !important;
+  justify-content: space-between !important;
+  width: 90%;
+}
+.input_with_label.role {
+  min-height: 150px !important;
+}
+.add_account_container .ui.form .fields.select_box .field,
+.add_account_container .input_with_label .error.field {
+  width: 320px !important;
+  margin: 0 !important;
+}
+.add_account_container .input_with_label .field .input input,
+.add_account_container .input_with_label .error.field .input input {
+  width: 320px !important;
+}
+.add_account_container .ui.form .fields.select_box {
+  margin-top: 2rem !important;
+  margin-bottom: 0 !important;
+}
+.input_with_label.role {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.add_account_container .ui.form {
+  width: 80% !important;
+}
+
+.input_with_label.role p {
+  padding-top: 1rem !important;
+  padding: 2rem 0;
+  font-size: 16px !important;
+  color: var(--blue_darker);
+}
+.add_account_container .ui.form .fields.select_box .error.field,
+.input_with_label.role .field {
+  margin: 0 2rem !important;
+}
+.profile_seg .seg_no_border .col {
+  width: 40% !important;
+}
+._add_account_admin_btn {
+  width: 100%;
+  display: flex;
+  padding: 4rem;
+}
+._add_account_admin_btn .button {
+  font-size: 18px !important;
+}
+.input_with_label.role .ui.radio.checkbox label {
+  color: var(--blue_darker) !important;
+}
+.input_with_label {
+  max-height: 76px !important;
+  margin: 3rem 0;
+}
+.ui.error.form .ui.error.message.role_err {
+  display: flex !important;
+  justify-content: center !important;
+  background-color: transparent !important;
+  border: 1px solid var(--red) !important;
+}
+._succes_add {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 3rem;
+  align-items: center;
+  width: 80%;
+  white-space: nowrap;
+}
+.role_err span {
+  padding: 0 !important;
+  color: var(--red) !important;
+}
+@media (max-width: 1439px) {
+  .input_with_label.role .field {
+    margin: 0 !important;
+  }
+  .add_account_container .input_with_label .field .input input,
+  .add_account_container .input_with_label .error.field .input input {
+    width: 280px !important;
+  }
+  .add_account_container .ui.form .fields.select_box .field,
+  .add_account_container .input_with_label .error.field {
+    width: 280px !important;
+    margin: 0 !important;
+  }
+  .add_account_container .ui.form {
+    width: 100% !important;
+  }
+}
+@media (max-width: 1199px) {
+  .seg_no_border {
+    flex-direction: column !important;
+  }
+  .add_account_container {
+    width: 100%;
+  }
+  .add_account_container .input_with_label .field .input input,
+  .add_account_container .input_with_label .error.field .input input {
+    width: 340px !important;
+  }
+  .add_account_container .ui.form .fields.select_box .field,
+  .add_account_container .input_with_label .error.field {
+    width: 340px !important;
+    margin: 0 !important;
+  }
+  .profile_seg .seg_no_border .col {
+    width: 100% !important;
+  }
+}
+@media (max-width: 950px) {
+  .add_account_container .input_with_label .field .input input,
+  .add_account_container .input_with_label .error.field .input input {
+    width: 220px !important;
+  }
+  .add_account_container .ui.form .fields.select_box .field,
+  .add_account_container .input_with_label .error.field {
+    width: 220px !important;
+    margin: 0 !important;
+  }
+  ._add_account_admin_btn {
+    justify-content: center !important;
+  }
+}
+@media (max-width: 499px) {
+  ._succes_add {
+    padding-left: 0 !important;
+  }
+  .input_with_label > label {
+    display: none !important;
+  }
+  .add_account_container .input_with_label .field .input input,
+  .add_account_container .input_with_label .error.field .input input {
+    width: 100% !important;
+  }
+  .add_account_container .input_with_label .field,
+  .add_account_container .input_with_label .error.field {
+    width: 90% !important;
+  }
+  .add_account_container .ui.form .fields.select_box .field,
+  .add_account_container .input_with_label .error.field {
+    width: 90% !important;
+    margin: 0 !important;
+  }
+
+  .input_with_label {
+    display: flex;
+    justify-content: center;
+  }
+  .input_with_label.role .fields.select_box {
+    flex-direction: column;
+  }
+  .input_with_label.role .fields.select_box .field,
+  .add_account_container .input_with_label .error.field {
+    padding: 0.75rem 0;
+  }
+  .input_with_label {
+    padding: 1rem 0 !important;
+    display: flex;
+    justify-content: flex-start !important;
+  }
+  .input_with_label.role {
+    padding: 1rem 1.5rem !important;
+  }
+}
