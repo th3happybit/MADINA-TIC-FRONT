@@ -22,6 +22,7 @@ const AdminAddAccountForm = () => {
   };
 
   const handleChange = (e, { id, value }) => {
+    if (roleError) setRoleError(null);
     if (emailError) setEmailError(null);
     if (addressError) setAddressError(null);
     if (phoneError) setPhoneError(null);
