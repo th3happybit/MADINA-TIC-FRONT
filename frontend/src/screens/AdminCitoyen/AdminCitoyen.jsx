@@ -40,13 +40,15 @@ const AdminCitoyen = (props) => {
                 url: "http://13.92.195.8/api/users/" + id + "/",
                 method: "patch",
                 data: {
-                    is_approved: true,
+                    is_active: true,
                 },
             })
             .then((res) => {
-                setstat(true)
+                setstat(true);
+                if (activeFilter !== "All Citizens")
+                setpage(1);
             })
-            .catch((err) => console.log(err.response));
+            .catch((err) => {});
     }
 
     const handelBan = (id) => {
@@ -63,11 +65,13 @@ const AdminCitoyen = (props) => {
                 url: "http://13.92.195.8/api/users/" + id + "/",
                 method: "patch",
                 data: {
-                    is_approved: false,
+                    is_active: false,
                 },
             })
             .then((res) => {
-                setstat(true)
+                setstat(true);
+                if (activeFilter !== "All Citizens")
+                setpage(1);
             })
             .catch((err) => {});
     }
@@ -80,14 +84,17 @@ const AdminCitoyen = (props) => {
     const getData = (p, filter, sortP) => {
 
         let pa = {
-            page: p
+            page: p,
+            is_approved : true,
         }
 
-        if (filter === "Not Approved") {
-            pa["is_approved"] = false;
+
+
+        if (filter === "Desactivated") {
+            pa["is_active"] = false;
         }
-        else if (filter === "Approved") {
-            pa["is_approved"] = true;
+        else if (filter === "Active") {
+            pa["is_active"] = true;
         }
 
         if (sortP === "Name A-Z")
@@ -101,8 +108,6 @@ const AdminCitoyen = (props) => {
 
         if (term !== "") {
             pa["search"] = term;
-            // pa["page"] = 1;
-            // setpage(1);
         }
 
         pa["role"] = "Client"
@@ -118,7 +123,6 @@ const AdminCitoyen = (props) => {
                 }
             })
             .then((res) => {
-                // console.log(res)
                 setData(res.data.results)
                 if ((res.data.count) < 6) {
                     setpage(1);
@@ -135,7 +139,6 @@ const AdminCitoyen = (props) => {
                 setisloading(false);
             })
             .catch((err) => {
-                console.log(err.response)
             })
     }
     useEffect(() => {
@@ -148,12 +151,12 @@ const AdminCitoyen = (props) => {
     }
 
     const handel_onlyvalidated = () => {
-        setactiveFilter("Approved");
+        setactiveFilter("Active");
         setpage(1);
     }
 
     const handel_notvalidated = () => {
-        setactiveFilter("Not Approved");
+        setactiveFilter("Desactivated");
         setpage(1);
     }
 
@@ -243,12 +246,12 @@ const AdminCitoyen = (props) => {
                             />
                             <Dropdown.Item
                                 label={{ color: 'green', empty: true, circular: true }}
-                                text='Approved'
+                                text='Active'
                                 onClick={handel_onlyvalidated}
                             />
                             <Dropdown.Item
                                 label={{ color: 'red', empty: true, circular: true }}
-                                text='Not Approved'
+                                text='Desactivated'
                                 onClick={handel_notvalidated}
                             />
                         </Dropdown.Menu>
