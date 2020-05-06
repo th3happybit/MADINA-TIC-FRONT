@@ -1,7 +1,7 @@
 
 
 const validatePassword = (p) => {
-    const passPatern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+    const passPatern = /^(?=.*[a-z])(?=.*[A-Z])(?=.{8,})/;
     return passPatern.test(p);
 };
 
