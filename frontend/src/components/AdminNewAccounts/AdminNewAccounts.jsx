@@ -23,7 +23,38 @@ const AdminNewAccounts = () => {
   const handleSearch = (e, { value }) => {
     setsearchValue(value);
   };
-
+  const getData = () => {
+    setIsLoading(true);
+    let url = `http://13.92.195.8/api/users/`;
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
+      })
+      .request({
+        url,
+        method: "get",
+        params: {
+          page: activePage,
+          search: searchValue,
+          is_approved: false,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setData(res.data.results);
+        setIsLoading(false);
+        if (res.data.count % 5 !== 0) {
+          setCount(Math.floor(res.data.count / 5) + 1);
+        } else setCount(Math.floor(res.data.count / 5));
+        setSearchLoading(false);
+      })
+      .catch((err) => console.log(err.response));
+  };
   useEffect(() => {
     setIsLoading(true);
     let url = `http://13.92.195.8/api/users/`;
@@ -81,6 +112,7 @@ const AdminNewAccounts = () => {
           count={count}
           activePage={activePage}
           handlePagination={handlePagination}
+          refresh={getData}
         />
       </div>
     </Segment>

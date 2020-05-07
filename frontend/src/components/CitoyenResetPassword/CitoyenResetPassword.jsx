@@ -52,7 +52,6 @@ const CitoyenResetpassword = (props) => {
           headers: {
             post: {
               "Content-Type": "application/json",
-              Authorization: `Token ${localStorage.getItem("token")}`,
             },
           },
         })
@@ -71,7 +70,9 @@ const CitoyenResetpassword = (props) => {
           setMessageSuccess(res.data.detail);
           setSuccess(true);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {
+          setIsLoanding(false);
+        });
     }
   };
 

@@ -1,11 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
 import "./CitoyenPasswordForm.css";
 
 const PasswordForm = () => {
-
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
     isPassword: true,
@@ -24,26 +23,27 @@ const PasswordForm = () => {
   const [errMessage, seterrMessage] = useState(null);
   const [isEditing, setisediting] = useState(false);
 
-
   const reset = () => {
-    if (currentPassword.value !== "") setCurrentPassword({
-      value: "",
-      isPassword: true,
-    });
-    if (newPassword.value !== "") setNewPassword({
-      value: "",
-      isPassword: true,
-    })
-    if (confirmPassword.value !== "") setConfirmPassword({
-      value: "",
-      isPassword: true,
-    })
-    
-  }
+    if (currentPassword.value !== "")
+      setCurrentPassword({
+        value: "",
+        isPassword: true,
+      });
+    if (newPassword.value !== "")
+      setNewPassword({
+        value: "",
+        isPassword: true,
+      });
+    if (confirmPassword.value !== "")
+      setConfirmPassword({
+        value: "",
+        isPassword: true,
+      });
+  };
   const handleedit = () => {
-    reset()
+    reset();
     setisediting((prevState) => !prevState);
-  }
+  };
 
   const handleShowPsw = (e) => {
     let id = e.currentTarget.attributes["data-id"].nodeValue;
@@ -84,8 +84,8 @@ const PasswordForm = () => {
   };
 
   const handleInputChangeValue = (event) => {
-    if (error) seterror(null)
-    if (success) setSuccess(null)
+    if (error) seterror(null);
+    if (success) setSuccess(null);
     let value = event.currentTarget.value;
     let id = event.currentTarget.id;
     switch (id) {
@@ -122,20 +122,19 @@ const PasswordForm = () => {
     setIsLoading(true);
     if (error) seterror(null);
     if (success) setSuccess(null);
-    
+
     var errors = ValidatePassword([
-      currentPassword, 
+      currentPassword,
       newPassword,
-      confirmPassword, 
+      confirmPassword,
     ]);
 
-    if (errors.length > 0){
+    if (errors.length > 0) {
       seterror(true);
-      seterrMessage(errors[0].error);  
+      seterrMessage(errors[0].error);
       setIsLoading(false);
       reset();
-    }
-    else{
+    } else {
       UpdatePasswordCitoyen();
     }
   };
@@ -152,10 +151,10 @@ const PasswordForm = () => {
       .request({
         url: "http://13.92.195.8/api/password/change/",
         method: "post",
-        data : {
-        old_password : currentPassword.value,
-        new_password1 : newPassword.value,
-        new_password2 : confirmPassword.value
+        data: {
+          old_password: currentPassword.value,
+          new_password1: newPassword.value,
+          new_password2: confirmPassword.value,
         },
       })
       .then((res) => {
@@ -163,11 +162,15 @@ const PasswordForm = () => {
         setIsLoading(false);
       })
       .catch((err) => {
-        let resErrOldPassword = err.response.data.old_password ? err.response.data.old_password[0] : "";
-        let resErrNewPassw = err.response.data.new_password2 ? err.response.data.new_password2[0] : "";
-          if (resErrOldPassword !== "") {
-            seterrMessage(resErrOldPassword);
-          } else seterrMessage(resErrNewPassw);
+        let resErrOldPassword = err.response.data.old_password
+          ? err.response.data.old_password[0]
+          : "";
+        let resErrNewPassw = err.response.data.new_password2
+          ? err.response.data.new_password2[0]
+          : "";
+        if (resErrOldPassword !== "") {
+          seterrMessage(resErrOldPassword);
+        } else seterrMessage(resErrNewPassw);
         seterror(true);
         setIsLoading(false);
         reset();
@@ -177,100 +180,108 @@ const PasswordForm = () => {
   return (
     <div>
       <Form
-      success = {success}
-      error = {error} 
-      id="pform" 
-      className="_margin_vertical_lg">
-      <Form.Group className="input-password">
-        <div className="input_p">
-          <Form.Input
-            disabled={!isEditing}
-            id="currentPassword"
-            value={currentPassword.value}
-            type={currentPassword.isPassword ? "password" : "text"}
-            label="Current Password"
-            placeholder="Current Password"
-            onChange={handleInputChangeValue}
-            className="required"
-          />
-          <i
-            className="eye icon pointer"
-            data-id="currentPassword"
-            onClick={handleShowPsw}
-          />
-        </div>
-      </Form.Group>
-      <Form.Group className="input-password">
-        <div className="input_p">
-          <Form.Input
-            disabled={!isEditing}
-            id="newPassword"
-            value={newPassword.value}
-            type={newPassword.isPassword ? "password" : "text"}
-            label="New Password"
-            placeholder="New Password"
-            onChange={handleInputChangeValue}
-            className="required"
-          />
-          <i
-            className="eye icon pointer"
-            data-id="newPassword"
-            onClick={handleShowPsw}
-          />
-        </div>
-      </Form.Group>
-      <Form.Group className="input-password">
-        <div className="input_p">
-          <Form.Input
-            disabled={!isEditing}
-            id="confirmPassword"
-            value={confirmPassword.value}
-            type={confirmPassword.isPassword ? "password" : "text"}
-            label="Confirm Password"
-            placeholder="Confirm Password"
-            onChange={handleInputChangeValue}
-            className="required"
-          />
-          <i
-            className="eye icon pointer"
-            data-id="confirmPassword"
-            onClick={handleShowPsw}
-          />
-        </div>
-      </Form.Group>
-      { isEditing ?
-      <div  className="_margin_vertical_md pbutt subs">
+        success={success}
+        error={error}
+        id="pform"
+        className="_margin_vertical_lg"
+      >
+        <Form.Group className="input-password">
+          <div className="input_p">
+            <Form.Input
+              disabled={!isEditing}
+              id="currentPassword"
+              value={currentPassword.value}
+              type={currentPassword.isPassword ? "password" : "text"}
+              label="Current Password"
+              placeholder="Current Password"
+              onChange={handleInputChangeValue}
+              className="required"
+            />
+            <i
+              className="eye icon pointer"
+              data-id="currentPassword"
+              onClick={handleShowPsw}
+            />
+          </div>
+        </Form.Group>
+        <Form.Group className="input-password">
+          <div className="input_p">
+            <Form.Input
+              disabled={!isEditing}
+              id="newPassword"
+              value={newPassword.value}
+              type={newPassword.isPassword ? "password" : "text"}
+              label="New Password"
+              placeholder="New Password"
+              onChange={handleInputChangeValue}
+              className="required"
+            />
+            <i
+              className="eye icon pointer"
+              data-id="newPassword"
+              onClick={handleShowPsw}
+            />
+          </div>
+        </Form.Group>
+        <Form.Group className="input-password">
+          <div className="input_p">
+            <Form.Input
+              disabled={!isEditing}
+              id="confirmPassword"
+              value={confirmPassword.value}
+              type={confirmPassword.isPassword ? "password" : "text"}
+              label="Confirm Password"
+              placeholder="Confirm Password"
+              onChange={handleInputChangeValue}
+              className="required"
+            />
+            <i
+              className="eye icon pointer"
+              data-id="confirmPassword"
+              onClick={handleShowPsw}
+            />
+          </div>
+        </Form.Group>
+        {isEditing ? (
+          <div className="_margin_vertical_md pbutt subs">
+            <Button
+              className="button_secondary"
+              disabled={isLoading}
+              onClick={handleedit}
+            >
+              Cancel
+            </Button>
 
-                
-                <Button className="button_secondary"
-                disabled={isLoading}
-                onClick={handleedit}
-                >Cancel</Button>
-                
-                <Button 
-                type="submit"
-                onClick={handleSumbit}
-                loading={isLoading}
-                className="button_primary">Save</Button>
-            </div>
-        :
+            <Button
+              type="submit"
+              onClick={handleSumbit}
+              loading={isLoading}
+              className="button_primary"
+            >
+              Save
+            </Button>
+          </div>
+        ) : (
+          <div className="_margin_vertical_md pbutt subs">
+            <Button
+              type="submit"
+              onClick={handleedit}
+              loading={isLoading}
+              className="button_primary"
+            >
+              Edit
+            </Button>
+          </div>
+        )}
 
-        <div  className="_margin_vertical_md pbutt subs">
-          <Button 
-          type="submit"
-          onClick={handleedit}
-          loading={isLoading}
-          className="button_primary">
-            Edit
-          </Button>
-        </div>
-        }
-            
-            <Message error content={errMessage} />
-            <Message success content="Your infos update request has been sent successfully" />
-    </Form>
+        <Message error content={errMessage} />
+        <Message
+          success
+          content="Your infos update request has been sent successfully"
+        />
+      </Form>
     </div>
   );
-}
+};
 
 export default PasswordForm;
