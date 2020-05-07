@@ -71,7 +71,7 @@ function App() {
           path="/signup"
           component={() => <CitoyenAuth islogin={false} />}
         />
-        <Redirect to="/admin/login" />
+        <Redirect to="/login" />
       </Switch>
     </Router>
   );
