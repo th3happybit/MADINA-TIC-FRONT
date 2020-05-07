@@ -17,13 +17,13 @@ const ValidateDataUpdatePass = (data) => {
         if(!validatePassword(new_pass.value)){
             errors.push({
                 id : "passoword",
-                error : "Password must be at least 8 charcaters and contain at least one upercase.",
+                error : "Password must be at least 8 charcaters and contain at least one uppercase.",
             });
         }
         if (new_pass.value !== confirm_pass.value){
             errors.push({
                 id : "password",
-                error : "Passwords are note identical.",
+                error : "Passwords are not identical.",
             });
         }
              if (new_pass.value.length > 128){
