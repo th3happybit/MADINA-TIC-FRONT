@@ -66,52 +66,50 @@ const HeaderAdmin = (props) => {
 
   return (
     <>
-      {image && (
-        <header className="_header_admin">
-          <div className="row">
-            <div className="right_part">
-              <div className="profile_img">
-                {" "}
-                <div
-                  className={
-                    active === "account" ? "btn_segment active" : "btn_segment"
-                  }
-                >
-                  <a href="/admin/create/account">
-                    <Button disabled={active === "account"}>Add account</Button>
-                  </a>
-                </div>
-                <Notification className="_margin_horizontal_md pointer" />
-                <Dropdown
-                  trigger={trigger}
-                  pointing="top right"
-                  icon={null}
-                  onCLick={handleLogout}
-                >
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      text="Account"
-                      icon="user"
-                      as={Link}
-                      to="/admin/profile"
-                    />
-
-                    <Dropdown.Item
-                      text="Sign Out"
-                      icon="sign out"
-                      onClick={handleLogout}
-                    />
-                  </Dropdown.Menu>
-                </Dropdown>
+      <header className="_header_admin">
+        <div className="row">
+          <div className="right_part">
+            <div className="profile_img">
+              {" "}
+              <div
+                className={
+                  active === "account" ? "btn_segment active" : "btn_segment"
+                }
+              >
+                <a href="/admin/create/account">
+                  <Button disabled={active === "account"}>Add account</Button>
+                </a>
               </div>
+              <Notification className="_margin_horizontal_md pointer" />
+              <Dropdown
+                trigger={trigger}
+                pointing="top right"
+                icon={null}
+                onCLick={handleLogout}
+              >
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    text="Account"
+                    icon="user"
+                    as={Link}
+                    to="/admin/profile"
+                  />
+
+                  <Dropdown.Item
+                    text="Sign Out"
+                    icon="sign out"
+                    onClick={handleLogout}
+                  />
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
           </div>
-          <div className="row mobile">
-            <Logo className="_header_logo" />
-            <Toggle className="_header_logo pointer" onClick={props.show} />
-          </div>
-        </header>
-      )}
+        </div>
+        <div className="row mobile">
+          <Logo className="_header_logo" />
+          <Toggle className="_header_logo pointer" onClick={props.show} />
+        </div>
+      </header>
     </>
   );
 };
