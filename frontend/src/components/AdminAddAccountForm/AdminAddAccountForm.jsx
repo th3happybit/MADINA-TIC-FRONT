@@ -156,13 +156,6 @@ const AdminAddAccountForm = () => {
                 <Form.Group inline className="select_box text-default">
                   <Form.Radio
                     className="text-default"
-                    label="Client"
-                    value="Client"
-                    checked={selectedRole === "Client"}
-                    onClick={handleChangeRole}
-                  />
-                  <Form.Radio
-                    className="text-default"
                     label="Maire"
                     value="Maire"
                     checked={selectedRole === "Maire"}
