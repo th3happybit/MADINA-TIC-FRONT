@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Message, Icon } from "semantic-ui-react";
 import axios from "axios";
 
 const FormRegister = () => {
   //? for loading while post request
   const [isLoading, setIsLoading] = useState(false);
-
   const [success, setSuccess] = useState(null);
-
   const [first_name, setfirst_name] = useState("");
-
   const [last_name, setlast_name] = useState("");
-
   const [birthday, setbirthday] = useState("");
-
   const [phone, setPhone] = useState("");
-
   const [addrress, setaddrres] = useState("");
-
   const [email, setEmail] = useState("");
-
   const [password, setPassword] = useState("");
-
   const [confirmPassword, setConfirmPassword] = useState("");
   //? for errors...
   const [emailError, setEmailError] = useState(null);
@@ -39,7 +30,6 @@ const FormRegister = () => {
   const [passwordMessage, setPasswordMessage] = useState("");
   const [firstNameMessage, setFirstNameMessage] = useState("");
   const [lastNameMessage, setLastNameMessage] = useState("");
-
   //? function for changing data in inputs
   const handleChangeInput = (e) => {
     if (success) setSuccess(false);
@@ -52,7 +42,6 @@ const FormRegister = () => {
       case "last_name":
         setlast_name(e.currentTarget.value);
         last_nameError && setlast_nameError(null);
-
         break;
       case "email":
         emailError && setEmailError(null);
@@ -82,6 +71,10 @@ const FormRegister = () => {
         break;
     }
   };
+  const checkPhoneNumber = (phone) => {
+    const phonePattern = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s]{0,1}[0-9]{3}[-\s]{0,1}[0-9]{4}$/;
+    return phonePattern.test(String(phone));
+  };
   const checkDate = (date) => {
     if (!date) return false;
     let dateArray = date.split("-");
@@ -91,17 +84,19 @@ const FormRegister = () => {
   //? function called when user submit the form
   const handleSumbit = () => {
     if (success) setSuccess(null);
-    //let login = false;
-    if (birthday.length > 0) {
-      if (!checkDate(birthday)) {
-        setdateError(true);
-      }
+    if (addrress.length <= 4 && addrress.length > 0) {
+      setAddressErr(true);
+    }
+    if (!checkPhoneNumber(phone) && phone.length > 0) {
+      setphoneError(true);
+    } else if (birthday.length === 0) {
+      RegisterUser();
+    } else if (!checkDate(birthday)) {
+      setdateError(true);
     } else {
       RegisterUser();
     }
-    //* initialation of errors if it gonna be the second time of submit
   };
-
   //? fetch api
   const RegisterUser = () => {
     setIsLoading(true);
@@ -121,45 +116,50 @@ const FormRegister = () => {
         setSuccess(true);
       })
       .catch((err) => {
-        Object.entries(err.response.data).map((element) => {
-          switch (element[0]) {
-            case "email":
-              setEmailError(true);
-              setEmailMessage(element[1]);
-              break;
-            case "password1":
-              setpasswordErr(true);
-              setPasswordMessage(element[1]);
-              break;
-            case "password2":
-              setpasswordErr(true);
-              setPasswordMessage(element[1]);
-              break;
-            case "first_name":
-              setfirst_nameError(true);
-              setFirstNameMessage(element[1]);
-              break;
-            case "last_name":
-              setlast_nameError(true);
-              setLastNameMessage(element[1]);
-              break;
-            case "phone":
-              setphoneError(true);
-              setPhoneMessage(element[1]);
-              break;
-            case "date_of_birth":
-              if (!dateError) setdateError(true);
-              if (!dateError) setBirthdayMessage(element[1]);
-              break;
-            case "address":
-              setAddressErr(true);
-              setAddressMessage(element[1]);
-              break;
-            default:
-              break;
-          }
-          return true;
-        });
+        if (err.response)
+          Object.entries(err.response.data).map((element) => {
+            switch (element[0]) {
+              case "email":
+                setEmailError(true);
+                setEmailMessage(element[1]);
+                break;
+              case "password1":
+                setpasswordErr(true);
+                setPasswordMessage(element[1]);
+                break;
+              case "password2":
+                setpasswordErr(true);
+                setPasswordMessage(element[1]);
+                break;
+              case "non_field_errors":
+                setpasswordErr(true);
+                setPasswordMessage(element[1]);
+                break;
+              case "first_name":
+                setfirst_nameError(true);
+                setFirstNameMessage(element[1]);
+                break;
+              case "last_name":
+                setlast_nameError(true);
+                setLastNameMessage(element[1]);
+                break;
+              case "phone":
+                setphoneError(true);
+                setPhoneMessage(element[1]);
+                break;
+              case "date_of_birth":
+                if (!dateError) setdateError(true);
+                if (!dateError) setBirthdayMessage(element[1]);
+                break;
+              case "address":
+                setAddressErr(true);
+                setAddressMessage(element[1]);
+                break;
+              default:
+                break;
+            }
+            return true;
+          });
         setIsLoading(false);
       });
   };
@@ -222,7 +222,6 @@ const FormRegister = () => {
           )}
         </div>
       </Form.Group>
-
       <Form.Group
         style={{
           width: "100%",
@@ -282,9 +281,10 @@ const FormRegister = () => {
         {dateError && (
           <p className="error_inputs_msg">
             <Icon name="info circle" />
-            {checkDate(birthday)
-              ? birthdayMessage
-              : "You are not a major person to have an account."}
+            {birthday.length === 0 && birthdayMessage}
+            {birthday.length > 0 &&
+              !checkDate(birthday) &&
+              "You are not a major person to have an account."}
           </p>
         )}
       </div>
@@ -310,7 +310,9 @@ const FormRegister = () => {
         {phoneError && (
           <p className="error_inputs_msg">
             <Icon name="info circle" />
-            {phoneMessage}
+            {checkPhoneNumber(phone)
+              ? phoneMessage
+              : "Please enter a valid phone number"}
           </p>
         )}
       </div>
@@ -336,7 +338,9 @@ const FormRegister = () => {
         {addressError && (
           <p className="error_inputs_msg">
             <Icon name="info circle" />
-            {addressMessage}
+            {addrress.length > 4
+              ? addressMessage
+              : "Please enter a valid address"}
           </p>
         )}
       </div>
@@ -392,7 +396,6 @@ const FormRegister = () => {
           </p>
         )}
       </div>
-
       <Message success content="check your email for validating your account" />
       <Button
         className="button_primary _margin_vertical_md pointer"
