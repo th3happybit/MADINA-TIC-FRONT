@@ -56,7 +56,7 @@ const CitoyenResetpassword = (props) => {
           },
         })
         .request({
-          url: "http://13.92.195.8/api/password/reset/confirm/",
+          url: "http://157.230.19.233/api/password/reset/confirm/",
           method: "post",
           data: {
             new_password1: New_Password,

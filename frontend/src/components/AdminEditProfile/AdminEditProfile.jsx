@@ -119,7 +119,7 @@ const AdminEditProfile = (props) => {
         },
       })
         .request({
-          url: "http://13.92.195.8/api/user/",
+          url: "http://157.230.19.233/api/user/",
           method: "put",
           data: {
             first_name,
@@ -149,7 +149,7 @@ const AdminEditProfile = (props) => {
         },
       })
         .request({
-          url: "http://13.92.195.8/api/password/change/",
+          url: "http://157.230.19.233/api/password/change/",
           method: "post",
           data: {
             new_password1: newPassword,

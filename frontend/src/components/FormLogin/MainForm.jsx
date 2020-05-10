@@ -42,7 +42,7 @@ const MainForm = () => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/login/",
+        url: "http://157.230.19.233/api/login/",
         method: "post",
         data: { email, password },
       })

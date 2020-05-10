@@ -149,7 +149,7 @@ const PasswordForm = () => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/password/change/",
+        url: "http://157.230.19.233/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,

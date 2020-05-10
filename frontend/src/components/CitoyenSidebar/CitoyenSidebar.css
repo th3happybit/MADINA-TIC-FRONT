@@ -1,0 +1,59 @@
+._citoyen_sidebar {
+  width: 200px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: "Open Sans", sans-serif;
+  color: var(--blue_darker);
+  padding: 2rem 0;
+  margin: 1rem;
+  margin-left: 0rem !important;
+}
+
+.add_declaration {
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 1px 3px 1px rgba(60, 64, 67, 0.149);
+  padding: 0.7rem 0.5rem;
+  border-radius: 25px;
+  align-items: center;
+  background-color: #fff;
+  color: var(--blue_darker);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1rem;
+}
+.add_declaration p {
+  white-space: nowrap;
+}
+.add_declaration .icon {
+  margin: 0;
+}
+.add_declaration:hover {
+  box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302),
+    0 4px 8px 3px rgba(60, 64, 67, 0.149);
+  background-color: #fafafb;
+}
+.sidebar_list_cit {
+  font-size: 1rem !important;
+}
+.sidebar_list_cit .item {
+  border-radius: 0 22px 22px 0px;
+  padding: 0.75rem 2rem !important;
+  cursor: pointer;
+}
+.sidebar_list_cit .item:hover {
+  background-color: #f1f3f4;
+}
+.sidebar_list_cit .item.active {
+  background-color: #29b5f654;
+  color: #0e4c69;
+  font-weight: 800;
+}
+@media (max-width: 929px) {
+  ._citoyen_sidebar {
+    display: none !important;
+  }
+}

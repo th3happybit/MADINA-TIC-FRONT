@@ -33,7 +33,7 @@ const FormLogin = () => {
   const LoginCitoyen = () => {
     setIsLoading(true);
     axios
-      .post("http://13.92.195.8/api/login/", {
+      .post("http://157.230.19.233/api/login/", {
         email,
         password,
       })
@@ -42,7 +42,7 @@ const FormLogin = () => {
         localStorage.setItem("token", res.data.key);
         //getItem
         setIsLoading(false);
-        return history.push("/citoyen/profile");
+        return history.push("/home");
       })
       .catch((err) => {
         console.log(err);
