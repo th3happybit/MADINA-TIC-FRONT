@@ -1,9 +1,76 @@
 ._citoyen_header {
-  height: 80px;
   position: relative;
-  left: 0;
-  right: 0;
-  top: 0;
+  margin-bottom: -18px;
+  background: transparent;
+  font-family: "Open Sans", sans-serif;
+  color: var(--blue_darker);
+  box-shadow: inset 0 -1px 0 rgba(100, 121, 143, 0.122);
+}
+._citoyen_header header {
+  z-index: 90;
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+._citoyen_header_logo {
+  min-width: 238px;
+  padding-right: 30px;
+  box-sizing: border-box;
+  flex: 1 0 auto;
+  height: 48px;
+  vertical-align: middle;
+  white-space: nowrap;
+  -moz-box-align: center;
+  align-items: center;
+  display: flex;
+}
+._citoyen_header_logo > ._madinatic_logo {
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  font-family: "Segoe_UI_bold" !important;
+  margin: 0 1rem;
+}
+._citoyen_header_logo > ._madinatic_logo > svg {
+  width: 60px;
+  height: 35px;
+}
+.form_search_header_citoyen {
+  padding-right: 30px;
+  max-width: 100%;
+  flex: 1 1 auto;
+  padding-left: 3rem;
+  height: 48px;
+  align-items: center;
+  display: flex;
+}
+.form_search_header_citoyen .search .input {
+  min-width: 500px;
+}
+.form_search_header_citoyen .search .input input {
+  border-radius: 8px;
+  height: 48px;
+  border: none;
+  background: #f1f3f4;
+}
+.form_search_header_citoyen .search .input input::placeholder {
+  color: var(--blue_darker);
+  font-size: 16px;
+}
+.form_search_header_citoyen .search .input input:focus {
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
+    0 1px 3px 1px rgba(60, 64, 67, 0.149);
   background-color: white;
-  z-index: 30;
+}
+.profile_citoyen_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile_citoyen_img .image {
+  border-radius: 50%;
+  width: 40px !important;
+  height: 40px !important;
 }
