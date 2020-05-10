@@ -29,7 +29,7 @@ const CitoyenMailVerification = () => {
           },
         })
         .request({
-          url: "http://13.92.195.8/api/password/reset/",
+          url: "http://157.230.19.233/api/password/reset/",
           method: "post",
           data: { email },
         })

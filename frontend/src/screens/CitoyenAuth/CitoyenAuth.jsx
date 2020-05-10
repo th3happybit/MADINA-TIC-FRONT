@@ -21,7 +21,7 @@ const CitoyenAuth = (props) => {
   const { islogin } = props; //* if screen is for Login or Signup
   return (
     <>
-      <CitoyenHeader />
+      <CitoyenHeader login={false} />
       {isLoading ? (
         <>
           <Container fluid className="_citoyen_login">

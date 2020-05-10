@@ -241,7 +241,7 @@ const Card = (props) => {
             },
           })
           .request({
-            url: "http://13.92.195.8/api/user/",
+            url: "http://157.230.19.233/api/user/",
             method: "patch",
             data: formData,
           })
@@ -284,7 +284,7 @@ const Card = (props) => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/password/change/",
+        url: "http://157.230.19.233/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,
@@ -326,7 +326,7 @@ const Card = (props) => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/user/",
+        url: "http://157.230.19.233/api/user/",
         method: "patch",
         data: formData,
       })

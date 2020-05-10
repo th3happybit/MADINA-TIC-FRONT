@@ -38,7 +38,7 @@ export default function RowNewAccounts(props) {
           },
         })
         .request({
-          url: "http://13.92.195.8/api/users/" + uid + "/",
+          url: "http://157.230.19.233/api/users/" + uid + "/",
           method: "patch",
           data: {
             is_approved: true,

@@ -1,10 +1,11 @@
 ._citoyen_header {
   position: relative;
   margin-bottom: -18px;
-  background: transparent;
   font-family: "Open Sans", sans-serif;
   color: var(--blue_darker);
   box-shadow: inset 0 -1px 0 rgba(100, 121, 143, 0.122);
+  z-index: 90;
+  background-color: white;
 }
 ._citoyen_header header {
   z-index: 90;
@@ -14,6 +15,10 @@
   justify-content: space-between;
   position: relative;
 }
+._citoyen_login_form .field .input input::placeholder {
+  color: var(--blue_darker) !important;
+}
+
 ._citoyen_header_logo {
   min-width: 238px;
   padding-right: 30px;
@@ -46,6 +51,9 @@
   align-items: center;
   display: flex;
 }
+.toggle_citoyen {
+  display: none;
+}
 .form_search_header_citoyen .search .input {
   min-width: 500px;
 }
@@ -71,6 +79,54 @@
 }
 .profile_citoyen_img .image {
   border-radius: 50%;
-  width: 40px !important;
-  height: 40px !important;
+  width: 50px !important;
+  height: 50px !important;
+  background-color: gray;
+}
+@media (max-width: 1199px) {
+  .form_search_header_citoyen .search .input {
+    min-width: 350px;
+  }
+}
+@media (max-width: 929px) {
+  .form_search_header_citoyen .search {
+    display: none;
+  }
+  .not_login_nav {
+    display: none;
+  }
+  .profile_citoyen_img {
+    display: none;
+  }
+  ._citoyen_header_logo > svg {
+    display: none;
+  }
+  .form_search_header_citoyen {
+    display: none;
+  }
+  ._citoyen_header_logo {
+    display: flex;
+    justify-content: center;
+  }
+  .toggle_citoyen {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1rem;
+  }
+  .toggle_citoyen line {
+    stroke: var(--blue_darker) !important;
+  }
+  .toggle_citoyen svg {
+    cursor: pointer;
+  }
+}
+.login_cit.button {
+  background-color: var(--primary);
+  color: white;
+  margin: 0 2rem;
+}
+.login_cit.button:hover {
+  background-color: var(--primary_darker);
+  color: white;
 }
