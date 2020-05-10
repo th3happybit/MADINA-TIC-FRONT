@@ -1,41 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { Search, Image, Button } from "semantic-ui-react";
-import axios from "axios";
-
+import React, { useState, useEffect } from "react";
+import { Search, Image, Button, Dropdown } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
-
+import { useHistory } from "react-router";
+import axios from "axios";
 //? import css
 import "./CitoyenHeader.css";
 
 export default function CitoyenHeader(props) {
-  const [fullname, setFullname] = useState("");
-  const [image, setImage] = useState(null);
-  const { login } = props;
+  const history = useHistory();
+
+  const [fullname, setfullname] = useState("");
+  const [image, setImage] = useState("");
   useEffect(() => {
+    setfullname(props.fullname);
+    setImage(props.image);
+  }, [props]);
+  const { login } = props;
+  const handleLogout = () => {
     axios
       .create({
         headers: {
-          get: {
+          post: {
             "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
           },
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
-        method: "get",
+        url: "http://157.230.19.233/api/logout/",
+        method: "post",
       })
-      .then((res) => {
-        console.log(res);
-        setFullname(res.data.first_name + " " + res.data.last_name);
-        setImage(res.data.image);
+      .then(() => {
+        localStorage.clear();
+        return history.push("/login");
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
       });
-  }, []);
+  };
+  const trigger = (
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
+      <Image src={image} size="small" className="pointer" />
+      <p className="medium-text text-default _margin_horizontal_xs">
+        {fullname}
+      </p>
+    </div>
+  );
   return (
     <div className={!login ? "_citoyen_header " : "_citoyen_header"}>
       <header>
@@ -80,10 +97,26 @@ export default function CitoyenHeader(props) {
             <>
               <Notification className="_margin_horizontal_md pointer" />
               <div className="profile_citoyen_img pointer">
-                <Image src={image} size="small" className="pointer" />
-                <p className="medium-text text-default _margin_horizontal_xs">
-                  {fullname}
-                </p>
+                <Dropdown trigger={trigger} pointing="top right" icon={null}>
+                  <Dropdown.Menu
+                    style={{
+                      width: "180px",
+                    }}
+                  >
+                    <Dropdown.Item
+                      text="Account"
+                      icon="user"
+                      as={Link}
+                      to="/admin/profile"
+                    />
+
+                    <Dropdown.Item
+                      text="Sign Out"
+                      icon="sign out"
+                      onClick={handleLogout}
+                    />
+                  </Dropdown.Menu>
+                </Dropdown>
               </div>
             </>
           )}

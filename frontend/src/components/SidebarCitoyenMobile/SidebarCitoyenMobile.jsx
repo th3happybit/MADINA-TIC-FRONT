@@ -1,18 +1,43 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { List, Image } from "semantic-ui-react";
-
+import { useHistory } from "react-router";
+import axios from "axios";
 import "./SidebarCitoyenMobile.css";
-import Alex from "../../assets/images/alex.jpg";
 
 const SidebarCitoyenMobile = (props) => {
+  const { fullname, image } = props;
+  const history = useHistory();
+
+  const handleLogout = () => {
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+          },
+        },
+      })
+      .request({
+        url: "http://157.230.19.233/api/logout/",
+        method: "post",
+      })
+      .then(() => {
+        localStorage.clear();
+        return history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div
       className={props.visible ? "_sidebar citoyen active" : "_sidebar citoyen"}
     >
       <div className="profile_citoyen_mobile_x">
-        <Image src={Alex} />
-        <p>Bengoudifa Oussama</p>
+        <Image src={image} />
+        <p>{fullname}</p>
       </div>
       <List className="_sidebar_list">
         <List.Item>
@@ -65,7 +90,10 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
       </List>
       <div className="_logout_header _margin_vertical_sm">
-        <p className="_logout_button_header _margin_horizontal_md  button_primary  medium-text border-radius-bg pointer">
+        <p
+          className="_logout_button_header _margin_horizontal_md  button_primary  medium-text border-radius-bg pointer"
+          onClick={handleLogout}
+        >
           Logout
         </p>
       </div>
