@@ -1,39 +1,99 @@
 import React, { useState, useEffect } from "react";
 import { Form, Image, Button, Icon } from "semantic-ui-react";
 
+import axios from "axios";
+
 import "./AddDeclaration.css";
-
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
+import Location from "./Location.jsx";
 
-export default function AddDeclaration() {
+export default function AddDeclaration(props) {
   const [title, setTitle] = useState("");
+  const [titleErr, setTitleErr] = useState(false);
   const [type, setType] = useState("");
+  const [typeErr, setTypeErr] = useState(false);
   const [adr, setAdr] = useState("");
+  const [adrErr, setAdrErr] = useState(false);
   const [adrGeo, setAdrGeo] = useState("");
   const [isGeo, setIsGeo] = useState(false);
   const [pictures, setPictures] = useState([]);
   const [picturesPreview, setPicturesPreview] = useState([]);
   const [description, setDesctiption] = useState("");
-  const options = [
-    { key: 1, text: "Electricity problem", value: 1 },
-    { key: 2, text: "Gaz problem", value: 2 },
-    { key: 3, text: "Route problem", value: 3 },
-  ];
+  const [descriptionErr, setDescriptionErr] = useState(false);
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        },
+      })
+      .request({
+        url: "http://157.230.19.233/api/documents/",
+        method: "get",
+      })
+      .then((res) => {
+        setOptions(res.data.results);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+  const handleCoords = (e) => {
+    setAdrGeo(String(e.longitude) + "-" + String(e.latitude));
+  };
+
   const handleGeo = () => {
     setIsGeo((prevState) => !prevState);
+    setAdr("");
   };
-  const handledeleteImg = () => {};
+  const handleAdd = () => {
+    if (adr.length === 0 && adrGeo.length === 0) {
+      setAdrErr(true);
+    } else {
+      //post request
+    }
+  };
+  const handledeleteImg = (e) => {
+    let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
+    let preview = [];
+    let f = [];
+    picturesPreview.map((elm, index) => {
+      if (index !== indexElm) {
+        preview.push(elm);
+      }
+      return true;
+    });
+    pictures.map((elm, index) => {
+      if (index !== indexElm) {
+        f.push(elm);
+      }
+      return true;
+    });
+    setPictures(f);
+    setPicturesPreview(preview);
+  };
   const handleChange = (e, { name, value }) => {
     switch (name) {
       case "title":
+        setTitleErr(false);
         setTitle(value);
         break;
       case "type":
+        setTypeErr(false);
         setType(value);
+        break;
       case "adr":
+        setAdrErr(false);
         setAdr(value);
+        break;
       case "description":
+        setDescriptionErr(false);
         setDesctiption(value);
+        break;
+
       default:
         break;
     }
@@ -59,7 +119,6 @@ export default function AddDeclaration() {
     setSelectedFile(es);
     setPictures((prevState) => [...prevState, es]);
   };
-  console.log({ picturesPreview, pictures });
   return (
     <div className="container_add_dec">
       <div className="_add_dec">
@@ -73,37 +132,57 @@ export default function AddDeclaration() {
             value={title}
             onChange={handleChange}
             name="title"
-            placeholder="title"
+            className={titleErr ? "add_dec_err" : ""}
           />
           <Form.Select
             fluid
             label="Type"
             options={options}
-            placeholder="type"
             name="type"
             value={type}
             onChange={handleChange}
+            className={typeErr ? "add_dec_err" : ""}
           />
           <div
             style={{
               position: "relative",
+              marginBottom: "1rem",
             }}
           >
             <Form.Input
+              disabled={isGeo}
               type="text"
               label="Address"
               value={adr}
+              className={adrErr ? "add_dec_err" : ""}
               onChange={handleChange}
               name="adr"
-              placeholder="address"
             />
-            <Gps className="gps_icon" />
+            {isGeo && <Location show={handleCoords} />}
+            {isGeo && <Gps className="gps_icon" />}
           </div>
           <Form.Group inline>
-            <Form.Radio label="Geo-localise" value="sm" checked />
-            <Form.Radio label="Manual address" value="md" checked={false} />
+            <Form.Radio
+              label="Geo-localise"
+              value="sm"
+              checked={isGeo}
+              onClick={handleGeo}
+            />
+            <Form.Radio
+              label="Manual address"
+              value="md"
+              checked={!isGeo}
+              onClick={handleGeo}
+            />
           </Form.Group>
-          <Form.TextArea label="Description" placeholder="..." />
+          <Form.TextArea
+            label="Description"
+            name="description"
+            placeholder="..."
+            value={description}
+            className={descriptionErr ? "add_dec_err" : ""}
+            onChange={handleChange}
+          />
           <p className="label_add_dec bold">Add Photos (Optional)</p>
 
           <div className="_profile_img_edit add_dec pointer">
@@ -135,7 +214,12 @@ export default function AddDeclaration() {
                   }}
                 >
                   <Image src={elm} key={index} />
-                  <Icon name="delete" key={index} onClick={handledeleteImg} />
+                  <Icon
+                    color="black"
+                    name="delete"
+                    data-id={index}
+                    onClick={handledeleteImg}
+                  />
                 </div>
               );
             })}
@@ -145,8 +229,12 @@ export default function AddDeclaration() {
               display: "flex",
               justifyContent: "center",
             }}
+            className="_add_btn_dec"
           >
-            <Button className="button_primary _margin_horizontal_sm">
+            <Button
+              onClick={handleAdd}
+              className="button_primary _margin_horizontal_sm"
+            >
               Confirm
             </Button>
             <Button className="button_secondary _margin_horizontal_sm">

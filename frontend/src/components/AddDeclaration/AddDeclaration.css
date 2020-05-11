@@ -66,6 +66,72 @@
 }
 .prev_images_dec .icon {
   position: absolute;
-  right: 0;
+  right: 5%;
   top: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: white;
+}
+.cordination_gps {
+  position: absolute !important;
+  top: 50%;
+  left: 2%;
+}
+._add_dec .disabled.field,
+._add_dec .disabled.field .input,
+._add_dec .disabled.field label {
+  opacity: 1 !important;
+}
+@media (max-width: 1366px) {
+  .container_add_dec {
+    width: 60%;
+  }
+}
+@media (max-width: 1199px) {
+  .container_add_dec .form {
+    width: 80%;
+  }
+}
+@media (max-width: 999px) {
+  .container_add_dec {
+    width: 50%;
+  }
+}
+@media (max-width: 929px) {
+  .container_add_dec {
+    width: 100%;
+  }
+  ._add_btn_dec .button {
+    min-width: 20px !important;
+    padding: 0% !important;
+    width: 130px;
+    height: 40px;
+  }
+}
+@media (max-width: 599px) {
+  ._add_btn_dec {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: column !important;
+  }
+  ._add_btn_dec .button {
+    margin: 0.75rem 0 !important;
+  }
+  .container_add_dec {
+    max-width: 90% !important;
+  }
+}
+.add_dec_err input,
+.add_dec_err textarea,
+.add_dec_err .selection.dropdown {
+  border: 2px solid var(--red) !important;
+  box-shadow: none;
+}
+.container_add_dec .form .input input:focus,
+.container_add_dec .form textarea:focus {
+  border: 2px solid var(--primary);
 }
