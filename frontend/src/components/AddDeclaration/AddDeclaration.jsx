@@ -21,6 +21,9 @@ export default function AddDeclaration(props) {
   const [description, setDesctiption] = useState("");
   const [descriptionErr, setDescriptionErr] = useState(false);
   const [options, setOptions] = useState([]);
+  const [uid, setUid] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dtid, setDtid] = useState(null);
 
   useEffect(() => {
     axios
@@ -33,29 +36,112 @@ export default function AddDeclaration(props) {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/documents/",
+        url: "http://157.230.19.233/api/declarations_types/",
         method: "get",
       })
       .then((res) => {
-        setOptions(res.data.results);
+        console.log(res);
+        let arr = [];
+        res.data.results.map((elm, index) => {
+          return arr.push({
+            key: index,
+            text: elm.name,
+            value: elm.name,
+            dtid: elm.dtid,
+          });
+        });
+        setOptions(arr);
       })
       .catch((err) => console.log(err));
   }, []);
   const handleCoords = (e) => {
-    setAdrGeo(String(e.longitude) + "-" + String(e.latitude));
+    setAdrGeo("[" + String(e.longitude) + "," + String(e.latitude) + "]");
   };
-
   const handleGeo = () => {
     setIsGeo((prevState) => !prevState);
     setAdr("");
   };
+  //TODO post
+  useEffect(() => {
+    if (uid) {
+      setIsLoading(true);
+      let url = `http://157.230.19.233/api/declarations/`;
+      axios
+        .create({
+          headers: {
+            post: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url,
+          method: "post",
+          data: {
+            title,
+            desc: description,
+            geo_cord: "[30,10]",
+            address: adr,
+            dtype: dtid,
+            citizen: uid,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          let did = res.data.did;
+        })
+        .catch((err) => {
+          Object.entries(err.response.data).map((elm) => {
+            switch (elm[0]) {
+              case "title":
+                setTitleErr(true);
+                break;
+              case "desc":
+                setDescriptionErr(true);
+                break;
+              case "dtype":
+                setTypeErr(true);
+                break;
+              default:
+                break;
+            }
+          });
+
+          setIsLoading(false);
+        });
+    }
+  }, [uid]);
+  console.log(pictures);
   const handleAdd = () => {
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
+    } else if (!uid) {
+      let url = `http://157.230.19.233/api/user/`;
+      axios
+        .create({
+          headers: {
+            get: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url,
+          method: "get",
+        })
+        .then((res) => {
+          let uid = res.data.uid;
+          options.map((elm) => elm.value === type && setDtid(elm.dtid));
+          setUid(uid);
+        })
+        .catch((err) => console.log(err.response));
     } else {
-      //post request
+      setUid(uid);
     }
   };
+
   const handledeleteImg = (e) => {
     let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
     let preview = [];
@@ -93,7 +179,6 @@ export default function AddDeclaration(props) {
         setDescriptionErr(false);
         setDesctiption(value);
         break;
-
       default:
         break;
     }
@@ -232,6 +317,7 @@ export default function AddDeclaration(props) {
             className="_add_btn_dec"
           >
             <Button
+              loading={isLoading}
               onClick={handleAdd}
               className="button_primary _margin_horizontal_sm"
             >

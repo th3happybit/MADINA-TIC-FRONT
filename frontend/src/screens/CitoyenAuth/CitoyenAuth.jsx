@@ -23,7 +23,11 @@ const CitoyenAuth = (props) => {
     <>
       <CitoyenHeader login={false} />
       {isLoading ? (
-        <>
+        <div
+          style={{
+            paddingTop: "66px",
+          }}
+        >
           <Container fluid className="_citoyen_login">
             <Grid style={{ height: "100%" }}>
               <GridRow style={{ paddingBottom: 0 }}>
@@ -63,7 +67,7 @@ const CitoyenAuth = (props) => {
               </div>
             </div>
           </Container>
-        </>
+        </div>
       ) : null}
     </>
   );
