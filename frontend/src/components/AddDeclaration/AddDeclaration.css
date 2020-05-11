@@ -1,0 +1,71 @@
+._add_dec {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+.container_add_dec {
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container_add_dec .form {
+  width: 50%;
+}
+.container_add_dec .form .field label,
+.label_add_dec {
+  color: var(--blue_darker) !important;
+  font-size: 16px !important;
+}
+.gps_icon {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  width: 25px;
+  height: 25px;
+}
+._profile_img_edit.add_dec {
+  width: 120px;
+  height: 35px;
+  border-radius: 5px;
+  color: white;
+  background-color: var(--primary);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-bottom: 2rem;
+}
+.prev_images_dec {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.prev_images_dec .image {
+  width: 130px;
+  margin: 0 1rem;
+  height: 130px;
+}
+._add_dec .form .input,
+._add_dec .form .selection.dropdown {
+  height: 45px;
+  font-size: 16px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
+._add_dec .form textarea {
+  font-size: 16px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
+._add_dec .form .input input {
+  padding: 1.5rem;
+}
+.prev_images_dec .icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

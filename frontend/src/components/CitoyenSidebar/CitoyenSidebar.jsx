@@ -5,10 +5,10 @@ import "./CitoyenSidebar.css";
 const CitoyenSidebar = () => {
   return (
     <div className="_citoyen_sidebar">
-      <div className="add_declaration pointer">
+      <a href="/add/declaration" className="add_declaration pointer">
         <Icon name="add" size="large" />
         <p>Add declaration</p>
-      </div>
+      </a>
       <List className="sidebar_list_cit">
         <List.Item className="active">
           <List.Icon name="home" />
