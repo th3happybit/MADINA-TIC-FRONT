@@ -1,6 +1,7 @@
 ._citoyen_sidebar {
   width: 200px;
-  position: relative;
+  position: fixed;
+  top: 70px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -12,6 +13,7 @@
 }
 
 .add_declaration {
+  text-decoration: none;
   margin-bottom: 1rem;
   box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302),
     0 1px 3px 1px rgba(60, 64, 67, 0.149);
@@ -24,6 +26,10 @@
   justify-content: space-evenly;
   align-items: center;
   font-size: 1rem;
+}
+.add_declaration:hover {
+  color: var(--blue_darker);
+  background-color: #fff;
 }
 .add_declaration p {
   white-space: nowrap;
