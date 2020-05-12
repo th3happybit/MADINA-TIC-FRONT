@@ -53,10 +53,10 @@ const CitoyenDeclarationTable = (props) => {
                             <Icon name={sortType === "asc" ? "sort up" : "sort down"}/> ) : (<Icon name="sort"/>)}
                         </p>
                     </Table.HeaderCell>
-                    <Table.HeaderCell width={3}>
+                    <Table.HeaderCell width={3} id="address_h">
                         Address
                     </Table.HeaderCell>
-                    <Table.HeaderCell width={3}>
+                    <Table.HeaderCell width={3} id="geo_loc_h">
                         Geo-Coordinates
                     </Table.HeaderCell>
                     <Table.HeaderCell width={2} onClick={handlesortdate}>

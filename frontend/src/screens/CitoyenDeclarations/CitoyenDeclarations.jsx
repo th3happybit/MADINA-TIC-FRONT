@@ -5,11 +5,7 @@ import { Segment, Search, Button, Pagination, Dropdown } from "semantic-ui-react
 import axios from "axios";
 
 
-import Header from "../../components/CitoyenHeader/CitoyenHeader.jsx";
-import SideBar from "../../components/CitoyenSidebar/CitoyenSidebar.jsx";
 import DecTable from "../../components/CitoyenDeclarationTable/CitoyenDeclarationTable.jsx";
-import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
-import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 
 import "./CitoyenDeclarations.css";
 
@@ -37,13 +33,13 @@ const CitoyenDeclarations = () => {
     const handlemobileTypeSortAZ = () => {
         setsortDate(null);
         setPage(1);
-        setsortType("desc");
+        setsortType("asc");
         setsortMobile("By Type A-Z");
     }
     const handlemobileTypeSortZA = () => {
         setsortDate(null);
         setPage(1);
-        setsortType("asc");
+        setsortType("desc");
         setsortMobile("By Typ Z-A");
     }
     const handlemobileNewFirst = () => {
@@ -202,6 +198,8 @@ const CitoyenDeclarations = () => {
         }
         if (term) pa["search"] = term;
 
+        pa["citizen"] = userid;
+
         axios
             .get("http://157.230.19.233/api/declarations/", {
                 params: pa,
@@ -211,18 +209,18 @@ const CitoyenDeclarations = () => {
                 }
             })
             .then((res) => {
-                setData(res.data.results);
-                if (res.data.count % 7 === 0) {
-                    setPages(parseInt(res.data.count / 7));
+                setData(res.data.results); 
+                if (res.data.count % 5 === 0) {
+                    setPages(parseInt(res.data.count / 5));
                 } else {
-                    setPages(parseInt(res.data.count / 7) + 1);
+                    setPages(parseInt(res.data.count / 5) + 1);
                 }
                 setperm(true)
                 setLoading(false);
                 setSearchLoading(false);
             })
             .catch((err) => {
-                console.log(err)
+                // console.log(err)
                 setLoading(false);
                 setSearchLoading(false);
             })
@@ -242,15 +240,7 @@ const CitoyenDeclarations = () => {
 
     return (
         <>
-            <>{visible && <Backdrop click={handleHide} />}</>
-            <Header
-                show={handleHide}
-                login={IsLogin}
-                fullname={Fullname}
-                image={Image}
-            />
-            <div className="_main">
-                <SideBar visible={visible} className="side_bar" />
+            <main className="_main">
                 <Segment className="_main_right shadow" loading={Loading}>
                     <div className="row">
                         <div className="title_segment">
@@ -320,7 +310,7 @@ const CitoyenDeclarations = () => {
                             floating
                             labeled
                             button
-                            className="icon filter_declaration">
+                            className="icon filter_declaration _sorts">
                             <Dropdown.Menu>
                                 <Dropdown.Item
                                     text="Random"
@@ -375,15 +365,7 @@ const CitoyenDeclarations = () => {
                                 <p class="zero-data">Sorry No declarations to display in this section</p>
                             </>)}
                 </Segment>
-            </div>
-            <SidebarCitoyenMobile
-                fullname={Fullname}
-                image={Image}
-                visible={visible}
-                active=""
-                click={handleHide}
-                login
-            />
+            </main>
         </>
     );
 }

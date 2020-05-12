@@ -1,12 +1,13 @@
 ._main{
     display : flex;
+    padding : 0 !important;
 }
 
 ._main_right {
-    margin-top: 4rem !important;
+    margin-top: 2rem !important;
     width: 80% !important;
     height: 650px !important;
-    margin-left: auto !important;
+    margin-left: 18rem !important;
     margin-right: auto !important;
     border: none !important;
     min-height: 400px !important;
@@ -82,7 +83,7 @@
     display : none !important;
 }
 
-.search input {
+._main > .search input {
     width : 300px !important;
 }
 
@@ -116,11 +117,34 @@ td:hover > .full_text{
     margin-top: 150px;
 }
 
-@media (max-width : 999px){
-    ._main thead { 
-        display: none !important;    
+@media (max-width : 1340px){
+    ._main_right{
+        margin-left: 16rem !important;
     }
+}
 
+@media (max-width : 1150px) {
+    ._main_right {
+        margin-left: 15rem !important;
+    }
+}
+
+@media (max-width : 1250px){
+    #address_h {
+        display: none !important;
+    }
+    #address {
+        display: none;
+    }
+    #geo_loc_h {
+        display: none;
+    }
+    #geo_loc {
+        display: none;
+    }
+}
+
+@media (max-width : 928px){
     ._main {
         height: 100%;
     }
@@ -130,13 +154,16 @@ td:hover > .full_text{
     }
 
     ._main_right {
+        margin-top: 1rem !important;
         margin-bottom: 2rem !important;
         height: 100% !important;
         width : 95% !important;
         min-height: 650px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
-    .search input {
+    ._main_right > .search input {
         margin-top : 10px !important;
         margin-bottom: 10px !important;
         width: 200px !important;
@@ -150,12 +177,19 @@ td:hover > .full_text{
         display: none !important;
     }
 
+    ._sorts {
+        visibility: hidden !important;
+    }
+
     ._hide_mob{
         display: none !important;
     }
 
     .citoyen_declar_pagin {
-        position: relative !important;
+        
+        position: absolute !important;
+        bottom : 2rem !important;
+        left: 2rem !important;
     }
 
     .filter_declaration {
@@ -191,6 +225,19 @@ td:hover > .full_text{
 
     #geo_loc {
         display: none !important;
+    }
+    @media (max-width : 767px) {
+        ._main thead { 
+            display: none !important;    
+        }
+        ._sorts{
+            visibility: visible !important;
+        }
+        .citoyen_declar_pagin {
+            position: relative !important;
+            bottom : 0rem !important;
+            left: 0 !important;
+        }
     }
 
     @media (max-width : 472px) {
