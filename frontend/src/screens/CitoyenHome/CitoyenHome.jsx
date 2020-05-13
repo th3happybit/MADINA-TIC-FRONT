@@ -7,7 +7,7 @@ import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
 import CitoyenSidebar from "../../components/CitoyenSidebar/CitoyenSidebar.jsx";
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
-const CitoyenHome = () => {
+const CitoyenHome = (props) => {
   const [visible, setVisible] = useState(false);
   const [fullname, setFullname] = useState("");
   const [image, setImage] = useState(null);
@@ -54,8 +54,17 @@ const CitoyenHome = () => {
             login
             fullname={fullname}
             image={image}
-          />
-          <CitoyenSidebar visible={visible} />
+          />{" "}
+          <CitoyenSidebar visible={visible} />{" "}
+          <main
+            style={{
+              position: "relative",
+              top: "70px",
+              left: "0",
+            }}
+          >
+            {props.childComponent}
+          </main>
           <SidebarCitoyenMobile
             fullname={fullname}
             image={image}

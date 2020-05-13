@@ -15,6 +15,7 @@ import AdminDashboard from "./screens/AdminDashboard/AdminDashboard.jsx";
 import CitoyenProfile from "./screens/CitoyenProfile/CitoyenProfile.jsx";
 import AdminCitoyen from "./screens/AdminCitoyen/AdminCitoyen.jsx";
 import AdminCreateAccount from "./screens/AdminCreateAccount/AdminCreateAccount.jsx";
+import Maire from "./screens/Maire/Maire.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -23,6 +24,8 @@ import AdminLogin from "./screens/AdminLogin/AdminLogin.jsx";
 import CitoyenMailVerification from "./components/CitoyenResetPassword/CitoyenMailVerification.jsx";
 import CitoyenResetPassword from "./components/CitoyenResetPassword/CitoyenResetPassword.jsx";
 import CitoyenHome from "./screens/CitoyenHome/CitoyenHome.jsx";
+import AddDeclaration from "./components/AddDeclaration/AddDeclaration.jsx";
+import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclarations.jsx";
 
 function App() {
   return (
@@ -37,10 +40,17 @@ function App() {
           path="/mailVerification"
           component={CitoyenMailVerification}
         />
+        <Route exact path="/maire" component={Maire} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
         <Route exact path="/citoyen/profile" component={CitoyenProfile} />
         <Route exact path="/home" component={CitoyenHome} />
+        <Route exact path="/citoyen/declaration/" component={() => <CitoyenHome childComponent={<CitoyenDeclarations/>} />}/>
+        <Route
+          exact
+          path="/add/declaration"
+          component={() => <CitoyenHome childComponent={<AddDeclaration />} />}
+        />
         <Route
           exact
           path="/admin/citoyen"

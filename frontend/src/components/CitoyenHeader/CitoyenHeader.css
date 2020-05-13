@@ -1,11 +1,15 @@
 ._citoyen_header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   margin-bottom: -18px;
   font-family: "Open Sans", sans-serif;
   color: var(--blue_darker);
   box-shadow: inset 0 -1px 0 rgba(100, 121, 143, 0.122);
   z-index: 90;
   background-color: white;
+  height: 70px;
 }
 ._citoyen_header header {
   z-index: 90;
