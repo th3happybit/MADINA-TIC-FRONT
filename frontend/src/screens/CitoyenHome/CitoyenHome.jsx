@@ -55,7 +55,9 @@ const CitoyenHome = (props) => {
             fullname={fullname}
             image={image}
           />{" "}
-          <CitoyenSidebar visible={visible} />{" "}
+          <CitoyenSidebar 
+            active={props.active} 
+            visible={visible} />{" "}
           <main
             style={{
               position: "relative",

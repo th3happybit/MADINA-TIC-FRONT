@@ -45,7 +45,7 @@ const MaireSideBar = (props) => {
                         />
                         <Menu.Item
                             as={Link}
-                            to="/maire/declarations"
+                            to="/maire/declaration"
                             name="Declarations"
                             className={props.active === "declarations" ? "active" : ""}
                         />
