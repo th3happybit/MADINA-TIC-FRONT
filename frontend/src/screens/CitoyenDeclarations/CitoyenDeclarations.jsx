@@ -14,10 +14,6 @@ const CitoyenDeclarations = () => {
 
     const [activeFilter, setactiveFilter] = useState("New Declarations");
     const [Loading, setLoading] = useState(true);
-    const [Fullname, setFullname] = useState("");
-    const [IsLogin, setIsLogin] = useState(null);
-    const [Image, setImage] = useState(null);
-    const [visible, setvisible] = useState(false);
     const [Data, setData] = useState([]);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(0);
@@ -33,13 +29,13 @@ const CitoyenDeclarations = () => {
     const handlemobileTypeSortAZ = () => {
         setsortDate(null);
         setPage(1);
-        setsortType("asc");
+        setsortType("desc");
         setsortMobile("By Type A-Z");
     }
     const handlemobileTypeSortZA = () => {
         setsortDate(null);
         setPage(1);
-        setsortType("desc");
+        setsortType("asc");
         setsortMobile("By Typ Z-A");
     }
     const handlemobileNewFirst = () => {
@@ -89,9 +85,6 @@ const CitoyenDeclarations = () => {
             setsortDate("asc");
         }
     }
-    const handleHide = () => {
-        setvisible((prevState) => !prevState);
-    };
     const handleFilter = (e) => {
         setactiveFilter(e.currentTarget.firstChild.textContent);
         setterm("")
@@ -108,35 +101,26 @@ const CitoyenDeclarations = () => {
         setPage(1);
     }
     const getUser = () => {
-        if (localStorage.getItem("token")) {
-            setIsLogin(true);
-            axios
-                .create({
-                    headers: {
-                        get: {
-                            "Content-Type": "application/json",
-                            Authorization: `Token ${localStorage.getItem("token")}`,
-                        },
+        axios
+            .create({
+                headers: {
+                    get: {
+                        "Content-Type": "application/json",
+                        Authorization: `Token ${localStorage.getItem("token")}`,
                     },
-                })
-                .request({
-                    url: "http://157.230.19.233/api/user/",
-                    method: "get",
-                })
-                .then((res) => {
-                    // console.log(res);
-                    setFullname(res.data.first_name + " " + res.data.last_name);
-                    setImage(res.data.image);
-                    setLoading(false);
-                    setuserid(res.data.uid);
-                })
-                .catch((err) => {
-                    // console.log(err.response);
-                });
-        } else {
-            setIsLogin(false);
-        }
-
+                },
+            })
+            .request({
+                url: "http://157.230.19.233/api/user/",
+                method: "get",
+            })
+            .then((res) => {
+                setLoading(false);
+                setuserid(res.data.uid);
+            })
+            .catch((err) => {
+                // console.log(err.response);
+            });
     }
 
     const getdecTypes = () => {
@@ -157,6 +141,7 @@ const CitoyenDeclarations = () => {
     }
 
     const getDeclarations = () => {
+        console.log("QQueried declarations")
         setLoading(true);
         setperm(false)
         let pa = {
@@ -194,10 +179,8 @@ const CitoyenDeclarations = () => {
                 break;
             default:
                 break;
-            /*not_validated, lack_of_info, validated, refused, under_treatment, treated, archived */
         }
         if (term) pa["search"] = term;
-
         pa["citizen"] = userid;
 
         axios
@@ -209,7 +192,8 @@ const CitoyenDeclarations = () => {
                 }
             })
             .then((res) => {
-                setData(res.data.results); 
+                console.log(res)
+                setData(res.data.results);
                 if (res.data.count % 5 === 0) {
                     setPages(parseInt(res.data.count / 5));
                 } else {
@@ -220,7 +204,6 @@ const CitoyenDeclarations = () => {
                 setSearchLoading(false);
             })
             .catch((err) => {
-                // console.log(err)
                 setLoading(false);
                 setSearchLoading(false);
             })
@@ -236,7 +219,6 @@ const CitoyenDeclarations = () => {
             getDeclarations();
         }
     }, [activeFilter, term, page, sortType, sortDate, types])
-
 
     return (
         <>
