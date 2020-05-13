@@ -24,6 +24,7 @@ import CitoyenMailVerification from "./components/CitoyenResetPassword/CitoyenMa
 import CitoyenResetPassword from "./components/CitoyenResetPassword/CitoyenResetPassword.jsx";
 import CitoyenHome from "./screens/CitoyenHome/CitoyenHome.jsx";
 import AddDeclaration from "./components/AddDeclaration/AddDeclaration.jsx";
+import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
 
 function App() {
   return (
@@ -42,6 +43,12 @@ function App() {
         <Route exact path="/admin/login" component={AdminLogin} />
         <Route exact path="/citoyen/profile" component={CitoyenProfile} />
         <Route exact path="/home" component={CitoyenHome} />
+       
+        <Route
+          exact
+          path="/infos"
+          component={() => <CitoyenHome childComponent={<CitoyenDeclarationInfo />} />}
+        />
         <Route
           exact
           path="/add/declaration"
