@@ -14,7 +14,7 @@ const CitoyenDeclarations = () => {
 
     const [activeFilter, setactiveFilter] = useState("New Declarations");
     const [Loading, setLoading] = useState(true);
-    const [Data, setData] = useState([]);
+    const [Data, setData] = useState(null);
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(0);
     const [term, setterm] = useState("");
@@ -25,6 +25,7 @@ const CitoyenDeclarations = () => {
     const [userid, setuserid] = useState(null);
     const [types, settypes] = useState([]);
     const [perm, setperm] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const handlemobileTypeSortAZ = () => {
         setsortDate(null);
@@ -112,7 +113,6 @@ const CitoyenDeclarations = () => {
                 // console.log(err.response);
             });
     }
-
     const getdecTypes = () => {
         axios
             .get("http://157.230.19.233/api/declarations_types/", {
@@ -129,7 +129,6 @@ const CitoyenDeclarations = () => {
                 console.log(err)
             })
     }
-
     const getDeclarations = () => {
         setLoading(true);
         setperm(false)
@@ -188,14 +187,34 @@ const CitoyenDeclarations = () => {
                 } else {
                     setPages(parseInt(res.data.count / 10) + 1);
                 }
+                setLoading(false)
                 setperm(true)
-                setLoading(false);
                 setSearchLoading(false);
             })
             .catch((err) => {
                 setLoading(false);
                 setSearchLoading(false);
             })
+    }
+    const deleteDeclaration = (id) => {
+        axios
+            .delete("http://157.230.19.233/api/declarations/" + String(id) + "/", {
+                headers: {
+                    "content-type": "application/json",
+                    Authorization: `Token ${localStorage.getItem("token")}`,
+                }
+            })
+            .then((res) => {
+                if (page === 1)
+                    setRefresh((prevstate) => !prevstate)
+                else
+                    setPage(1);
+                console.log(res)
+            })
+            .catch((err) => {
+
+            })
+
     }
 
     useEffect(() => {
@@ -207,130 +226,132 @@ const CitoyenDeclarations = () => {
         if (types.length > 0) {
             getDeclarations();
         }
-    }, [activeFilter, term, page, sortType, sortDate, types])
+    }, [activeFilter, term, page, sortType, sortDate, types, refresh])
 
     return (
         <>
             <main className="_main">
-                <Segment className="_main_right shadow" loading={Loading}>
-                    <div className="row">
-                        <div className="title_segment">
-                            <p className="extra-text text-default">Declarations</p>
+                <Segment className="_main_right shadow" loading={searchLoading ? false : Loading}>
+                    {Data && <>
+                        <div className="row">
+                            <div className="title_segment">
+                                <p className="extra-text text-default">Declarations</p>
+                            </div>
+                            <Search
+                                loading={searchLoading}
+                                onSearchChange={handel_search}
+                                value={term}
+                                showNoResults={false}
+                                results={null}
+                                placeholder="Search for declarations ..."
+                                input={{ icon: "search", iconPosition: "right" }}
+                            />
                         </div>
-                        <Search
-                            loading={searchLoading}
-                            onSearchChange={handel_search}
-                            value={term}
-                            showNoResults={false}
-                            results={null}
-                            placeholder="Search for declarations ..."
-                            input={{ icon: "search", iconPosition: "right" }}
-                        />
-                    </div>
-                    <div className="row filters">
-                        <Button onClick={handleFilter} className={activeFilter === "New Declarations" ? "_active" : ""}>New Declarations</Button>
-                        <Button onClick={handleFilter} className={activeFilter === "In progress" ? "_active" : ""}>In progress</Button>
-                        <Button onClick={handleFilter} className={activeFilter === "Validated" ? "_active" : ""}>Validated</Button>
-                        <Button onClick={handleFilter} className={activeFilter === "Treated" ? "_active" : ""}>Treated</Button>
-                        <Button onClick={handleFilter} className={activeFilter === "Refused" ? "_active" : ""}>Refused</Button>
-                        <Button onClick={handleFilter} className={activeFilter === "Archived" ? "_active" : ""}>Archived</Button>
-                        <Button onClick={handleFilter} className={activeFilter === "Lack of infos" ? "_active" : ""}>Lack of infos</Button>
-                    </div>
-                    <div className="show_mobile ">
-                        <Dropdown
-                            icon="angle down"
-                            text={activeFilter}
-                            floating
-                            labeled
-                            button
-                            className="icon filter_declaration">
-                            <Dropdown.Menu>
-                                <Dropdown.Item
-                                    text="New Declarations"
-                                    onClick={handleFilter}
-                                />
-                                <Dropdown.Item
-                                    text="In progress"
-                                    onClick={handleFilter}
-                                />
-                                <Dropdown.Item
-                                    text="Validated"
-                                    onClick={handleFilter}
-                                />
-                                <Dropdown.Item
-                                    text="Treated"
-                                    onClick={handleFilter}
-                                />
-                                <Dropdown.Item
-                                    text="Refused"
-                                    onClick={handleFilter}
-                                />
-                                <Dropdown.Item
-                                    text="Archived"
-                                    onClick={handleFilter}
-                                />
-                                <Dropdown.Item
-                                    text="Lack of infos"
-                                    onClick={handleFilter}
-                                />
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <Dropdown
-                            icon="angle down"
-                            text={sortMobile}
-                            floating
-                            labeled
-                            button
-                            className="icon filter_declaration _sorts">
-                            <Dropdown.Menu>
-                                <Dropdown.Item
-                                    text="Random"
-                                    onClick={handleRandomSort}
-                                />
-                                <Dropdown.Item
-                                    text="Group by type"
-                                    onClick={handlemobileTypeSortAZ}
-                                />
-                                <Dropdown.Item
-                                    text="Newer First"
-                                    onClick={handlemobileNewFirst}
-                                />
-                                <Dropdown.Item
-                                    text="Older first"
-                                    onClick={handlemobileOldFirst}
-                                />
-                            </Dropdown.Menu>
+                        <div className="row filters">
+                            <Button onClick={handleFilter} className={activeFilter === "New Declarations" ? "_active" : ""}>New Declarations</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "In progress" ? "_active" : ""}>In progress</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "Validated" ? "_active" : ""}>Validated</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "Treated" ? "_active" : ""}>Treated</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "Refused" ? "_active" : ""}>Refused</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "Archived" ? "_active" : ""}>Archived</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "Lack of infos" ? "_active" : ""}>Lack of infos</Button>
+                        </div>
+                        <div className="show_mobile ">
+                            <Dropdown
+                                icon="angle down"
+                                text={activeFilter}
+                                floating
+                                labeled
+                                button
+                                className="icon filter_declaration">
+                                <Dropdown.Menu>
+                                    <Dropdown.Item
+                                        text="New Declarations"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="In progress"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="Validated"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="Treated"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="Refused"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="Archived"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="Lack of infos"
+                                        onClick={handleFilter}
+                                    />
+                                </Dropdown.Menu>
+                            </Dropdown>
+                            <Dropdown
+                                icon="angle down"
+                                text={sortMobile}
+                                floating
+                                labeled
+                                button
+                                className="icon filter_declaration _sorts">
+                                <Dropdown.Menu>
+                                    <Dropdown.Item
+                                        text="Random"
+                                        onClick={handleRandomSort}
+                                    />
+                                    <Dropdown.Item
+                                        text="Group by type"
+                                        onClick={handlemobileTypeSortAZ}
+                                    />
+                                    <Dropdown.Item
+                                        text="Newer First"
+                                        onClick={handlemobileNewFirst}
+                                    />
+                                    <Dropdown.Item
+                                        text="Older first"
+                                        onClick={handlemobileOldFirst}
+                                    />
+                                </Dropdown.Menu>
 
-                        </Dropdown>
-                    </div>
-                    {Data.length > 0 ?
-                        (<>
-                            <DecTable
-                                data={Data}
-                                filter={activeFilter}
-                                refresh={getDeclarations}
-                                handlesortDate={handle_sort_date}
-                                handlesortType={handle_sort_type}
-                                sorttype={sortType}
-                                sortdate={sortDate}
-                                types={types}
-                            />
-                            <Pagination
-                                className="citoyen_declar_pagin"
-                                boundaryRange={0}
-                                activePage={page}
-                                onPageChange={onChange}
-                                firstItem={null}
-                                lastItem={null}
-                                totalPages={pages}
-                                pointing
-                                secondary
-                            />
-                        </>)
-                        : (perm &&
-                            <>
-                                <p class="zero-data">Sorry No declarations to display in this section</p>
-                            </>)}
+                            </Dropdown>
+                        </div>
+                        {Data.length > 0 ?
+                            (<>
+                                <DecTable
+                                    data={Data}
+                                    filter={activeFilter}
+                                    refresh={getDeclarations}
+                                    handlesortDate={handle_sort_date}
+                                    handlesortType={handle_sort_type}
+                                    sorttype={sortType}
+                                    sortdate={sortDate}
+                                    types={types}
+                                    handledelete={deleteDeclaration}
+                                />
+                                <Pagination
+                                    className="citoyen_declar_pagin"
+                                    boundaryRange={0}
+                                    activePage={page}
+                                    onPageChange={onChange}
+                                    firstItem={null}
+                                    lastItem={null}
+                                    totalPages={pages}
+                                    pointing
+                                    secondary
+                                />
+                            </>)
+                            : (perm &&
+                                <>
+                                    <p class="zero-data">Sorry No declarations to display in this section</p>
+                                </>)} </>}
                 </Segment>
             </main>
         </>
