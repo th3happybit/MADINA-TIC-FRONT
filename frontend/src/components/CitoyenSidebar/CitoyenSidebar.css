@@ -10,6 +10,7 @@
   padding: 2rem 0;
   margin: 1rem;
   margin-left: 0rem !important;
+  z-index: 1;
 }
 
 .add_declaration {

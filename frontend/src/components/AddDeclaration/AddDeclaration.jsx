@@ -40,9 +40,8 @@ export default function AddDeclaration(props) {
         method: "get",
       })
       .then((res) => {
-        console.log(res);
         let arr = [];
-        res.data.results.map((elm, index) => {
+        res.data.map((elm, index) => {
           return arr.push({
             key: index,
             text: elm.name,
@@ -88,8 +87,8 @@ export default function AddDeclaration(props) {
           },
         })
         .then((res) => {
-          console.log(res);
           let did = res.data.did;
+          postImages(did);
         })
         .catch((err) => {
           Object.entries(err.response.data).map((elm) => {
@@ -106,13 +105,44 @@ export default function AddDeclaration(props) {
               default:
                 break;
             }
+            return true;
           });
-
           setIsLoading(false);
         });
     }
   }, [uid]);
-  console.log(pictures);
+  const postImages = (did) => {
+    const formData = new FormData();
+    pictures.map((image) => {
+      formData.append("src", image, image.name);
+    });
+    console.log({ formData: formData.get("src") });
+    formData.append("filetype", "image");
+    formData.append("declaration", did);
+    console.log({ formData: formData.get("src") });
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        },
+      })
+      .request({
+        url: "http://157.230.19.233/api/documents/",
+        method: "post",
+        data: formData,
+      })
+      .then((res) => {
+        console.log(res);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setIsLoading(false);
+      });
+  };
   const handleAdd = () => {
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
@@ -323,7 +353,10 @@ export default function AddDeclaration(props) {
             >
               Confirm
             </Button>
-            <Button className="button_secondary _margin_horizontal_sm">
+            <Button
+              className="button_secondary _margin_horizontal_sm"
+              onClick={postImages}
+            >
               Save
             </Button>
           </Form.Group>

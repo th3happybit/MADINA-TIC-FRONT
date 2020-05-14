@@ -1,0 +1,68 @@
+._maire_declarations {
+    
+    position: absolute;
+    width: 80%;
+    height: 650px;
+    margin-top: 7rem;
+    margin-bottom: auto;
+    margin-left: 19rem !important;
+    margin-right: auto !important;
+
+}
+
+._maire_declarations .text-default{
+    color : var(--primary) !important;
+}
+
+._main_header {
+    border-bottom: solid 1px;
+    border-color: #E0E3DA;
+    padding-bottom: 1rem;
+    box-shadow: rgba(0, 0, 0, .08) 0px 2px;
+}
+
+._main_body {
+    margin-top: 1.8rem !important;
+    background-color: white !important;
+    height: 90%;
+}
+
+._main_body .row {
+    display : flex;
+    justify-content: space-between;
+    padding : 1rem !important;
+}
+
+._main_body .filter_declaration {
+    color : var(--primary) !important;
+    background-color: white !important;
+    border: 1px solid var(--primary) !important;
+    text-align: center !important;
+}
+
+._main_body .filter_declaration > i {
+    background-color: white !important;
+}
+
+._main_body .filter_declaration:hover {
+    color : white !important;
+    background-color: var(--primary) !important;
+}
+
+
+._main_body .filter_declaration:hover > i {
+    background-color: var(--primary) !important;
+}
+
+._maire_pagination {
+    position : absolute !important;
+    bottom: 3rem !important;
+    left : 4rem !important;
+    border : none !important;
+    border-bottom : 2px solid rgba(34, 36, 38, 0.15) !important;
+}
+
+._maire_table th {
+    background-color: var(--primary) !important;
+    color : white !important;
+}
