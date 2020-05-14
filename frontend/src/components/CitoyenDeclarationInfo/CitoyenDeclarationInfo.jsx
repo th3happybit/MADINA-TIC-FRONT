@@ -4,12 +4,35 @@ import { Button, Image, Icon, Segment } from "semantic-ui-react";
 import Status from "./StatusLabel.jsx";
 
 import "./CitoyenDeclarationInfo.css";
+import { Redirect } from 'react-router-dom';
+import { geoPropTypes } from 'react-geolocated';
 
-const CitoyenDeclarationInfo = () => {
+const CitoyenDeclarationInfo = (props) => {
 
   const [Data, setData] = useState([]);
   const [Loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const id = "b1025131-a7e9-4545-b6c9-2065d1f0be44";
+
+  const deleteDecla = (did) => {
+    axios
+    .delete("http://157.230.19.233/api/declarations/" + String(id) + "/",
+    {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      }
+    })
+    .then((res) => {
+      setRedirect(true);
+     
+    })
+    .catch((err) =>{
+      console.log(err)
+    })
+
+  }
 
   const getData = (did) => {
     axios
@@ -48,7 +71,7 @@ const CitoyenDeclarationInfo = () => {
   }
 
   useEffect(() => {
-    getData("e2137a69-0cbf-4882-bef9-5d089082935b");
+    getData("b1025131-a7e9-4545-b6c9-2065d1f0be44");
     getTypes();
   }, [])
 
@@ -98,6 +121,8 @@ const CitoyenDeclarationInfo = () => {
   }
 
   return (
+    <>
+    {redirect ? <Redirect exact path= "/citoyen/declaration"/> :
     <Segment loading={Loading} className="bg-white _container_declaration_info">
       <p className="text-gray-dark _intitulé extra-text"> Declaration details</p>
       <div className="d-flex _info_container">
@@ -134,8 +159,8 @@ const CitoyenDeclarationInfo = () => {
 
         <div className="_button1">
             {Data.status &&
-              getStatus(Data.status).status === "Not validated" &&
-              <Button animated className="action_button">
+              getStatus(Data.status).status === "Not Validated" &&
+              <Button animated color="black" className="action_button">
                 <Button.Content visible content="Modifiy" />
                 <Button.Content hidden icon><Icon name="pencil alternate" /></Button.Content>
               </Button>
@@ -159,12 +184,14 @@ const CitoyenDeclarationInfo = () => {
               color="red"
               type="submit"
               className="action_button delete_button"
+              onClick={deleteDecla}
             >
               <Button.Content visible content="Delete"/>
               <Button.Content icon hidden> <Icon name="times" /> </Button.Content>
             </Button>
           </div>
-    </Segment>
+    </Segment> }
+    </>
   );
 };
 
