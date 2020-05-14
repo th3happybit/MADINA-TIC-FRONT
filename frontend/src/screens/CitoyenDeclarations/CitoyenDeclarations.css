@@ -6,11 +6,12 @@
 ._main_right {
     margin-top: 2rem !important;
     width: 80% !important;
-    height: 650px !important;
+    height: 100% !important;
+    /* min-height: 650px !important; */
     margin-left: 18rem !important;
     margin-right: auto !important;
+    margin-bottom: 3rem !important;
     border: none !important;
-    min-height: 400px !important;
     -ms-overflow-style: none !important;
     background-color: white !important;
 }
@@ -69,9 +70,10 @@
 }
 
 .citoyen_declar_pagin {
-    position: absolute !important;
+    position: relative !important;
+    margin-top: 1rem !important;
     bottom: 5% !important;
-    left: 5% !important;
+    left: 2% !important;
     border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
 }
 
@@ -244,6 +246,18 @@ td:hover > .full_text{
         .show_mobile{
             display: block !important;
         }
+
+        ._main_right .search .input {
+            width: -webkit-fill-available ;
+            margin-bottom: 10px;
+            margin-top : 10px;
+        }
+
+        .filter_declaration{
+            width: 100% !important;
+            margin-bottom: 10px !important;
+        }
+        
     }
 }
 

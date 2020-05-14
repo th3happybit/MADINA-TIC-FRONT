@@ -59,7 +59,7 @@ const CitoyenDeclarationTable = (props) => {
                     <Table.HeaderCell width={2} onClick={handlesortdate}>
                         <p className="sort_field pointer">Depo. Date
                         {sortDate ? (
-                                <Icon name={sortDate === "asc" ? "sort up" : "sort down"} />) : (<Icon name="sort" />)}</p>
+                                <Icon name="sort down" />) : (<Icon name="sort" />)}</p>
                     </Table.HeaderCell>
                     <Table.HeaderCell width={3} textAlign={"center"}>
                         Manage
@@ -85,9 +85,9 @@ const CitoyenDeclarationTable = (props) => {
                                 {editType(dtype)}
                             </Table.Cell>
                             <Table.Cell id="address">
-                                {address.length < 32 ? (<p>{address}</p>) : (
+                                {address.length < 28 ? (<p>{address}</p>) : (
                                     <>
-                                        <p>{address.slice(0, 29) + " ..."}</p>
+                                        <p>{address.slice(0, 25) + " ..."}</p>
                                         <span className="full_text">{address}</span>
                                     </>
                                 )}

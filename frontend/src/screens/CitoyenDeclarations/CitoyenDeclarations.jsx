@@ -29,14 +29,8 @@ const CitoyenDeclarations = () => {
     const handlemobileTypeSortAZ = () => {
         setsortDate(null);
         setPage(1);
-        setsortType("desc");
-        setsortMobile("By Type A-Z");
-    }
-    const handlemobileTypeSortZA = () => {
-        setsortDate(null);
-        setPage(1);
         setsortType("asc");
-        setsortMobile("By Typ Z-A");
+        setsortMobile("Group by type");
     }
     const handlemobileNewFirst = () => {
         setsortType(null);
@@ -58,10 +52,6 @@ const CitoyenDeclarations = () => {
     const handle_sort_type = () => {
         setsortDate(null)
         if (sortType === "asc") {
-            setsortType("desc");
-            setPage(1);
-        }
-        else if (sortType === "desc") {
             setsortType(null);
             setPage(1);
         }
@@ -141,7 +131,6 @@ const CitoyenDeclarations = () => {
     }
 
     const getDeclarations = () => {
-        console.log("QQueried declarations")
         setLoading(true);
         setperm(false)
         let pa = {
@@ -194,10 +183,10 @@ const CitoyenDeclarations = () => {
             .then((res) => {
                 console.log(res)
                 setData(res.data.results);
-                if (res.data.count % 5 === 0) {
-                    setPages(parseInt(res.data.count / 5));
+                if (res.data.count % 10 === 0) {
+                    setPages(parseInt(res.data.count / 10));
                 } else {
-                    setPages(parseInt(res.data.count / 5) + 1);
+                    setPages(parseInt(res.data.count / 10) + 1);
                 }
                 setperm(true)
                 setLoading(false);
@@ -299,12 +288,8 @@ const CitoyenDeclarations = () => {
                                     onClick={handleRandomSort}
                                 />
                                 <Dropdown.Item
-                                    text="By type A-Z"
+                                    text="Group by type"
                                     onClick={handlemobileTypeSortAZ}
-                                />
-                                <Dropdown.Item
-                                    text="By type Z-A"
-                                    onClick={handlemobileTypeSortZA}
                                 />
                                 <Dropdown.Item
                                     text="Newer First"
