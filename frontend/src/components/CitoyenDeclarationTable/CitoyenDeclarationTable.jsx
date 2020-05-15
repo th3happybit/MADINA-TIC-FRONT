@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-
+import ModalDelete from "./ConfirmDeleteModal.jsx"
 import { Table, Button, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+
 
 
 const CitoyenDeclarationTable = (props) => {
 
-    const { data, filter, handlesortDate, handlesortType, sortdate, sorttype, types } = props;
+    const { data, filter, handlesortDate, handlesortType, sortdate, sorttype, handledelete, types } = props;
 
     const [Data, setData] = useState(data);
     const [Filter, setFilter] = useState(null);
@@ -30,11 +32,10 @@ const CitoyenDeclarationTable = (props) => {
         setData(data)
     });
     const editType = (type) => {
-            for (let j = 0; j < types.length; j++) {
-                if (type === types[j].dtid)
+        for (let j = 0; j < types.length; j++) {
+            if (type === types[j].dtid)
                 return types[j].name
-            }
-
+        }
     }
 
     return (
@@ -59,7 +60,7 @@ const CitoyenDeclarationTable = (props) => {
                     <Table.HeaderCell width={2} onClick={handlesortdate}>
                         <p className="sort_field pointer">Depo. Date
                         {sortDate ? (
-                                <Icon name={sortDate === "asc" ? "sort up" : "sort down"} />) : (<Icon name="sort" />)}</p>
+                                <Icon name="sort down" />) : (<Icon name="sort" />)}</p>
                     </Table.HeaderCell>
                     <Table.HeaderCell width={3} textAlign={"center"}>
                         Manage
@@ -74,10 +75,12 @@ const CitoyenDeclarationTable = (props) => {
                         address,
                         geo_cord,
                         created_on,
+                        did,
                     } = element;
 
                     return (
                         <Table.Row key={index}>
+                            {console.log(did)}
                             <Table.Cell>
                                 {title}
                             </Table.Cell>
@@ -85,9 +88,9 @@ const CitoyenDeclarationTable = (props) => {
                                 {editType(dtype)}
                             </Table.Cell>
                             <Table.Cell id="address">
-                                {address.length < 32 ? (<p>{address}</p>) : (
+                                {address.length < 28 ? (<p>{address}</p>) : (
                                     <>
-                                        <p>{address.slice(0, 29) + " ..."}</p>
+                                        <p>{address.slice(0, 25) + " ..."}</p>
                                         <span className="full_text">{address}</span>
                                     </>
                                 )}
@@ -104,15 +107,20 @@ const CitoyenDeclarationTable = (props) => {
                                 {created_on.slice(0, 10)}
                             </Table.Cell>
                             <Table.Cell id="manage_cell">
-                                <Button.Group className="manage_button">
-                                    <Button icon id="infos_btn" className="shadow _hide_on_mobile _infos_btn_desktop">
-                                        <Icon name="info" color="black" />
-                                    </Button>
-                                    <Button
-                                        className="shadow btn_account_detail pointer primary _show_on_mobile"
-                                        content="Details"
-                                    />
-                                </Button.Group>
+                                
+                                    <Button.Group className="manage_button">
+                                    <Link to={{ pathname: "/infos", state: { id: did } }} >
+                                        <Button icon id="infos_btn" className="shadow _hide_on_mobile _infos_btn_desktop">
+                                            <Icon name="info" color="black" />
+                                        </Button>
+                                        </Link>
+                                        <Link to={{ pathname: "/infos", state: { id: did } }} >
+                                        <Button
+                                            className="shadow btn_account_detail pointer primary _show_on_mobile"
+                                            content="Details"
+                                        /></Link>
+                                    </Button.Group>
+                                
                                 {Filter === "Refused" && (
                                     <Button.Group className="manage_button">
                                         <Button icon color={"yellow"} className="shadow _hide_on_mobile">
@@ -150,16 +158,10 @@ const CitoyenDeclarationTable = (props) => {
                                     </Button.Group>
                                 )}
                                 {((Filter === "New Declarations") || (Filter === "Refused") || (Filter === "Lack of infos")) && (
-                                    <Button.Group>
-                                        <Button icon color={"red"} className="shadow _hide_on_mobile">
-                                            <Icon name="delete" color="white" />
-                                        </Button>
-                                        <Button
-                                            color={"red"}
-                                            className="shadow btn_account_detail pointer _show_on_mobile"
-                                            content="Delete"
-                                        />
-                                    </Button.Group>
+                                    <ModalDelete
+                                        onConfirm={handledelete}
+                                        did={did}
+                                    />
                                 )}
                             </Table.Cell>
                         </Table.Row>

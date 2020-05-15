@@ -54,7 +54,7 @@ function App() {
         <Route
           exact
           path="/infos"
-          component={() => <CitoyenHome childComponent={<CitoyenDeclarationInfo />} />}
+          component={(prop) => <CitoyenHome props={prop} childComponent={<CitoyenDeclarationInfo props={prop}/>} />}
         />
         <Route
           exact
