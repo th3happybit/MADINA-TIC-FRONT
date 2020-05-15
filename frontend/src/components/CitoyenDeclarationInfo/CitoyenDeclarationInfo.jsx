@@ -4,14 +4,40 @@ import { Button, Image, Icon, Segment } from "semantic-ui-react";
 import Status from "./StatusLabel.jsx";
 
 import "./CitoyenDeclarationInfo.css";
+import { Redirect, useHistory } from 'react-router-dom';
+import { geoPropTypes } from 'react-geolocated';
 
-const CitoyenDeclarationInfo = () => {
+const CitoyenDeclarationInfo = (props) => {
 
   const [Data, setData] = useState([]);
   const [Loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
+  const [redirect, setRedirect] = useState(false);
+  const [id, setId] = useState(null);
+  let history = useHistory();
+  
+
+  const deleteDecla = () => {
+    axios
+    .delete("http://157.230.19.233/api/declarations/" + id + "/",
+    {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${localStorage.getItem("token")}`,
+      }
+    })
+    .then((res) => {
+      history.push("/citoyen/declaration")
+     
+    })
+    .catch((err) =>{
+      console.log(err)
+    })
+
+  }
 
   const getData = (did) => {
+    if (did)
     axios
       .get("http://157.230.19.233/api/declarations/" + String(did) + "/",
         {
@@ -48,9 +74,10 @@ const CitoyenDeclarationInfo = () => {
   }
 
   useEffect(() => {
-    getData("e2137a69-0cbf-4882-bef9-5d089082935b");
+    setId(props.props.location.state.id)
+    getData(id);
     getTypes();
-  }, [])
+  }, [id])
 
   const editType = (tid) => {
     for (let i = 0; i < types.length; i++) {
@@ -122,9 +149,13 @@ const CitoyenDeclarationInfo = () => {
               return (
                 element.filetype === "image" &&
                 <Image 
+                  onClick={() => {
+                    window.open(element.src)
+                  }}
                   src={element.src} 
                   key={index} 
-                  rounded  
+                  rounded
+                  className="pointer"  
                 />
               )
             })}
@@ -134,8 +165,8 @@ const CitoyenDeclarationInfo = () => {
 
         <div className="_button1">
             {Data.status &&
-              getStatus(Data.status).status === "Not validated" &&
-              <Button animated className="action_button">
+              getStatus(Data.status).status === "Not Validated" &&
+              <Button animated color="black" className="action_button">
                 <Button.Content visible content="Modifiy" />
                 <Button.Content hidden icon><Icon name="pencil alternate" /></Button.Content>
               </Button>
@@ -159,6 +190,7 @@ const CitoyenDeclarationInfo = () => {
               color="red"
               type="submit"
               className="action_button delete_button"
+              onClick={deleteDecla}
             >
               <Button.Content visible content="Delete"/>
               <Button.Content icon hidden> <Icon name="times" /> </Button.Content>
