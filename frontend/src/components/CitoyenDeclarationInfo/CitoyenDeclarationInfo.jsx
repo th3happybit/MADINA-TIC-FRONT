@@ -4,7 +4,7 @@ import { Button, Image, Icon, Segment } from "semantic-ui-react";
 import Status from "./StatusLabel.jsx";
 
 import "./CitoyenDeclarationInfo.css";
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { geoPropTypes } from 'react-geolocated';
 
 const CitoyenDeclarationInfo = (props) => {
@@ -13,11 +13,13 @@ const CitoyenDeclarationInfo = (props) => {
   const [Loading, setLoading] = useState(true);
   const [types, setTypes] = useState([]);
   const [redirect, setRedirect] = useState(false);
-  const id = "b1025131-a7e9-4545-b6c9-2065d1f0be44";
+  const [id, setId] = useState(null);
+  let history = useHistory();
+  
 
-  const deleteDecla = (did) => {
+  const deleteDecla = () => {
     axios
-    .delete("http://157.230.19.233/api/declarations/" + String(id) + "/",
+    .delete("http://157.230.19.233/api/declarations/" + id + "/",
     {
       headers: {
         "content-type": "application/json",
@@ -25,7 +27,7 @@ const CitoyenDeclarationInfo = (props) => {
       }
     })
     .then((res) => {
-      setRedirect(true);
+      history.push("/citoyen/declaration")
      
     })
     .catch((err) =>{
@@ -35,6 +37,7 @@ const CitoyenDeclarationInfo = (props) => {
   }
 
   const getData = (did) => {
+    if (did)
     axios
       .get("http://157.230.19.233/api/declarations/" + String(did) + "/",
         {
@@ -71,9 +74,10 @@ const CitoyenDeclarationInfo = (props) => {
   }
 
   useEffect(() => {
-    getData("b1025131-a7e9-4545-b6c9-2065d1f0be44");
+    setId(props.props.location.state.id)
+    getData(id);
     getTypes();
-  }, [])
+  }, [id])
 
   const editType = (tid) => {
     for (let i = 0; i < types.length; i++) {
@@ -121,8 +125,6 @@ const CitoyenDeclarationInfo = (props) => {
   }
 
   return (
-    <>
-    {redirect ? <Redirect exact path= "/citoyen/declaration"/> :
     <Segment loading={Loading} className="bg-white _container_declaration_info">
       <p className="text-gray-dark _intitulé extra-text"> Declaration details</p>
       <div className="d-flex _info_container">
@@ -147,9 +149,13 @@ const CitoyenDeclarationInfo = (props) => {
               return (
                 element.filetype === "image" &&
                 <Image 
+                  onClick={() => {
+                    window.open(element.src)
+                  }}
                   src={element.src} 
                   key={index} 
-                  rounded  
+                  rounded
+                  className="pointer"  
                 />
               )
             })}
@@ -190,8 +196,7 @@ const CitoyenDeclarationInfo = (props) => {
               <Button.Content icon hidden> <Icon name="times" /> </Button.Content>
             </Button>
           </div>
-    </Segment> }
-    </>
+    </Segment>
   );
 };
 
