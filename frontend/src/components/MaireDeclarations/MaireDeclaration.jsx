@@ -21,10 +21,10 @@ const MaireDeclarations = (props) => {
     const [sortMobile, setsortMobile] = useState("Random");
     const [types, settypes] = useState(null);
     const [names, setNames] = useState([]);
+    const [allow, setAllow] = useState(false)
 
 
     const getUser = (id, key) => {
-        // console.log(id + "key = " + key)
         axios
             .get("http://157.230.19.233/api/users/" + id + "/", {
                 headers: {
@@ -34,8 +34,7 @@ const MaireDeclarations = (props) => {
             })
             .then((res) => {
                 const temp = names;
-                // console.log(names)
-                temp[key] = res.data.first_name
+                temp[key] = res.data.last_name + " " + res.data.first_name
                 setNames(temp);
                 if (names.filter(String).length - Data.length === 0)
                     setLoading(false)
@@ -44,14 +43,12 @@ const MaireDeclarations = (props) => {
                 console.log(err)
             })
     }
-
     const getNames = () => {
         setNames([]);
         for (let i = 0; i < Data.length; i++) {
             getUser(Data[i].citizen, i)
         }
     }
-
     const handlesortOldFirst = () => {
         setsortDate("asc");
         setsortMobile("Old first");
@@ -87,7 +84,6 @@ const MaireDeclarations = (props) => {
         setPage(1);
     }
     const getData = () => {
-        // setData([]);
         setLoading(true);
         const pa = {
             page: page,
@@ -141,8 +137,12 @@ const MaireDeclarations = (props) => {
                 } else {
                     setPages(parseInt(res.data.count / 10) + 1);
                 }
-                setPerm(true)
-                setsearchLoading(false);
+                if (res.data.count ===0){
+                    setPerm(true);
+                    setAllow(true);
+                    setsearchLoading(false);
+                }
+                setLoading(false);
             })
             .catch((err) => {
                 console.log(err)
@@ -230,10 +230,24 @@ const MaireDeclarations = (props) => {
         updateDecStatus(data, decData.did)
         addComplement(complementData);
     }
+    const archiveDeclaration = (decData) => {
+        const data = {
+            title: decData.title, desc: decData.desc, citizen: decData.citizen,
+            dtype: decData.dtype, status: "lack_of_infos"
+        }
+        updateDecStatus(data, decData.did)
+    }
     const changePage = (e, pageInfo) => {
         setPage(pageInfo.activePage)
     }
     useEffect(() => {
+        setAllow(false);
+        setPerm(false);
+        setTimeout(() => {
+            setAllow(true);
+            setPerm(true);
+            setsearchLoading(false)
+        }, 1900);
         getTypes();
     }, [page, activeFilter, term, sortDate]);
 
@@ -250,7 +264,7 @@ const MaireDeclarations = (props) => {
                 </div>
             </div>
             <Segment
-                loading={Loading}
+                loading={!allow ? true : Loading}
                 className="_main_body shadow">
                 <div className="row">
                     <Search
@@ -334,7 +348,7 @@ const MaireDeclarations = (props) => {
 
                 </div>
                 {
-                    ((Data.length > 0) ?
+                    ((Data.length > 0) && (allow) ?
                         <>
                             <MaireDeclarationTable
                                 data={Data}
@@ -344,6 +358,7 @@ const MaireDeclarations = (props) => {
                                 sortdate={sortDate}
                                 rejectDeclaration={rejectDeclaration}
                                 demandComplement={demandComplement}
+                                archiveDeclaration = {archiveDeclaration}
                                 types={types}
                             />
                             <Pagination className="_maire_pagination"

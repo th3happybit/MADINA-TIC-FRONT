@@ -1,10 +1,11 @@
 /* eslint-disable no-use-before-define */
 import React, { useState } from "react";
-import { Modal, Button, Icon, Image, Transition } from "semantic-ui-react";
+import { Modal, Button, Icon, Image, Transition, Popup } from "semantic-ui-react";
 
 import RedirectModel from "./ModalRedirection.jsx";
 import ComplementModal from "./ModalComplement.jsx";
 import DeleteModal from "./ModalDelete.jsx";
+import ArchiveModal from "./ModalArchive.jsx";
 import { useEffect } from "react";
 
 const ModalD = (props) => {
@@ -65,9 +66,15 @@ const ModalD = (props) => {
       trigger={
         <>
           <Button.Group onClick={handleopen} className="infos_button">
-            <Button icon className="shadow _hide_on_mobile _infos_btn_desktop">
-              <Icon name="info" color="black" />
-            </Button>
+            <Popup
+            content="More Infos"
+              trigger=
+              {
+                <Button icon className="shadow _hide_on_mobile _infos_btn_desktop">
+                  <Icon name="info" color="black" />
+                </Button>
+              }
+            />
           </Button.Group>
           <Button onClick={handleopen}
             color="blue"
@@ -179,12 +186,17 @@ const ModalD = (props) => {
         )}
         {status === "Treated" &&
           <Modal.Content className="content_modal_btns marginTop">
-            <Button animated color="black">
-              <Button.Content visible content="Archive" />
-              <Button.Content hidden>
-                <Icon name="archive" />
-              </Button.Content>
-            </Button>
+            <ArchiveModal
+              data={{
+                did: did,
+                title: title,
+                citizen: citizen,
+                dtype: type,
+                desc: description,
+              }}
+              archive={props.archive}
+              close={handleclose}
+            />
           </Modal.Content>
         }
       </Modal.Content>

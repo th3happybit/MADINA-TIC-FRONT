@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import axios from "axios";
-import { Table, Icon } from "semantic-ui-react";
+import { Table, Icon, Popup } from "semantic-ui-react";
 import ModalDetails from "./ModalDetails.jsx";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -117,10 +117,8 @@ const MaireDeclarationTable = (props) => {
                     } = element
                     return (
                         <Table.Row key={index}>
-                            {/* {console.log(citizen)} */}
                             <Table.Cell className="_table_title">
-                                {/* {console.log(index)} */}
-                                {props.names[index] ? props.names[index] : ""}
+                                {names[index]}
                             </Table.Cell>
                             <Table.Cell>
                                 {title}
@@ -150,6 +148,7 @@ const MaireDeclarationTable = (props) => {
                                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
                                     status={getStatus(status).status}
                                     reject={props.rejectDeclaration}
+                                    archive={props.archiveDeclaration}
                                     complement={props.demandComplement}
                                     validate={props.validateDeclaration}
                                 />
