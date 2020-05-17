@@ -19,7 +19,7 @@ const Maire = (props) => {
                 headers: {
                     get: {
                         "Content-Type": "application/json",
-                        Authorization: `Token ${localStorage.getItem("admin_token")}`,
+                        Authorization: `Token ${localStorage.getItem("maire_token")}`,
                     },
                 },
             })
@@ -52,7 +52,7 @@ const Maire = (props) => {
                 <MaireSideBar active={active} />
                 <HeaderMaire active={active} show={handleHide} />
                 <MaireHeaderSideBar visible={visible} active={active} click={handleHide} />
-                <main className="_maire_main">{props.childComponent}</main>
+                <>{props.childComponent}</>
             </UserProvider>
         ) : (<div
             style={{

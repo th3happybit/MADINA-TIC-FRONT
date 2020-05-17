@@ -1,0 +1,135 @@
+.details_content ._header_modal {
+    text-align: center !important;
+}
+
+.details_content ._redirection_content {
+    padding: 2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.details_content ._redirection_content .ui.selection {
+    width : 300px !important;
+}
+
+.detail_content ._content_modal{
+    width: 100% !important;
+    display: flex !important;
+    justify-content: start !important;
+}
+
+._infos_section {
+    position: relative !important;
+    left: 20%;
+}
+
+._infos_section img {
+    display: inline-block !important;
+    margin-right: 30px !important;
+    margin-left: 30px !important;
+    margin-top: 10px !important;
+    max-width: 200px !important;
+    max-height: 200px !important;
+}
+
+._redirection_content .field {
+    width : 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+._redirection_content label{
+    margin-bottom: 1rem !important;
+    color : var(--blue_darker);
+}
+
+._redirection_content > div{
+    display: flex;
+    flex-direction: column;
+}
+
+._hidden{
+    display: none !important;
+}
+
+._primary {
+    background-color: var(--primary) !important;
+}
+
+._images_slides {
+    width: 350px;
+    height: 210px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+._image {
+    margin-top: 105px !important;
+}
+
+._images_slides .button {
+    background-color: white !important;
+    color: black !important;
+}
+._images_slides .button:hover {
+    background-color: var(--gray_light) !important;
+}
+
+._modal_btns .button {
+    margin: 0 1rem;
+    padding: 0.7rem 1.5rem !important;
+}
+
+.content_modal_btns ._mobile_btn {
+    display: none;
+}
+
+@media (max-width : 660px){
+
+    ._images_slides{
+        margin-top: 20px !important;
+        width: 220px;
+        height: 120px;
+    }
+
+    ._image {
+        margin-top: 60px !important;
+    }
+
+    ._infos_section img {
+        display: inline-block !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+        margin-top: 10px !important;
+        max-width: 120px !important;
+        max-height: 120px !important;
+    }
+    
+}
+
+@media (max-width : 550px) {
+
+    ._images_slides{
+        width: 180px;
+    }
+
+    ._detail_content {
+        border-bottom: 1px solid var(--secondary) !important;
+    }
+    .content_modal_btns ._hidden_on_mobile {
+        display: none;
+    }
+
+    .content_modal_btns ._mobile_btn {
+        display: flex !important;
+        justify-content: center !important;
+        min-width: 0px !important;
+        width: 80px !important;
+    }
+
+    ._detail_content ._header_modal p {
+        font-size: 20px !important;
+    }
+}
