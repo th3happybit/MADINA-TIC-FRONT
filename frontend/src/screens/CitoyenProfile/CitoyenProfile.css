@@ -11,6 +11,8 @@ main > #container_profile {
  
 .citoyen-profile {
     width: 100%;
+    justify-content: center !important;
+    padding-left: 15% !important;
 }
   
 .citoyen-profile > .left {
@@ -19,7 +21,7 @@ main > #container_profile {
 }
   
 .citoyen-profile > .right {
-    width: 70% !important;
+    width: 65% !important;
 }
 
 
@@ -129,22 +131,10 @@ main > #container_profile {
 
 @media (max-width: 1299px) {
     .citoyen-profile > .left {
-      width: 35% !important;
+      width: 90% !important;
     }
     .citoyen-profile > .right {
-      width: 65% !important;
-    }
-    .infos-form .form .fields .field .field .input input {
-      min-width : 220px !important;
-    }
-}
-
-@media (max-width: 1179px) {
-    .citoyen-profile > .left {
-      width: 80% !important;
-    }
-    .citoyen-profile > .right {
-      width: 80% !important;
+      width: 90% !important;
     }
     .citoyen-profile{
         padding : 2rem;
@@ -154,7 +144,7 @@ main > #container_profile {
         align-content: center;
     }
     .infos-form .form .fields .field .field .input input {
-      min-width : 220px !important;
+      max-width : 220px !important;
     }
 }
 

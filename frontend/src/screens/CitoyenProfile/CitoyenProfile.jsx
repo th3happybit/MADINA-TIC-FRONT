@@ -8,9 +8,6 @@ import PasswordForm from "../../components/CitoyenPasswordForm/CitoyenPasswordFo
 
 import "./CitoyenProfile.css";
 
-//? import header
-import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
-
 const CitoyenProfile = () => {
   const [Infos, setInfos] = useState([]);
   const [activeItem, setActiveItem] = useState("info");
@@ -58,7 +55,6 @@ const CitoyenProfile = () => {
 
   return (
     <>
-      <CitoyenHeader />
       {isLogin ? (
         <main>
           <Container
