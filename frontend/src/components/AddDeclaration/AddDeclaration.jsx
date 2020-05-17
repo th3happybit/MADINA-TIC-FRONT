@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Image, Button, Icon } from "semantic-ui-react";
+import { Form, Image, Button, Icon, Message } from "semantic-ui-react";
 
 import axios from "axios";
 
@@ -8,6 +8,8 @@ import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "./Location.jsx";
 
 export default function AddDeclaration(props) {
+  const [succes, setSucces] = useState(false);
+  const [isSave, setIsSave] = useState(false);
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
   const [type, setType] = useState("");
@@ -60,9 +62,10 @@ export default function AddDeclaration(props) {
     setIsGeo((prevState) => !prevState);
     setAdr("");
   };
+
   //TODO post
   useEffect(() => {
-    if (uid) {
+    if (uid && !isSave) {
       setIsLoading(true);
       let url = `http://157.230.19.233/api/declarations/`;
       axios
@@ -88,7 +91,9 @@ export default function AddDeclaration(props) {
         })
         .then((res) => {
           let did = res.data.did;
-          postImages(did);
+          if (pictures.length > 0) {
+            postImages(did);
+          } else setSucces(true);
         })
         .catch((err) => {
           Object.entries(err.response.data).map((elm) => {
@@ -110,16 +115,71 @@ export default function AddDeclaration(props) {
           setIsLoading(false);
         });
     }
-  }, [uid]);
+  }, [uid, isSave]);
+  useEffect(() => {
+    if (uid && isSave) {
+      setIsLoading(true);
+      let url = `http://157.230.19.233/api/declarations/`;
+      axios
+        .create({
+          headers: {
+            post: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url,
+          method: "post",
+          data: {
+            title,
+            desc: description,
+            geo_cord: "[30,10]",
+            address: adr,
+            dtype: dtid,
+            citizen: uid,
+            status: "draft",
+          },
+        })
+        .then((res) => {
+          let did = res.data.did;
+          if (pictures.length > 0) {
+            postImages(did);
+          } else setSucces(true);
+        })
+        .catch((err) => {
+          Object.entries(err.response.data).map((elm) => {
+            switch (elm[0]) {
+              case "title":
+                setTitleErr(true);
+                break;
+              case "desc":
+                setDescriptionErr(true);
+                break;
+              case "dtype":
+                setTypeErr(true);
+                break;
+              default:
+                break;
+            }
+            return true;
+          });
+          setIsLoading(false);
+        });
+    }
+  }, [uid, isSave]);
+  const handleSave = () => {
+    setIsSave(true);
+    handleAdd();
+  };
   const postImages = (did) => {
     const formData = new FormData();
     pictures.map((image) => {
       formData.append("src", image, image.name);
     });
-    console.log({ formData: formData.get("src") });
     formData.append("filetype", "image");
     formData.append("declaration", did);
-    console.log({ formData: formData.get("src") });
     axios
       .create({
         headers: {
@@ -137,6 +197,7 @@ export default function AddDeclaration(props) {
       .then((res) => {
         console.log(res);
         setIsLoading(false);
+        setSucces(true);
       })
       .catch((err) => {
         console.log(err.response);
@@ -146,6 +207,7 @@ export default function AddDeclaration(props) {
   const handleAdd = () => {
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
+      setSucces(false);
     } else if (!uid) {
       let url = `http://157.230.19.233/api/user/`;
       axios
@@ -240,7 +302,7 @@ export default function AddDeclaration(props) {
         <h3 className="large-title text-default bold _margin_vertical_md">
           Add Declaration
         </h3>
-        <Form>
+        <Form success={succes}>
           <Form.Input
             type="text"
             label="Title"
@@ -355,11 +417,19 @@ export default function AddDeclaration(props) {
             </Button>
             <Button
               className="button_secondary _margin_horizontal_sm"
-              onClick={postImages}
+              onClick={handleSave}
             >
               Save
             </Button>
           </Form.Group>
+          <Message
+            success
+            content={
+              isSave
+                ? "Your decalration has been saved"
+                : "Your decalration has been added"
+            }
+          />
         </Form>
       </div>
     </div>
