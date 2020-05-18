@@ -271,7 +271,7 @@ return (
             </div>
         </div>
         <Segment
-            loading={!allow ? true : Loading}
+            loading={false}
             className="_main_body shadow">
             <div className="row">
                 <Search
