@@ -35,45 +35,49 @@ const UpdateDeclaration = (props) => {
     setAdr("");
   };
   useEffect(() => {
-    axios
-      .create({
-        headers: {
-          get: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        },
-      })
-      .request({
-        url: "http://157.230.19.233/api/declarations_types/",
-        method: "get",
-      })
-      .then((res) => {
-        let arr = [];
-        res.data.map((elm, index) => {
-          return arr.push({
-            key: index,
-            text: elm.name,
-            value: elm.name,
-            dtid: elm.dtid,
-          });
-        });
-        setOptions(arr);
-        axios
-          .get(`http://157.230.19.233/api/declarations_types/${selectedType}`, {
-            headers: {
-              "content-type": "application/json",
+    selectedType &&
+      axios
+        .create({
+          headers: {
+            get: {
+              "Content-Type": "application/json",
               Authorization: `Token ${localStorage.getItem("token")}`,
             },
-          })
-          .then((res) => {
-            setType(res.data.name);
-          })
-          .catch((err) => {
-            console.log(err.response);
+          },
+        })
+        .request({
+          url: "http://157.230.19.233/api/declarations_types/",
+          method: "get",
+        })
+        .then((res) => {
+          let arr = [];
+          res.data.map((elm, index) => {
+            return arr.push({
+              key: index,
+              text: elm.name,
+              value: elm.name,
+              dtid: elm.dtid,
+            });
           });
-      })
-      .catch((err) => console.log(err));
+          setOptions(arr);
+          axios
+            .get(
+              `http://157.230.19.233/api/declarations_types/${selectedType}`,
+              {
+                headers: {
+                  "content-type": "application/json",
+                  Authorization: `Token ${localStorage.getItem("token")}`,
+                },
+              }
+            )
+            .then((res) => {
+              setType(res.data.name);
+            })
+            .catch((err) => {
+              console.log(err.response);
+            });
+        })
+        .catch((err) => console.log(err));
   }, [selectedType]);
   useEffect(() => {
     axios

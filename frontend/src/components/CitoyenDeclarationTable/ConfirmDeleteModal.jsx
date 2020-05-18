@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Icon } from "semantic-ui-react";
+import { Modal, Button, Icon, Popup } from "semantic-ui-react";
 
 const ModalC = (props) => {
 
@@ -33,12 +33,16 @@ const ModalC = (props) => {
             className="_change_approval"
             trigger={
                 <Button.Group onClick={handleopen}>
-                    <Button icon
-                        color={"red"}
-                        className="shadow _hide_on_mobile"
-                    >
-                        <Icon name="delete" color="white" />
-                    </Button>
+                    <Popup
+                        content="Delete"
+                        trigger={<Button icon
+                            color={"red"}
+                            className="shadow _hide_on_mobile"
+                        >
+                            <Icon name="delete" color="white" />
+                        </Button>}
+                    />
+
                     <Button
                         color={"red"}
                         className="shadow btn_account_detail pointer _show_on_mobile"

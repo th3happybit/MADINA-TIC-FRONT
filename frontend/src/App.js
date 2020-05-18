@@ -16,8 +16,7 @@ import CitoyenProfile from "./screens/CitoyenProfile/CitoyenProfile.jsx";
 import AdminCitoyen from "./screens/AdminCitoyen/AdminCitoyen.jsx";
 import AdminCreateAccount from "./screens/AdminCreateAccount/AdminCreateAccount.jsx";
 import Maire from "./screens/Maire/Maire.jsx";
-
-import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration";
+import MaireAuth from "./screens/Maire/MaireLogin.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -45,6 +44,7 @@ function App() {
           component={CitoyenMailVerification}
         />
         <Route exact path="/maire" component={Maire} />
+        <Route exact path="/maire/login" component={MaireAuth} />
         <Route
           exact
           path="/maire/declaration/"
@@ -57,7 +57,13 @@ function App() {
         />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
-        <Route exact path="/citoyen/profile" component={CitoyenProfile} />
+        <Route
+          exact
+          path="/citoyen/profile"
+          component={() => (
+            <CitoyenHome active="" childComponent={<CitoyenProfile />} />
+          )}
+        />
         <Route
           exact
           path="/home"

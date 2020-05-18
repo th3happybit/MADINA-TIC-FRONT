@@ -24,7 +24,7 @@ const HeaderAdmin = (props) => {
                 headers: {
                     get: {
                         "Content-Type": "application/json",
-                        Authorization: `Token ${localStorage.getItem("admin_token")}`,
+                        Authorization: `Token ${localStorage.getItem("maire_token")}`,
                     },
                 },
             })
@@ -58,7 +58,7 @@ const HeaderAdmin = (props) => {
             })
             .then(() => {
                 localStorage.clear();
-                return history.push("/login");
+                return history.push("/maire/login");
             })
             .catch((err) => {
                 console.log(err);
@@ -84,7 +84,7 @@ const HeaderAdmin = (props) => {
                                         text="Account"
                                         icon="user"
                                         as={Link}
-                                        to="/citoyen/profile"
+                                        to="/admin/profile"
                                     />
                                     <Dropdown.Item
                                         text="Sign Out"

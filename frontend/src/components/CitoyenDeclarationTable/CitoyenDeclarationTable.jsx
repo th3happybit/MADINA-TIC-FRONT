@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import ModalDelete from "./ConfirmDeleteModal.jsx"
-import { Table, Button, Icon } from "semantic-ui-react";
+import { Table, Button, Icon, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 
@@ -80,7 +80,6 @@ const CitoyenDeclarationTable = (props) => {
 
                     return (
                         <Table.Row key={index}>
-                            {console.log(did)}
                             <Table.Cell>
                                 {title}
                             </Table.Cell>
@@ -107,55 +106,65 @@ const CitoyenDeclarationTable = (props) => {
                                 {created_on.slice(0, 10)}
                             </Table.Cell>
                             <Table.Cell id="manage_cell">
-                                
-                                    <Button.Group className="manage_button">
+
+                                <Button.Group className="manage_button">
                                     <Link to={{ pathname: "/infos", state: { id: did } }} >
-                                        <Button icon id="infos_btn" className="shadow _hide_on_mobile _infos_btn_desktop">
-                                            <Icon name="info" color="black" />
-                                        </Button>
-                                        </Link>
-                                        <Link to={{ pathname: "/infos", state: { id: did } }} >
+                                        <Popup
+                                            content="Infos"
+                                            trigger={
+                                                <Button icon id="infos_btn" className="shadow _hide_on_mobile _infos_btn_desktop">
+                                                    <Icon name="info" color="black" />
+                                                </Button>
+                                            }
+                                        />
+
+                                    </Link>
+                                    <Link to={{ pathname: "/infos", state: { id: did } }} >
                                         <Button
                                             className="shadow btn_account_detail pointer primary _show_on_mobile"
                                             content="Details"
-                                        /></Link>
-                                    </Button.Group>
-                                
-                                {Filter === "Refused" && (
-                                    <Button.Group className="manage_button">
-                                        <Button icon color={"yellow"} className="shadow _hide_on_mobile">
-                                            <Icon name="sync alternate" color="white" />
-                                        </Button>
-                                        <Button
-                                            color={"yellow"}
-                                            className="shadow btn_account_detail pointer _show_on_mobile"
-                                            content="Complete"
                                         />
-                                    </Button.Group>
-                                )}
+                                    </Link>
+                                </Button.Group>
                                 {Filter === "New Declarations" && (
+                                    <Link to={{pathname : "/declaration/update", state : {data : element}}}>
                                     <Button.Group className="manage_button">
-                                        <Button icon color={"black"} className="shadow _hide_on_mobile">
-                                            <Icon name="pencil alternate" color="white" />
-                                        </Button>
+                                        <Popup
+                                            content="Edit"
+                                            trigger=
+                                            {
+                                                <Button icon color={"black"} className="shadow _hide_on_mobile">
+                                                    <Icon name="pencil alternate" color="white" />
+                                                </Button>
+                                            }
+                                        />
                                         <Button
                                             color={"black"}
                                             className="shadow btn_account_detail pointer _show_on_mobile"
                                             content="Edit"
                                         />
                                     </Button.Group>
+                                    </Link>
                                 )}
                                 {Filter === "Lack of infos" && (
+                                    <Link to={{pathname : "/declaration/complement", state : {data : element}}}>
                                     <Button.Group className="manage_button">
-                                        <Button icon color={"green"} className="shadow _hide_on_mobile">
-                                            <Icon name="plus" color="white" />
-                                        </Button>
+                                        <Popup
+                                            content="Add Infos"
+                                            trigger=
+                                            {
+                                                <Button icon color={"green"} className="shadow _hide_on_mobile">
+                                                    <Icon name="plus" color="white" />
+                                                </Button>
+                                            }
+                                        />
                                         <Button
                                             color={"green"}
                                             className="shadow btn_account_detail pointer _show_on_mobile"
                                             content="Add infos"
                                         />
                                     </Button.Group>
+                                    </Link>
                                 )}
                                 {((Filter === "New Declarations") || (Filter === "Refused") || (Filter === "Lack of infos")) && (
                                     <ModalDelete

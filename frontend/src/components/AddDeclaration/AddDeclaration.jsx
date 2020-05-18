@@ -8,6 +8,7 @@ import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "./Location.jsx";
 
 export default function AddDeclaration(props) {
+  console.log({ props });
   const [succes, setSucces] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [title, setTitle] = useState("");
