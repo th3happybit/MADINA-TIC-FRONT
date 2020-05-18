@@ -80,7 +80,6 @@ const CitoyenDeclarationTable = (props) => {
 
                     return (
                         <Table.Row key={index}>
-                            {console.log(did)}
                             <Table.Cell>
                                 {title}
                             </Table.Cell>
@@ -127,25 +126,8 @@ const CitoyenDeclarationTable = (props) => {
                                         />
                                     </Link>
                                 </Button.Group>
-
-                                {Filter === "Refused" && (
-                                    <Button.Group className="manage_button">
-                                        <Popup
-                                            content="Resend"
-                                            trigger={
-                                                <Button icon color={"yellow"} className="shadow _hide_on_mobile">
-                                                    <Icon name="sync alternate" color="white" />
-                                                </Button>
-                                            }
-                                        />
-                                        <Button
-                                            color={"yellow"}
-                                            className="shadow btn_account_detail pointer _show_on_mobile"
-                                            content="Resend"
-                                        />
-                                    </Button.Group>
-                                )}
                                 {Filter === "New Declarations" && (
+                                    <Link to={{pathname : "/declaration/update", state : {data : element}}}>
                                     <Button.Group className="manage_button">
                                         <Popup
                                             content="Edit"
@@ -162,8 +144,10 @@ const CitoyenDeclarationTable = (props) => {
                                             content="Edit"
                                         />
                                     </Button.Group>
+                                    </Link>
                                 )}
                                 {Filter === "Lack of infos" && (
+                                    <Link to={{pathname : "/declaration/complement", state : {data : element}}}>
                                     <Button.Group className="manage_button">
                                         <Popup
                                             content="Add Infos"
@@ -180,6 +164,7 @@ const CitoyenDeclarationTable = (props) => {
                                             content="Add infos"
                                         />
                                     </Button.Group>
+                                    </Link>
                                 )}
                                 {((Filter === "New Declarations") || (Filter === "Refused") || (Filter === "Lack of infos")) && (
                                     <ModalDelete
