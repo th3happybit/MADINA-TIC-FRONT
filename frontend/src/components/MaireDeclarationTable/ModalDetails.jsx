@@ -47,6 +47,7 @@ const ModalD = (props) => {
     fullname,
     title,
     type,
+    dtype,
     created_on,
     address,
     rejected_at,
@@ -163,7 +164,7 @@ const ModalD = (props) => {
                 maire: props.maire,
                 declaration: did,
                 citizen: citizen,
-                dtype: type,
+                dtype: dtype,
                 desc: description,
               }}
               complement={props.complement}
@@ -176,7 +177,7 @@ const ModalD = (props) => {
                 maire: props.maire,
                 declaration: did,
                 citizen: citizen,
-                dtype: type,
+                dtype: dtype,
                 desc: description,
               }}
               reject={props.reject}
@@ -191,7 +192,7 @@ const ModalD = (props) => {
                 did: did,
                 title: title,
                 citizen: citizen,
-                dtype: type,
+                dtype: dtype,
                 desc: description,
               }}
               archive={props.archive}

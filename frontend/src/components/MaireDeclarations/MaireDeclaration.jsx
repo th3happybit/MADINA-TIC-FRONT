@@ -18,34 +18,15 @@ const MaireDeclarations = (props) => {
   const [sortDate, setsortDate] = useState(null);
   const [sortMobile, setsortMobile] = useState("Random");
   const [types, settypes] = useState(null);
-  const [names, setNames] = useState([]);
   const [allow, setAllow] = useState(false);
-  const [test, setTest] = useState([]);
+  const [refresh, setRefresh] = useState(false)
 
-  const getUser = (id, key) => {
-    axios
-      .get("http://157.230.19.233/api/users/" + id + "/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
-        },
-      })
-      .then((res) => {
-        const temp = names;
-        temp[key] = res.data.last_name + " " + res.data.first_name;
-        setNames(temp);
-        if (names.filter(String).length - Data.length === 0) setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const getNames = () => {
-    setNames([]);
-    for (let i = 0; i < Data.length; i++) {
-      getUser(Data[i].citizen, i);
-    }
-  };
+
+  const handlesortRandom = () => {
+    setsortDate(null);
+    setsortMobile("Random");
+    setPage(1);
+  }
   const handlesortOldFirst = () => {
     setsortDate("asc");
     setsortMobile("Old first");
@@ -79,7 +60,9 @@ const MaireDeclarations = (props) => {
     setPage(1);
   };
   const getData = () => {
-    setLoading(true);
+    setData([]);
+    setPerm(false);
+    setAllow(false);
     const pa = {
       page: page,
     };
@@ -125,7 +108,7 @@ const MaireDeclarations = (props) => {
         },
       })
       .then(async (res) => {
-        setLoading(false);
+        console.log(res.data)
         if (res.data.count % 10 === 0) {
           setPages(parseInt(res.data.count / 10));
         } else {
@@ -133,11 +116,11 @@ const MaireDeclarations = (props) => {
         }
         if (res.data.count === 0) {
           setPerm(true);
-          setAllow(true);
+          setLoading(false)
           setsearchLoading(false);
         }
         let data = res.data.results;
-        let tempArr = new Array();
+        let tempArr = [];
         data.map(async (elm, index) => {
           let req = await axios.get(
             `http://157.230.19.233/api/users/${elm.citizen}`,
@@ -156,6 +139,8 @@ const MaireDeclarations = (props) => {
           if (index + 1 === data.length) {
             await setData(tempArr);
             setAllow(true);
+            setLoading(false);
+            setsearchLoading(false);
           }
         });
       })
@@ -164,6 +149,7 @@ const MaireDeclarations = (props) => {
       });
   };
   const getTypes = () => {
+    setLoading(true)
     axios
       .get("http://157.230.19.233/api/declarations_types/", {
         headers: {
@@ -181,78 +167,92 @@ const MaireDeclarations = (props) => {
   };
   const updateDecStatus = (data, did) => {
     axios
-      .patch("http://157.230.19.233/api/declarations/" + did + "/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+    .create({
+      headers : {
+        patch : {
+          "Content-type" : "application/json",
+          Authorization : `Token ${localStorage.getItem("maire_token")}`
         },
-        data: data,
+      },
+    })
+    .request("http://157.230.19.233/api/declarations/" + did + "/", {
+      method : "patch",
+      data : data,
+    })
+      .then((res) => {
+        setRefresh((prevState) => !prevState)
+        setPage(1)
       })
-      .then((res) => {})
       .catch((err) => {
+        setRefresh((prevState) => !prevState)
+        setPage(1)
         console.log(err);
       });
   };
   const addRejection = (data) => {
     axios
-      .post("http://157.230.19.233/api/declarations_rejection/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+    .create({
+      headers : {
+        post : {
+          "Content-type" : "application/json",
+          Authorization : `Token ${localStorage.getItem("maire_token")}`
         },
-        data: data,
+      },
+    })
+    .request("http://157.230.19.233/api/declarations_rejection/", {
+      method : "post",
+      data : data,
+    })
+      .then((res) => {
+        setRefresh((prevState) => !prevState)
+        setPage(1)
       })
-      .then((res) => {})
       .catch((err) => {
+        setRefresh((prevState) => !prevState)
+        setPage(1)
         console.log(err);
       });
   };
   const addComplement = (data) => {
     axios
-      .post("http://157.230.19.233/api/declarations_complement_demand/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+      .create({
+      headers : {
+        post : {
+          "Content-type" : "application/json",
+          Authorization : `Token ${localStorage.getItem("maire_token")}`
         },
-        data: data,
+      },
+    })
+    .request("http://157.230.19.233/api/declarations_complement_demand/", {
+      method : "post",
+      data : data,
+    })
+      .then((res) => {
+        setRefresh((prevState) => !prevState)
+        setPage(1)
       })
-      .then((res) => {})
       .catch((err) => {
+        setRefresh((prevState) => !prevState)
+        setPage(1)
         console.log(err);
       });
   };
   const rejectDeclaration = (decData, reason) => {
     decData["reason"] = reason;
-    const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
-      status: "rejected",
-    };
     const rejectionData = {
       maire: decData.maire,
       declaration: decData.did,
       reason: reason,
     };
-    updateDecStatus(data, decData.did);
     addRejection(rejectionData);
   };
   const demandComplement = (decData, reason) => {
     decData["reason"] = reason;
-    const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
-      status: "lack_of_infos",
-    };
     const complementData = {
       maire: decData.maire,
       declaration: decData.did,
       reason: reason,
     };
-    updateDecStatus(data, decData.did);
     addComplement(complementData);
   };
   const archiveDeclaration = (decData) => {
@@ -261,7 +261,7 @@ const MaireDeclarations = (props) => {
       desc: decData.desc,
       citizen: decData.citizen,
       dtype: decData.dtype,
-      status: "lack_of_infos",
+      status: "archived",
     };
     updateDecStatus(data, decData.did);
   };
@@ -270,9 +270,8 @@ const MaireDeclarations = (props) => {
   };
   useEffect(() => {
     getTypes();
-  }, [page, activeFilter, term, sortDate]);
+  }, [page, activeFilter, term, sortDate, refresh]);
 
-  console.log({ Data });
   return (
     <div className="_maire_declarations">
       <div className="_main_header">
@@ -280,7 +279,7 @@ const MaireDeclarations = (props) => {
           <p className="extra-text text-default">Declarations</p>
         </div>
       </div>
-      <Segment loading={false} className="_main_body shadow">
+      <Segment loading={searchLoading ? false : (Loading)} className="_main_body shadow">
         <div className="row">
           <Search
             loading={searchLoading}
@@ -309,7 +308,7 @@ const MaireDeclarations = (props) => {
             <Dropdown.Menu>
               <Dropdown.Item
                 text="Randomly"
-                onClick={() => setsortDate(null)}
+                onClick={handlesortRandom}
               />
               <Dropdown.Item text="Newer first" onClick={handlesortNewFirst} />
               <Dropdown.Item text="Old first" onClick={handlesortOldFirst} />
@@ -362,11 +361,10 @@ const MaireDeclarations = (props) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {allow ? (
+        {(allow)  ? (
           <>
             <MaireDeclarationTable
               data={Data}
-              names={names}
               filter={activeFilter}
               handlesortDate={handle_sort_date}
               sortdate={sortDate}
