@@ -27,8 +27,10 @@ import CitoyenResetPassword from "./components/CitoyenResetPassword/CitoyenReset
 import CitoyenHome from "./screens/CitoyenHome/CitoyenHome.jsx";
 import AddDeclaration from "./components/AddDeclaration/AddDeclaration.jsx";
 import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclarations.jsx";
-import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx"
+import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx";
 import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
+
+import ccc from "./components/UpdateDeclaration/UpdateDeclaration.jsx"
 
 function App() {
   return (
@@ -37,7 +39,7 @@ function App() {
         <Route
           path="/account/reset-password/confirm/:uid/:token"
           component={CitoyenResetPassword}
-        />
+        /><Route exact path="/test" component={ccc}/>
         <Route
           exact
           path="/mailVerification"
@@ -55,7 +57,12 @@ function App() {
         <Route
           exact
           path="/infos"
-          component={(prop) => <CitoyenHome props={prop} childComponent={<CitoyenDeclarationInfo props={prop}/>} />}
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<CitoyenDeclarationInfo props={prop} />}
+            />
+          )}
         />
         <Route
           exact

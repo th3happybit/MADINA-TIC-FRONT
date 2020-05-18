@@ -53,9 +53,9 @@ const MaireDeclarationTable = (props) => {
                 return props.types[j].name
         }
     }
-    useEffect(() => {
-        setNames(props.names);
-    }, [props.names, props.data])
+    // useEffect(() => {
+    //     setNames(props.names);
+    // }, [props.names, props.data])
 
     function filterAttachments(att) {
         var ret = []
@@ -113,12 +113,14 @@ const MaireDeclarationTable = (props) => {
                         status,
                         desc,
                         validated_at,
-                        attachments
+                        attachments,
+                        first_name,
+                        last_name,
                     } = element
                     return (
                         <Table.Row key={index}>
                             <Table.Cell className="_table_title">
-                                {names[index]}
+                                {last_name + " " + first_name}
                             </Table.Cell>
                             <Table.Cell>
                                 {title}

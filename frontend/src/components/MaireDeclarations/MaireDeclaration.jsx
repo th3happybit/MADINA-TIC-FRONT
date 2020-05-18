@@ -130,250 +130,257 @@ const MaireDeclarations = (props) => {
                 }
             })
             .then((res) => {
-                setData(res.data.results);
                 setLoading(false);
                 if (res.data.count % 10 === 0) {
                     setPages(parseInt(res.data.count / 10));
                 } else {
                     setPages(parseInt(res.data.count / 10) + 1);
                 }
-                if (res.data.count ===0){
+                if (res.data.count === 0) {
                     setPerm(true);
                     setAllow(true);
                     setsearchLoading(false);
                 }
-                setLoading(false);
+                let data = res.data.results;
+                let tempArr = [];
+                data.map((elm, index) => {
+                    axios
+                        .get(`http://157.230.19.233/api/users/${elm.citizen}`, {
+                            headers: {
+                                "content-type": "application/json",
+                                Authorization: `Token ${localStorage.getItem("token")}`,
+                            },
+                        })
+                        .then((res) => {
+                            let element = elm;
+                            element["first_name"] = res.data.first_name;
+                            element["last_name"] = res.data.last_name;
+                            tempArr.push(element);
+                        })
+                        .catch((err) => {
+                            console.log(err.response);
+                        });
+                });
+                setData(tempArr);
             })
-            .catch((err) => {
-                console.log(err)
-            })
+            .catch ((err) => {
+    console.log(err)
+})
 
     }
-    const getTypes = () => {
-        axios
-            .get("http://157.230.19.233/api/declarations_types/", {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${localStorage.getItem("token")}`,
-                }
-            })
-            .then((res) => {
-                getData();
-                settypes(res.data);
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+const getTypes = () => {
+    axios
+        .get("http://157.230.19.233/api/declarations_types/", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${localStorage.getItem("token")}`,
+            }
+        })
+        .then((res) => {
+            getData();
+            settypes(res.data);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+const updateDecStatus = (data, did) => {
+    axios
+        .patch("http://157.230.19.233/api/declarations/" + did + "/", {
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Token ${localStorage.getItem("maire_token")}`,
+            },
+            data: data
+        })
+        .then((res) => {
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+const addRejection = (data) => {
+    axios
+        .post("http://157.230.19.233/api/declarations_rejection/", {
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Token ${localStorage.getItem("maire_token")}`
+            },
+            data: data,
+        })
+        .then((res) => {
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+const addComplement = (data) => {
+    axios
+        .post("http://157.230.19.233/api/declarations_complement_demand/", {
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Token ${localStorage.getItem("maire_token")}`,
+            },
+            data: data,
+        })
+        .then((res) => {
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+const rejectDeclaration = (decData, reason) => {
+    decData["reason"] = reason;
+    const data = {
+        title: decData.title, desc: decData.desc, citizen: decData.citizen,
+        dtype: decData.dtype, status: "rejected"
     }
-    const updateDecStatus = (data, did) => {
-        axios
-            .patch("http://157.230.19.233/api/declarations/" + did + "/", {
-                headers: {
-                    "content-type": "application/json",
-                    Authorization: `Token ${localStorage.getItem("maire_token")}`,
-                },
-                data: data
-            })
-            .then((res) => {
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+    const rejectionData = { maire: decData.maire, declaration: decData.did, reason: reason }
+    updateDecStatus(data, decData.did)
+    addRejection(rejectionData);
+}
+const demandComplement = (decData, reason) => {
+    decData["reason"] = reason;
+    const data = {
+        title: decData.title, desc: decData.desc, citizen: decData.citizen,
+        dtype: decData.dtype, status: "lack_of_infos"
     }
-    const addRejection = (data) => {
-        axios
-            .post("http://157.230.19.233/api/declarations_rejection/", {
-                headers: {
-                    "content-type": "application/json",
-                    Authorization: `Token ${localStorage.getItem("maire_token")}`
-                },
-                data: data,
-            })
-            .then((res) => {
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+    const complementData = { maire: decData.maire, declaration: decData.did, reason: reason }
+    updateDecStatus(data, decData.did)
+    addComplement(complementData);
+}
+const archiveDeclaration = (decData) => {
+    const data = {
+        title: decData.title, desc: decData.desc, citizen: decData.citizen,
+        dtype: decData.dtype, status: "lack_of_infos"
     }
-    const addComplement = (data) => {
-        axios
-            .post("http://157.230.19.233/api/declarations_complement_demand/", {
-                headers: {
-                    "content-type": "application/json",
-                    Authorization: `Token ${localStorage.getItem("maire_token")}`,
-                },
-                data: data,
-            })
-            .then((res) => {
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
-    const rejectDeclaration = (decData, reason) => {
-        decData["reason"] = reason;
-        const data = {
-            title: decData.title, desc: decData.desc, citizen: decData.citizen,
-            dtype: decData.dtype, status: "rejected"
-        }
-        const rejectionData = { maire: decData.maire, declaration: decData.did, reason: reason }
-        updateDecStatus(data, decData.did)
-        addRejection(rejectionData);
-    }
-    const demandComplement = (decData, reason) => {
-        decData["reason"] = reason;
-        const data = {
-            title: decData.title, desc: decData.desc, citizen: decData.citizen,
-            dtype: decData.dtype, status: "lack_of_infos"
-        }
-        const complementData = { maire: decData.maire, declaration: decData.did, reason: reason }
-        updateDecStatus(data, decData.did)
-        addComplement(complementData);
-    }
-    const archiveDeclaration = (decData) => {
-        const data = {
-            title: decData.title, desc: decData.desc, citizen: decData.citizen,
-            dtype: decData.dtype, status: "lack_of_infos"
-        }
-        updateDecStatus(data, decData.did)
-    }
-    const changePage = (e, pageInfo) => {
-        setPage(pageInfo.activePage)
-    }
-    useEffect(() => {
-        setAllow(false);
-        setPerm(false);
-        setTimeout(() => {
-            setAllow(true);
-            setPerm(true);
-            setsearchLoading(false)
-        }, 1900);
-        getTypes();
-    }, [page, activeFilter, term, sortDate]);
+    updateDecStatus(data, decData.did)
+}
+const changePage = (e, pageInfo) => {
+    setPage(pageInfo.activePage)
+}
+useEffect(() => {
+    getTypes();
+}, [page, activeFilter, term, sortDate]);
 
-    useEffect(() => {
-        if (Data.length > 0)
-            getNames();
-    }, [Data]);
-
-    return (
-        <div className="_maire_declarations">
-            <div className="_main_header">
-                <div className="title_segment">
-                    <p className="extra-text text-default">Declarations</p>
-                </div>
+return (
+    <div className="_maire_declarations">
+        <div className="_main_header">
+            <div className="title_segment">
+                <p className="extra-text text-default">Declarations</p>
             </div>
-            <Segment
-                loading={!allow ? true : Loading}
-                className="_main_body shadow">
-                <div className="row">
-                    <Search
-                        loading={searchLoading}
-                        onSearchChange={handlesearch}
-                        value={term}
-                        showNoResults={false}
-                        results={null}
-                        input={{
-                            icon: "search", iconPosition: "right", disabled:
-                                ((Data.length < 1) && ((term === null) || (term === ""))) ? true : false
-                        }}
-                        placeholder="Search for declarations ..." />
-                    <Dropdown className="icon filter_declaration _mobile"
-                        icon="angle down"
-                        text={sortMobile}
-                        button
-                        selection
-                        labeled
-                    >
-                        <Dropdown.Menu>
-                            <Dropdown.Item
-                                text="Randomly"
-                                onClick={() => setsortDate(null)}
-                            />
-                            <Dropdown.Item
-                                text="Newer first"
-                                onClick={handlesortNewFirst}
-                            />
-                            <Dropdown.Item
-                                text="Old first"
-                                onClick={handlesortOldFirst}
-                            />
-                        </Dropdown.Menu>
-                    </Dropdown>
-                    <Dropdown className="icon filter_declaration"
-                        icon="angle down"
-                        text={activeFilter}
-                        button
-                        selection
-                        labeled
-                    >
-                        <Dropdown.Menu>
-                            <Dropdown.Item
-                                text="New Declarations"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "blue", empty: true }}
-                            />
-                            <Dropdown.Item
-                                text="Validated"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "green", empty: true }}
-                            />
-                            <Dropdown.Item
-                                text="In progress"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "yellow", empty: true }}
-                            />
-                            <Dropdown.Item
-                                text="Treated"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "green", empty: true }}
-                            />
-                            <Dropdown.Item
-                                text="Refused"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "red", empty: true }}
-                            />
-                            <Dropdown.Item
-                                text="Archived"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "black", empty: true }}
-                            />
-                            <Dropdown.Item
-                                text="Lack of infos"
-                                onClick={handle_filter}
-                                label={{ circular: true, color: "orange", empty: true }}
-                            />
-                        </Dropdown.Menu>
-                    </Dropdown>
+        </div>
+        <Segment
+            loading={!allow ? true : Loading}
+            className="_main_body shadow">
+            <div className="row">
+                <Search
+                    loading={searchLoading}
+                    onSearchChange={handlesearch}
+                    value={term}
+                    showNoResults={false}
+                    results={null}
+                    input={{
+                        icon: "search", iconPosition: "right", disabled:
+                            ((Data.length < 1) && ((term === null) || (term === ""))) ? true : false
+                    }}
+                    placeholder="Search for declarations ..." />
+                <Dropdown className="icon filter_declaration _mobile"
+                    icon="angle down"
+                    text={sortMobile}
+                    button
+                    selection
+                    labeled
+                >
+                    <Dropdown.Menu>
+                        <Dropdown.Item
+                            text="Randomly"
+                            onClick={() => setsortDate(null)}
+                        />
+                        <Dropdown.Item
+                            text="Newer first"
+                            onClick={handlesortNewFirst}
+                        />
+                        <Dropdown.Item
+                            text="Old first"
+                            onClick={handlesortOldFirst}
+                        />
+                    </Dropdown.Menu>
+                </Dropdown>
+                <Dropdown className="icon filter_declaration"
+                    icon="angle down"
+                    text={activeFilter}
+                    button
+                    selection
+                    labeled
+                >
+                    <Dropdown.Menu>
+                        <Dropdown.Item
+                            text="New Declarations"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "blue", empty: true }}
+                        />
+                        <Dropdown.Item
+                            text="Validated"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "green", empty: true }}
+                        />
+                        <Dropdown.Item
+                            text="In progress"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "yellow", empty: true }}
+                        />
+                        <Dropdown.Item
+                            text="Treated"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "green", empty: true }}
+                        />
+                        <Dropdown.Item
+                            text="Refused"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "red", empty: true }}
+                        />
+                        <Dropdown.Item
+                            text="Archived"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "black", empty: true }}
+                        />
+                        <Dropdown.Item
+                            text="Lack of infos"
+                            onClick={handle_filter}
+                            label={{ circular: true, color: "orange", empty: true }}
+                        />
+                    </Dropdown.Menu>
+                </Dropdown>
 
-                </div>
-                {
-                    ((Data.length > 0) && (allow) ?
-                        <>
-                            <MaireDeclarationTable
-                                data={Data}
-                                names={names}
-                                filter={activeFilter}
-                                handlesortDate={handle_sort_date}
-                                sortdate={sortDate}
-                                rejectDeclaration={rejectDeclaration}
-                                demandComplement={demandComplement}
-                                archiveDeclaration = {archiveDeclaration}
-                                types={types}
-                                maire={props.maire}
-                            />
-                            <Pagination className="_maire_pagination"
-                                boundaryRange={0}
-                                activePage={page}
-                                onPageChange={changePage}
-                                firstItem={null}
-                                lastItem={null}
-                                totalPages={pages}
-                                pointing
-                                secondary />
-                        </> : (perm && <p class="zero-data">Sorry No declarations to display in this section</p>))}
-            </Segment>
-        </div>)
+            </div>
+            {
+                ((Data.length > 0) && (allow) ?
+                    <>
+                        <MaireDeclarationTable
+                            data={Data}
+                            names={names}
+                            filter={activeFilter}
+                            handlesortDate={handle_sort_date}
+                            sortdate={sortDate}
+                            rejectDeclaration={rejectDeclaration}
+                            demandComplement={demandComplement}
+                            archiveDeclaration={archiveDeclaration}
+                            types={types}
+                            maire={props.maire}
+                        />
+                        <Pagination className="_maire_pagination"
+                            boundaryRange={0}
+                            activePage={page}
+                            onPageChange={changePage}
+                            firstItem={null}
+                            lastItem={null}
+                            totalPages={pages}
+                            pointing
+                            secondary />
+                    </> : (perm && <p class="zero-data">Sorry No declarations to display in this section</p>))}
+        </Segment>
+    </div>)
 }
 
 export default MaireDeclarations;
