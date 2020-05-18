@@ -12,6 +12,7 @@ const Maire = (props) => {
 
     const [isLogin, setIsLogin] = useState(null);
     const [verified, setVerified] = useState(false);
+    const [maire, setMaire] = useState(null)
 
     useEffect(() => {
         axios
@@ -28,8 +29,10 @@ const Maire = (props) => {
                 method: "get",
             })
             .then((res) => {
-                if (res.data.role === "Maire")
+                if (res.data.role === "Maire"){
                     setIsLogin(true);
+                    setMaire(res.data.uid)
+                }
                 else {
                     setIsLogin(false)
                 }
@@ -52,7 +55,7 @@ const Maire = (props) => {
                 <MaireSideBar active={active} />
                 <HeaderMaire active={active} show={handleHide} />
                 <MaireHeaderSideBar visible={visible} active={active} click={handleHide} />
-                <>{props.childComponent}</>
+                <>{<props.childComponent maire={maire}/>}</>
             </UserProvider>
         ) : (<div
             style={{

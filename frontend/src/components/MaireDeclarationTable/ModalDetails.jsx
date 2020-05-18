@@ -160,7 +160,7 @@ const ModalD = (props) => {
               data={{
                 did: did,
                 title: title,
-                maire: localStorage.getItem("maire_token"),
+                maire: props.maire,
                 declaration: did,
                 citizen: citizen,
                 dtype: type,
@@ -173,7 +173,7 @@ const ModalD = (props) => {
               data={{
                 did: did,
                 title: title,
-                maire: localStorage.getItem("maire_token"),
+                maire: props.maire,
                 declaration: did,
                 citizen: citizen,
                 dtype: type,

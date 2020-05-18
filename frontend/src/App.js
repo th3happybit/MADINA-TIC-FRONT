@@ -45,7 +45,7 @@ function App() {
         />
         <Route exact path="/maire" component={Maire} />
         <Route exact path="/maire/login" component={MaireAuth}/>
-        <Route exact path="/maire/declaration/" component={() => <Maire active="declarations" childComponent={<MaireDeclarations/> }/>} />
+        <Route exact path="/maire/declaration/" component={() => <Maire active="declarations" childComponent={MaireDeclarations}/>} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
         <Route exact path="/citoyen/profile" component={() => <CitoyenHome active="" childComponent={<CitoyenProfile/>}/>} />

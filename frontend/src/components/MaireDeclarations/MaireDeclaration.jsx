@@ -360,6 +360,7 @@ const MaireDeclarations = (props) => {
                                 demandComplement={demandComplement}
                                 archiveDeclaration = {archiveDeclaration}
                                 types={types}
+                                maire={props.maire}
                             />
                             <Pagination className="_maire_pagination"
                                 boundaryRange={0}

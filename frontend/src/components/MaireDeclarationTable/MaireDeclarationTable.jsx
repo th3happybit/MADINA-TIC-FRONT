@@ -151,6 +151,7 @@ const MaireDeclarationTable = (props) => {
                                     archive={props.archiveDeclaration}
                                     complement={props.demandComplement}
                                     validate={props.validateDeclaration}
+                                    maire={props.maire}
                                 />
                             </Table.Cell>
                         </Table.Row>
