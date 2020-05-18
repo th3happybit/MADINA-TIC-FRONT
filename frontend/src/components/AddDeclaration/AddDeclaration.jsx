@@ -227,10 +227,12 @@ export default function AddDeclaration(props) {
           let uid = res.data.uid;
           options.map((elm) => elm.value === type && setDtid(elm.dtid));
           setUid(uid);
+          setIsLoading(false);
         })
         .catch((err) => console.log(err.response));
     } else {
       setUid(uid);
+      setIsLoading(false);
     }
   };
 

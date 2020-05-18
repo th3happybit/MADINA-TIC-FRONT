@@ -88,7 +88,11 @@ function App() {
           path="/add/declaration"
           component={() => <CitoyenHome childComponent={<AddDeclaration />} />}
         />
-        <Route exact path="/test" component={UpdateDeclaration} />
+        <Route
+          exact
+          path="/update/declaration/:did"
+          component={UpdateDeclaration}
+        />
         />
         <Route
           exact

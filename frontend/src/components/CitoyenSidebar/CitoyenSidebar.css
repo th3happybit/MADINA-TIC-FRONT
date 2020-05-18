@@ -12,7 +12,15 @@
   margin-left: 0rem !important;
   z-index: 1;
 }
-
+._citoyen_sidebar .item a .content {
+  color: var(--blue_darker);
+}
+._citoyen_sidebar .item.active a .content {
+  color: #1e70bf;
+}
+._citoyen_sidebar .item.active i.icon.file.alternate::before {
+  color: #1e70bf !important;
+}
 .add_declaration {
   text-decoration: none;
   margin-bottom: 1rem;
