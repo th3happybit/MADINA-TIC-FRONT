@@ -4,7 +4,7 @@ import { Button, Image, Icon, Segment } from "semantic-ui-react";
 import Status from "./StatusLabel.jsx";
 
 import "./CitoyenDeclarationInfo.css";
-import { Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { geoPropTypes } from "react-geolocated";
 
 const CitoyenDeclarationInfo = (props) => {
@@ -167,19 +167,18 @@ const CitoyenDeclarationInfo = (props) => {
 
       <div className="_button1">
         {Data.status && getStatus(Data.status).status === "Not Validated" && (
+          <Link to={{pathname : "/update/declaration" , state : {data : Data}}}>
           <Button
             animated
             color="black"
             className="action_button"
-            onClick={() => {
-              history.push("/update/declaration/" + String(id));
-            }}
           >
             <Button.Content visible content="Modifiy" />
             <Button.Content hidden icon>
               <Icon name="pencil alternate" />
             </Button.Content>
           </Button>
+          </Link>
         )}
         {Data.status && getStatus(Data.status).status === "Refused" && (
           <Button animated color="yellow" className="action_button">
@@ -190,12 +189,14 @@ const CitoyenDeclarationInfo = (props) => {
           </Button>
         )}
         {Data.status && getStatus(Data.status).status === "Lack of infos" && (
+          <Link to={{pathname : "/update/declaration" , state : {data : Data}}}>
           <Button animated color="green" className="action_button">
             <Button.Content visible content="Complete" />
             <Button.Content hidden icon>
               <Icon name="add" />
             </Button.Content>
           </Button>
+          </Link>
         )}
         <Button
           animated

@@ -24,9 +24,7 @@ const UpdateDeclaration = (props) => {
   const [options, setOptions] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
 
-  const {
-    match: { params },
-  } = props;
+
   const handleCoords = (e) => {
     setAdrGeo("[" + String(e.longitude) + "," + String(e.latitude) + "]");
   };
@@ -35,6 +33,7 @@ const UpdateDeclaration = (props) => {
     setAdr("");
   };
   useEffect(() => {
+    console.log(props.props)
     selectedType &&
       axios
         .create({
@@ -81,7 +80,7 @@ const UpdateDeclaration = (props) => {
   }, [selectedType]);
   useEffect(() => {
     axios
-      .get(`http://157.230.19.233/api/declarations/${params.did}/`, {
+      .get(`http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`, {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,

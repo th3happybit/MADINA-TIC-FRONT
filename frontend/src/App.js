@@ -30,6 +30,8 @@ import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclaratio
 import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx";
 import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
 
+import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx"
+
 function App() {
   return (
     <Router>
@@ -96,8 +98,8 @@ function App() {
         />
         <Route
           exact
-          path="/update/declaration/:did"
-          component={UpdateDeclaration}
+          path="/update/declaration/"
+          component={(prop) => <CitoyenHome props={prop} childComponent={<UpdateDeclaration props={prop} />} />}
         />
         />
         <Route
