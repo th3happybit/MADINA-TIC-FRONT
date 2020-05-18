@@ -20,6 +20,7 @@ const MaireDeclarations = (props) => {
   const [types, settypes] = useState(null);
   const [names, setNames] = useState([]);
   const [allow, setAllow] = useState(false);
+  const [test, setTest] = useState([]);
 
   const getUser = (id, key) => {
     axios
@@ -123,7 +124,7 @@ const MaireDeclarations = (props) => {
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
         },
       })
-      .then((res) => {
+      .then(async (res) => {
         setLoading(false);
         if (res.data.count % 10 === 0) {
           setPages(parseInt(res.data.count / 10));
@@ -136,27 +137,27 @@ const MaireDeclarations = (props) => {
           setsearchLoading(false);
         }
         let data = res.data.results;
-        let tempArr = [];
-        data.map((elm, index) => {
-          axios
-            .get(`http://157.230.19.233/api/users/${elm.citizen}`, {
+        let tempArr = new Array();
+        data.map(async (elm, index) => {
+          let req = await axios.get(
+            `http://157.230.19.233/api/users/${elm.citizen}`,
+            {
               headers: {
                 "content-type": "application/json",
-                Authorization: `Token ${localStorage.getItem("token")}`,
+                Authorization: `Token ${localStorage.getItem("maire_token")}`,
               },
-            })
-            .then((res) => {
-              let element = elm;
-              element["first_name"] = res.data.first_name;
-              element["last_name"] = res.data.last_name;
-              tempArr.push(element);
-            })
-            .catch((err) => {
-              console.log(err.response);
-            });
+            }
+          );
+          let dataX = await req.data;
+          let element = await elm;
+          element["first_name"] = await dataX.first_name;
+          element["last_name"] = await dataX.last_name;
+          await tempArr.push(element);
+          if (index + 1 === data.length) {
+            await setData(tempArr);
+            setAllow(true);
+          }
         });
-        setData(tempArr);
-        console.log({ temp: tempArr });
       })
       .catch((err) => {
         console.log(err);
@@ -167,7 +168,7 @@ const MaireDeclarations = (props) => {
       .get("http://157.230.19.233/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
         },
       })
       .then((res) => {
@@ -175,7 +176,7 @@ const MaireDeclarations = (props) => {
         settypes(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
   const updateDecStatus = (data, did) => {
@@ -271,6 +272,7 @@ const MaireDeclarations = (props) => {
     getTypes();
   }, [page, activeFilter, term, sortDate]);
 
+  console.log({ Data });
   return (
     <div className="_maire_declarations">
       <div className="_main_header">
@@ -360,7 +362,7 @@ const MaireDeclarations = (props) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {Data.length > 0 && allow ? (
+        {allow ? (
           <>
             <MaireDeclarationTable
               data={Data}
