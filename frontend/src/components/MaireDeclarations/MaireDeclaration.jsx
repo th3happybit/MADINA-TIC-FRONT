@@ -77,6 +77,7 @@ const MaireDeclarations = (props) => {
     setsearchLoading(true);
     setTerm(e.currentTarget.value);
     setPage(1);
+    getData();
   };
   const getData = () => {
     setLoading(true);
@@ -122,6 +123,9 @@ const MaireDeclarations = (props) => {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
+        params: {
+          search: term,
         },
       })
       .then(async (res) => {
@@ -202,23 +206,30 @@ const MaireDeclarations = (props) => {
         },
         data: data,
       })
-      .then((res) => {})
+      .then((res) => {
+        console.log(res);
+      })
       .catch((err) => {
         console.log(err);
       });
   };
   const addComplement = (data) => {
     axios
-      .post("http://157.230.19.233/api/declarations_complement_demand/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+      .post(
+        "http://157.230.19.233/api/declarations_complement_demand/",
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          },
         },
-        data: data,
+        { data: data }
+      )
+      .then((res) => {
+        console.log(res);
       })
-      .then((res) => {})
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
   const rejectDeclaration = (decData, reason) => {

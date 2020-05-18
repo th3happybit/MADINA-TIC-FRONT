@@ -7,7 +7,7 @@ const MaireDeclarationTable = (props) => {
   const [names, setNames] = useState([]);
   const [data, setData] = useState(null);
   useEffect(() => {
-    console.log({ khay: props.data });
+    setData(props.data);
   }, []);
   function getStatus(st) {
     var ret = { status: "", color: "" };
@@ -129,7 +129,7 @@ const MaireDeclarationTable = (props) => {
                       validated_at ? validated_at.slice(0, 10) : "/"
                     }
                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
-                    status={getStatus(status).status}
+                    status={getStatus(status)}
                     reject={props.rejectDeclaration}
                     archive={props.archiveDeclaration}
                     complement={props.demandComplement}

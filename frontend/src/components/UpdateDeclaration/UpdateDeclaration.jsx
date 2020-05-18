@@ -4,7 +4,8 @@ import axios from "axios";
 //? import css
 import "./UpdateDeclaration.css";
 
-const UpdateDeclaration = () => {
+const UpdateDeclaration = (props) => {
+  console.log(props);
   const [data, setData] = useState([]);
 
   useEffect(() => {
