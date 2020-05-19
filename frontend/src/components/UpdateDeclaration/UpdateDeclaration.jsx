@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Form, Image, Button, Segment, Message } from "semantic-ui-react";
-
+import Geocode from "react-geocode";
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
 //? import css
 import "./UpdateDeclaration.css";
-
+Geocode.setApiKey("AIzaSyDGe5vjL8wBmilLzoJ0jNIwe9SAuH2xS_0");
+Geocode.enableDebug();
 const UpdateDeclaration = (props) => {
-<<<<<<< HEAD
-  console.log(props);
-=======
->>>>>>> f92a51e36828f67d6a08d85ac2f232cb698606c3
   const [data, setData] = useState([]);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
@@ -28,6 +25,17 @@ const UpdateDeclaration = (props) => {
   const [options, setOptions] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
   const [loadingPage, setLoadingPage] = useState(false);
+  useEffect(() => {
+    Geocode.fromLatLng("48.8583701", "2.2922926").then(
+      (response) => {
+        const address = response.results[0].formatted_address;
+        console.log(address);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }, []);
 
   const handleUpdate = () => {
     setIsLoading(true);
@@ -46,7 +54,7 @@ const UpdateDeclaration = (props) => {
         data: {
           title,
           desc: description,
-          geo_cord: "[30,10]",
+          geo_cord: adrGeo,
           address: adr,
           dtype: selectedType,
           citizen: props.props.location.state.data.citizen,
@@ -240,7 +248,7 @@ const UpdateDeclaration = (props) => {
               display: "flex",
               justifyContent: "center",
             }}
-            className="_add_btn_dec"
+            className="_add_btn_dec here"
           >
             <Button
               loading={isLoading}

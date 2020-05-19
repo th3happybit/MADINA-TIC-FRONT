@@ -83,7 +83,7 @@ export default function AddDeclaration(props) {
           data: {
             title,
             desc: description,
-            geo_cord: "[30,10]",
+            geo_cord: adrGeo,
             address: adr,
             dtype: dtid,
             citizen: uid,
@@ -135,7 +135,7 @@ export default function AddDeclaration(props) {
           data: {
             title,
             desc: description,
-            geo_cord: "[30,10]",
+            geo_cord: adrGeo,
             address: adr,
             dtype: dtid,
             citizen: uid,
@@ -184,7 +184,7 @@ export default function AddDeclaration(props) {
       .create({
         headers: {
           post: {
-            "Content-Type": "application/json",
+            "content-type": "multipart/form-data",
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
         },
@@ -384,13 +384,14 @@ export default function AddDeclaration(props) {
           </div>
           <div className="prev_images_dec">
             {picturesPreview.map((elm, index) => {
+              console.log({ src: elm.src });
               return (
                 <div
                   style={{
                     position: "relative",
                   }}
                 >
-                  <Image src={elm} key={index} />
+                  <Image src={elm.src} key={index} />
                   <Icon
                     color="black"
                     name="delete"
