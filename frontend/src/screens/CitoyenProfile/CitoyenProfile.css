@@ -160,7 +160,7 @@ main > #container_profile {
   }
 }
 
-@media (max-width: 999px) {
+@media (max-width: 928px) {
 
   main{
     padding : 1rem 0;

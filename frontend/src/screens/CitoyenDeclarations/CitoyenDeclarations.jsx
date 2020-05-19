@@ -130,6 +130,7 @@ const CitoyenDeclarations = () => {
             })
     }
     const getDeclarations = () => {
+        setData([]);
         setLoading(true);
         setperm(false)
         let pa = {
@@ -180,7 +181,6 @@ const CitoyenDeclarations = () => {
                 }
             })
             .then((res) => {
-                console.log(res)
                 setData(res.data.results);
                 if (res.data.count % 10 === 0) {
                     setPages(parseInt(res.data.count / 10));
@@ -209,7 +209,6 @@ const CitoyenDeclarations = () => {
                     setRefresh((prevstate) => !prevstate)
                 else
                     setPage(1);
-                console.log(res)
             })
             .catch((err) => {
 

@@ -155,6 +155,7 @@ const ModalD = (props) => {
                 desc: description,
               }}
               validate={props.validate}
+              services={props.services}
               close={handleclose}
             />
             <ComplementModal

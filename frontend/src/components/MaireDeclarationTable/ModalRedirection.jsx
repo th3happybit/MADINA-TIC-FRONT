@@ -2,36 +2,37 @@ import React, { useState } from "react";
 import { Modal, Button, Icon, ModalContent, Select } from "semantic-ui-react";
 
 import "./MaireDeclarationTable.css"
+import { useEffect } from "react";
 
 
 const Modalredirect = (props) => {
     const [open, setOpen] = useState(false);
     const [service, setService] = useState(null);
+    const [options, setOptions] = useState([]);
 
     const handleopen = () => {
         setOpen(true);
     };
-
     const handlechange = (e) => {
         setService(e.currentTarget.firstChild.textContent);
     }
-
-    const options = [
-        { key: '1', value: "Service1", text: "service 1" },
-        { key: '2', value: "Service2", text: "service 2" },
-        { key: '3', value: "Service3", text: "service 3" },
-        { key: '4', value: "Service4", text: "service 4" },
-        { key: '5', value: "Service5", text: "service 5" }
-    ]
-
     const handlevalidate = () => {
         props.validate(props.data, service)
     }
-
     const handleclose = () => {
         setOpen(false);
     };
-
+    useEffect(() => {
+        let arr = [];
+        props.services.map((elem, index) => {
+            arr.push({
+                key : index,
+                value : elem.uid,
+                text : elem.first_name + " " + elem.last_name,
+            })
+        })
+        setOptions(arr);
+    }, [props.services])
     return (
         <Modal
             open={open}

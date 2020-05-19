@@ -65,6 +65,7 @@ const ServiceDeclaration = (props) => {
     const getData = () => {
         setData([])
         setLoading(true);
+        console.log(sortDate)
         const pa = {
             page: page,
         }

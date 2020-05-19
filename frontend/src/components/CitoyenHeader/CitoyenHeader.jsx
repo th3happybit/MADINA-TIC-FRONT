@@ -25,7 +25,7 @@ export default function CitoyenHeader(props) {
         headers: {
           post: {
             "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            Authorization: `Token ${localStorage.getItem("token")}`,
           },
         },
       })
@@ -34,7 +34,7 @@ export default function CitoyenHeader(props) {
         method: "post",
       })
       .then(() => {
-        localStorage.clear();
+        localStorage.removeItem("token");
         return history.push("/login");
       })
       .catch((err) => {
@@ -107,7 +107,7 @@ export default function CitoyenHeader(props) {
                       text="Account"
                       icon="user"
                       as={Link}
-                      to="/admin/profile"
+                      to="/citoyen/profile"
                     />
 
                     <Dropdown.Item

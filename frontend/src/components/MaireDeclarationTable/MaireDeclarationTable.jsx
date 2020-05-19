@@ -2,13 +2,25 @@
 import React, { useEffect, useState } from "react";
 import { Table, Icon } from "semantic-ui-react";
 import ModalDetails from "./ModalDetails.jsx";
+import axios from "axios";
 
 const MaireDeclarationTable = (props) => {
   const { data } = props
-    const [names, setNames] = useState([])
-  
+    const [names, setNames] = useState([]);
+    const [services, setServices] = useState([])
   useEffect(() => {
     setNames(props.names);
+    axios
+      .get(("http://157.230.19.233/api/users/?role=Service"),{
+        headers : {
+          "content-type" : "application/json",
+          Authorization : `Token ${localStorage.getItem("maire_token")}`
+        }
+      })
+      .then((res)=> {
+        // console.log(res)
+        setServices(res.data.results)
+      })
 }, [props.names, props.data])
   function getStatus(st) {
     var ret = { status: "", color: "" };
@@ -114,7 +126,7 @@ const MaireDeclarationTable = (props) => {
                 <Table.Cell>{created_on.slice(0, 10)}</Table.Cell>
                 <Table.Cell textAlign="center" className="_left">
                   <ModalDetails
-                    fullname={last_name + " " + first_name  }
+                    fullname={names[index]}
                     did={did}
                     citizen={citizen}
                     title={title}
@@ -127,6 +139,7 @@ const MaireDeclarationTable = (props) => {
                     validated_at={
                       validated_at ? validated_at.slice(0, 10) : "/"
                     }
+                    services={services}
                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
                     status={getStatus(status).status}
                     reject={props.rejectDeclaration}

@@ -172,7 +172,8 @@ td:hover > .full_text{
     }
 
     ._main .row {
-        flex-direction: column;
+        /* flex-direction: column; */
+        margin-bottom: 20px;
     }
 
     ._main .row.filters {
@@ -245,6 +246,15 @@ td:hover > .full_text{
     @media (max-width : 472px) {
         .show_mobile{
             display: block !important;
+        }
+
+        ._main_right .filter_declaration{
+            width : 100% !important;
+        }
+
+        ._main .row {
+            flex-direction: column;
+            margin-bottom: 0px;
         }
 
         ._main_right .search .input {

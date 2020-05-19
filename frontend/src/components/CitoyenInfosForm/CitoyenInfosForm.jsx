@@ -178,6 +178,7 @@ const InfosForm = (props) => {
           <Input
             fluid
             id="birthday"
+            type="date"
             value={birthday}
             onChange={handleChangeInput}
             placeholder={"Birthday..."}

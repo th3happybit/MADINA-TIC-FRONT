@@ -16,6 +16,21 @@ const validateNationalID = (nid) => {
   return nidPattern.test(String(nid));
 };
 
+const checkDate = (date) => {
+  let dt = new Date();
+  if (dt.getFullYear() - date.slice(0, 4) > 18)
+    return true;
+  else if (dt.getFullYear() - date.slice(0, 4) === 18)
+    if (dt.getMonth() - date.slice(6, 8) > 0)
+      return true
+    else if (dt.getMonth() - date.slice(6, 8) === 0)
+      if (dt.getDay() - date.slice(8, 10) > 0)
+        return true
+      else return false;
+    else return false
+  else return false;
+}
+
 const ValidateDataUpdateProfile = (data) => {
   const {
     first_name,
@@ -44,6 +59,12 @@ const ValidateDataUpdateProfile = (data) => {
         error: "First Name is too long",
       });
     }
+
+    if (!checkDate(birthday))
+      errors.push({
+        id : "birthday",
+        error : "You must be above 18"
+      })
 
     if (last_name.length > 150) {
       errors.push({
