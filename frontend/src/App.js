@@ -17,6 +17,8 @@ import AdminCitoyen from "./screens/AdminCitoyen/AdminCitoyen.jsx";
 import AdminCreateAccount from "./screens/AdminCreateAccount/AdminCreateAccount.jsx";
 import Maire from "./screens/Maire/Maire.jsx";
 import MaireAuth from "./screens/Maire/MaireLogin.jsx";
+import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
+import Service from "./screens/Service/Service.jsx"
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -30,6 +32,7 @@ import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclaratio
 import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx";
 import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
+import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 
 function App() {
   return (
@@ -52,7 +55,6 @@ function App() {
         <Route exact path="/citoyen/profile" component={() => <CitoyenHome active="" childComponent={<CitoyenProfile/>}/>} />
         <Route exact path="/home" component={() => <CitoyenHome active="home"/>} />
         <Route exact path="/citoyen/declaration/" component={() => <CitoyenHome active ="declaration" childComponent={<CitoyenDeclarations/>} />}/>
-       
         <Route
           exact
           path="/infos"
@@ -74,6 +76,9 @@ function App() {
           component={(prop) => <CitoyenHome props={prop} childComponent={<UpdateDeclaration props={prop} />} />}
         />
         />
+        <Route exact path="/service/login" component={ServiceAuth} />
+        <Route exact path="/service" component={Service} />
+        <Route exact path="/service/declaration" component={() => <Service active="declarations" childComponent={ServiceDeclaration} />} />
         <Route
           exact
           path="/admin/citoyen"

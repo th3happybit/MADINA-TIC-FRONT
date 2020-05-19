@@ -10,11 +10,12 @@ import MaireHeaderSideBar from "../../components/MaireHeaderSideBar/MaireHeaderS
 
 const Maire = (props) => {
 
-    const [isLogin, setIsLogin] = useState(null);
+    const [isLogin, setIsLogin] = useState(false);
     const [verified, setVerified] = useState(false);
     const [maire, setMaire] = useState(null)
 
     useEffect(() => {
+        if (localStorage.getItem("maire_token"))
         axios
             .create({
                 headers: {
@@ -38,7 +39,10 @@ const Maire = (props) => {
                 }
                 setVerified(true);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {});
+        else{
+            setVerified(true)
+        }
     }, []);
 
 
@@ -49,7 +53,7 @@ const Maire = (props) => {
         setVisible((prevState) => !prevState);
     };
     return (
-        <>{verified && (isLogin ? (
+        <>{isLogin ? (
             <UserProvider value={dataContext}>
                 {visible && <Backdrop click={handleHide} />}
                 <MaireSideBar active={active} />
@@ -57,7 +61,7 @@ const Maire = (props) => {
                 <MaireHeaderSideBar visible={visible} active={active} click={handleHide} />
                 <>{<props.childComponent maire={maire}/>}</>
             </UserProvider>
-        ) : (<div
+        ) : (verified && <div
             style={{
                 display: "flex",
                 justifyContent: "center",
@@ -77,11 +81,11 @@ const Maire = (props) => {
                         ccolor: "#912d2b",
                     }}
                 >
-                    Go to login page?<a href="/admin/login">click here</a>
+                    Go to login page?<a href="/maire/login">click here</a>
                 </p>
             </Message>
         </div>)
-        )}</>
+        }</>
     );
 }
 

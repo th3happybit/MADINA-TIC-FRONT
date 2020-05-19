@@ -133,3 +133,14 @@
         font-size: 20px !important;
     }
 }
+
+@media (max-width : 399px){
+    ._infos_section img {
+        display: inline-block !important;
+        margin-right: 10px !important;
+        margin-left: 10px !important;
+        margin-top: 10px !important;
+        max-width: 90px !important;
+        max-height: 90px !important;
+    }
+}

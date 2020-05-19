@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Image, Dropdown } from "semantic-ui-react";
-import UserContext from "../../screens/Maire/MaireContext.jsx";
+import UserContext from "../../screens/Service/ServiceContext.jsx";
 
 import { useHistory } from "react-router";
 import axios from "axios";
 //? import css
-import "./MaireHeader.css";
+import "./ServiceHeader.css";
 
 //? import icons and images
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 
-import { Link } from "react-router-dom";
 //sfc shortcut
-const HeaderAdmin = (props) => {
+const HeaderService = (props) => {
     const { isUploaded } = useContext(UserContext);
     const [image, setImage] = useState(null);
     const [fullname, setFullname] = useState(null);
@@ -24,7 +23,7 @@ const HeaderAdmin = (props) => {
                 headers: {
                     get: {
                         "Content-Type": "application/json",
-                        Authorization: `Token ${localStorage.getItem("maire_token")}`,
+                        Authorization: `Token ${localStorage.getItem("service_token")}`,
                     },
                 },
             })
@@ -56,8 +55,8 @@ const HeaderAdmin = (props) => {
                 method: "post",
             })
             .then(() => {
-                localStorage.removeItem("maire_token");
-                return history.push("/maire/login");
+                localStorage.removeItem("service_token");
+                return history.push("/service/login");
             })
             .catch((err) => {
                 console.log(err);
@@ -66,7 +65,7 @@ const HeaderAdmin = (props) => {
 
     return (
         <>
-            <header className="_header_maire">
+            <header className="_header_service">
                 <div className="row">
                     <div className="right_part">
                         <div className="profile_img">
@@ -79,12 +78,6 @@ const HeaderAdmin = (props) => {
                                 onCLick={handleLogout}
                             >
                                 <Dropdown.Menu>
-                                    <Dropdown.Item
-                                        text="Account"
-                                        icon="user"
-                                        as={Link}
-                                        to="/admin/profile"
-                                    />
                                     <Dropdown.Item
                                         text="Sign Out"
                                         icon="sign out"
@@ -104,4 +97,4 @@ const HeaderAdmin = (props) => {
         </>
     );
 };
-export default HeaderAdmin;
+export default HeaderService;

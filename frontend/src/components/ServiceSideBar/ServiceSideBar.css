@@ -1,0 +1,74 @@
+._sidebar_service {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 230px;
+    z-index: 1;
+  }
+._sidebar_service > .row {
+    display: flex;
+    background-color: white;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+  }
+._sidebar_service .part_top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 70px;
+    background-color: #f2f2f2;
+  }
+._sidebar_service .part_top p {
+    margin: 0 0.5rem;
+    font-family: "Segoe_UI_bold";
+  }
+
+  .logo_h {
+    width: 30px;
+    height: 30px;
+  }
+  ._sidebar_icons {
+    width: 25px;
+    height: 25px;
+    margin: 0 0.5rem;
+    fill: #3f4853;
+    cursor: pointer;
+  }
+  
+  ._sidebar_icons.active {
+    fill: var(--primary) !important;
+  }
+  
+  ._sidebar_service > .row > .menu > .d-flex {
+    align-items: center;
+    margin: 2rem 0;
+    width: 70%;
+  }
+  ._sidebar_service > .row > .menu > .d-flex:hover ._sidebar_icons,
+  ._sidebar_service > .row > .menu > .d-flex:hover .item {
+    color: var(--primary) !important;
+    fill: var(--primary) !important;
+  }
+  ._sidebar_service > .row > .menu .item {
+    font-size: 16px !important;
+    cursor: pointer;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    color: #4a535f;
+  }
+  ._sidebar_service > .row > .menu .item.active {
+    color: var(--primary) !important;
+  }
+  @media (max-width: 899px) {
+    ._sidebar_service {
+      display: none !important;
+    }
+  }
+  
