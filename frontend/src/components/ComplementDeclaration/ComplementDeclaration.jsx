@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Image, Button, Segment, Message } from "semantic-ui-react";
+import { Form, Image, Button, Icon, Message } from "semantic-ui-react";
 
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
-//? import css
-import "./UpdateDeclaration.css";
 
-const UpdateDeclaration = (props) => {
-<<<<<<< HEAD
-  console.log(props);
-=======
->>>>>>> f92a51e36828f67d6a08d85ac2f232cb698606c3
+const ComplementDeclaration = (props) => {
   const [data, setData] = useState([]);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
@@ -27,9 +21,10 @@ const UpdateDeclaration = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
-  const [loadingPage, setLoadingPage] = useState(false);
-
-  const handleUpdate = () => {
+  const [reason, setReason] = useState("");
+  const [pictures, setPictures] = useState([]);
+  const [picturesPreview, setPicturesPreview] = useState([]);
+  const handleComplement = () => {
     setIsLoading(true);
     axios
       .create({
@@ -70,11 +65,8 @@ const UpdateDeclaration = (props) => {
     setIsGeo((prevState) => !prevState);
     setAdr("");
   };
+  useEffect(() => {}, []);
   useEffect(() => {
-    console.log({ props: props.props.location.state.data });
-  }, []);
-  useEffect(() => {
-    setLoadingPage(true);
     selectedType &&
       axios
         .create({
@@ -112,7 +104,8 @@ const UpdateDeclaration = (props) => {
             )
             .then((res) => {
               setType(res.data.name);
-              setLoadingPage(false);
+
+              console.log({ props: props.props.location.state.data });
             })
             .catch((err) => {
               console.log(err.response);
@@ -137,11 +130,51 @@ const UpdateDeclaration = (props) => {
         setDesctiption(res.data.desc);
         setAdr(res.data.address);
         setAdrGeo(res.data.geo_cord);
+        setPictures(res.data.attachments);
+        setPicturesPreview(res.data.attachments);
       })
       .catch((err) => {
         console.log(err.response);
       });
   }, []);
+  useEffect(() => {
+    axios
+      .get(
+        `http://157.230.19.233/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        setReason(res.data.results[0].reason);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
+  const handledeleteImg = (e) => {
+    let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
+    let preview = [];
+    let f = [];
+    picturesPreview.map((elm, index) => {
+      if (index !== indexElm) {
+        preview.push(elm);
+      }
+      return true;
+    });
+    pictures.map((elm, index) => {
+      if (index !== indexElm) {
+        f.push(elm);
+      }
+      return true;
+    });
+    setPictures(f);
+    setPicturesPreview(preview);
+  };
+  const [selectedFile, setSelectedFile] = useState();
   const handleChange = (e, { name, value }) => {
     switch (name) {
       case "title":
@@ -164,19 +197,23 @@ const UpdateDeclaration = (props) => {
         break;
     }
   };
+  const onSelectFile = (e) => {
+    let es = e.target.files[0];
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    setSelectedFile({ src: es });
+    setPictures((prevState) => [...prevState, es]);
+  };
   return (
     <div className="container_add_dec">
-      <Segment
-        className="_add_dec"
-        style={{
-          margin: "auto",
-        }}
-        loading={loadingPage}
-      >
+      <div className="_add_dec">
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Update Declaration
+          Complement Declaration
         </h3>
         <Form success={succes}>
+          <Form.Input disabled type="text" label="The motif" value={reason} />
           <Form.Input
             type="text"
             label="Title"
@@ -234,7 +271,48 @@ const UpdateDeclaration = (props) => {
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
+          <p className="label_add_dec bold">Add Photos (Optional)</p>
 
+          <div className="_profile_img_edit add_dec pointer">
+            <label
+              htmlFor="myInput"
+              className="pointer"
+              style={{
+                display: "flex",
+                width: "100%",
+              }}
+            >
+              Upload
+            </label>
+            <input
+              id="myInput"
+              style={{ display: "none" }}
+              type="file"
+              accept="image/*"
+              className="pointer"
+              onChange={onSelectFile}
+            />
+          </div>
+          <div className="prev_images_dec">
+            {pictures.map((elm, index) => {
+              console.log(elm);
+              return (
+                <div
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <Image src={elm.src} key={index} />
+                  <Icon
+                    color="black"
+                    name="delete"
+                    data-id={index}
+                    onClick={handledeleteImg}
+                  />
+                </div>
+              );
+            })}
+          </div>
           <Form.Group
             style={{
               display: "flex",
@@ -245,19 +323,19 @@ const UpdateDeclaration = (props) => {
             <Button
               loading={isLoading}
               className="button_primary _margin_horizontal_sm"
-              onClick={handleUpdate}
+              onClick={handleComplement}
             >
-              Confirm Update
+              Confirm Complement
             </Button>
           </Form.Group>
           <Message
             success
-            content="Your decalration has been modified succesfully"
+            content="Your complement has been send succesfully"
           />
         </Form>
-      </Segment>
+      </div>
     </div>
   );
 };
 
-export default UpdateDeclaration;
+export default ComplementDeclaration;
