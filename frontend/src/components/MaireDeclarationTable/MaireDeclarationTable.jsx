@@ -4,10 +4,12 @@ import { Table, Icon } from "semantic-ui-react";
 import ModalDetails from "./ModalDetails.jsx";
 
 const MaireDeclarationTable = (props) => {
-  const [data, setData] = useState(null);
+  const { data } = props
+    const [names, setNames] = useState([])
+  
   useEffect(() => {
-    setData(props.data)
-  }, [props.data]);
+    setNames(props.names);
+}, [props.names, props.data])
   function getStatus(st) {
     var ret = { status: "", color: "" };
     switch (st) {
@@ -96,7 +98,7 @@ const MaireDeclarationTable = (props) => {
             return (
               <Table.Row key={index}>
                 <Table.Cell className="_table_title">
-                  {last_name + " " + first_name ? last_name + " " + first_name : "/"}
+                  {names[index]}
                 </Table.Cell>
                 <Table.Cell>{title}</Table.Cell>
                 <Table.Cell className="_hide _hide_td">
