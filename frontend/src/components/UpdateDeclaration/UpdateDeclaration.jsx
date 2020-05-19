@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Image, Button, Icon, Message } from "semantic-ui-react";
+import { Form, Image, Button, Segment, Message } from "semantic-ui-react";
 
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
@@ -23,7 +23,41 @@ const UpdateDeclaration = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
+  const [loadingPage, setLoadingPage] = useState(false);
 
+  const handleUpdate = () => {
+    setIsLoading(true);
+    axios
+      .create({
+        headers: {
+          patch: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        },
+      })
+      .request({
+        url: `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        method: "patch",
+        data: {
+          title,
+          desc: description,
+          geo_cord: "[30,10]",
+          address: adr,
+          dtype: selectedType,
+          citizen: props.props.location.state.data.citizen,
+        },
+      })
+      .then((res) => {
+        setIsLoading(false);
+        console.log(res);
+        setSucces(true);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setIsLoading(false);
+      });
+  };
 
   const handleCoords = (e) => {
     setAdrGeo("[" + String(e.longitude) + "," + String(e.latitude) + "]");
@@ -33,7 +67,10 @@ const UpdateDeclaration = (props) => {
     setAdr("");
   };
   useEffect(() => {
-    console.log(props.props)
+    console.log({ props: props.props.location.state.data });
+  }, []);
+  useEffect(() => {
+    setLoadingPage(true);
     selectedType &&
       axios
         .create({
@@ -71,6 +108,7 @@ const UpdateDeclaration = (props) => {
             )
             .then((res) => {
               setType(res.data.name);
+              setLoadingPage(false);
             })
             .catch((err) => {
               console.log(err.response);
@@ -80,12 +118,15 @@ const UpdateDeclaration = (props) => {
   }, [selectedType]);
   useEffect(() => {
     axios
-      .get(`http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`, {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
+      .get(
+        `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((res) => {
         setSelectedType(res.data.dtype);
         setTitle(res.data.title);
@@ -96,7 +137,7 @@ const UpdateDeclaration = (props) => {
       .catch((err) => {
         console.log(err.response);
       });
-  });
+  }, []);
   const handleChange = (e, { name, value }) => {
     switch (name) {
       case "title":
@@ -121,9 +162,15 @@ const UpdateDeclaration = (props) => {
   };
   return (
     <div className="container_add_dec">
-      <div className="_add_dec">
+      <Segment
+        className="_add_dec"
+        style={{
+          margin: "auto",
+        }}
+        loading={loadingPage}
+      >
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Add Declaration
+          Update Declaration
         </h3>
         <Form success={succes}>
           <Form.Input
@@ -183,20 +230,7 @@ const UpdateDeclaration = (props) => {
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
-          <p className="label_add_dec bold">Add Photos (Optional)</p>
 
-          <div className="_profile_img_edit add_dec pointer">
-            <label
-              htmlFor="myInput"
-              className="pointer"
-              style={{
-                display: "flex",
-                width: "100%",
-              }}
-            >
-              Upload
-            </label>
-          </div>
           <Form.Group
             style={{
               display: "flex",
@@ -207,6 +241,7 @@ const UpdateDeclaration = (props) => {
             <Button
               loading={isLoading}
               className="button_primary _margin_horizontal_sm"
+              onClick={handleUpdate}
             >
               Confirm Update
             </Button>
@@ -216,7 +251,7 @@ const UpdateDeclaration = (props) => {
             content="Your decalration has been modified succesfully"
           />
         </Form>
-      </div>
+      </Segment>
     </div>
   );
 };

@@ -29,7 +29,7 @@ import AddDeclaration from "./components/AddDeclaration/AddDeclaration.jsx";
 import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclarations.jsx";
 import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx";
 import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
-
+import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 
 function App() {
@@ -103,6 +103,16 @@ function App() {
             <CitoyenHome
               props={prop}
               childComponent={<UpdateDeclaration props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/declaration/"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<ComplementDeclaration props={prop} />}
             />
           )}
         />
