@@ -4,11 +4,12 @@ import { Table, Icon } from "semantic-ui-react";
 import ModalDetails from "./ModalDetails.jsx";
 
 const MaireDeclarationTable = (props) => {
+  const { data } = props;
   const [names, setNames] = useState([]);
-  const [data, setData] = useState(null);
+
   useEffect(() => {
-    setData(props.data);
-  }, []);
+    setNames(props.names);
+  }, [props.names, props.data]);
   function getStatus(st) {
     var ret = { status: "", color: "" };
     switch (st) {
@@ -49,9 +50,6 @@ const MaireDeclarationTable = (props) => {
       if (type === props.types[j].dtid) return props.types[j].name;
     }
   };
-  // useEffect(() => {
-  //     setNames(props.names);
-  // }, [props.names, props.data])
 
   function filterAttachments(att) {
     var ret = [];
@@ -83,7 +81,6 @@ const MaireDeclarationTable = (props) => {
       {data && (
         <Table.Body>
           {data.map((element, index) => {
-            console.log({ element });
             const {
               did,
               citizen,
@@ -100,9 +97,7 @@ const MaireDeclarationTable = (props) => {
             } = element;
             return (
               <Table.Row key={index}>
-                <Table.Cell className="_table_title">
-                  {last_name + " " + first_name}
-                </Table.Cell>
+                <Table.Cell className="_table_title">{names[index]}</Table.Cell>
                 <Table.Cell>{title}</Table.Cell>
                 <Table.Cell className="_hide _hide_td">
                   {address.length < 40 ? (
@@ -117,10 +112,12 @@ const MaireDeclarationTable = (props) => {
                 <Table.Cell>{created_on.slice(0, 10)}</Table.Cell>
                 <Table.Cell textAlign="center" className="_left">
                   <ModalDetails
+                    fullname={last_name + " " + first_name}
                     did={did}
                     citizen={citizen}
                     title={title}
                     type={editType(dtype)}
+                    dtype={dtype}
                     address={address}
                     description={desc}
                     attachements={filterAttachments(attachments)}

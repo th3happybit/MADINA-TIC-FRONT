@@ -20,7 +20,7 @@ const MaireDeclarations = (props) => {
   const [types, settypes] = useState(null);
   const [names, setNames] = useState([]);
   const [allow, setAllow] = useState(false);
-  const [test, setTest] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const getUser = (id, key) => {
     axios
@@ -45,6 +45,12 @@ const MaireDeclarations = (props) => {
     for (let i = 0; i < Data.length; i++) {
       getUser(Data[i].citizen, i);
     }
+  };
+
+  const handlesortRandom = () => {
+    setsortDate(null);
+    setsortMobile("Random");
+    setPage(1);
   };
   const handlesortOldFirst = () => {
     setsortDate("asc");
@@ -124,11 +130,9 @@ const MaireDeclarations = (props) => {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
         },
-        params: {
-          search: term,
-        },
       })
-      .then(async (res) => {
+      .then((res) => {
+        setData(res.data.results);
         setLoading(false);
         if (res.data.count % 10 === 0) {
           setPages(parseInt(res.data.count / 10));
@@ -140,34 +144,14 @@ const MaireDeclarations = (props) => {
           setAllow(true);
           setsearchLoading(false);
         }
-        let data = res.data.results;
-        let tempArr = new Array();
-        data.map(async (elm, index) => {
-          let req = await axios.get(
-            `http://157.230.19.233/api/users/${elm.citizen}`,
-            {
-              headers: {
-                "content-type": "application/json",
-                Authorization: `Token ${localStorage.getItem("maire_token")}`,
-              },
-            }
-          );
-          let dataX = await req.data;
-          let element = await elm;
-          element["first_name"] = await dataX.first_name;
-          element["last_name"] = await dataX.last_name;
-          await tempArr.push(element);
-          if (index + 1 === data.length) {
-            await setData(tempArr);
-            setAllow(true);
-          }
-        });
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   const getTypes = () => {
+    setLoading(true);
     axios
       .get("http://157.230.19.233/api/declarations_types/", {
         headers: {
@@ -185,85 +169,92 @@ const MaireDeclarations = (props) => {
   };
   const updateDecStatus = (data, did) => {
     axios
-      .patch("http://157.230.19.233/api/declarations/" + did + "/", {
+      .create({
         headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          patch: {
+            "Content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          },
         },
+      })
+      .request("http://157.230.19.233/api/declarations/" + did + "/", {
+        method: "patch",
         data: data,
       })
-      .then((res) => {})
+      .then((res) => {
+        setRefresh((prevState) => !prevState);
+        setPage(1);
+      })
       .catch((err) => {
+        setRefresh((prevState) => !prevState);
+        setPage(1);
         console.log(err);
       });
   };
   const addRejection = (data) => {
     axios
-      .post("http://157.230.19.233/api/declarations_rejection/", {
+      .create({
         headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          post: {
+            "Content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          },
         },
+      })
+      .request("http://157.230.19.233/api/declarations_rejection/", {
+        method: "post",
         data: data,
       })
       .then((res) => {
-        console.log(res);
+        setRefresh((prevState) => !prevState);
+        setPage(1);
       })
       .catch((err) => {
+        setRefresh((prevState) => !prevState);
+        setPage(1);
         console.log(err);
       });
   };
   const addComplement = (data) => {
     axios
-      .post(
-        "http://157.230.19.233/api/declarations_complement_demand/",
-        {
-          headers: {
-            "content-type": "application/json",
+      .create({
+        headers: {
+          post: {
+            "Content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("maire_token")}`,
           },
         },
-        { data: data }
-      )
+      })
+      .request("http://157.230.19.233/api/declarations_complement_demand/", {
+        method: "post",
+        data: data,
+      })
       .then((res) => {
-        console.log(res);
+        setRefresh((prevState) => !prevState);
+        setPage(1);
       })
       .catch((err) => {
-        console.log(err.response);
+        setRefresh((prevState) => !prevState);
+        setPage(1);
+        console.log(err);
       });
   };
   const rejectDeclaration = (decData, reason) => {
     decData["reason"] = reason;
-    const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
-      status: "rejected",
-    };
     const rejectionData = {
       maire: decData.maire,
       declaration: decData.did,
       reason: reason,
     };
-    updateDecStatus(data, decData.did);
     addRejection(rejectionData);
   };
   const demandComplement = (decData, reason) => {
     decData["reason"] = reason;
-    const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
-      status: "lack_of_infos",
-    };
     const complementData = {
       maire: decData.maire,
       declaration: decData.did,
       reason: reason,
     };
-    updateDecStatus(data, decData.did);
     addComplement(complementData);
   };
   const archiveDeclaration = (decData) => {
@@ -272,7 +263,7 @@ const MaireDeclarations = (props) => {
       desc: decData.desc,
       citizen: decData.citizen,
       dtype: decData.dtype,
-      status: "lack_of_infos",
+      status: "archived",
     };
     updateDecStatus(data, decData.did);
   };
@@ -280,10 +271,19 @@ const MaireDeclarations = (props) => {
     setPage(pageInfo.activePage);
   };
   useEffect(() => {
+    setAllow(false);
+    setPerm(false);
+    setTimeout(() => {
+      setAllow(true);
+      setPerm(true);
+      setsearchLoading(false);
+    }, 1900);
     getTypes();
-  }, [page, activeFilter, term, sortDate]);
+  }, [page, activeFilter, term, sortDate, refresh]);
 
-  console.log({ Data });
+  useEffect(() => {
+    if (Data.length > 0) getNames();
+  }, [Data]);
   return (
     <div className="_maire_declarations">
       <div className="_main_header">
@@ -291,7 +291,7 @@ const MaireDeclarations = (props) => {
           <p className="extra-text text-default">Declarations</p>
         </div>
       </div>
-      <Segment loading={false} className="_main_body shadow">
+      <Segment loading={!allow ? true : Loading} className="_main_body shadow">
         <div className="row">
           <Search
             loading={searchLoading}
@@ -318,10 +318,7 @@ const MaireDeclarations = (props) => {
             labeled
           >
             <Dropdown.Menu>
-              <Dropdown.Item
-                text="Randomly"
-                onClick={() => setsortDate(null)}
-              />
+              <Dropdown.Item text="Randomly" onClick={handlesortRandom} />
               <Dropdown.Item text="Newer first" onClick={handlesortNewFirst} />
               <Dropdown.Item text="Old first" onClick={handlesortOldFirst} />
             </Dropdown.Menu>
@@ -373,7 +370,7 @@ const MaireDeclarations = (props) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {allow ? (
+        {Data.length > 0 && allow ? (
           <>
             <MaireDeclarationTable
               data={Data}

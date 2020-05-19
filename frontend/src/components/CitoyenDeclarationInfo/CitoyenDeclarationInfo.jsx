@@ -4,8 +4,8 @@ import { Button, Image, Icon, Segment } from "semantic-ui-react";
 import Status from "./StatusLabel.jsx";
 
 import "./CitoyenDeclarationInfo.css";
-import { Redirect, useHistory } from 'react-router-dom';
-import { geoPropTypes } from 'react-geolocated';
+import { Link, useHistory } from "react-router-dom";
+import { geoPropTypes } from "react-geolocated";
 
 const CitoyenDeclarationInfo = (props) => {
 
@@ -163,39 +163,53 @@ const CitoyenDeclarationInfo = (props) => {
         </div>
         </div>
 
-        <div className="_button1">
-            {Data.status &&
-              getStatus(Data.status).status === "Not Validated" &&
-              <Button animated color="black" className="action_button">
-                <Button.Content visible content="Modifiy" />
-                <Button.Content hidden icon><Icon name="pencil alternate" /></Button.Content>
-              </Button>
-            }
-            {Data.status && (
-              getStatus(Data.status).status === "Refused" &&
-              <Button animated color="yellow" className="action_button">
-                <Button.Content visible content="Resend" />
-                <Button.Content hidden icon><Icon name="sync alternate" /></Button.Content>
-              </Button>
-            )
-            }{Data.status && (
-              getStatus(Data.status).status === "Lack of infos" &&
-              <Button animated color="green" className="action_button">
-                <Button.Content visible content="Complete" />
-                <Button.Content hidden icon><Icon name="add" /></Button.Content>
-              </Button>
-            )
-            }
-            <Button animated
-              color="red"
-              type="submit"
-              className="action_button delete_button"
-              onClick={deleteDecla}
-            >
-              <Button.Content visible content="Delete"/>
-              <Button.Content icon hidden> <Icon name="times" /> </Button.Content>
-            </Button>
-          </div>
+      <div className="_button1">
+        {Data.status && getStatus(Data.status).status === "Not Validated" && (
+          <Link to={{pathname : "/update/declaration" , state : {data : Data}}}>
+          <Button
+            animated
+            color="black"
+            className="action_button"
+          >
+            <Button.Content visible content="Modifiy" />
+            <Button.Content hidden icon>
+              <Icon name="pencil alternate" />
+            </Button.Content>
+          </Button>
+          </Link>
+        )}
+        {Data.status && getStatus(Data.status).status === "Refused" && (
+          <Button animated color="yellow" className="action_button">
+            <Button.Content visible content="Resend" />
+            <Button.Content hidden icon>
+              <Icon name="sync alternate" />
+            </Button.Content>
+          </Button>
+        )}
+        {Data.status && getStatus(Data.status).status === "Lack of infos" && (
+          <Link to={{pathname : "/update/declaration" , state : {data : Data}}}>
+          <Button animated color="green" className="action_button">
+            <Button.Content visible content="Complete" />
+            <Button.Content hidden icon>
+              <Icon name="add" />
+            </Button.Content>
+          </Button>
+          </Link>
+        )}
+        <Button
+          animated
+          color="red"
+          type="submit"
+          className="action_button delete_button"
+          onClick={deleteDecla}
+        >
+          <Button.Content visible content="Delete" />
+          <Button.Content icon hidden>
+            {" "}
+            <Icon name="times" />{" "}
+          </Button.Content>
+        </Button>
+      </div>
     </Segment>
   );
 };
