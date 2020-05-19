@@ -127,7 +127,7 @@ const CitoyenDeclarationTable = (props) => {
                                     </Link>
                                 </Button.Group>
                                 {Filter === "New Declarations" && (
-                                    <Link to={{pathname : "/declaration/update", state : {data : element}}}>
+                                    <Link to={{pathname : "/update/declaration/", state : {data : element}}}>
                                     <Button.Group className="manage_button">
                                         <Popup
                                             content="Edit"
@@ -147,7 +147,7 @@ const CitoyenDeclarationTable = (props) => {
                                     </Link>
                                 )}
                                 {Filter === "Lack of infos" && (
-                                    <Link to={{pathname : "/declaration/complement", state : {data : element}}}>
+                                    <Link to={{pathname : "/complement/declaration", state : {data : element}}}>
                                     <Button.Group className="manage_button">
                                         <Popup
                                             content="Add Infos"
