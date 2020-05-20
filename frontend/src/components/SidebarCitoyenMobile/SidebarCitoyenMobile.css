@@ -1,0 +1,23 @@
+._sidebar.citoyen {
+  right: 0px;
+  left: -250px;
+}
+._sidebar.active.citoyen {
+  left: 0px;
+}
+.profile_citoyen_mobile_x {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile_citoyen_mobile_x .image {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+}
+.profile_citoyen_mobile_x > p {
+  margin: 0 1rem;
+}
+.profile_citoyen_mobile_x {
+  cursor: pointer;
+}

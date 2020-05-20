@@ -54,7 +54,7 @@ const AdminAddAccountForm = () => {
       },
     })
       .request({
-        url: "http://13.92.195.8/api/users/",
+        url: "http://157.230.19.233/api/users/",
         method: "post",
         data: {
           email,

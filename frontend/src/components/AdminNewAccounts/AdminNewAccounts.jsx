@@ -25,7 +25,7 @@ const AdminNewAccounts = () => {
   };
   const getData = () => {
     setIsLoading(true);
-    let url = `http://13.92.195.8/api/users/`;
+    let url = `http://157.230.19.233/api/users/`;
     axios
       .create({
         headers: {
@@ -57,7 +57,7 @@ const AdminNewAccounts = () => {
   };
   useEffect(() => {
     setIsLoading(true);
-    let url = `http://13.92.195.8/api/users/`;
+    let url = `http://157.230.19.233/api/users/`;
     axios
       .create({
         headers: {

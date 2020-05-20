@@ -94,7 +94,7 @@ const InfosForm = (props) => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/user/",
+        url: "http://157.230.19.233/api/user/",
         method: "put",
         data: {
           email: email,
@@ -178,6 +178,7 @@ const InfosForm = (props) => {
           <Input
             fluid
             id="birthday"
+            type="date"
             value={birthday}
             onChange={handleChangeInput}
             placeholder={"Birthday..."}

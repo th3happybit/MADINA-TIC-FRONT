@@ -8,9 +8,6 @@ import PasswordForm from "../../components/CitoyenPasswordForm/CitoyenPasswordFo
 
 import "./CitoyenProfile.css";
 
-//? import header
-import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
-
 const CitoyenProfile = () => {
   const [Infos, setInfos] = useState([]);
   const [activeItem, setActiveItem] = useState("info");
@@ -45,7 +42,7 @@ const CitoyenProfile = () => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/user/",
+        url: "http://157.230.19.233/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -58,7 +55,6 @@ const CitoyenProfile = () => {
 
   return (
     <>
-      <CitoyenHeader />
       {isLogin ? (
         <main>
           <Container

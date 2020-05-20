@@ -20,7 +20,7 @@ const SidebarHeader = (props) => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/logout/",
+        url: "http://157.230.19.233/api/logout/",
         method: "post",
         // data: { email, password },
       })

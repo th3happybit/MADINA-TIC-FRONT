@@ -101,7 +101,7 @@ const FormRegister = () => {
   const RegisterUser = () => {
     setIsLoading(true);
     axios
-      .post("http://13.92.195.8/api/registration/", {
+      .post("http://157.230.19.233/api/registration/", {
         email: email,
         password1: password,
         password2: confirmPassword,

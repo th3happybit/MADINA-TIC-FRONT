@@ -28,7 +28,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/user/",
+        url: "http://157.230.19.233/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -51,7 +51,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "http://13.92.195.8/api/logout/",
+        url: "http://157.230.19.233/api/logout/",
         method: "post",
         // data: { email, password },
       })
