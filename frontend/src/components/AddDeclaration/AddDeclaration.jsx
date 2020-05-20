@@ -93,7 +93,10 @@ export default function AddDeclaration(props) {
           let did = res.data.did;
           if (pictures.length > 0) {
             postImages(did);
-          } else setSucces(true);
+          } else {
+            setSucces(true);
+            setIsLoading(false);
+          }
         })
         .catch((err) => {
           Object.entries(err.response.data).map((elm) => {
