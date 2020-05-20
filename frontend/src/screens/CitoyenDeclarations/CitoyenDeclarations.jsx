@@ -169,88 +169,47 @@ const CitoyenDeclarations = () => {
       default:
         break;
     }
-    const getDeclarations = () => {
-        setData([]);
-        setLoading(true);
-        setperm(false)
-        let pa = {
-            page: page,
-        }
-        if (sortDate) {
-            if (sortDate === "asc") pa["ordering"] = "created_on"
-            else pa["ordering"] = "-created_on"
-        }
-        else if (sortType) {
-            if (sortType === "asc") pa["ordering"] = "dtype"
-            else pa["ordering"] = "-dtype"
-        }
-        switch (activeFilter) {
-            case "New Declarations":
-                pa["status"] = "not_validated";
-                break;
-            case "Lack of infos":
-                pa["status"] = "lack_of_info";
-                break;
-            case "Validated":
-                pa["status"] = "validated";
-                break;
-            case "Refused":
-                pa["status"] = "refused";
-                break;
-            case "In progress":
-                pa["status"] = "under_treatment";
-                break;
-            case "Treated":
-                pa["status"] = "treated";
-                break;
-            case "Archived":
-                pa["status"] = "archived";
-                break;
-            default:
-                break;
-        }
-        if (term) pa["search"] = term;
-        pa["citizen"] = userid;
+    if (term) pa["search"] = term;
+    pa["citizen"] = userid;
 
-        axios
-            .get("http://157.230.19.233/api/declarations/", {
-                params: pa,
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Token ${localStorage.getItem("token")}`,
-                }
-            })
-            .then((res) => {
-                setData(res.data.results);
-                if (res.data.count % 10 === 0) {
-                    setPages(parseInt(res.data.count / 10));
-                } else {
-                    setPages(parseInt(res.data.count / 10) + 1);
-                }
-                setLoading(false)
-                setperm(true)
-                setSearchLoading(false);
-            })
-            .catch((err) => {
-                setLoading(false);
-                setSearchLoading(false);
-            })
-    }
-    const deleteDeclaration = (id) => {
-        axios
-            .delete("http://157.230.19.233/api/declarations/" + String(id) + "/", {
-                headers: {
-                    "content-type": "application/json",
-                    Authorization: `Token ${localStorage.getItem("token")}`,
-                }
-            })
-            .then((res) => {
-                if (page === 1)
-                    setRefresh((prevstate) => !prevstate)
-                else
-                    setPage(1);
-            })
-            .catch((err) => {
+    axios
+      .get("http://157.230.19.233/api/declarations/", {
+        params: pa,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        setData(res.data.results);
+        if (res.data.count % 10 === 0) {
+          setPages(parseInt(res.data.count / 10));
+        } else {
+          setPages(parseInt(res.data.count / 10) + 1);
+        }
+        setLoading(false);
+        setperm(true);
+        setSearchLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setSearchLoading(false);
+      });
+  };
+  const deleteDeclaration = (id) => {
+    axios
+      .delete("http://157.230.19.233/api/declarations/" + String(id) + "/", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        if (page === 1) setRefresh((prevstate) => !prevstate);
+        else setPage(1);
+      })
+      .catch((err) => {});
+  };
 
   useEffect(() => {
     getUser();
