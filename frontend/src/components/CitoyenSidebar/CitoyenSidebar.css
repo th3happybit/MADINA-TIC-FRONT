@@ -12,7 +12,10 @@
   margin-left: 0rem !important;
   z-index: 1;
 }
-
+.file.text,
+.file.text .icon {
+  color: rgb(87, 98, 113) !important;
+}
 .add_declaration {
   text-decoration: none;
   margin-bottom: 1rem;
@@ -27,6 +30,13 @@
   justify-content: space-evenly;
   align-items: center;
   font-size: 1rem;
+}
+.add_declaration .ui.list > a.item {
+  font-size: 1rem !important;
+  color: rgb(87, 98, 113) !important;
+}
+.add_declaration .item {
+  color: rgb(87, 98, 113) !important;
 }
 .add_declaration:hover {
   color: var(--blue_darker);

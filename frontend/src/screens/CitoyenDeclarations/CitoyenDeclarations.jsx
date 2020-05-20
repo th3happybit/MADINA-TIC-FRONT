@@ -106,8 +106,8 @@ const CitoyenDeclarations = () => {
                 method: "get",
             })
             .then((res) => {
-                setLoading(false);
                 setuserid(res.data.uid);
+                getdecTypes();
             })
             .catch((err) => {
                 // console.log(err.response);
@@ -122,7 +122,6 @@ const CitoyenDeclarations = () => {
                 }
             })
             .then((res) => {
-                // console.log(res.data)
                 settypes(res.data);
             })
             .catch((err) => {
@@ -218,7 +217,6 @@ const CitoyenDeclarations = () => {
 
     useEffect(() => {
         getUser();
-        getdecTypes();
     }, []);
 
     useEffect(() => {

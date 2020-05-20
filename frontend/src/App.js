@@ -31,6 +31,7 @@ import AddDeclaration from "./components/AddDeclaration/AddDeclaration.jsx";
 import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclarations.jsx";
 import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx";
 import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
+import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 
@@ -48,8 +49,14 @@ function App() {
           component={CitoyenMailVerification}
         />
         <Route exact path="/maire" component={Maire} />
-        <Route exact path="/maire/login" component={MaireAuth}/>
-        <Route exact path="/maire/declaration/" component={() => <Maire active="declarations" childComponent={MaireDeclarations}/>} />
+        <Route exact path="/maire/login" component={MaireAuth} />
+        <Route
+          exact
+          path="/maire/declaration/"
+          component={() => (
+            <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
         <Route exact path="/citoyen/profile" component={() => <CitoyenHome active="" childComponent={<CitoyenProfile/>}/>} />
@@ -73,7 +80,22 @@ function App() {
         <Route
           exact
           path="/update/declaration/"
-          component={(prop) => <CitoyenHome props={prop} childComponent={<UpdateDeclaration props={prop} />} />}
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<UpdateDeclaration props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/declaration/"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<ComplementDeclaration props={prop} />}
+            />
+          )}
         />
         />
         <Route exact path="/service/login" component={ServiceAuth} />

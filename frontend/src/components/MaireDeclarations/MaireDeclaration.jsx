@@ -22,39 +22,36 @@ const MaireDeclarations = (props) => {
   const [allow, setAllow] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
-
   const getUser = (id, key) => {
     axios
       .get("http://157.230.19.233/api/users/" + id + "/", {
         headers: {
           "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`
-        }
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
       })
       .then((res) => {
         const temp = names;
-        temp[key] = res.data.last_name + " " + res.data.first_name
+        temp[key] = res.data.last_name + " " + res.data.first_name;
         setNames(temp);
-        if (names.filter(String).length - Data.length === 0)
-          setLoading(false)
+        if (names.filter(String).length - Data.length === 0) setLoading(false);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }
+        console.log(err);
+      });
+  };
   const getNames = () => {
     setNames([]);
     for (let i = 0; i < Data.length; i++) {
-      getUser(Data[i].citizen, i)
+      getUser(Data[i].citizen, i);
     }
-  }
-
+  };
 
   const handlesortRandom = () => {
     setsortDate(null);
     setsortMobile("Random");
     setPage(1);
-  }
+  };
   const handlesortOldFirst = () => {
     setsortDate("asc");
     setsortMobile("Old first");
@@ -86,18 +83,19 @@ const MaireDeclarations = (props) => {
     setsearchLoading(true);
     setTerm(e.currentTarget.value);
     setPage(1);
+    getData();
   };
   const getData = () => {
     setLoading(true);
     const pa = {
       page: page,
-    }
+    };
     if (term) {
       pa["search"] = term;
     }
     if (sortDate) {
-      if (sortDate === "asc") pa["ordering"] = "created_on"
-      else pa["ordering"] = "-created_on"
+      if (sortDate === "asc") pa["ordering"] = "created_on";
+      else pa["ordering"] = "-created_on";
     }
     switch (activeFilter) {
       case "New Declarations":
@@ -130,8 +128,8 @@ const MaireDeclarations = (props) => {
         params: pa,
         headers: {
           "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`
-        }
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
       })
       .then((res) => {
         setData(res.data.results);
@@ -149,12 +147,11 @@ const MaireDeclarations = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err)
-      })
-
-  }
+        console.log(err);
+      });
+  };
   const getTypes = () => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get("http://157.230.19.233/api/declarations_types/", {
         headers: {
@@ -176,7 +173,7 @@ const MaireDeclarations = (props) => {
         headers: {
           patch: {
             "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
           },
         },
       })
@@ -185,12 +182,12 @@ const MaireDeclarations = (props) => {
         data: data,
       })
       .then((res) => {
-        setRefresh((prevState) => !prevState)
-        setPage(1)
+        setRefresh((prevState) => !prevState);
+        setPage(1);
       })
       .catch((err) => {
-        setRefresh((prevState) => !prevState)
-        setPage(1)
+        setRefresh((prevState) => !prevState);
+        setPage(1);
         console.log(err);
       });
   };
@@ -200,7 +197,7 @@ const MaireDeclarations = (props) => {
         headers: {
           post: {
             "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
           },
         },
       })
@@ -209,12 +206,12 @@ const MaireDeclarations = (props) => {
         data: data,
       })
       .then((res) => {
-        setRefresh((prevState) => !prevState)
-        setPage(1)
+        setRefresh((prevState) => !prevState);
+        setPage(1);
       })
       .catch((err) => {
-        setRefresh((prevState) => !prevState)
-        setPage(1)
+        setRefresh((prevState) => !prevState);
+        setPage(1);
         console.log(err);
       });
   };
@@ -224,7 +221,7 @@ const MaireDeclarations = (props) => {
         headers: {
           post: {
             "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
           },
         },
       })
@@ -233,12 +230,12 @@ const MaireDeclarations = (props) => {
         data: data,
       })
       .then((res) => {
-        setRefresh((prevState) => !prevState)
-        setPage(1)
+        setRefresh((prevState) => !prevState);
+        setPage(1);
       })
       .catch((err) => {
-        setRefresh((prevState) => !prevState)
-        setPage(1)
+        setRefresh((prevState) => !prevState);
+        setPage(1);
         console.log(err);
       });
   };
@@ -279,14 +276,13 @@ const MaireDeclarations = (props) => {
     setTimeout(() => {
       setAllow(true);
       setPerm(true);
-      setsearchLoading(false)
+      setsearchLoading(false);
     }, 1900);
     getTypes();
   }, [page, activeFilter, term, sortDate, refresh]);
 
   useEffect(() => {
-    if (Data.length > 0)
-      getNames();
+    if (Data.length > 0) getNames();
   }, [Data]);
   return (
     <div className="_maire_declarations">
@@ -322,10 +318,7 @@ const MaireDeclarations = (props) => {
             labeled
           >
             <Dropdown.Menu>
-              <Dropdown.Item
-                text="Randomly"
-                onClick={handlesortRandom}
-              />
+              <Dropdown.Item text="Randomly" onClick={handlesortRandom} />
               <Dropdown.Item text="Newer first" onClick={handlesortNewFirst} />
               <Dropdown.Item text="Old first" onClick={handlesortOldFirst} />
             </Dropdown.Menu>
@@ -377,7 +370,7 @@ const MaireDeclarations = (props) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {((Data.length > 0) && allow) ? (
+        {Data.length > 0 && allow ? (
           <>
             <MaireDeclarationTable
               data={Data}
@@ -404,12 +397,12 @@ const MaireDeclarations = (props) => {
             />
           </>
         ) : (
-            perm && (
-              <p class="zero-data">
-                Sorry No declarations to display in this section
-              </p>
-            )
-          )}
+          perm && (
+            <p class="zero-data">
+              Sorry No declarations to display in this section
+            </p>
+          )
+        )}
       </Segment>
     </div>
   );

@@ -109,9 +109,7 @@ const MaireDeclarationTable = (props) => {
             } = element;
             return (
               <Table.Row key={index}>
-                <Table.Cell className="_table_title">
-                  {names[index]}
-                </Table.Cell>
+                <Table.Cell className="_table_title">{names[index]}</Table.Cell>
                 <Table.Cell>{title}</Table.Cell>
                 <Table.Cell className="_hide _hide_td">
                   {address.length < 40 ? (
@@ -141,7 +139,7 @@ const MaireDeclarationTable = (props) => {
                     }
                     services={services}
                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
-                    status={getStatus(status).status}
+                    status={getStatus(status)}
                     reject={props.rejectDeclaration}
                     archive={props.archiveDeclaration}
                     complement={props.demandComplement}
