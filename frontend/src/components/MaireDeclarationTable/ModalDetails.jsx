@@ -151,7 +151,7 @@ const ModalD = (props) => {
                 maire: localStorage.getItem("maire_token"),
                 declaration: did,
                 citizen: citizen,
-                dtype: type,
+                dtype: dtype,
                 desc: description,
               }}
               validate={props.validate}

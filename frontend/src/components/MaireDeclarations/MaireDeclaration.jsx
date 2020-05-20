@@ -275,6 +275,7 @@ const MaireDeclarations = (props) => {
       dtype: decData.dtype,
       status: "validated",
       service: decData.service,
+      validated_at : decData.validated_at
     };
     updateDecStatus(data, decData.did)
   }

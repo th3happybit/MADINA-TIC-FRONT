@@ -62,7 +62,6 @@ const MaireDeclarationTable = (props) => {
       if (type === props.types[j].dtid) return props.types[j].name;
     }
   };
-
   function filterAttachments(att) {
     var ret = [];
     for (let i = 0; i < att.length; i++) {
@@ -70,7 +69,37 @@ const MaireDeclarationTable = (props) => {
     }
 
     return ret;
-  }
+  };
+  function getMonth(month) {
+    switch (month) {
+        case "01":
+            return "January"
+        case "02":
+            return "February"
+        case "03":
+            return "March"
+        case "04":
+            return "April"
+        case "05":
+            return "May"
+        case "06":
+            return "June"
+        case "07":
+            return "July"
+        case "08":
+            return "August"
+        case "09":
+            return "September"
+        case "10":
+            return "October"
+        case "11":
+            return "November"
+        case "12":
+            return "December"
+        default:
+            break;
+    }
+}
 
   return (
     <Table striped className="_maire_table">
@@ -93,6 +122,7 @@ const MaireDeclarationTable = (props) => {
       {data && (
         <Table.Body>
           {data.map((element, index) => {
+            console.log(data)
             const {
               did,
               citizen,
@@ -121,7 +151,7 @@ const MaireDeclarationTable = (props) => {
                     </>
                   )}
                 </Table.Cell>
-                <Table.Cell>{created_on.slice(0, 10)}</Table.Cell>
+                <Table.Cell>{created_on.slice(8, 10) + " - " + getMonth(created_on.slice(5, 7)) + " - " + created_on.slice(0, 4)}</Table.Cell>
                 <Table.Cell textAlign="center" className="_left">
                   <ModalDetails
                     fullname={names[index]}
@@ -135,7 +165,7 @@ const MaireDeclarationTable = (props) => {
                     attachements={filterAttachments(attachments)}
                     created_on={created_on.slice(0, 10)}
                     validated_at={
-                      validated_at ? validated_at.slice(0, 10) : "/"
+                      validated_at ? validated_at.slice(8, 10) + " - " + getMonth(validated_at.slice(5, 7)) + " - " + validated_at.slice(0, 4) : "/"
                     }
                     services={services}
                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}

@@ -37,6 +37,36 @@ const CitoyenDeclarationTable = (props) => {
                 return types[j].name
         }
     }
+    function getMonth(month) {
+        switch (month) {
+            case "01":
+                return "January"
+            case "02":
+                return "February"
+            case "03":
+                return "March"
+            case "04":
+                return "April"
+            case "05":
+                return "May"
+            case "06":
+                return "June"
+            case "07":
+                return "July"
+            case "08":
+                return "August"
+            case "09":
+                return "September"
+            case "10":
+                return "October"
+            case "11":
+                return "November"
+            case "12":
+                return "December"
+            default:
+                break;
+        }
+    }
 
     return (
         <Table striped >
@@ -103,7 +133,7 @@ const CitoyenDeclarationTable = (props) => {
                                 )}
                             </Table.Cell>
                             <Table.Cell>
-                                {created_on.slice(0, 10)}
+                                {created_on.slice(8, 10) + " - " + getMonth(created_on.slice(5, 7)) + " - " + created_on.slice(0, 4)}
                             </Table.Cell>
                             <Table.Cell id="manage_cell">
 
@@ -127,43 +157,43 @@ const CitoyenDeclarationTable = (props) => {
                                     </Link>
                                 </Button.Group>
                                 {Filter === "New Declarations" && (
-                                    <Link to={{pathname : "/update/declaration/", state : {data : element}}}>
-                                    <Button.Group className="manage_button">
-                                        <Popup
-                                            content="Edit"
-                                            trigger=
-                                            {
-                                                <Button icon color={"black"} className="shadow _hide_on_mobile">
-                                                    <Icon name="pencil alternate" color="white" />
-                                                </Button>
-                                            }
-                                        />
-                                        <Button
-                                            color={"black"}
-                                            className="shadow btn_account_detail pointer _show_on_mobile"
-                                            content="Edit"
-                                        />
-                                    </Button.Group>
+                                    <Link to={{ pathname: "/update/declaration/", state: { data: element } }}>
+                                        <Button.Group className="manage_button">
+                                            <Popup
+                                                content="Edit"
+                                                trigger=
+                                                {
+                                                    <Button icon color={"black"} className="shadow _hide_on_mobile">
+                                                        <Icon name="pencil alternate" color="white" />
+                                                    </Button>
+                                                }
+                                            />
+                                            <Button
+                                                color={"black"}
+                                                className="shadow btn_account_detail pointer _show_on_mobile"
+                                                content="Edit"
+                                            />
+                                        </Button.Group>
                                     </Link>
                                 )}
                                 {Filter === "Lack of infos" && (
-                                    <Link to={{pathname : "/complement/declaration", state : {data : element}}}>
-                                    <Button.Group className="manage_button">
-                                        <Popup
-                                            content="Add Infos"
-                                            trigger=
-                                            {
-                                                <Button icon color={"green"} className="shadow _hide_on_mobile">
-                                                    <Icon name="plus" color="white" />
-                                                </Button>
-                                            }
-                                        />
-                                        <Button
-                                            color={"green"}
-                                            className="shadow btn_account_detail pointer _show_on_mobile"
-                                            content="Add infos"
-                                        />
-                                    </Button.Group>
+                                    <Link to={{ pathname: "/complement/declaration", state: { data: element } }}>
+                                        <Button.Group className="manage_button">
+                                            <Popup
+                                                content="Add Infos"
+                                                trigger=
+                                                {
+                                                    <Button icon color={"green"} className="shadow _hide_on_mobile">
+                                                        <Icon name="plus" color="white" />
+                                                    </Button>
+                                                }
+                                            />
+                                            <Button
+                                                color={"green"}
+                                                className="shadow btn_account_detail pointer _show_on_mobile"
+                                                content="Add infos"
+                                            />
+                                        </Button.Group>
                                     </Link>
                                 )}
                                 {((Filter === "New Declarations") || (Filter === "Refused") || (Filter === "Lack of infos")) && (

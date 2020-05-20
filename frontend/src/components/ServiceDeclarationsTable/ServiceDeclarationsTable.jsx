@@ -31,25 +31,25 @@ const ServiceDesclarationTable = (props) => {
     function getMonth(month) {
         switch (month) {
             case "01":
-                return "Janvier"
+                return "January"
             case "02":
-                return "Février"
+                return "February"
             case "03":
-                return "Mars"
+                return "March"
             case "04":
-                return "Avril"
+                return "April"
             case "05":
-                return "Mai"
+                return "May"
             case "06":
-                return "Juin"
+                return "June"
             case "07":
-                return "Juillet"
+                return "July"
             case "08":
-                return "Août"
+                return "August"
             case "09":
-                return "Septembre"
+                return "September"
             case "10":
-                return "Octobre"
+                return "October"
             case "11":
                 return "November"
             case "12":

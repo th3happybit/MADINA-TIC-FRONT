@@ -19,6 +19,7 @@ const Modalredirect = (props) => {
     const handlevalidate = () => {
         let dt = props.data;
         dt["service"] = service;
+        dt["validated_at"] = new Date().toJSON().substr(0,19)+"+01:00";
         props.validate(dt)
     }
     const handleclose = () => {
