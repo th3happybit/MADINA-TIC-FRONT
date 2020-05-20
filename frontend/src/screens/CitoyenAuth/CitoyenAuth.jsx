@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Grid, GridRow, GridColumn, Image } from "semantic-ui-react";
 
+import { useHistory } from "react-router";
 //?import css
 import "./CitoyenAuth.css";
 
@@ -14,6 +15,13 @@ import FormCitoyen from "../../components/FormCitoyen/FormCitoyen.jsx";
 import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
 
 const CitoyenAuth = (props) => {
+  const history = useHistory();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      history.push("/home");
+    }
+  }, []);
   const [isLoading, setIsLoaded] = useState(false);
   useEffect(() => {
     setIsLoaded((prevState) => !prevState);

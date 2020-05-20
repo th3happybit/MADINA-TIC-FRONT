@@ -1,151 +1,156 @@
 .card-citoyen {
-    display: flex;
-    background-color: white;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    border : 0px !important;
-}
-  
-.card-citoyen > .citoyen-profile-pic {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    padding: 1rem 2rem;
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  border: 0px !important;
 }
 
-.divider{
-    padding-top : 20px;
-    width : 80%;
+.card-citoyen > .citoyen-profile-pic {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+.card-citoyen {
+  height: 85vh;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.divider {
+  padding-top: 20px;
+  width: 80%;
 }
 
 .card-citoyen > .citoyen-profile-pic > .profile > .image {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    background-color: gray;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-color: gray;
 }
-  
+
 .card-citoyen > .citoyen-profile-pic > .profile > .edit-profile-pic {
-    width: 35px;
-    background-color: white;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    position: absolute;
-    top: 60%;
-    right: -5%;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  width: 35px;
+  background-color: white;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 60%;
+  right: -5%;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
-  
+
 .edit-profile-pic > label {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-  
+
 #myInput {
-    position: absolute;
-    top: 60%;
-    right: -5%;
+  position: absolute;
+  top: 60%;
+  right: -5%;
 }
-  
+
 .profile {
-    position: relative;
+  position: relative;
 }
-  
+
 .card-citoyen > .citoyen-profile-pic > .profile > .edit-profile-pic svg {
-    height: 20px;
-    width: 20px;
+  height: 20px;
+  width: 20px;
 }
-  
+
 .card-citoyen > .row {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem 2rem;
 }
-  
+
 .card-citoyen > .row > .col {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0.6rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.6rem 0;
 }
-  
+
 .card-citoyen > .row > .col span {
-    color: #576271 !important;
+  color: #576271 !important;
 }
-  
+
 .icon_card {
-    color: #576271 !important;
+  color: #576271 !important;
 }
-  
+
 .social-media {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-  
+
 .social-media {
-    padding: 2rem;
+  padding: 2rem;
 }
 
 .edit-profile-pict.hide {
-    display: none !important;
+  display: none !important;
 }
 
-.edit-profile-pic.mobile, ._buttons_mobile {
-    min-height: 66px !important;
+.edit-profile-pic.mobile,
+._buttons_mobile {
+  min-height: 66px !important;
 }
 
 ._buttons_mobile {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
 }
-  
+
 ._buttons_mobile.hide {
-    display: none !important;
+  display: none !important;
 }
-  
+
 ._buttons_mobile .secondary {
-    background-color: var(--secondary) !important;
-    color: white !important;
-    font-size: 14px !important;
+  background-color: var(--secondary) !important;
+  color: white !important;
+  font-size: 14px !important;
 }
-  
+
 ._buttons_mobile .primary {
-    background-color: var(--primary) !important;
-    color: white !important;
-    font-size: 14px !important;
-    border-radius: 5px;
+  background-color: var(--primary) !important;
+  color: white !important;
+  font-size: 14px !important;
+  border-radius: 5px;
 }
 
 .card-citoyen > .save_img {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    padding: 1rem;
-    visibility: hidden !important;   
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+  visibility: hidden !important;
 }
 
 .card-citoyen > .save_img.hide {
-    visibility: visible !important;
-  }
-  
+  visibility: visible !important;
+}
+
 .card-citoyen > .save_img .button {
-    min-width: 80px !important;
-    padding: 0.7rem 1rem !important;
+  min-width: 80px !important;
+  padding: 0.7rem 1rem !important;
 }
 
 .row.mobile_menu {
-    padding-top: 1rem !important;
+  padding-top: 1rem !important;
 }

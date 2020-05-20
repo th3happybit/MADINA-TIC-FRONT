@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
@@ -9,9 +9,7 @@ const MainForm = () => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [isLoading, setISLoading] = useState(false);
-
   const [error, seterror] = useState(null);
 
   //? function for changing data in inputs

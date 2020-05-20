@@ -81,6 +81,7 @@ const ComplementDeclaration = (props) => {
           address: adr,
           dtype: selectedType,
           citizen: props.props.location.state.data.citizen,
+          status: "not_validated",
         },
       })
       .then((res) => {
@@ -328,7 +329,9 @@ const ComplementDeclaration = (props) => {
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
-          <p className="label_add_dec bold">Pictures</p>
+          {pictures.length > 0 && (
+            <p className="label_add_dec bold">Pictures</p>
+          )}
           <div className="prev_images_dec">
             {picturesPreview.map((elm, index) => {
               return (
@@ -342,7 +345,9 @@ const ComplementDeclaration = (props) => {
               );
             })}
           </div>
-          <p className="label_add_dec bold">Add another Photos</p>
+          <p className="label_add_dec bold">
+            {pictures.length > 0 ? "Add another Photos" : "Add pictures"}
+          </p>
 
           <div className="_profile_img_edit add_dec pointer">
             <label

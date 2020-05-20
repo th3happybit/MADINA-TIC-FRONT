@@ -31,13 +31,14 @@ const MaireDeclarations = (props) => {
         },
       })
       .then((res) => {
+        console.log(res);
         const temp = names;
         temp[key] = res.data.last_name + " " + res.data.first_name;
         setNames(temp);
         if (names.filter(String).length - Data.length === 0) setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
   };
   const getNames = () => {
@@ -275,10 +276,10 @@ const MaireDeclarations = (props) => {
       dtype: decData.dtype,
       status: "validated",
       service: decData.service,
-      validated_at : decData.validated_at
+      validated_at: decData.validated_at,
     };
-    updateDecStatus(data, decData.did)
-  }
+    updateDecStatus(data, decData.did);
+  };
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
   };

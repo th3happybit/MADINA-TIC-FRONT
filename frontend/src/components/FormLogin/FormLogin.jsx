@@ -1,8 +1,5 @@
 import React from "react";
 
-//? import logo
-import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
-
 //? import component
 import MainForm from "./MainForm.jsx";
 

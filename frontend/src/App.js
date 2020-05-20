@@ -59,9 +59,28 @@ function App() {
         />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
-        <Route exact path="/citoyen/profile" component={() => <CitoyenHome active="" childComponent={<CitoyenProfile/>}/>} />
-        <Route exact path="/home" component={() => <CitoyenHome active="home"/>} />
-        <Route exact path="/citoyen/declaration/" component={() => <CitoyenHome active ="declaration" childComponent={<CitoyenDeclarations/>} />}/>
+        <Route
+          exact
+          path="/citoyen/profile"
+          component={() => (
+            <CitoyenHome active="" childComponent={<CitoyenProfile />} />
+          )}
+        />
+        <Route
+          exact
+          path="/home"
+          component={() => <CitoyenHome active="home" />}
+        />
+        <Route
+          exact
+          path="/citoyen/declaration/"
+          component={() => (
+            <CitoyenHome
+              active="declaration"
+              childComponent={<CitoyenDeclarations />}
+            />
+          )}
+        />
         <Route
           exact
           path="/infos"

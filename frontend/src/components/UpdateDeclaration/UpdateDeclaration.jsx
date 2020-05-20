@@ -58,6 +58,7 @@ const UpdateDeclaration = (props) => {
           address: adr,
           dtype: selectedType,
           citizen: props.props.location.state.data.citizen,
+          modified_at: new Date().toJSON().substr(0, 19) + "+01:00",
         },
       })
       .then((res) => {
