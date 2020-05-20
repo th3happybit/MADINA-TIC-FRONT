@@ -26,6 +26,8 @@ export default function AddDeclaration(props) {
   const [uid, setUid] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [dtid, setDtid] = useState(null);
+  const [saveLoading, setSaveLoading] = useState(false);
+  const [fileErr, setFileErr] = useState(false);
 
   useEffect(() => {
     axios
@@ -83,7 +85,7 @@ export default function AddDeclaration(props) {
           data: {
             title,
             desc: description,
-            geo_cord: "[30,10]",
+            geo_cord: adrGeo,
             address: adr,
             dtype: dtid,
             citizen: uid,
@@ -93,7 +95,10 @@ export default function AddDeclaration(props) {
           let did = res.data.did;
           if (pictures.length > 0) {
             postImages(did);
-          } else setSucces(true);
+          } else {
+            setSucces(true);
+            setIsLoading(false);
+          }
         })
         .catch((err) => {
           Object.entries(err.response.data).map((elm) => {
@@ -118,7 +123,7 @@ export default function AddDeclaration(props) {
   }, [uid, isSave]);
   useEffect(() => {
     if (uid && isSave) {
-      setIsLoading(true);
+      setSaveLoading(true);
       let url = `http://157.230.19.233/api/declarations/`;
       axios
         .create({
@@ -135,7 +140,7 @@ export default function AddDeclaration(props) {
           data: {
             title,
             desc: description,
-            geo_cord: "[30,10]",
+            geo_cord: adrGeo,
             address: adr,
             dtype: dtid,
             citizen: uid,
@@ -146,7 +151,11 @@ export default function AddDeclaration(props) {
           let did = res.data.did;
           if (pictures.length > 0) {
             postImages(did);
-          } else setSucces(true);
+            setSaveLoading(false);
+          } else {
+            setSucces(true);
+            setSaveLoading(false);
+          }
         })
         .catch((err) => {
           Object.entries(err.response.data).map((elm) => {
@@ -165,7 +174,7 @@ export default function AddDeclaration(props) {
             }
             return true;
           });
-          setIsLoading(false);
+          setSaveLoading(false);
         });
     }
   }, [uid, isSave]);
@@ -175,16 +184,18 @@ export default function AddDeclaration(props) {
   };
   const postImages = (did) => {
     const formData = new FormData();
+    console.log({ pictures });
     pictures.map((image) => {
+      console.log({ image });
       formData.append("src", image, image.name);
     });
-    formData.append("filetype", "image");
+    formData.append("filetype", "image/jpeg");
     formData.append("declaration", did);
     axios
       .create({
         headers: {
           post: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
         },
@@ -205,6 +216,7 @@ export default function AddDeclaration(props) {
       });
   };
   const handleAdd = () => {
+    console.log("ee");
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
       setSucces(false);
@@ -288,13 +300,19 @@ export default function AddDeclaration(props) {
   }, [selectedFile]);
 
   const onSelectFile = (e) => {
+    setFileErr(false);
     let es = e.target.files[0];
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
     }
-    setSelectedFile(es);
-    setPictures((prevState) => [...prevState, es]);
+
+    if (es.type === "image/png" || es.type === "image/jpeg") {
+      setSelectedFile(es);
+      setPictures((prevState) => [...prevState, es]);
+    } else {
+      setFileErr(true);
+    }
   };
   return (
     <div className="container_add_dec">
@@ -302,7 +320,7 @@ export default function AddDeclaration(props) {
         <h3 className="large-title text-default bold _margin_vertical_md">
           Add Declaration
         </h3>
-        <Form success={succes}>
+        <Form success={succes} error={fileErr}>
           <Form.Input
             type="text"
             label="Title"
@@ -382,6 +400,7 @@ export default function AddDeclaration(props) {
               onChange={onSelectFile}
             />
           </div>
+          <Message error list={["Please enter an image file"]} />
           <div className="prev_images_dec">
             {picturesPreview.map((elm, index) => {
               return (
@@ -416,6 +435,7 @@ export default function AddDeclaration(props) {
               Confirm
             </Button>
             <Button
+              loading={saveLoading}
               className="button_secondary _margin_horizontal_sm"
               onClick={handleSave}
             >

@@ -132,10 +132,10 @@ td:hover > .full_text{
 }
 
 @media (max-width : 1250px){
-    #address_h {
+    ._main #address_h {
         display: none !important;
     }
-    #address {
+    ._main #address {
         display: none;
     }
     #geo_loc_h {
@@ -172,7 +172,8 @@ td:hover > .full_text{
     }
 
     ._main .row {
-        flex-direction: column;
+        /* flex-direction: column; */
+        margin-bottom: 20px;
     }
 
     ._main .row.filters {
@@ -194,7 +195,7 @@ td:hover > .full_text{
         left: 2rem !important;
     }
 
-    .filter_declaration {
+    ._main_right .filter_declaration {
     color: var(--primary) !important;
     border-radius: 0px !important;
     width: 200px !important;
@@ -205,10 +206,10 @@ td:hover > .full_text{
     margin-top: 10px !important;
     }
     
-    .filter_declaration > i {
+    ._main_right .filter_declaration > i {
         color: white !important;
         background-color: var(--primary) !important;
-        border: solid 0.5px var(white);
+        border: solid 0.5px var(--white);
     }
 
     .show_mobile{
@@ -221,11 +222,11 @@ td:hover > .full_text{
         font-size: x-large;
     }
 
-    #address {
+    ._main #address {
         display: none !important;
     }
 
-    #geo_loc {
+    ._main #geo_loc {
         display: none !important;
     }
     @media (max-width : 767px) {
@@ -245,6 +246,15 @@ td:hover > .full_text{
     @media (max-width : 472px) {
         .show_mobile{
             display: block !important;
+        }
+
+        ._main_right .filter_declaration{
+            width : 100% !important;
+        }
+
+        ._main .row {
+            flex-direction: column;
+            margin-bottom: 0px;
         }
 
         ._main_right .search .input {

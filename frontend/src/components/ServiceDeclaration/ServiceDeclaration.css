@@ -1,0 +1,63 @@
+._service_declarations {
+    position: relative;
+    width: 100%;
+    min-height: 650px;
+    padding-top: 6rem;
+    padding-left: 19rem !important;
+    padding-right: 2rem !important;
+}
+
+._service_declarations .text-default {
+    color: var(--primary) !important;
+    position: sticky !important;
+}
+
+._service_table th {
+    background-color: var(--primary) !important;
+    color: white !important;
+}
+
+._service_table .infos_button {
+    padding : 0 !important;
+}
+
+@media (max-width : 1100px){
+    ._service_table ._hide{
+        display: none !important;
+    }
+}
+
+@media (max-width: 899px){
+
+    ._service_declarations {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        padding-top: 8rem !important;
+        width: 100%;
+        position: unset;
+        min-height: 0 !important;
+    }
+    ._service_table ._infos_btn_desktop {
+        display : none ;
+    }
+    ._service_table td{
+        text-align: left !important;
+    }
+    .ui.table:not(.unstackable) tr ._hide {
+        display: none !important;
+    }
+    ._service_table tr {
+        display: flex !important;
+        flex-direction: column !important;
+        padding-top: 1em !important;
+        padding-bottom: 1em !important;
+        box-shadow: 0 -1px 0 0 rgba(0, 0, 0, .1) inset!important;
+    }
+    ._service_table td {
+        border-top: none !important;
+        padding: .25em .75em !important;
+    }
+    ._service_table th {
+        display: none !important;
+    }
+}

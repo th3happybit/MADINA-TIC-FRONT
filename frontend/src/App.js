@@ -16,7 +16,9 @@ import CitoyenProfile from "./screens/CitoyenProfile/CitoyenProfile.jsx";
 import AdminCitoyen from "./screens/AdminCitoyen/AdminCitoyen.jsx";
 import AdminCreateAccount from "./screens/AdminCreateAccount/AdminCreateAccount.jsx";
 import Maire from "./screens/Maire/Maire.jsx";
-
+import MaireAuth from "./screens/Maire/MaireLogin.jsx";
+import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
+import Service from "./screens/Service/Service.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -27,8 +29,11 @@ import CitoyenResetPassword from "./components/CitoyenResetPassword/CitoyenReset
 import CitoyenHome from "./screens/CitoyenHome/CitoyenHome.jsx";
 import AddDeclaration from "./components/AddDeclaration/AddDeclaration.jsx";
 import CitoyenDeclarations from "./screens/CitoyenDeclarations/CitoyenDeclarations.jsx";
-import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx"
+import MaireDeclarations from "./components/MaireDeclarations/MaireDeclaration.jsx";
 import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenDeclarationInfo.jsx";
+import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
+import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
+import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 
 function App() {
   return (
@@ -44,22 +49,85 @@ function App() {
           component={CitoyenMailVerification}
         />
         <Route exact path="/maire" component={Maire} />
-        <Route exact path="/maire/declaration/" component={() => <Maire active="declarations" childComponent={<MaireDeclarations/> }/>} />
+        <Route exact path="/maire/login" component={MaireAuth} />
+        <Route
+          exact
+          path="/maire/declaration/"
+          component={() => (
+            <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/admin/login" component={AdminLogin} />
-        <Route exact path="/citoyen/profile" component={CitoyenProfile} />
-        <Route exact path="/home" component={() => <CitoyenHome active="home"/>} />
-        <Route exact path="/citoyen/declaration/" component={() => <CitoyenHome active ="declaration" childComponent={<CitoyenDeclarations/>} />}/>
-       
+        <Route
+          exact
+          path="/citoyen/profile"
+          component={() => (
+            <CitoyenHome active="" childComponent={<CitoyenProfile />} />
+          )}
+        />
+        <Route
+          exact
+          path="/home"
+          component={() => <CitoyenHome active="home" />}
+        />
+        <Route
+          exact
+          path="/citoyen/declaration/"
+          component={() => (
+            <CitoyenHome
+              active="declaration"
+              childComponent={<CitoyenDeclarations />}
+            />
+          )}
+        />
         <Route
           exact
           path="/infos"
-          component={(prop) => <CitoyenHome props={prop} childComponent={<CitoyenDeclarationInfo props={prop}/>} />}
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<CitoyenDeclarationInfo props={prop} />}
+            />
+          )}
         />
         <Route
           exact
           path="/add/declaration"
           component={() => <CitoyenHome childComponent={<AddDeclaration />} />}
+        />
+        <Route
+          exact
+          path="/update/declaration/"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<UpdateDeclaration props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/declaration/"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<ComplementDeclaration props={prop} />}
+            />
+          )}
+        />
+        />
+        <Route exact path="/service/login" component={ServiceAuth} />
+        <Route exact path="/service" component={Service} />
+        <Route
+          exact
+          path="/service/declaration"
+          component={() => (
+            <Service
+              active="declarations"
+              childComponent={ServiceDeclaration}
+            />
+          )}
         />
         <Route
           exact

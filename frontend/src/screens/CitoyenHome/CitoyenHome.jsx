@@ -31,12 +31,10 @@ const CitoyenHome = (props) => {
           method: "get",
         })
         .then((res) => {
-          console.log(res);
           setFullname(res.data.first_name + " " + res.data.last_name);
           setImage(res.data.image);
         })
         .catch((err) => {
-          console.log(err.response);
         });
     } else {
       setIsLogin(false);

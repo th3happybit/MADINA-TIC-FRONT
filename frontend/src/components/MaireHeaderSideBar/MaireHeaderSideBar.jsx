@@ -21,11 +21,10 @@ const SidebarHeader = (props) => {
       .request({
         url: "http://157.230.19.233/api/logout/",
         method: "post",
-        // data: { email, password },
       })
       .then(() => {
-        localStorage.setItem(("admin_token", ""));
-        return history.push("login");
+        localStorage.removeItem("maire_token");
+        return history.push("/maire/login");
       })
       .catch((err) => {
         // console.log(err);
