@@ -166,6 +166,9 @@ const CitoyenDeclarations = () => {
             case "Archived":
                 pa["status"] = "archived";
                 break;
+            case "Draft":
+                pa["status"] = "draft";
+                break;
             default:
                 break;
         }
@@ -253,6 +256,7 @@ const CitoyenDeclarations = () => {
                             <Button onClick={handleFilter} className={activeFilter === "Refused" ? "_active" : ""}>Refused</Button>
                             <Button onClick={handleFilter} className={activeFilter === "Archived" ? "_active" : ""}>Archived</Button>
                             <Button onClick={handleFilter} className={activeFilter === "Lack of infos" ? "_active" : ""}>Lack of infos</Button>
+                            <Button onClick={handleFilter} className={activeFilter === "Draft" ? "_active" : ""}>Draft</Button>
                         </div>
                         <div className="show_mobile ">
                             <Dropdown
@@ -289,6 +293,10 @@ const CitoyenDeclarations = () => {
                                     />
                                     <Dropdown.Item
                                         text="Lack of infos"
+                                        onClick={handleFilter}
+                                    />
+                                    <Dropdown.Item
+                                        text="Draft"
                                         onClick={handleFilter}
                                     />
                                 </Dropdown.Menu>

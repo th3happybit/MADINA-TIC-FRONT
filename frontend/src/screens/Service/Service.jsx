@@ -12,7 +12,6 @@ const Service = (props) => {
 
     const [isLogin, setIsLogin] = useState(false);
     const [verified, setVerified] = useState(false);
-    const [service, setService] = useState(null)
 
     useEffect(() => {
         if (localStorage.getItem("service_token"))
@@ -32,14 +31,13 @@ const Service = (props) => {
                 .then((res) => {
                     if (res.data.role === "Service") {
                         setIsLogin(true);
-                        setService(res.data.uid)
                     }
                     else {
                         setIsLogin(false);
                         setVerified(true);
                     }
                 })
-                .catch((err) => {console.log(err)});
+                .catch((err) => {});
         else{
             setVerified(true)
         }

@@ -139,7 +139,7 @@ const MaireDeclarationTable = (props) => {
                     }
                     services={services}
                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
-                    status={getStatus(status)}
+                    status={getStatus(status).status}
                     reject={props.rejectDeclaration}
                     archive={props.archiveDeclaration}
                     complement={props.demandComplement}

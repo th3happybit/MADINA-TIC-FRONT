@@ -13,11 +13,13 @@ const Modalredirect = (props) => {
     const handleopen = () => {
         setOpen(true);
     };
-    const handlechange = (e) => {
-        setService(e.currentTarget.firstChild.textContent);
+    const handlechange = (e, {value}) => {
+        setService(value);
     }
     const handlevalidate = () => {
-        props.validate(props.data, service)
+        let dt = props.data;
+        dt["service"] = service;
+        props.validate(dt)
     }
     const handleclose = () => {
         setOpen(false);

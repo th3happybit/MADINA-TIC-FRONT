@@ -21,6 +21,7 @@ const ServiceDeclaration = (props) => {
     const [searchLoading, setsearchLoading] = useState(false);
     const [sortDate, setsortDate] = useState(null);
     const [types, settypes] = useState([]);
+    const [id, setId] = useState(null);
 
     const handle_filter = (e) => {
         setactiveFilter(e.currentTarget.children[1].textContent);
@@ -62,12 +63,12 @@ const ServiceDeclaration = (props) => {
     const changePage = (e, pageInfo) => {
         setPage(pageInfo.activePage);
     };
-    const getData = () => {
+    const getData = (sid) => {
         setData([])
         setLoading(true);
-        console.log(sortDate)
         const pa = {
             page: page,
+            service : sid,
         }
         if (term) {
             pa["search"] = term;
@@ -92,7 +93,7 @@ const ServiceDeclaration = (props) => {
             default:
                 break;
         }
-
+        if (sid)
         axios
             .get("http://157.230.19.233/api/declarations/", {
                 params: pa,
@@ -117,10 +118,9 @@ const ServiceDeclaration = (props) => {
                 setLoading(false);
             })
             .catch((err) => {
-                console.log(err)
             })
     };
-    const getTypes = () => {
+    const getTypes = (sid) => {
         setLoading(true)
         axios
             .get("http://157.230.19.233/api/declarations_types/", {
@@ -130,19 +130,35 @@ const ServiceDeclaration = (props) => {
                 },
             })
             .then((res) => {
-                getData();
+                getData(sid);
                 settypes(res.data);
             })
             .catch((err) => {
-                console.log(err.response);
             });
     };
 
     useEffect(() => {
-        getTypes();
+        axios
+        .create({
+        headers: {
+            get: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+        },
+        })
+        .request({
+        url: "http://157.230.19.233/api/user/",
+            method: "get",
+        })
+        .then((res) => {
+            setId(res.data.uid);
+            getTypes(res.data.uid);
+        })
     }, [])
     useEffect(() => {
-        getData()
+        if (id)
+        getData(id)
     }, [page, term, sortDate, sortmobile, activeFilter])
     return (
         <div className="_service_declarations">

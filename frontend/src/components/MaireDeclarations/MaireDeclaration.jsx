@@ -267,6 +267,17 @@ const MaireDeclarations = (props) => {
     };
     updateDecStatus(data, decData.did);
   };
+  const validateDeclaration = (decData) => {
+    const data = {
+      title: decData.title,
+      desc: decData.desc,
+      citizen: decData.citizen,
+      dtype: decData.dtype,
+      status: "validated",
+      service: decData.service,
+    };
+    updateDecStatus(data, decData.did)
+  }
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
   };
@@ -378,6 +389,7 @@ const MaireDeclarations = (props) => {
               filter={activeFilter}
               handlesortDate={handle_sort_date}
               sortdate={sortDate}
+              validateDeclaration={validateDeclaration}
               rejectDeclaration={rejectDeclaration}
               demandComplement={demandComplement}
               archiveDeclaration={archiveDeclaration}
