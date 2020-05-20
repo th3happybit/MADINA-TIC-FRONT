@@ -537,7 +537,7 @@ const Card = (props) => {
                       />
                       <Input
                         className="mobile-input"
-                        type="text"
+                        type="date"
                         id="birthday"
                         value={birthday}
                         onChange={handleChangeInput}

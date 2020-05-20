@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 //? import toggle
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 
-const SidebarHeader = (props) => {
+const ServiceHeaderSideBar = (props) => {
   const history = useHistory();
   const handleLogout = () => {
     axios
@@ -23,11 +23,10 @@ const SidebarHeader = (props) => {
         method: "post",
       })
       .then(() => {
-        localStorage.removeItem("maire_token");
-        return history.push("/maire/login");
+        localStorage.removeItem("service_token");
+        return history.push("/service/login");
       })
       .catch((err) => {
-        // console.log(err);
       });
   };
   const { visible } = props;
@@ -37,7 +36,7 @@ const SidebarHeader = (props) => {
       <List className="_sidebar_list">
         <List.Item>
           <Link
-            to="/maire/dashboard"
+            to="/service/dashboard"
             className={
               props.active === "dashboard"
                 ? "medium-text text-default text-active"
@@ -49,7 +48,7 @@ const SidebarHeader = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/maire/declaration/"
+            to="/service/declaration/"
             className={
               props.active === "declarations"
                 ? "medium-text text-default text-active"
@@ -60,20 +59,32 @@ const SidebarHeader = (props) => {
           </Link>
         </List.Item>
         <List.Item>
-          <a
-            href="/citoyen/profile"
+          <Link
+            to="/service/rapport"
             className={
-              props.active === "profile"
+              props.active === "rapport"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
-            Profile
-          </a>
-        </List.Item>{" "}
+            Rapports
+          </Link>
+        </List.Item>
         <List.Item>
           <Link
-            to="/maire/notifications"
+            to="/service/announcement"
+            className={
+              props.active === "annonce"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Rapports
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
+            to="/service/notifications"
             className={
               props.active === "notifications"
                 ? "medium-text text-default text-active"
@@ -96,4 +107,4 @@ const SidebarHeader = (props) => {
   );
 };
 
-export default SidebarHeader;
+export default ServiceHeaderSideBar;

@@ -25,7 +25,7 @@ export default function CitoyenHeader(props) {
         headers: {
           post: {
             "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`,
+            Authorization: `Token ${localStorage.getItem("token")}`,
           },
         },
       })
@@ -34,7 +34,7 @@ export default function CitoyenHeader(props) {
         method: "post",
       })
       .then(() => {
-        localStorage.clear();
+        localStorage.removeItem("token");
         return history.push("/login");
       })
       .catch((err) => {

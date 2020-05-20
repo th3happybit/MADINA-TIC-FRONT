@@ -2,10 +2,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Icon, Image, Transition, Popup } from "semantic-ui-react";
 
-import RedirectModel from "./ModalRedirection.jsx";
-import ComplementModal from "./ModalComplement.jsx";
-import DeleteModal from "./ModalDelete.jsx";
-import ArchiveModal from "./ModalArchive.jsx";
 import { useEffect } from "react";
 
 const ModalD = (props) => {
@@ -44,13 +40,11 @@ const ModalD = (props) => {
 
   const {
     did,
-    fullname,
     title,
     type,
     dtype,
     created_on,
     address,
-    rejected_at,
     status,
     validated_at,
     description,
@@ -93,13 +87,10 @@ const ModalD = (props) => {
           </div>
           <div className="_content_modal">
             <div>
-              <p>Citizen Name</p>
               <p>Title</p>
-              <p>Type</p>
               <p>Address</p>
               <p>Added at</p>
               <p>Validated at</p>
-              <p>Rejected at</p>
               <p>Status</p>
               <p>Description</p>
               {attachements.length > 0 &&
@@ -107,13 +98,10 @@ const ModalD = (props) => {
               }
             </div>
             <div className="_infos_section">
-              <p>{fullname ? fullname : "/"}</p>
               <p>{title ? title : "/"}</p>
-              <p>{type ? type : "/"}</p>
               <p>{address ? address : "/"}</p>
               <p>{created_on}</p>
               <p>{validated_at ? validated_at : "/"}</p>
-              <p>{rejected_at ? rejected_at : " / "}</p>
               <p>{status}</p>
               <p>{description}</p>
               {attachements.length > 0 &&
@@ -142,65 +130,6 @@ const ModalD = (props) => {
             </div>
           </div>
         </Modal.Content>
-        {status === "Not Validated" && (
-          <Modal.Content className="content_modal_btns marginTop">
-            <RedirectModel
-              data={{
-                did: did,
-                title: title,
-                maire: localStorage.getItem("maire_token"),
-                declaration: did,
-                citizen: citizen,
-                dtype: type,
-                desc: description,
-              }}
-              validate={props.validate}
-              services={props.services}
-              close={handleclose}
-            />
-            <ComplementModal
-              data={{
-                did: did,
-                title: title,
-                maire: props.maire,
-                declaration: did,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              complement={props.complement}
-              close={handleclose}
-            />
-            <DeleteModal
-              data={{
-                did: did,
-                title: title,
-                maire: props.maire,
-                declaration: did,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              reject={props.reject}
-              close={handleclose}
-            />
-          </Modal.Content>
-        )}
-        {status === "Treated" &&
-          <Modal.Content className="content_modal_btns marginTop">
-            <ArchiveModal
-              data={{
-                did: did,
-                title: title,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              archive={props.archive}
-              close={handleclose}
-            />
-          </Modal.Content>
-        }
       </Modal.Content>
     </Modal>
   );
