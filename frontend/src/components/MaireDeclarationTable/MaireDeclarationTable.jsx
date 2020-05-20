@@ -5,23 +5,23 @@ import ModalDetails from "./ModalDetails.jsx";
 import axios from "axios";
 
 const MaireDeclarationTable = (props) => {
-  const { data } = props
-    const [names, setNames] = useState([]);
-    const [services, setServices] = useState([])
+  const { data } = props;
+  const [names, setNames] = useState([]);
+  const [services, setServices] = useState([]);
   useEffect(() => {
     setNames(props.names);
     axios
-      .get(("http://157.230.19.233/api/users/?role=Service"),{
-        headers : {
-          "content-type" : "application/json",
-          Authorization : `Token ${localStorage.getItem("maire_token")}`
-        }
+      .get("http://157.230.19.233/api/users/?role=Service", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
       })
-      .then((res)=> {
+      .then((res) => {
         // console.log(res)
-        setServices(res.data.results)
-      })
-}, [props.names, props.data])
+        setServices(res.data.results);
+      });
+  }, [props.names, props.data]);
   function getStatus(st) {
     var ret = { status: "", color: "" };
     switch (st) {

@@ -122,6 +122,7 @@ const CitoyenDeclarations = () => {
                 }
             })
             .then((res) => {
+                // console.log(res.data)
                 settypes(res.data);
             })
             .catch((err) => {

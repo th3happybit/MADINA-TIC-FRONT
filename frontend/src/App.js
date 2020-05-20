@@ -18,7 +18,7 @@ import AdminCreateAccount from "./screens/AdminCreateAccount/AdminCreateAccount.
 import Maire from "./screens/Maire/Maire.jsx";
 import MaireAuth from "./screens/Maire/MaireLogin.jsx";
 import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
-import Service from "./screens/Service/Service.jsx"
+import Service from "./screens/Service/Service.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -100,7 +100,16 @@ function App() {
         />
         <Route exact path="/service/login" component={ServiceAuth} />
         <Route exact path="/service" component={Service} />
-        <Route exact path="/service/declaration" component={() => <Service active="declarations" childComponent={ServiceDeclaration} />} />
+        <Route
+          exact
+          path="/service/declaration"
+          component={() => (
+            <Service
+              active="declarations"
+              childComponent={ServiceDeclaration}
+            />
+          )}
+        />
         <Route
           exact
           path="/admin/citoyen"
