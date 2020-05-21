@@ -54,7 +54,7 @@ export default function RowNewAccounts(props) {
       axios
         .create({
           headers: {
-            patch: {
+            delete: {
               "Content-Type": "application/json",
               Authorization: `Token ${localStorage.getItem("admin_token")}`,
             },
@@ -62,9 +62,9 @@ export default function RowNewAccounts(props) {
         })
         .request({
           url: "http://157.230.19.233/api/users/" + uid + "/",
-          method: "pacth",
+          method: "delete",
           data: {
-            is_approved: false,
+            uid,
           },
         })
         .then((res) => {
