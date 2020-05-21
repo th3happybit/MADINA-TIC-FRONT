@@ -13,6 +13,7 @@ const FormRegister = () => {
   const [addrress, setaddrres] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [nationalId, setNationalId] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   //? for errors...
   const [emailError, setEmailError] = useState(null);
@@ -38,6 +39,9 @@ const FormRegister = () => {
       case "first_name":
         first_nameError && setfirst_nameError(null);
         setfirst_name(e.currentTarget.value);
+        break;
+      case "nationalid":
+        setNationalId(e.currentTarget.value);
         break;
       case "last_name":
         setlast_name(e.currentTarget.value);
@@ -110,6 +114,7 @@ const FormRegister = () => {
         phone: phone,
         date_of_birth: birthday,
         address: addrress,
+        national_id: nationalId,
       })
       .then((res) => {
         setIsLoading(false);
@@ -173,6 +178,7 @@ const FormRegister = () => {
           style={{
             width: "100%",
             position: "relative",
+            margin: "0 1rem",
           }}
         >
           <Form.Input
@@ -199,6 +205,7 @@ const FormRegister = () => {
           style={{
             width: "100%",
             position: "relative",
+            margin: "0 1rem",
           }}
         >
           <Form.Input
@@ -315,6 +322,22 @@ const FormRegister = () => {
               : "Please enter a valid phone number"}
           </p>
         )}
+      </div>
+      <div
+        style={{
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        <Form.Input
+          value={nationalId}
+          id="nationalid"
+          placeholder="National id"
+          type="text"
+          size="large"
+          className="_margin_vertical_sm small"
+          onChange={handleChangeInput}
+        />
       </div>
       <div
         style={{
