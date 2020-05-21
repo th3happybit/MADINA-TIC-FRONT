@@ -54,10 +54,16 @@ const FormLogin = () => {
           })
           .then((res) => {
             const is_approved = res.data.is_approved;
+            const role = res.data.role;
             if (is_approved) {
-              localStorage.setItem("token", key);
-              setIsLoading(false);
-              return history.push("/home");
+              if (role === "Client") {
+                localStorage.setItem("token", key);
+                setIsLoading(false);
+                return history.push("/home");
+              } else {
+                setIsErr(true);
+                setIsLoading(false);
+              }
             } else {
               setIsErr(true);
               setNonApproved(true);
