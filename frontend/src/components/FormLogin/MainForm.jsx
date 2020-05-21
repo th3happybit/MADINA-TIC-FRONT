@@ -63,7 +63,6 @@ const MainForm = () => {
             if (res.data.role === "Admin") {
               localStorage.setItem("admin_token", key);
               setISLoading(false);
-
               return history.push("/admin/dashboard");
             } else {
               seterror(true);
