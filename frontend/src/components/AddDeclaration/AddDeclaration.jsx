@@ -188,7 +188,7 @@ export default function AddDeclaration(props) {
     pictures.map((image) => {
       formData.append("src", image);
     });
-    formData.append("filetype", "other");
+    formData.append("filetype", "image");
     formData.append("declaration", did);
     axios
       .create({

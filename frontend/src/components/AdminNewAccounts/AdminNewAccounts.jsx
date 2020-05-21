@@ -15,6 +15,8 @@ const AdminNewAccounts = () => {
   const [searchValue, setsearchValue] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
   const [activePage, setActivePage] = useState(1);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   const handlePagination = (e, { activePage }) => {
     setActivePage(activePage);
