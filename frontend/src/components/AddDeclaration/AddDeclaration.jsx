@@ -186,10 +186,9 @@ export default function AddDeclaration(props) {
     const formData = new FormData();
     console.log({ pictures });
     pictures.map((image) => {
-      console.log({ image });
-      formData.append("src", image, image.name);
+      formData.append("src", image);
     });
-    formData.append("filetype", "image/jpeg");
+    formData.append("filetype", "other");
     formData.append("declaration", did);
     axios
       .create({
