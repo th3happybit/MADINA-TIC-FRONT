@@ -7,7 +7,7 @@ import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile
 
 const InfosForm = (props) => {
   const { cit_infos, loading } = props;
-
+  console.log({ cit_infos });
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [isEditing, setEditing] = useState(true);
