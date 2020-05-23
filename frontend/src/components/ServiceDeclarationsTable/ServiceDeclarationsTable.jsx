@@ -1,5 +1,6 @@
 import React from "react";
-import { Table, Icon } from "semantic-ui-react";
+import { Table, Icon, Button, Popup } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import DetailsModal from "./ModalDetails.jsx";
@@ -10,7 +11,6 @@ const ServiceDesclarationTable = (props) => {
   useEffect(() => {
     setData(props.data);
   }, [props.data]);
-  console.log("ssdsd");
 
   function filterAttachments(att) {
     var ret = [];
@@ -104,6 +104,7 @@ const ServiceDesclarationTable = (props) => {
         <Table.Body>
           {Data.map((element, index) => {
             const {
+              did,
               title,
               created_on,
               validated_at,
@@ -151,7 +152,7 @@ const ServiceDesclarationTable = (props) => {
                       validated_at.slice(0, 4)
                     : "/"}
                 </Table.Cell>
-                <Table.Cell textAlign="center">
+                <Table.Cell className="_manage_cell" textAlign="center">
                   <DetailsModal
                     title={title}
                     // type={editType(dtype)}
@@ -178,6 +179,25 @@ const ServiceDesclarationTable = (props) => {
                     // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
                     status={getStatus(status).status}
                   />
+                  {status === "under_treatment" && (
+                    <Link
+                      to={{
+                        pathname: "/add/report",
+                        state: { did: did },
+                      }}
+                    >
+                      <Popup
+                        content="Attach rapport"
+                        trigger={
+                          <Button
+                            color="green"
+                            icon={{ name: "add" }}
+                            className="shadow"
+                          />
+                        }
+                      />
+                    </Link>
+                  )}
                 </Table.Cell>
               </Table.Row>
             );

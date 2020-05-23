@@ -34,7 +34,12 @@ import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenD
 import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
+<<<<<<< HEAD
 import ServiceAddAnnonce from "./components/ServiceAnnonce/ServiceAddAnnonce.jsx"
+=======
+import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
+import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
+>>>>>>> 47a7cdcbd56c9dd0ba33868e08e04d694849301a
 
 function App() {
   return (
@@ -126,7 +131,29 @@ function App() {
           component={() => (
             <Service
               active="declarations"
-              childComponent={ServiceDeclaration}
+              childComponent={<ServiceDeclaration />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/add/report"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="reports"
+              childComponent={<DeposeRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/add/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonces"
+              childComponent={<DeposerAnnonces props={prop} />}
             />
           )}
         />
@@ -163,7 +190,7 @@ function App() {
           path="/signup"
           component={() => <CitoyenAuth islogin={false} />}
         />
-        <Redirect to="/admin/login" />
+        <Redirect to="/login" />
       </Switch>
     </Router>
   );

@@ -82,7 +82,7 @@ const TableNewAccounts = (props) => {
             })}
           </Table.Body>
           <Pagination
-            className="_margin_vertical_lg"
+            className="_maPgin_vertical_lg"
             activePage={props.activePage}
             onPageChange={props.handlePagination}
             totalPages={props.count}

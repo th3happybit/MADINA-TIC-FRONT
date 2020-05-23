@@ -51,8 +51,29 @@ export default function RowNewAccounts(props) {
         })
         .catch((err) => console.log(err.response));
     } else if (type === 1) {
-      setOpen(false);
-      console.log(uid);
+      axios
+        .create({
+          headers: {
+            delete: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("admin_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://157.230.19.233/api/users/" + uid + "/",
+          method: "delete",
+          data: {
+            uid,
+          },
+        })
+        .then((res) => {
+          props.refresh();
+          setLoading(false);
+          setOpen(false);
+          console.log(res);
+        })
+        .catch((err) => console.log(err.response));
     }
   };
 

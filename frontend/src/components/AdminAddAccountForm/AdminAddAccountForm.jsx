@@ -16,6 +16,8 @@ const AdminAddAccountForm = () => {
   const [phoneError, setPhoneError] = useState(null);
   const [addressError, setAddressError] = useState(null);
   const [roleError, setRoleError] = useState(null);
+  const [first_name, setFirstName] = useState("");
+  const [last_name, setLastName] = useState("");
 
   const handleChangeRole = (e, { value }) => {
     setSelectedRole(value);
@@ -37,6 +39,12 @@ const AdminAddAccountForm = () => {
         break;
       case "phone":
         setPhone(value);
+        break;
+      case "last_name":
+        setLastName(value);
+        break;
+      case "first_name":
+        setFirstName(value);
         break;
       default:
         break;
@@ -61,6 +69,8 @@ const AdminAddAccountForm = () => {
           address,
           phone,
           role: selectedRole,
+          first_name,
+          last_name,
         },
       })
       .then((res) => {
@@ -70,6 +80,8 @@ const AdminAddAccountForm = () => {
         setPhone("");
         setAddress("");
         setSelectedRole("");
+        setFirstName("");
+        setLastName("");
       })
       .catch((err) => {
         setIsLoading(false);
@@ -135,6 +147,28 @@ const AdminAddAccountForm = () => {
                   type="text"
                   id="address"
                   value={address}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input_with_label">
+                <label htmlFor="first_name">First name</label>
+                <Form.Input
+                  placeholder="First name"
+                  size="big"
+                  type="text"
+                  id="first_name"
+                  value={first_name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="input_with_label">
+                <label htmlFor="last_name">Last name</label>
+                <Form.Input
+                  placeholder="Last name"
+                  size="big"
+                  type="text"
+                  id="last_name"
+                  value={last_name}
                   onChange={handleChange}
                 />
               </div>

@@ -1,9 +1,9 @@
 # Madina-tic-frontend
 a react based frontend for madina-tic project
 
-## deployment:
+## Deployment:
 
-### manual deployment
+### Manual deployment
 	- requirements:
 		2. nodejs and yarn
 	-. setup the frontend:
@@ -12,7 +12,7 @@ a react based frontend for madina-tic project
 		- run the server:
 			- `yarn start`
 
-### docker deployment:
+### Docker deployment:
 	- requirements:
 		1. install docker deamon [docs](https://docs.docker.com/install/).
 		2. install docker-compose tool [docs](https://docs.docker.com/compose/install/).

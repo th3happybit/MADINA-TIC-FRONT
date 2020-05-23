@@ -1,0 +1,4 @@
+._service_table ._manage_cell {
+    display: flex;
+    justify-content: space-evenly;
+}
