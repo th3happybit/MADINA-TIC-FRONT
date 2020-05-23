@@ -55,16 +55,16 @@ const ServiceSideBar = (props) => {
                     <div className="d-flex">
                         <Rapport
                             className={
-                                props.active === "rapport"
+                                props.active === "reports"
                                     ? "_sidebar_icons active"
                                     : "_sidebar_icons"
                             }
                         />
                         <Menu.Item
                             as={Link}
-                            to="/service/rapport/"
-                            name="Rapports"
-                            className={props.active === "rapport" ? "active" : ""}
+                            to="/service/report/"
+                            name="Reports"
+                            className={props.active === "reports" ? "active" : ""}
                         />
                     </div>
                     <div className="d-flex">
@@ -78,7 +78,7 @@ const ServiceSideBar = (props) => {
                         <Menu.Item
                             as={Link}
                             to="/service/announcement/"
-                            name="Announcement"
+                            name="Announcements"
                             className={props.active === "annonce" ? "active" : ""}
                         />
                     </div>

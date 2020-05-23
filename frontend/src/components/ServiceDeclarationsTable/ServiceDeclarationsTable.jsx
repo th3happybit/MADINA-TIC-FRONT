@@ -10,7 +10,6 @@ const ServiceDesclarationTable = (props) => {
   useEffect(() => {
     setData(props.data);
   }, [props.data]);
-  console.log("ssdsd");
 
   function filterAttachments(att) {
     var ret = [];

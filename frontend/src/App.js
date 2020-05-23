@@ -34,6 +34,7 @@ import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenD
 import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
+import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 
 function App() {
   return (
@@ -127,6 +128,13 @@ function App() {
               active="declarations"
               childComponent={ServiceDeclaration}
             />
+          )}
+        />
+        <Route
+          exact
+          path="/add/report"
+          component={() => (
+            <Service active="reports" childComponent={DeposeRapport} />
           )}
         />
         <Route

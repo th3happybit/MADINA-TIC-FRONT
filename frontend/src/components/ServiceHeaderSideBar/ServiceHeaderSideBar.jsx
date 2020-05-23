@@ -60,14 +60,14 @@ const ServiceHeaderSideBar = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/service/rapport"
+            to="/service/reports"
             className={
-              props.active === "rapport"
+              props.active === "reports"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
-            Rapports
+            Reports
           </Link>
         </List.Item>
         <List.Item>
@@ -79,7 +79,7 @@ const ServiceHeaderSideBar = (props) => {
                 : "medium-text text-default"
             }
           >
-            Rapports
+            Announcements
           </Link>
         </List.Item>
         <List.Item>
