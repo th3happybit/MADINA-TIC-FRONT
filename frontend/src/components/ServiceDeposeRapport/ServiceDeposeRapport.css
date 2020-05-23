@@ -20,6 +20,10 @@
   flex-direction: column !important;
 }
 
+._add_form .field.error textarea {
+  background: white !important;
+}
+
 ._add_form ._upload_section .button {
   width: 100px !important;
   margin-top: 10px;
@@ -36,9 +40,7 @@
 
 ._add_form ._upload_section span p {
   font-weight: 550;
-  
 }
-
 
 ._add_form ._action_button button {
   margin-top: 20px;

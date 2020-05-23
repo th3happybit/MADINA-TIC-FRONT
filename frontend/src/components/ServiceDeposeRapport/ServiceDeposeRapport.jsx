@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import {
   Segment,
@@ -13,10 +14,12 @@ import "./ServiceDeposeRapport.css";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const DeposeRapport = (props) => {
   const [Loading, setLoading] = useState(false);
   const [reqError, setReqErr] = useState(false);
+  const [duplicateErr, setDuplicateErr] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
   const [successFile, setSuccessFile] = useState(false);
   const [uploadingData, setUplaodingData] = useState(false);
@@ -30,11 +33,16 @@ const DeposeRapport = (props) => {
   const [declaration, setDeclaration] = useState(null);
   const [service, setService] = useState(null);
 
+  let histroy = useHistory();
+
   useEffect(() => {
+    setDeclaration(props.props.location.state.did);
     setLoading(true);
     axios
       .get(
-        "http://157.230.19.233/api/declarations/8984b120-213c-4338-a632-4f8222b08c6f/",
+        "http://157.230.19.233/api/declarations/" +
+          props.props.location.state.did +
+          "/",
         {
           headers: {
             "content-type": "application/json",
@@ -61,6 +69,7 @@ const DeposeRapport = (props) => {
     setSuccessFile(false);
     setSuccessData(false);
     setReqErr(false);
+    setDuplicateErr(false);
   };
   const handleTitle = (e, { value }) => {
     setTitleErr(false);
@@ -80,6 +89,7 @@ const DeposeRapport = (props) => {
     setFile(null);
   };
   const handlePost = () => {
+    setDuplicateErr(false);
     setReqErr(false);
     let error = false;
     if (!title || title.length < 6) {
@@ -90,21 +100,17 @@ const DeposeRapport = (props) => {
       setDescErr(true);
       error = true;
     }
-    if (file && file.size > 0 && !error) {
-      PostFile();
-    } else if (!file) {
-      setSuccessFile(true);
-    }
     if (!error) {
       PostReport();
     }
   };
-  const PostFile = () => {
+  const PostFile = (rid) => {
     setUploadingFile(true);
     const formData = new FormData();
     formData.append("src", file);
     formData.append("filetype", "pdf");
     formData.append("declaration", declaration.did);
+    formData.append("report", rid);
     axios
       .create({
         headers: {
@@ -123,12 +129,13 @@ const DeposeRapport = (props) => {
         setUploadingFile(false);
         setSuccessFile(true);
         setFile(null);
-        console.log(res);
+        setTimeout(() => {
+          histroy.push("/service/declaration");
+        }, 2000);
       })
       .catch((err) => {
         setReqErr(true);
         setUploadingFile(false);
-        console.log(err);
       });
   };
   const PostReport = () => {
@@ -154,14 +161,23 @@ const DeposeRapport = (props) => {
         },
       })
       .then((res) => {
-        console.log(res);
         setSuccessData(true);
         setUplaodingData(false);
+        if (file && file.size > 0) {
+          PostFile(res.data.rid);
+        } else if (!file) {
+          setSuccessFile(true);
+          setTimeout(() => {
+            histroy.push("/service/declaration");
+          }, 2000);
+        }
       })
       .catch((err) => {
-        setReqErr(true);
         setUplaodingData(false);
-        console.log(err);
+        if (err.response.data.declaration)
+          if (err.response.data.declaration[0] === "This field must be unique.")
+            setDuplicateErr(true);
+          else setReqErr(true);
       });
   };
 
@@ -171,7 +187,10 @@ const DeposeRapport = (props) => {
         <h3 className="large-title text-default bold _margin_vertical_md">
           Add Report
         </h3>
-        <Form error={fileErr || reqError} success={successData && successFile}>
+        <Form
+          error={fileErr || reqError || duplicateErr}
+          success={successData && successFile}
+        >
           {declaration && (
             <p className="text-default">Declaration : {declaration.title}</p>
           )}
@@ -246,21 +265,34 @@ const DeposeRapport = (props) => {
                   visible={successFile && successData}
                   animation="scale"
                   duration={200}
-                  className="pointer"
                 >
                   <Message
                     success
+                    className="pointer"
                     onClick={removeMessage}
-                    content={"Your changes has been sent successfully."}
+                    content={"Your changes has been sent successfully. You will be redirected in 2 seconds ..."}
                   />
                 </Transition>
-
                 <Transition visible={reqError} animation="scale" duration={200}>
                   <Message
                     className="pointer"
                     onClick={removeMessage}
                     error
                     content={"Something went wrong while sending request !"}
+                  />
+                </Transition>
+                <Transition
+                  visible={duplicateErr}
+                  animation="scale"
+                  duration={200}
+                >
+                  <Message
+                    className="pointer"
+                    onClick={removeMessage}
+                    error
+                    content={
+                      "A report is already attached to this declaration !"
+                    }
                   />
                 </Transition>
               </>

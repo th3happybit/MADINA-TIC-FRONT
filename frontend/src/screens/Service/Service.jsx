@@ -62,7 +62,7 @@ const Service = (props) => {
           <main>
             {" "}
             {props.childComponent ? (
-              <props.childComponent />
+              props.childComponent
             ) : (
               <div
                 style={{

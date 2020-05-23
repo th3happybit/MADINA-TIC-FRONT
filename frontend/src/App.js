@@ -126,15 +126,15 @@ function App() {
           component={() => (
             <Service
               active="declarations"
-              childComponent={ServiceDeclaration}
+              childComponent={<ServiceDeclaration />}
             />
           )}
         />
         <Route
           exact
           path="/add/report"
-          component={() => (
-            <Service active="reports" childComponent={DeposeRapport} />
+          component={(prop) => (
+            <Service props={prop} active="reports" childComponent={<DeposeRapport props={prop}/>} />
           )}
         />
         <Route
