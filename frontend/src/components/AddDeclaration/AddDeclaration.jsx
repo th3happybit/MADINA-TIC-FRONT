@@ -184,7 +184,6 @@ export default function AddDeclaration(props) {
   };
   const postImages = (did) => {
     const formData = new FormData();
-    console.log({ pictures });
     pictures.map((image) => {
       formData.append("src", image);
     });
