@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import { Table, Icon, Button, Popup } from "semantic-ui-react";
+import { Table, Button, Popup, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -78,26 +79,40 @@ const ServiceDesclarationTable = (props) => {
     }
   }
 
+  function getPriority(p) {
+    switch (p) {
+      case "critical":
+        return {
+          priority: "Critical",
+          color: "red",
+        };
+      case "low":
+        return {
+          priority: "Low",
+          color: "blue",
+        };
+      case "normal":
+        return {
+          priority: "Normal",
+          color: "green",
+        };
+      case "important":
+        return {
+          priority: "Important",
+          color: "yellow",
+        };
+      default:
+        break;
+    }
+  }
+
   return (
     <Table striped className="_service_table">
       <Table.Header>
-        <Table.HeaderCell content="Title" width={2} />
-        <Table.HeaderCell content="Address" width={3} className="_hide" />
-        <Table.HeaderCell
-          width={2}
-          content="Geo-Coordinates"
-          className="_hide"
-        />
-        <Table.HeaderCell width={2}>
-          <p onClick={props.handlesortDate} className="sort_field pointer">
-            Validated At
-            {props.sortdate ? (
-              <Icon name={props.sortdate === "asc" ? "sort up" : "sort down"} />
-            ) : (
-              <Icon name="sort" />
-            )}
-          </p>
-        </Table.HeaderCell>
+        <Table.HeaderCell content="Title" width={3} />
+        <Table.HeaderCell content="Address" width={5} className="_hide" />
+        <Table.HeaderCell width={2} content="Validated at" />
+        <Table.HeaderCell width={1} content="Priority" />
         <Table.HeaderCell content="Manage" width={1} textAlign="center" />
       </Table.Header>
       {Data && (
@@ -114,33 +129,20 @@ const ServiceDesclarationTable = (props) => {
               dtype,
               desc,
               status,
+              priority,
             } = element;
 
             return (
               <Table.Row>
                 <Table.Cell>{title}</Table.Cell>
                 <Table.Cell className="_hide">
-                  {address.length < 42 ? (
+                  {address.length < 55 ? (
                     <p>{address}</p>
                   ) : (
                     <>
-                      <p>{address.slice(0, 37) + " ..."}</p>
+                      <p>{address.slice(0, 47) + " ..."}</p>
                       <span className="full_text">{address}</span>
                     </>
-                  )}
-                </Table.Cell>
-                <Table.Cell className="_hide">
-                  {geo_cord ? (
-                    geo_cord.length < 20 ? (
-                      <p>{geo_cord}</p>
-                    ) : (
-                      <>
-                        <p>{geo_cord.slice(0, 15) + " ..."}</p>
-                        <span className="full_text">{geo_cord}</span>
-                      </>
-                    )
-                  ) : (
-                    "/"
                   )}
                 </Table.Cell>
                 <Table.Cell>
@@ -152,14 +154,22 @@ const ServiceDesclarationTable = (props) => {
                       validated_at.slice(0, 4)
                     : "/"}
                 </Table.Cell>
+                <Table.Cell>
+                  <Label
+                    color={getPriority(priority).color}
+                    style={{ width: "80px", "text-align": "center" }}
+                  >
+                    {getPriority(priority).priority}
+                  </Label>
+                </Table.Cell>
                 <Table.Cell className="_manage_cell" textAlign="center">
                   <DetailsModal
                     title={title}
-                    // type={editType(dtype)}
                     dtype={dtype}
                     address={address}
                     description={desc}
                     attachements={filterAttachments(attachments)}
+                    priority={getPriority(priority).priority}
                     created_on={
                       created_on.slice(8, 10) +
                       " - " +

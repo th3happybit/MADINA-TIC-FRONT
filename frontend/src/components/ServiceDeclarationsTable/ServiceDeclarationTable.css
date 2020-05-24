@@ -2,3 +2,13 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+._service_table td .ui.blue.label {
+    background-color: var(--primary) !important;
+}
+
+@media (max-width : 899px) {
+    ._service_table ._manage_cell {
+        justify-content: flex-start;
+    }
+}

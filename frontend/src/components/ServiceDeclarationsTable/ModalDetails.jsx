@@ -46,16 +46,13 @@ const ModalD = (props) => {
   }, [props.attachements.length]);
 
   const {
-    did,
     title,
-    type,
-    dtype,
     created_on,
     address,
     status,
     validated_at,
     description,
-    citizen,
+    priority,
     attachements,
   } = props;
 
@@ -102,6 +99,7 @@ const ModalD = (props) => {
               <p>Added at</p>
               <p>Validated at</p>
               <p>Status</p>
+              <p>Pritority</p>
               <p>Description</p>
               {attachements.length > 0 && <p className="_image">Images</p>}
             </div>
@@ -111,6 +109,7 @@ const ModalD = (props) => {
               <p>{created_on}</p>
               <p>{validated_at ? validated_at : "/"}</p>
               <p>{status}</p>
+              <p>{priority}</p>
               <p>{description}</p>
               {attachements.length > 0 && (
                 <div className="_images_slides">
