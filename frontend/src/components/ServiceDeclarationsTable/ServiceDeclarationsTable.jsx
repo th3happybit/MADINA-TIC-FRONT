@@ -11,6 +11,7 @@ const ServiceDesclarationTable = (props) => {
   const [Data, setData] = useState(null);
   useEffect(() => {
     setData(props.data);
+    console.log(props.data);
   }, [props.data]);
 
   function filterAttachments(att) {
@@ -81,22 +82,22 @@ const ServiceDesclarationTable = (props) => {
 
   function getPriority(p) {
     switch (p) {
-      case "critical":
+      case 1:
         return {
           priority: "Critical",
           color: "red",
         };
-      case "low":
+      case 4:
         return {
           priority: "Low",
           color: "blue",
         };
-      case "normal":
+      case 3:
         return {
           priority: "Normal",
           color: "green",
         };
-      case "important":
+      case 2:
         return {
           priority: "Important",
           color: "yellow",
@@ -162,7 +163,7 @@ const ServiceDesclarationTable = (props) => {
                     {getPriority(priority).priority}
                   </Label>
                 </Table.Cell>
-                <Table.Cell className="_manage_cell" textAlign="center">
+                <Table.Cell id="_manage_cell" textAlign="center">
                   <DetailsModal
                     title={title}
                     dtype={dtype}
@@ -202,9 +203,14 @@ const ServiceDesclarationTable = (props) => {
                           <Button
                             color="green"
                             icon={{ name: "add" }}
-                            className="shadow"
+                            className="shadow _hide_on_mobile"
                           />
                         }
+                      />
+                      <Button
+                        color="green"
+                        className="shadow mobile_button _hide_on_desktop"
+                        content="Attach report"
                       />
                     </Link>
                   )}

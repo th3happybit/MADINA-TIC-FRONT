@@ -80,7 +80,7 @@ const ModalD = (props) => {
           <Button
             onClick={handleopen}
             color="blue"
-            className="shadow btn_account_detail pointer _primary _hide_on_desktop"
+            className="shadow mobile_button pointer _primary _hide_on_desktop"
             content="More details"
           />
         </>

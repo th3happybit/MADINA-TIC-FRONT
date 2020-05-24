@@ -90,7 +90,6 @@ const ServiceDeclaration = (props) => {
         });
   };
   const getTypes = (sid) => {
-    console.log("ss");
     setLoading(true);
     axios
       .get("http://157.230.19.233/api/declarations_types/", {

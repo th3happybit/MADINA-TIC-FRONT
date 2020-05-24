@@ -122,29 +122,29 @@ const Modalredirect = (props) => {
               <Radio
                 label="Critical"
                 name="radioGroup"
-                value="critical"
-                checked={priority === "critical"}
+                value={1}
+                checked={priority === 1}
                 onChange={handlepriority}
               />
               <Radio
                 label="Important"
                 name="radioGroup"
-                value="important"
-                checked={priority === "important"}
+                value={2}
+                checked={priority === 2}
                 onChange={handlepriority}
               />
               <Radio
                 label="Normal"
                 name="radioGroup"
-                value="normal"
-                checked={priority === "normal"}
+                value={3}
+                checked={priority === 3}
                 onChange={handlepriority}
               />
               <Radio
                 label="Low"
                 name="radioGroup"
-                value="low"
-                checked={priority === "low"}
+                value={4}
+                checked={priority === 4}
                 onChange={handlepriority}
               />
             </div>

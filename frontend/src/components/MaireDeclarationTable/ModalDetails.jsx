@@ -40,13 +40,13 @@ const ModalD = (props) => {
   };
   function getPriority(p) {
     switch (p) {
-      case "critical":
+      case 1:
         return "Critical";
-      case "low":
+      case 4:
         return "Low";
-      case "normal":
+      case 3:
         return "Normal";
-      case "important":
+      case 2:
         return "Important";
       default:
         break;
