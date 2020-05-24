@@ -5,8 +5,8 @@
 }
 
 ._rapport_form > ._add_form {
-  padding-left: 10rem;
-  padding-right: 10rem;
+  padding-left: 16rem;
+  padding-right: 16rem;
   padding-top: 1rem;
   padding-bottom: 2rem;
   min-height: 530px;
@@ -18,6 +18,10 @@
 ._add_form ._upload_section {
   display: flex;
   flex-direction: column !important;
+}
+
+._add_form input {
+  height: 45px;
 }
 
 ._add_form .field.error textarea {
@@ -86,8 +90,8 @@
 
 @media (max-width: 1299px) {
   ._rapport_form > ._add_form {
-    padding-left: 8rem;
-    padding-right: 8rem;
+    padding-left: 12rem;
+    padding-right: 12rem;
   }
   ._rapport_form {
     padding-left: 27rem;

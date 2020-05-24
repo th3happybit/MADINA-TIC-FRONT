@@ -8,6 +8,7 @@ import {
   Message,
   Input,
   Transition,
+  Modal,
 } from "semantic-ui-react";
 
 import "./ServiceDeposeRapport.css";
@@ -28,8 +29,9 @@ const DeposeRapport = (props) => {
   const [titleErr, setTitleErr] = useState(false);
   const [description, setDescription] = useState(null);
   const [descErr, setDescErr] = useState(false);
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState(null);
   const [fileErr, setFileErr] = useState(false);
+  const [maxErr, setMaxErr] = useState(false);
   const [declaration, setDeclaration] = useState(null);
   const [service, setService] = useState(null);
 
@@ -66,8 +68,7 @@ const DeposeRapport = (props) => {
       });
   }, []);
   const removeMessage = () => {
-    setSuccessFile(false);
-    setSuccessData(false);
+    setMaxErr(false);
     setReqErr(false);
     setDuplicateErr(false);
   };
@@ -81,12 +82,27 @@ const DeposeRapport = (props) => {
   };
   const handleUpload = (e) => {
     setFileErr(false);
-    let temp = e.target.files[0];
-    if (temp.type !== "application/pdf") setFileErr(true);
-    else setFile(temp);
+    if (files && files.length === 3) {
+      setMaxErr(true);
+      return;
+    }
+    let tmp = e.target.files[0];
+    if (tmp && tmp.size > 0 && tmp.type === "application/pdf") {
+      if (!files) setFiles([tmp]);
+      else setFiles((prevState) => [...prevState, tmp]);
+    } else if (tmp) {
+      setFileErr(true);
+    }
   };
-  const handleDelete = () => {
-    setFile(null);
+  const handleDelete = (e) => {
+    setMaxErr(false);
+    setFileErr(false);
+    let i = parseInt(e.currentTarget.attributes["data-id"].value);
+    let arr = [];
+    for (let j = 0; j < files.length; j++) {
+      if (j !== i) arr.push(files[j]);
+    }
+    setFiles(arr);
   };
   const handlePost = () => {
     setDuplicateErr(false);
@@ -107,10 +123,12 @@ const DeposeRapport = (props) => {
   const PostFile = (rid) => {
     setUploadingFile(true);
     const formData = new FormData();
-    formData.append("src", file);
-    formData.append("filetype", "pdf");
-    formData.append("declaration", declaration.did);
-    formData.append("report", rid);
+    files.map((file, index) => {
+      formData.append("src", file);
+      formData.append("filetype", "pdf");
+      formData.append("declaration", declaration.did);
+      formData.append("report", rid);
+    });
     axios
       .create({
         headers: {
@@ -128,10 +146,7 @@ const DeposeRapport = (props) => {
       .then((res) => {
         setUploadingFile(false);
         setSuccessFile(true);
-        setFile(null);
-        setTimeout(() => {
-          histroy.push("/service/declaration");
-        }, 2000);
+        setFiles(null);
       })
       .catch((err) => {
         setReqErr(true);
@@ -163,13 +178,10 @@ const DeposeRapport = (props) => {
       .then((res) => {
         setSuccessData(true);
         setUplaodingData(false);
-        if (file && file.size > 0) {
+        if (files) {
           PostFile(res.data.rid);
-        } else if (!file) {
+        } else if (!files) {
           setSuccessFile(true);
-          setTimeout(() => {
-            histroy.push("/service/declaration");
-          }, 2000);
         }
       })
       .catch((err) => {
@@ -188,7 +200,7 @@ const DeposeRapport = (props) => {
           Add Report
         </h3>
         <Form
-          error={fileErr || reqError || duplicateErr}
+          error={fileErr || reqError || duplicateErr || maxErr}
           success={successData && successFile}
         >
           {declaration && (
@@ -226,77 +238,90 @@ const DeposeRapport = (props) => {
           />
           <div className="_upload_section">
             <p className="text-default">Add Files ( Optional )</p>
-            {file ? (
-              <span>
-                <p className="text-default">{file.name}</p>
-                <Icon
-                  onClick={handleDelete}
-                  name="times circle"
-                  className="pointer"
-                  style={{ "margin-left": "10px" }}
-                />
-              </span>
-            ) : (
-              <>
-                <Button
-                  as={"label"}
-                  htmlFor="myInput"
-                  animated
-                  color="blue"
-                  className="_primary"
-                >
-                  <Button.Content visible content="Upload" />
-                  <Button.Content hidden>
-                    <Icon name="upload" />
-                  </Button.Content>
-                </Button>
-                <input
-                  id="myInput"
-                  style={{ display: "none" }}
-                  type="file"
-                  accept=".pdf"
-                  className="pointer"
-                  onChange={handleUpload}
-                />
-                {fileErr && (
-                  <Message error content={"Please upload a valid PDF file."} />
-                )}
-                <Transition
-                  visible={successFile && successData}
-                  animation="scale"
-                  duration={200}
-                >
-                  <Message
-                    success
-                    className="pointer"
-                    onClick={removeMessage}
-                    content={"Your changes has been sent successfully. You will be redirected in 2 seconds ..."}
-                  />
-                </Transition>
-                <Transition visible={reqError} animation="scale" duration={200}>
-                  <Message
-                    className="pointer"
-                    onClick={removeMessage}
-                    error
-                    content={"Something went wrong while sending request !"}
-                  />
-                </Transition>
-                <Transition
-                  visible={duplicateErr}
-                  animation="scale"
-                  duration={200}
-                >
-                  <Message
-                    className="pointer"
-                    onClick={removeMessage}
-                    error
-                    content={
-                      "A report is already attached to this declaration !"
-                    }
-                  />
-                </Transition>
-              </>
+            {files &&
+              files.map((file, index) => {
+                return (
+                  <span key={index}>
+                    <p className="text-default">{file.name}</p>
+                    <Icon
+                      onClick={handleDelete}
+                      name="times circle"
+                      className="pointer"
+                      data-id={index}
+                      style={{ "margin-left": "10px" }}
+                    />
+                  </span>
+                );
+              })}
+            <Button
+              as={"label"}
+              htmlFor="myInput"
+              animated
+              color="blue"
+              className="_primary"
+            >
+              <Button.Content visible content="Upload" />
+              <Button.Content hidden>
+                <Icon name="upload" />
+              </Button.Content>
+            </Button>
+            <input
+              id="myInput"
+              style={{ display: "none" }}
+              type="file"
+              accept=".pdf"
+              className="pointer"
+              onChange={handleUpload}
+            />
+            {fileErr && (
+              <Message error content={"Please upload a valid PDF file."} />
             )}
+            <Modal open={successFile && successData}>
+              <Modal.Header>Success Message</Modal.Header>
+              <Modal.Content>
+                <Message
+                  success
+                  content={
+                    "Your changes has been sent successfully. Press Done and you will be redirected to declarations page."
+                  }
+                />
+              </Modal.Content>
+              <Modal.Actions>
+                <Button
+                  className="_primary"
+                  color="blue"
+                  onClick={() => {
+                    histroy.push("/service/declaration");
+                  }}
+                >
+                  Done
+                </Button>
+              </Modal.Actions>
+            </Modal>
+            <Transition visible={reqError} animation="scale" duration={200}>
+              <Message
+                className="pointer"
+                onClick={removeMessage}
+                error
+                content={"Something went wrong while sending request !"}
+              />
+            </Transition>
+            <Transition visible={maxErr} animation="scale" duration={200}>
+              <Message
+                className="pointer"
+                onClick={removeMessage}
+                error
+                content={"Maximum is 3 files !"}
+              />
+            </Transition>
+            <Transition visible={duplicateErr} animation="scale" duration={200}>
+              <Message
+                className="pointer"
+                onClick={removeMessage}
+                error
+                content={"A report is already attached to this declaration !"}
+              />
+            </Transition>
           </div>
         </Form>
         <div className="_action_button">
