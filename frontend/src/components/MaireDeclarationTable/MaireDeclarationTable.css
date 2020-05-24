@@ -10,7 +10,8 @@
 }
 
 .details_content ._redirection_content .ui.selection {
-    width : 300px !important;
+    width : 320px !important;
+    margin-bottom: 20px;
 }
 
 .detail_content ._content_modal{
@@ -37,6 +38,13 @@
     width : 100% !important;
     display: flex !important;
     flex-direction: column !important;
+}
+
+._redirection_content ._priority_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 200px;
 }
 
 ._redirection_content label{

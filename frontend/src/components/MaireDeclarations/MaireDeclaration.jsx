@@ -31,7 +31,6 @@ const MaireDeclarations = (props) => {
         },
       })
       .then((res) => {
-        console.log(res);
         const temp = names;
         temp[key] = res.data.last_name + " " + res.data.first_name;
         setNames(temp);
@@ -47,7 +46,6 @@ const MaireDeclarations = (props) => {
       getUser(Data[i].citizen, i);
     }
   };
-
   const handlesortRandom = () => {
     setsortDate(null);
     setsortMobile("Random");
@@ -277,6 +275,7 @@ const MaireDeclarations = (props) => {
       status: "validated",
       service: decData.service,
       validated_at: decData.validated_at,
+      priority : decData.priority,
     };
     updateDecStatus(data, decData.did);
   };

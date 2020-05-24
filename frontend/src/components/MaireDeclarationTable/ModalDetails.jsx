@@ -23,24 +23,35 @@ const ModalD = (props) => {
   const handleopen = () => {
     setOpen(true);
   };
-
   const handleincrement = () => {
     if (active < max) {
       const temp = active + 1;
       setactive(temp);
     }
   };
-
   const handledecrement = () => {
     if (active > 0) {
       const temp = active - 1;
       setactive(temp);
     }
   };
-
   const handleclose = () => {
     setOpen(false);
   };
+  function getPriority(p) {
+    switch (p) {
+      case 1:
+        return "Critical";
+      case 4:
+        return "Low";
+      case 3:
+        return "Normal";
+      case 2:
+        return "Important";
+      default:
+        break;
+    }
+  }
 
   useEffect(() => {
     if (props.attachements.length > 0) {
@@ -57,7 +68,7 @@ const ModalD = (props) => {
     dtype,
     created_on,
     address,
-    rejected_at,
+    priority,
     status,
     validated_at,
     description,
@@ -113,6 +124,7 @@ const ModalD = (props) => {
               <p>Added at</p>
               <p>Validated at</p>
               <p>Status</p>
+              <p>Priority</p>
               <p>Description</p>
               {attachements.length > 0 && <p className="_image">Images</p>}
             </div>
@@ -124,6 +136,7 @@ const ModalD = (props) => {
               <p>{created_on}</p>
               <p>{validated_at ? validated_at : "/"}</p>
               <p>{status}</p>
+              <p>{priority ? getPriority(priority) : "/"}</p>
               <p>{description}</p>
               {attachements.length > 0 && (
                 <div className="_images_slides">

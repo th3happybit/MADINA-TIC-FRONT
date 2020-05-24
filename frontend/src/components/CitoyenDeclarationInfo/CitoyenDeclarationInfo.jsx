@@ -216,8 +216,8 @@ const CitoyenDeclarationInfo = (props) => {
               <div class="ui small image">
                 {Data.attachments &&
                   Data.attachments.map((element, index) => {
-                    console.log("element");
                     return (
+                      element.filetype === "image" &&
                       <Image
                         onClick={() => {
                           window.open(element.src);
