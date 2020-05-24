@@ -35,6 +35,7 @@ import ComplementDeclaration from "./components/ComplementDeclaration/Complement
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
+import UpdateRapport from "./components/ServiceUpdateReport/UpdateReport.jsx";
 
 function App() {
   return (
@@ -135,6 +136,13 @@ function App() {
           path="/add/report"
           component={(prop) => (
             <Service props={prop} active="reports" childComponent={<DeposeRapport props={prop}/>} />
+          )}
+        />
+        <Route
+          exact
+          path="/update/report"
+          component={(prop) => (
+            <Service props={prop} active="reports" childComponent={<UpdateRapport props={prop}/>} />
           )}
         />
         <Route
