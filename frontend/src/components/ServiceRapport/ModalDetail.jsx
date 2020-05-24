@@ -25,6 +25,36 @@ const ModalD = (props) => {
     rid,
   } = props.data;
   console.log(props.data);
+  function getMonth(month) {
+    switch (month) {
+      case "01":
+        return "January";
+      case "02":
+        return "February";
+      case "03":
+        return "March";
+      case "04":
+        return "April";
+      case "05":
+        return "May";
+      case "06":
+        return "June";
+      case "07":
+        return "July";
+      case "08":
+        return "August";
+      case "09":
+        return "September";
+      case "10":
+        return "October";
+      case "11":
+        return "November";
+      case "12":
+        return "December";
+      default:
+        break;
+    }
+  }
   useEffect(() => {
     let url = `http://157.230.19.233/api/declarations/${declaration}`;
     axios
@@ -45,6 +75,27 @@ const ModalD = (props) => {
       })
       .catch((err) => {
         console.log(err.reponse);
+      });
+
+    //? SECOND REQUEST FOR FILES
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        },
+      })
+      .request({
+        url: `http://157.230.19.233/api/documents/?report=${rid}`,
+        method: "get",
+      })
+      .then((res) => {
+        console.log({ docRes: res });
+      })
+      .catch((err) => {
+        console.log({ DocErr: err.reponse });
       });
   }, [props.data]);
 
@@ -89,7 +140,17 @@ const ModalD = (props) => {
               <p>{title}</p>
               <p>{titleDec}</p>
               <p>{created_on}</p>
-              {validated_at && <p>{validated_at}</p>}
+              {validated_at && (
+                <p>
+                  {validated_at
+                    ? validated_at.slice(8, 10) +
+                      " - " +
+                      getMonth(validated_at.slice(5, 7)) +
+                      " - " +
+                      validated_at.slice(0, 4)
+                    : "/"}
+                </p>
+              )}
               <p>{desc}</p>
             </div>
           </div>

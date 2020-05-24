@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table, Icon } from "semantic-ui-react";
 import ModalDetail from "./ModalDetail.jsx";
+import ModalDelete from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
+import axios from "axios";
 
 const TableServiceRapport = (props) => {
   const [Data, setData] = useState([]);
@@ -60,8 +62,14 @@ const TableServiceRapport = (props) => {
       {Data && (
         <Table.Body>
           {Data.map((element, index) => {
-            const { title, created_on, validated_at, desc, status } = element;
-
+            const {
+              title,
+              created_on,
+              validated_at,
+              desc,
+              status,
+              rid,
+            } = element;
             return (
               <Table.Row>
                 <Table.Cell>{title}</Table.Cell>
@@ -76,7 +84,36 @@ const TableServiceRapport = (props) => {
                     : "/"}
                 </Table.Cell>
                 <Table.Cell>
-                  <ModalDetail data={element} />
+                  <div className="btns_actions">
+                    <ModalDetail data={element} />
+                    <ModalDelete
+                      onConfirm={() => {
+                        let url = `http://157.230.19.233/api/reports/${rid}`;
+                        axios
+                          .create({
+                            headers: {
+                              delete: {
+                                "Content-Type": "application/json",
+                                Authorization: `Token ${localStorage.getItem(
+                                  "service_token"
+                                )}`,
+                              },
+                            },
+                          })
+                          .request({
+                            url,
+                            method: "delete",
+                          })
+                          .then((res) => {
+                            console.log(res);
+                            props.refresh();
+                          })
+                          .catch((err) => {
+                            console.log(err.response);
+                          });
+                      }}
+                    />
+                  </div>
                 </Table.Cell>
               </Table.Row>
             );

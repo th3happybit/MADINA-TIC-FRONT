@@ -16,7 +16,7 @@ const ServiceRapport = () => {
   const [sortmobile, setsortMobile] = useState("Random");
   const [activeFilter, setactiveFilter] = useState("validated");
   const [sortDate, setsortDate] = useState(null);
-
+  const [sid, setSid] = useState(null);
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
   };
@@ -44,14 +44,24 @@ const ServiceRapport = () => {
     setsearchLoading(true);
     setTerm(value);
   };
+  const handleRefresh = () => {
+    setTerm("");
+    setPage(1);
+    getData();
+  };
   useEffect(() => {
+    if (sid) {
+      getData();
+    }
+  }, [term, activeFilter, sortDate, sid]);
+  const getData = () => {
     let ord = "";
     if (sortDate) {
       if (sortDate === "asc") ord = "validated_at";
       else ord = "-validated_at";
     }
     setLoading(true);
-    let url = `http://157.230.19.233/api/reports/?search=${term}&status=${activeFilter}&ordering=${ord}`;
+    let url = `http://157.230.19.233/api/reports/?search=${term}&status=${activeFilter}&ordering=${ord}&service=${sid}`;
     axios
       .create({
         headers: {
@@ -62,6 +72,7 @@ const ServiceRapport = () => {
         },
         params: {
           search: term,
+          page: page,
         },
       })
       .request({
@@ -69,7 +80,6 @@ const ServiceRapport = () => {
         method: "get",
       })
       .then((res) => {
-        console.log({ res });
         if (res.data.count % 10 === 0) {
           setPages(parseInt(res.data.count / 10));
         } else {
@@ -82,7 +92,30 @@ const ServiceRapport = () => {
       .catch((err) => {
         console.log({ err: err.response });
       });
-  }, [term, activeFilter, sortDate]);
+  };
+  useEffect(() => {
+    let url = `http://157.230.19.233/api/user/`;
+    axios
+      .create({
+        headers: {
+          get: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        },
+      })
+      .request({
+        url,
+        method: "get",
+      })
+      .then((res) => {
+        console.log(res);
+        setSid(res.data.uid);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
   const handle_sort_date = () => {
     if (sortDate === "asc") {
       setsortDate("desc");
@@ -186,6 +219,7 @@ const ServiceRapport = () => {
               data={data}
               handlesortDate={handle_sort_date}
               sortdate={sortDate}
+              refresh={handleRefresh}
             />
             <Pagination
               className="_service_pagination"

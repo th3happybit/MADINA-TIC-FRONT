@@ -36,6 +36,7 @@ import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
+import ServiceRapport from "./components/ServiceRapport/ServiceRapport.jsx";
 
 function App() {
   return (
@@ -57,6 +58,13 @@ function App() {
           path="/maire/declaration/"
           component={() => (
             <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
+        <Route
+          exact
+          path="/service/rapports/"
+          component={() => (
+            <Service active="rapports" childComponent={<ServiceRapport />} />
           )}
         />
         <Route exact path="/admin" component={Admin} />
