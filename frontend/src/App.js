@@ -19,6 +19,7 @@ import Maire from "./screens/Maire/Maire.jsx";
 import MaireAuth from "./screens/Maire/MaireLogin.jsx";
 import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
+import Consultations from "./screens/Consultations/Consultations.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -137,6 +138,13 @@ function App() {
               active="declarations"
               childComponent={<ServiceDeclaration />}
             />
+          )}
+        />
+        <Route
+          exact
+          path="/test"
+          component={() => (
+            <Service active="" childComponent={<Consultations />} />
           )}
         />
         <Route
