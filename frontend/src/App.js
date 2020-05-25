@@ -19,6 +19,8 @@ import Maire from "./screens/Maire/Maire.jsx";
 import MaireAuth from "./screens/Maire/MaireLogin.jsx";
 import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
+import Consultations from "./screens/Consultations/Consultations.jsx";
+import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -37,6 +39,7 @@ import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclarati
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import UpdateRapport from "./components/ServiceUpdateReport/UpdateReport.jsx";
 import ComplementRapport from "./components/ServiceComplementReport/ComplementReport.jsx";
+import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
 
 function App() {
   return (
@@ -58,6 +61,23 @@ function App() {
           path="/maire/declaration/"
           component={() => (
             <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
+        <Route
+          exact
+          path="/service/rapports/"
+          component={() => (
+            <Service active="rapports" childComponent={<Consultations />} />
+          )}
+        />
+        <Route
+          exact
+          path="/service/annonce/"
+          component={() => (
+            <Service
+              active="annonce"
+              childComponent={<ConsultationsAnnonce />}
+            />
           )}
         />
         <Route exact path="/admin" component={Admin} />
@@ -162,6 +182,17 @@ function App() {
               props={prop}
               active="reports"
               childComponent={<ComplementRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/add/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonces"
+              childComponent={<DeposerAnnonces props={prop} />}
             />
           )}
         />
