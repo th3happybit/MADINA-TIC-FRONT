@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Button, Icon } from "semantic-ui-react";
+import { Modal, Button, Icon, Image } from "semantic-ui-react";
 
 const ModalDetailComponent = (props) => {
   const { detail, isRapport, title, token, data } = props;
@@ -92,10 +92,13 @@ const ModalDetailComponent = (props) => {
           <div className="_header_modal extra-text text-default">
             <p>{title} Details</p>
           </div>
-          <div className="_content_modal">
+          <div className="_content_modal ">
             <div>
               {isRapport && <p>Title Decaration</p>}
-              <p>Title Rapport</p>
+              {detail.map((elm) => (
+                <p>{elm.text}</p>
+              ))}
+              {files.length > 0 && <p>Files</p>}
             </div>
             <div
               style={{
@@ -103,7 +106,45 @@ const ModalDetailComponent = (props) => {
               }}
             >
               {isRapport && <p>{titleDec}</p>}
-              {files.length > 0 && <iframe src={files[0].name} />}
+              {detail.map((elm) => (
+                <p>{data[elm.value] ? data[elm.value] : "/"}</p>
+              ))}
+              {files.length > 0 &&
+                files.map((file, index) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                      }}
+                    >
+                      <span
+                        key={index}
+                        style={{
+                          display: "flex",
+                          color: "#29b5f6",
+                          marginRight: ".5rem",
+                        }}
+                      >
+                        <p
+                          style={{
+                            cursor: "pointer",
+                            textDecoration: "underline",
+                            color: "#29b5f6",
+                            fontSize: "16px",
+                            fontWeight: "600",
+                          }}
+                          onClick={() => {
+                            window.open(
+                              "http://157.230.19.233/" + String(file.src)
+                            );
+                          }}
+                        >
+                          {file.src.split("/")[3]}
+                        </p>
+                      </span>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </Modal.Content>

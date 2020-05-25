@@ -1,0 +1,7 @@
+.btns_actionsx {
+  display: flex;
+  justify-content: center;
+}
+.btns_actionsx .buttons {
+  margin: 0 1rem;
+}

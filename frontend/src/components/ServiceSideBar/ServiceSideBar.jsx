@@ -76,7 +76,7 @@ const ServiceSideBar = (props) => {
             />
             <Menu.Item
               as={Link}
-              to="/service/announcement/"
+              to="/service/annonce/"
               name="Announcement"
               className={props.active === "annonce" ? "active" : ""}
             />

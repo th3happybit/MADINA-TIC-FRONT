@@ -1,37 +1,31 @@
 import React from "react";
 import TestComponent from "../../components/TestComponent/TestComponent.jsx";
 
-const Consultations = () => {
+const ConsultationAnnonce = () => {
   return (
     <TestComponent
-      title="Rapports"
-      url="http://157.230.19.233/api/reports/"
+      title="Annonces"
+      url="http://157.230.19.233/api/announces/"
       token="service_token"
       role="service"
-      isRapport
+      isRapport={false}
       header={[
         { text: "Title", value: "title", sort: true },
         { text: "Description", value: "desc", sort: false },
-        { text: "Created on", value: "created_on", sort: true },
+        { text: "Start At", value: "start_at", sort: true },
+        { text: "End At", value: "end_at", sort: true },
       ]}
       detail={[
         { text: "Title Rapport", value: "title" },
         { text: "Description", value: "desc" },
         { text: "Created on", value: "created_on" },
-        { text: "Modified on", value: "modified_at" },
-        { text: "Validated on", value: "validated_at" },
+        { text: "Start At", value: "start_at" },
+        { text: "End At", value: "end_at" },
       ]}
       permission="self" //? all or self
-      status={[
-        "not_validated",
-        "lack_of_info",
-        "work_not_finished",
-        "validated",
-        "refused",
-        "archived",
-      ]}
+      status={["published", "modified", "removed", "archived "]}
     />
   );
 };
 
-export default Consultations;
+export default ConsultationAnnonce;

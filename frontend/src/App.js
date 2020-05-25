@@ -20,6 +20,7 @@ import MaireAuth from "./screens/Maire/MaireLogin.jsx";
 import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
 import Consultations from "./screens/Consultations/Consultations.jsx";
+import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -37,7 +38,6 @@ import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
-import ServiceRapport from "./components/ServiceRapport/ServiceRapport.jsx";
 
 function App() {
   return (
@@ -65,7 +65,17 @@ function App() {
           exact
           path="/service/rapports/"
           component={() => (
-            <Service active="rapports" childComponent={<ServiceRapport />} />
+            <Service active="rapports" childComponent={<Consultations />} />
+          )}
+        />
+        <Route
+          exact
+          path="/service/annonce/"
+          component={() => (
+            <Service
+              active="annonce"
+              childComponent={<ConsultationsAnnonce />}
+            />
           )}
         />
         <Route exact path="/admin" component={Admin} />
@@ -138,13 +148,6 @@ function App() {
               active="declarations"
               childComponent={<ServiceDeclaration />}
             />
-          )}
-        />
-        <Route
-          exact
-          path="/test"
-          component={() => (
-            <Service active="" childComponent={<Consultations />} />
           )}
         />
         <Route

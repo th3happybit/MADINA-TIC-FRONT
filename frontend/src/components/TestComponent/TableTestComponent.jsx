@@ -3,6 +3,7 @@ import { Table, Icon } from "semantic-ui-react";
 import axios from "axios";
 
 import ModalDetailComponent from "./ModalDetailComponent.jsx";
+import ConfirmDeleteModal from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
 
 const SortedRow = (props) => {
   const { elm, handleSort, setsortDate } = props;
@@ -30,9 +31,12 @@ const TableTestComponent = (props) => {
     isRapport,
     token,
     title,
+    url,
+    activeFilter,
+    refresh,
   } = props;
   const [Data, setData] = useState([]);
-
+  console.log({ activeFilter });
   useEffect(() => {
     setData(data);
     return () => {
@@ -42,6 +46,7 @@ const TableTestComponent = (props) => {
   const handleSort = (type) => {
     setOrderField(type);
   };
+
   return (
     <Table striped className="_service_table">
       <Table.Header>
@@ -73,14 +78,48 @@ const TableTestComponent = (props) => {
                 ))}
 
                 <Table.Cell>
-                  <div className="btns_actions">
+                  <div className="btns_actionsx">
                     <ModalDetailComponent
                       data={element}
                       detail={detail}
                       isRapport={isRapport}
                       title={title}
                       token={token}
+                      style={{
+                        margin: "0 1rem",
+                      }}
                     />
+                    {activeFilter === "not_validated" && (
+                      <ConfirmDeleteModal
+                        onConfirm={() => {
+                          axios
+                            .create({
+                              headers: {
+                                patch: {
+                                  "Content-Type": "application/json",
+                                  Authorization: `Token ${localStorage.getItem(
+                                    token
+                                  )}`,
+                                },
+                              },
+                            })
+                            .request({
+                              url: `${url}${element.rid}/`,
+                              method: "patch",
+                              data: {
+                                status: "archived",
+                              },
+                            })
+                            .then((res) => {
+                              console.log(res);
+                              refresh();
+                            })
+                            .catch((err) => {
+                              console.log(err.response);
+                            });
+                        }}
+                      />
+                    )}
                   </div>
                 </Table.Cell>
               </Table.Row>

@@ -8,17 +8,35 @@ import "./TestComponent.css";
 import TableTestComponent from "./TableTestComponent.jsx";
 
 const TestComponent = (props) => {
+  const {
+    title,
+    status,
+    permission,
+    url,
+    token,
+    role,
+    header,
+    detail,
+    isRapport,
+  } = props;
   const [term, setTerm] = useState("");
   const [data, setData] = useState([]);
   const [searchLoading, setsearchLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [activeFilter, setactiveFilter] = useState("not_validated");
+  const [activeFilter, setactiveFilter] = useState(
+    isRapport ? "not_validated" : "published"
+  );
+  const changePage = (e, pageInfo) => {
+    setPage(pageInfo.activePage);
+  };
   const [sortDate, setsortDate] = useState("asc");
   const [sortmobile, setsortMobile] = useState("Random");
   const [uid, setUID] = useState(null);
   const [pages, setPages] = useState(0);
   const [Loading, setLoading] = useState(false);
   const [orderfield, setOrderField] = useState("title");
+  const [loaded, setLoaded] = useState(false);
+
   const handleRefresh = () => {
     setTerm("");
     setPage(1);
@@ -48,17 +66,7 @@ const TestComponent = (props) => {
     setsortMobile("Newer first");
     setPage(1);
   };
-  const {
-    title,
-    status,
-    permission,
-    url,
-    token,
-    role,
-    header,
-    detail,
-    isRapport,
-  } = props;
+
   const colors = [
     "red",
     "orange",
@@ -103,7 +111,6 @@ const TestComponent = (props) => {
         ? (ord = String(orderfield))
         : (ord = "-" + String(orderfield));
     }
-    console.log({ ord: ord });
     setLoading(true);
     let lastUrl =
       permission === "self"
@@ -128,6 +135,7 @@ const TestComponent = (props) => {
         method: "get",
       })
       .then((res) => {
+        setLoaded(true);
         if (res.data.count % 10 === 0) {
           setPages(parseInt(res.data.count / 10));
         } else {
@@ -152,7 +160,6 @@ const TestComponent = (props) => {
       }
     }
   }, [term, activeFilter, sortDate, permission, uid]);
-  console.log({ data });
   return (
     <div className="service_rapports _service_declarations">
       <div className="_main_header">
@@ -228,12 +235,29 @@ const TestComponent = (props) => {
               isRapport={isRapport}
               title={title}
               token={token}
+              url={url}
+              activeFilter={activeFilter}
+            />
+            <Pagination
+              className="_service_pagination"
+              boundaryRange={0}
+              activePage={page}
+              onPageChange={changePage}
+              firstItem={null}
+              lastItem={null}
+              totalPages={pages}
+              pointing
+              secondary
             />
           </>
         ) : (
-          <p class="zero-data">
-            Sorry No declarations to display in this section
-          </p>
+          <>
+            {loaded && (
+              <p class="zero-data">
+                Sorry No declarations to display in this section
+              </p>
+            )}
+          </>
         )}
       </Segment>
     </div>
