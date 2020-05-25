@@ -36,6 +36,7 @@ import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenD
 import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
+
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
 
@@ -167,7 +168,7 @@ function App() {
           component={(prop) => (
             <Service
               props={prop}
-              active="annonces"
+              active="annonce"
               childComponent={<DeposerAnnonces props={prop} />}
             />
           )}

@@ -1,0 +1,102 @@
+._add_ann {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 8rem 0rem 5rem 5rem;
+}
+.container_add_dec.service ._add_dec {
+  margin: 8rem 0 !important;
+}
+.container_add_ann {
+  max-width: 70%;
+  margin-left: 18%;
+  margin-right: 5%;
+}
+.date_annonce,
+.one_input {
+  display: flex;
+  flex-direction: column;
+}
+.date_annonce .one_input {
+  margin: 0 0 1em;
+}
+.date_picker_err {
+  border: 2px solid var(--red) !important;
+}
+.date_annonce .one_input label {
+  display: block;
+  margin: 0 0 0.28571429rem 0;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.92857143em;
+  font-weight: 700;
+  text-transform: none;
+  color: var(--blue_darker) !important;
+  font-size: 16px !important;
+}
+.date_annonce .react-datepicker__input-container input {
+  padding: 1rem !important;
+}
+@media (max-width: 1366px) {
+  .container_add_ann {
+    margin-left: 24%;
+  }
+}
+
+@media (max-width: 999px) {
+  ._add_ann {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    margin: 8rem 0rem 0 rem 5rem;
+  }
+
+  .container_add_ann {
+    width: 100%;
+  }
+}
+@media (max-width: 929px) {
+  .container_add_ann {
+    width: 60%;
+    margin-left: 27%;
+  }
+}
+
+@media (max-width: 899px) {
+  .container_add_ann {
+    max-width: 70%;
+    margin-left: 16%;
+  }
+}
+
+@media (max-width: 767px) {
+  ._add_btn_dec .button {
+    min-width: 20px !important;
+    padding: 0% !important;
+    width: 100px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 690px) {
+  .container_add_ann {
+    width: 80%;
+    margin-left: 12%;
+  }
+
+  ._add_btn_dec .button {
+    margin: 0.75rem !important;
+  }
+}
+
+@media (max-width: 599px) {
+  .container_add_ann {
+    width: 90%;
+    margin-left: 1%;
+  }
+}
