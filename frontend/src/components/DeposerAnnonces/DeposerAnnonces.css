@@ -1,0 +1,77 @@
+._add_ann {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 8rem 0rem 5rem 5rem ;
+}
+
+.container_add_ann {
+    max-width: 70%;
+    margin-left: 18%;
+    margin-right: 5%;
+}
+
+@media (max-width : 1366px){
+ .container_add_ann{
+  margin-left: 24%;
+ }
+}
+
+@media (max-width: 999px) {
+._add_ann {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  margin: 8rem 0rem 0 rem 5rem ;
+}
+
+  .container_add_ann {
+    width: 100%;
+  }
+}
+@media (max-width: 929px) {
+  .container_add_ann {
+    width: 60%;
+    margin-left: 27%;
+  }
+ }
+
+@media (max-width : 899px) {
+ .container_add_ann {
+    max-width: 70%;
+    margin-left: 16%;
+}
+}
+
+@media (max-width : 767px) {
+ ._add_btn_dec .button {
+    min-width: 20px !important;
+    padding: 0% !important;
+    width: 100px;
+    height: 40px;
+}
+}
+
+@media (max-width : 690px) {
+   .container_add_ann {
+    width: 80%;
+    margin-left: 12%;
+  }
+
+ ._add_btn_dec .button {
+  margin: 0.75rem !important;
+}
+}
+
+@media (max-width : 599px) {
+   .container_add_ann {
+    width: 90%;
+    margin-left: 1%;
+  }
+}

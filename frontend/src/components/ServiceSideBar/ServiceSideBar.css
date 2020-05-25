@@ -21,7 +21,7 @@
     font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
     width: 100%;
     height: 70px;
-    background-color: #f2f2f2;
+    box-shadow: inset 0 -1px 0 rgba(100, 121, 143, 0.122);
   }
 ._sidebar_service .part_top p {
     margin: 0 0.5rem;
@@ -46,7 +46,7 @@
   
   ._sidebar_service > .row > .menu > .d-flex {
     align-items: center;
-    margin: 2rem 0;
+    margin: 0.85rem 0;
     width: 80%;
   }
   ._sidebar_service > .row > .menu > .d-flex:hover ._sidebar_icons,
@@ -65,7 +65,23 @@
   }
   ._sidebar_service > .row > .menu .item.active {
     color: var(--primary) !important;
+
   }
+
+  .ui.vertical.text.menu:last-child{
+    width: 200px;
+    position: fixed;
+    top: 70px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+    color: var(--blue_darker);
+    padding: 2rem 0;
+    margin: 1rem;
+    margin-left: 0rem !important;
+  }
+
   @media (max-width: 899px) {
     ._sidebar_service {
       display: none !important;

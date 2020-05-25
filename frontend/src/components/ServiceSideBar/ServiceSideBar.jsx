@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu } from "semantic-ui-react";
+import { Menu} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import "./ServiceSideBar.css";
@@ -19,7 +19,11 @@ const ServiceSideBar = (props) => {
             <p className="extra-text text-active">MADINA TIC</p>
           </div>
         </Link>
+
+
+
         <Menu text vertical>
+
           <div className="d-flex">
             <Dashboard
               className={

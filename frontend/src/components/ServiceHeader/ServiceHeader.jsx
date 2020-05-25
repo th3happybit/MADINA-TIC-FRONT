@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Image, Dropdown } from "semantic-ui-react";
+import { Image, Dropdown, Icon } from "semantic-ui-react";
 import UserContext from "../../screens/Service/ServiceContext.jsx";
 
 import { useHistory } from "react-router";
@@ -68,6 +68,10 @@ const HeaderService = (props) => {
             <header className="_header_service">
                 <div className="row">
                     <div className="right_part">
+                        {/* add annonce button */}
+                        <a href="/add/annonce" className="add_annonce pointer medium-text text-default text-active">
+                            <p>Add annonce</p>
+                        </a>
                         <div className="profile_img">
                             {" "}
                             <Notification className="_margin_horizontal_md pointer" />

@@ -34,12 +34,10 @@ import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenD
 import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
-<<<<<<< HEAD
-import ServiceAddAnnonce from "./components/ServiceAnnonce/ServiceAddAnnonce.jsx"
-=======
+
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
->>>>>>> 47a7cdcbd56c9dd0ba33868e08e04d694849301a
+
 
 function App() {
   return (
