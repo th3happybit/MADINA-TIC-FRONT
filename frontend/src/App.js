@@ -38,7 +38,6 @@ import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclarati
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
 
-
 function App() {
   return (
     <Router>
@@ -150,7 +149,7 @@ function App() {
           component={(prop) => (
             <Service
               props={prop}
-              active="annonces"
+              active="annonce"
               childComponent={<DeposerAnnonces props={prop} />}
             />
           )}
