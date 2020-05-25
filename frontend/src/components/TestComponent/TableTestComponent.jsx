@@ -89,6 +89,8 @@ const TableTestComponent = (props) => {
                         margin: "0 1rem",
                       }}
                     />
+                    //? hna dir test taek b isRapport w status w hot props taw3k
+                    nrml
                     {activeFilter === "not_validated" && (
                       <ConfirmDeleteModal
                         onConfirm={() => {

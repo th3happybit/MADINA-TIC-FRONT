@@ -9,6 +9,8 @@ const Consultations = () => {
       token="service_token"
       role="service"
       isRapport
+      onModify={null}
+      onUpdate={null} //? hna hot les components mch les fonctions c dire hot les modal taek wla jsp te3 update w modify
       header={[
         { text: "Title", value: "title", sort: true },
         { text: "Description", value: "desc", sort: false },
