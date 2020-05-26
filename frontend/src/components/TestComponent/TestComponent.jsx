@@ -103,6 +103,7 @@ const TestComponent = (props) => {
       });
   };
   const getData = () => {
+    setData([]);
     let ord = "";
     if (sortDate) {
       sortDate === "asc"
@@ -157,6 +158,9 @@ const TestComponent = (props) => {
         getData();
       }
     }
+    return () => {
+      setData([]);
+    };
   }, [term, activeFilter, sortDate, permission, uid]);
   return (
     <div className="service_rapports _service_declarations">

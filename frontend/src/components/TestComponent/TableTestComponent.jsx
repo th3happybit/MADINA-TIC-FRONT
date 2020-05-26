@@ -4,13 +4,10 @@ import axios from "axios";
 
 import ModalDetailComponent from "./ModalDetailComponent.jsx";
 import ConfirmDeleteModal from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
-<<<<<<< HEAD
 import ModalComplement from "../MaireDeclarationTable/ModalComplement";
 import ModalArchive from "../MaireDeclarationTable/ModalArchive.jsx";
 import ModalDetail from "../MaireDeclarationTable/ModalDetails.jsx";
-=======
 import { Link } from "react-router-dom";
->>>>>>> 494dbbae8c35621ced178c369bd5ad46c6f0d43c
 
 const SortedRow = (props) => {
   const { elm, handleSort, setsortDate } = props;
@@ -97,6 +94,9 @@ const TableTestComponent = (props) => {
                         margin: "0 1rem",
                       }}
                     />
+                    {isRapport && activeFilter === "lack_of_info" && (
+                      <ModalComplement />
+                    )}
                     {isRapport && activeFilter === "not_validated" && (
                       <Button.Group>
                         <Link
@@ -130,70 +130,42 @@ const TableTestComponent = (props) => {
                         </Link>
                       </Button.Group>
                     )}
-                    {isRapport && activeFilter === "lack_of_info" && (
-                      <Button.Group>
-                        <Link
-                          to={{
-                            pathname: "/complement/rapport",
-                            state: {
-                              rid: element.rid,
-                              did: element.declaration,
-                            },
-                          }}
-                        >
-                          <Popup
-                            content="Complement"
-                            trigger={
-                              <Button
-                                className="shadow _hide_on_mobile _infos_btn_desktop"
-                                color="orange"
-                                icon={{
-                                  name: "sync alternate",
-                                  color: "white",
-                                  inverted: true,
-                                }}
-                              />
-                            }
-                          />
-                          <Button
-                            color={"orange"}
-                            className="shadow btn_account_detail _show_on_mobile"
-                            content="Complement"
-                          />
-                        </Link>
-                      </Button.Group>
-                    )}
-                    {activeFilter === "not_validated" && (
-                      <ConfirmDeleteModal
-                        onConfirm={() => {
-                          axios
-                            .create({
-                              headers: {
-                                patch: {
-                                  "Content-Type": "application/json",
-                                  Authorization: `Token ${localStorage.getItem(
-                                    token
-                                  )}`,
-                                },
+                    {isRapport &&
+                      role === "maire" &&
+                      activeFilter === "lack_of_info" && (
+                        <Button.Group>
+                          <Link
+                            to={{
+                              pathname: "/complement/rapport",
+                              state: {
+                                rid: element.rid,
+                                did: element.declaration,
                               },
-                            })
-                            .request({
-                              url: `${url}${element.rid}/`,
-                              method: "patch",
-                              data: {
-                                status: "archived",
-                              },
-                            })
-                            .then((res) => {
-                              console.log(res);
-                              refresh();
-                            })
-                            .catch((err) => {
-                              console.log(err.response);
-                            });
-                        }}
-                      />
-                    )}
+                            }}
+                          >
+                            <Popup
+                              content="Complement"
+                              trigger={
+                                <Button
+                                  className="shadow _hide_on_mobile _infos_btn_desktop"
+                                  color="orange"
+                                  icon={{
+                                    name: "sync alternate",
+                                    color: "white",
+                                    inverted: true,
+                                  }}
+                                />
+                              }
+                            />
+                            <Button
+                              color={"orange"}
+                              className="shadow btn_account_detail _show_on_mobile"
+                              content="Complement"
+                            />
+                          </Link>
+                        </Button.Group>
+                      )}
+
                     {role === "service" && (
                       <>
                         {activeFilter === "not_validated" && (
