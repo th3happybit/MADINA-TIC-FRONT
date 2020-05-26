@@ -17,7 +17,6 @@ export default function DeposerAnnonces(props) {
   const [titleErr, setTitleErr] = useState(false);
   const [description, setDesctiption] = useState("");
   const [descriptionErr, setDescriptionErr] = useState(false);
-  const [uid, setUid] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const AddAnnonce = () => {
@@ -37,6 +36,7 @@ export default function DeposerAnnonces(props) {
           title: title,
           start_at: startDate,
           end_at: endDate,
+          status: "not_validated",
           desc: description,
         },
       })

@@ -23,9 +23,7 @@ const TestComponent = (props) => {
   const [data, setData] = useState([]);
   const [searchLoading, setsearchLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [activeFilter, setactiveFilter] = useState(
-    isRapport ? "not_validated" : "published"
-  );
+  const [activeFilter, setactiveFilter] = useState("not_validated");
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
   };
@@ -236,6 +234,7 @@ const TestComponent = (props) => {
               title={title}
               token={token}
               url={url}
+              role={role}
               activeFilter={activeFilter}
             />
             <Pagination

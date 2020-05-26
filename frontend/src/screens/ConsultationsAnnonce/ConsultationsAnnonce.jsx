@@ -23,7 +23,7 @@ const ConsultationAnnonce = () => {
         { text: "End At", value: "end_at" },
       ]}
       permission="self" //? all or self
-      status={["published", "modified", "removed", "archived "]}
+      status={["not_validated", "published", "modified", "removed", "archived"]}
     />
   );
 };

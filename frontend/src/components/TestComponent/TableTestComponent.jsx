@@ -4,6 +4,9 @@ import axios from "axios";
 
 import ModalDetailComponent from "./ModalDetailComponent.jsx";
 import ConfirmDeleteModal from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
+import ModalComplement from "../MaireDeclarationTable/ModalComplement";
+import ModalArchive from "../MaireDeclarationTable/ModalArchive.jsx";
+import ModalDetail from "../MaireDeclarationTable/ModalDetails.jsx";
 
 const SortedRow = (props) => {
   const { elm, handleSort, setsortDate } = props;
@@ -24,6 +27,7 @@ const SortedRow = (props) => {
 const TableTestComponent = (props) => {
   const {
     detail,
+    role,
     header,
     data,
     setOrderField,
@@ -79,48 +83,64 @@ const TableTestComponent = (props) => {
 
                 <Table.Cell>
                   <div className="btns_actionsx">
-                    <ModalDetailComponent
-                      data={element}
-                      detail={detail}
-                      isRapport={isRapport}
-                      title={title}
-                      token={token}
-                      style={{
-                        margin: "0 1rem",
-                      }}
-                    />
-                    //? hna dir test taek b isRapport w status w hot props taw3k
-                    nrml
-                    {activeFilter === "not_validated" && (
-                      <ConfirmDeleteModal
-                        onConfirm={() => {
-                          axios
-                            .create({
-                              headers: {
-                                patch: {
-                                  "Content-Type": "application/json",
-                                  Authorization: `Token ${localStorage.getItem(
-                                    token
-                                  )}`,
-                                },
-                              },
-                            })
-                            .request({
-                              url: `${url}${element.rid}/`,
-                              method: "patch",
-                              data: {
-                                status: "archived",
-                              },
-                            })
-                            .then((res) => {
-                              console.log(res);
-                              refresh();
-                            })
-                            .catch((err) => {
-                              console.log(err.response);
-                            });
+                    {role === "service" && (
+                      <ModalDetailComponent
+                        data={element}
+                        detail={detail}
+                        isRapport={isRapport}
+                        title={title}
+                        token={token}
+                        style={{
+                          margin: "0 1rem",
                         }}
                       />
+                    )}
+                    {role === "service" && (
+                      <>
+                        {activeFilter === "not_validated" && (
+                          <ConfirmDeleteModal
+                            onConfirm={() => {
+                              axios
+                                .create({
+                                  headers: {
+                                    patch: {
+                                      "Content-Type": "application/json",
+                                      Authorization: `Token ${localStorage.getItem(
+                                        token
+                                      )}`,
+                                    },
+                                  },
+                                })
+                                .request({
+                                  url: `${url}${element.rid}/`,
+                                  method: "patch",
+                                  data: {
+                                    status: "archived",
+                                  },
+                                })
+                                .then((res) => {
+                                  console.log(res);
+                                  refresh();
+                                })
+                                .catch((err) => {
+                                  console.log(err.response);
+                                });
+                            }}
+                          />
+                        )}
+                      </>
+                    )}
+                    {role === "maire" && (
+                      <>
+                        {activeFilter === "not_validated" && (
+                          <>
+                            <ModalDetail
+                              status={activeFilter}
+                              attachements={[]}
+                            />
+                          </>
+                        )}
+                      </>
                     )}
                   </div>
                 </Table.Cell>
