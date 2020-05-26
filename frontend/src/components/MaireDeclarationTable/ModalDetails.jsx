@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
 import React, { useState } from "react";
 import {
@@ -54,27 +55,14 @@ const ModalD = (props) => {
   }
 
   useEffect(() => {
-    if (props.attachements.length > 0) {
-      setactive(0);
-      setMax(props.attachements.length - 1);
-    }
-  }, [props.attachements.length]);
+    if (Maire)
+      if (props.data.attachements.length > 0) {
+        setactive(0);
+        setMax(props.data.attachements.length - 1);
+      }
+  }, []);
 
-  const {
-    did,
-    fullname,
-    title,
-    type,
-    dtype,
-    created_on,
-    address,
-    priority,
-    status,
-    validated_at,
-    description,
-    citizen,
-    attachements,
-  } = props;
+  const { title, data, Maire } = props;
   const handleClick = (e) => {
     window.open(e.currentTarget.src);
   };
@@ -113,128 +101,145 @@ const ModalD = (props) => {
         <Modal.Content className="detail_content">
           {" "}
           <div className="_header_modal extra-text text-default">
-            <p>Declaration Details</p>
+            <p>{title}</p>
           </div>
           <div className="_content_modal">
             <div>
-              <p>Citizen Name</p>
-              <p>Title</p>
-              <p>Type</p>
-              <p>Address</p>
-              <p>Added at</p>
-              <p>Validated at</p>
-              <p>Status</p>
-              <p>Priority</p>
-              <p>Description</p>
-              {attachements.length > 0 && <p className="_image">Images</p>}
+              <p>{data.fullname ? "Citizen Name" : null}</p>
+              <p>{data.title ? "Title" : null}</p>
+              <p>{data.type ? "Type" : null}</p>
+              <p>{data.address ? "Address" : null}</p>
+              <p>{data.created_on ? "Added at" : null}</p>
+              <p>{data.validated_at ? "Validated_at" : null}</p>
+              <p>{data.status ? "Status" : null}</p>
+              <p>{data.priority ? "Priority" : null}</p>
+              <p>{data.description ? "Description" : null}</p>
+              {data.attachements
+                ? data.attachements.length > 0 && (
+                    <p className="_image">Images</p>
+                  )
+                : null}
             </div>
             <div className="_infos_section">
-              <p>{fullname ? fullname : "/"}</p>
-              <p>{title ? title : "/"}</p>
-              <p>{type ? type : "/"}</p>
-              <p>{address ? address : "/"}</p>
-              <p>{created_on}</p>
-              <p>{validated_at ? validated_at : "/"}</p>
-              <p>{status}</p>
-              <p>{priority ? getPriority(priority) : "/"}</p>
-              <p>{description}</p>
-              {attachements.length > 0 && (
-                <div className="_images_slides">
-                  {attachements.length > 1 && (
-                    <Button
-                      circular
-                      size={window.innerWidth > 660 ? "medium" : "tiny"}
-                      onClick={handledecrement}
-                      className="shadow"
-                      icon={{ name: "chevron left" }}
-                    />
-                  )}
-                  {attachements.map((element, index) => {
-                    return (
-                      index === active && (
-                        <Transition.Group animation={"browse"} duration={1000}>
-                          <Image
-                            src={element.src}
-                            key={index}
-                            rounded
-                            onClick={handleClick}
-                          />
-                        </Transition.Group>
-                      )
-                    );
-                  })}
-                  {attachements.length > 1 && (
-                    <Button
-                      circular
-                      onClick={handleincrement}
-                      size={window.innerWidth > 660 ? "medium" : "tiny"}
-                      className="shadow"
-                      icon={{ name: "chevron right" }}
-                    />
-                  )}
-                </div>
-              )}
+              <p>{data.fullname ? data.fullname : null}</p>
+              <p>{data.title ? data.title : null}</p>
+              <p>{data.type ? data.type : null}</p>
+              <p>{data.address ? data.address : null}</p>
+              <p>{data.created_on ? data.created_on : null}</p>
+              <p>{data.validated_at ? data.validated_at : null}</p>
+              <p>{data.status ? data.status : null}</p>
+              <p>{data.priority ? getPriority(data.priority) : null}</p>
+              <p>{data.description}</p>
+              {data.attachements
+                ? data.attachements.length > 0 && (
+                    <div className="_images_slides">
+                      {data.attachements.length > 1 && (
+                        <Button
+                          circular
+                          size={window.innerWidth > 660 ? "medium" : "tiny"}
+                          onClick={handledecrement}
+                          className="shadow"
+                          icon={{ name: "chevron left" }}
+                        />
+                      )}
+                      {data.attachements.map((element, index) => {
+                        return (
+                          index === active && (
+                            <Transition.Group
+                              animation={"browse"}
+                              duration={1000}
+                            >
+                              <Image
+                                src={element.src}
+                                key={index}
+                                rounded
+                                onClick={handleClick}
+                              />
+                            </Transition.Group>
+                          )
+                        );
+                      })}
+                      {data.attachements.length > 1 && (
+                        <Button
+                          circular
+                          onClick={handleincrement}
+                          size={window.innerWidth > 660 ? "medium" : "tiny"}
+                          className="shadow"
+                          icon={{ name: "chevron right" }}
+                        />
+                      )}
+                    </div>
+                  )
+                : null}
             </div>
           </div>
-        </Modal.Content>
-        {status === "Not Validated" && (
-          <Modal.Content className="content_modal_btns marginTop">
-            <RedirectModel
-              data={{
-                did: did,
-                title: title,
-                maire: localStorage.getItem("maire_token"),
-                declaration: did,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              validate={props.validate}
-              services={props.services}
-              close={handleclose}
-            />
-            <ComplementModal
-              data={{
-                did: did,
-                title: title,
-                maire: props.maire,
-                declaration: did,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              complement={props.complement}
-              close={handleclose}
-            />
-            <DeleteModal
-              data={{
-                did: did,
-                title: title,
-                maire: props.maire,
-                declaration: did,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              reject={props.reject}
-              close={handleclose}
-            />
-          </Modal.Content>
-        )}
-        {status === "Treated" && (
-          <Modal.Content className="content_modal_btns marginTop">
-            <ArchiveModal
-              data={{
-                did: did,
-                title: title,
-                citizen: citizen,
-                dtype: dtype,
-                desc: description,
-              }}
-              archive={props.archive}
-              close={handleclose}
-            />
-          </Modal.Content>
+        </Modal.Content>{" "}
+        {Maire && (
+          <>
+            {data.status === "Not Validated" && (
+              <Modal.Content className="content_modal_btns marginTop">
+                <RedirectModel
+                  modal
+                  data={{
+                    did: data.did,
+                    title: title,
+                    maire: props.maire,
+                    declaration: data.did,
+                    citizen: data.citizen,
+                    dtype: data.dtype,
+                    desc: data.description,
+                  }}
+                  validate={props.validate}
+                  services={props.data.services}
+                  close={handleclose}
+                />
+                <ComplementModal
+                  modal
+                  data={{
+                    did: data.did,
+                    title: title,
+                    maire: props.maire,
+                    declaration: data.did,
+                    citizen: data.citizen,
+                    dtype: data.dtype,
+                    desc: data.description,
+                  }}
+                  complement={props.complement}
+                  close={handleclose}
+                />
+                <DeleteModal
+                  modal
+                  data={{
+                    did: data.did,
+                    title: title,
+                    maire: props.maire,
+                    declaration: data.did,
+                    citizen: data.citizen,
+                    dtype: data.dtype,
+                    desc: data.description,
+                  }}
+                  reject={props.reject}
+                  close={handleclose}
+                />
+              </Modal.Content>
+            )}
+            {data.status === "Treated" && (
+              <Modal.Content className="content_modal_btns marginTop">
+                <ArchiveModal
+                  modal
+                  data={{
+                    did: data.did,
+                    title: title,
+                    citizen: data.citizen,
+                    dtype: data.dtype,
+                    desc: data.description,
+                  }}
+                  archive={props.archive}
+                  close={handleclose}
+                />
+              </Modal.Content>
+            )}{" "}
+          </>
         )}
       </Modal.Content>
     </Modal>

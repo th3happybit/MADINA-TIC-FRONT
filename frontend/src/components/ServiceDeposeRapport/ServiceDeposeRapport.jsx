@@ -279,12 +279,11 @@ const DeposeRapport = (props) => {
             <Modal open={successFile && successData}>
               <Modal.Header>Success Message</Modal.Header>
               <Modal.Content>
-                <Message
-                  success
-                  content={
-                    "Your changes has been sent successfully. Press Done and you will be redirected to declarations page."
-                  }
-                />
+                <p className="text-default">
+                  {" "}
+                  Your changes has been sent successfully. Press the button and
+                  you will be redirected back to declarations page.
+                </p>
               </Modal.Content>
               <Modal.Actions>
                 <Button
@@ -294,7 +293,7 @@ const DeposeRapport = (props) => {
                     histroy.push("/service/declaration");
                   }}
                 >
-                  Done
+                  Got it !
                 </Button>
               </Modal.Actions>
             </Modal>

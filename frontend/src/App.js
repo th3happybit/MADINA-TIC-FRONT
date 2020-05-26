@@ -154,33 +154,33 @@ function App() {
         />
         <Route
           exact
-          path="/add/report"
+          path="/add/rapport"
           component={(prop) => (
             <Service
               props={prop}
-              active="reports"
+              active="rapports"
               childComponent={<DeposeRapport props={prop} />}
             />
           )}
         />
         <Route
           exact
-          path="/update/report"
+          path="/update/rapport"
           component={(prop) => (
             <Service
               props={prop}
-              active="reports"
+              active="rapports"
               childComponent={<UpdateRapport props={prop} />}
             />
           )}
         />
         <Route
           exact
-          path="/complement/report"
+          path="/complement/rapport"
           component={(prop) => (
             <Service
               props={prop}
-              active="reports"
+              active="rapports"
               childComponent={<ComplementRapport props={prop} />}
             />
           )}

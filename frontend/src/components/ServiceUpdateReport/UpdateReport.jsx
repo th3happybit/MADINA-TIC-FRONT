@@ -16,87 +16,102 @@ import { useHistory } from "react-router-dom";
 
 const UpdateReport = (props) => {
   const [Loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [reqError, setReqErr] = useState(false);
   const [duplicateErr, setDuplicateErr] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
+  const [DelFile, setdelFile] = useState(false);
   const [successFile, setSuccessFile] = useState(false);
   const [uploadingData, setUplaodingData] = useState(false);
+  const [successDel, setSuccessDel] = useState(false);
   const [successData, setSuccessData] = useState(false);
   const [title, setTitle] = useState(null);
   const [titleErr, setTitleErr] = useState(false);
   const [description, setDescription] = useState(null);
   const [descErr, setDescErr] = useState(false);
-  const [files, setFiles] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [filesD, setFilesD] = useState([]);
   const [fileErr, setFileErr] = useState(false);
   const [maxErr, setMaxErr] = useState(false);
   const [declaration, setDeclaration] = useState(null);
   const [service, setService] = useState(null);
+  const [report, setReport] = useState(null);
 
   let history = useHistory();
 
-//   useEffect(() => {
-//     setDeclaration(props.props.location.state.did);
-//     setLoading(true);
-//     axios
-//       .get(
-//         "http://157.230.19.233/api/declarations/" +
-//           props.props.location.state.did +
-//           "/",
-//         {
-//           headers: {
-//             "content-type": "application/json",
-//             Authorization: `Token ${localStorage.getItem("service_token")}`,
-//           },
-//         }
-//       )
-//       .then((res) => {
-//         setLoading(false);
-//         setDeclaration(res.data);
-//       });
-//     axios
-//       .get("http://157.230.19.233/api/user", {
-//         headers: {
-//           "content-type": "application/json",
-//           Authorization: `Token ${localStorage.getItem("service_token")}`,
-//         },
-//       })
-//       .then((res) => {
-//         setService(res.data.uid);
-//       });
-//     axios
-//       .get("http://157.230.19.233/api/reports_complement_demand", {
-//         params: {
-//           report: props.props.location.state.rid,
-//         },
-//         headers: {
-//           "content-type": "application/json",
-//           Authorization: `Token ${localStorage.getItem("service_token")}`,
-//         },
-//       })
-//       .then((res) => {})
-//       .catch((err) => {});
-
-//     axios
-//       .get("http://157.230.19.233/api/reports/", {
-//         params: {
-//           rid: props.props.location.state.rid,
-//         },
-//         headers: {
-//           "content-type": "application/json",
-//           Authorization: `Token ${localStorage.getItem("service_token")}`,
-//         },
-//       })
-//       .then((res) => {})
-//       .catch((err) => {});
-//   }, []);
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://157.230.19.233/api/user", {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("service_token")}`,
+        },
+      })
+      .then((res) => {
+        setService(res.data.uid);
+      });
+    axios
+      .get(
+        "http://157.230.19.233/api/declarations/" +
+          props.props.location.state.did +
+          "/",
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        setDeclaration(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(
+        `http://157.230.19.233/api/reports/${props.props.location.state.rid}`,
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        setReport(res.data);
+        setTitle(res.data.title);
+        setDescription(res.data.desc);
+      })
+      .catch((err) => {});
+    axios
+      .get("http://157.230.19.233/api/documents", {
+        params: {
+          report__rid: props.props.location.state.rid,
+        },
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("service_token")}`,
+        },
+      })
+      .then((res) => {
+        setFiles(res.data);
+        setLoading(false);
+      });
+  }, []);
 
   const handleTitle = (e, { value }) => {
     setTitleErr(false);
     setTitle(value);
+    if (value === report.title && description === report.desc) setEdit(false);
+    else setEdit(true);
   };
   const handleDesc = (e, { value }) => {
     setDescErr(false);
     setDescription(value);
+    if (value === report.desc && title === report.title) setEdit(false);
+    else setEdit(true);
   };
   const removeMessage = () => {
     setMaxErr(false);
@@ -105,14 +120,19 @@ const UpdateReport = (props) => {
   };
   const handleUpload = (e) => {
     setFileErr(false);
-    if (files && files.length === 3) {
+    if (files.length === 3) {
       setMaxErr(true);
       return;
     }
     let tmp = e.target.files[0];
     if (tmp && tmp.size > 0 && tmp.type === "application/pdf") {
-      if (!files) setFiles([tmp]);
-      else setFiles((prevState) => [...prevState, tmp]);
+      if (files.length === 0) {
+        setFiles([tmp]);
+        setEdit(true);
+      } else {
+        setFiles((prevState) => [...prevState, tmp]);
+        setEdit(true);
+      }
     } else if (tmp) {
       setFileErr(true);
     }
@@ -120,10 +140,19 @@ const UpdateReport = (props) => {
   const handleDelete = (e) => {
     setMaxErr(false);
     setFileErr(false);
+    setEdit(true);
     let i = parseInt(e.currentTarget.attributes["data-id"].value);
     let arr = [];
     for (let j = 0; j < files.length; j++) {
       if (j !== i) arr.push(files[j]);
+      if (files[e.currentTarget.attributes["data-id"].value].dmid)
+        if (filesD.length === 0)
+          setFilesD([files[e.currentTarget.attributes["data-id"].value].dmid]);
+        else {
+          let Tarr = filesD;
+          Tarr.push(files[e.currentTarget.attributes["data-id"].value].dmid);
+          setFilesD(Tarr);
+        }
     }
     setFiles(arr);
   };
@@ -146,64 +175,112 @@ const UpdateReport = (props) => {
   const PostFile = (rid) => {
     setUploadingFile(true);
     const formData = new FormData();
+    var upload = false;
     files.map((file, index) => {
-      formData.append("src", file);
-      formData.append("filetype", "pdf");
-      formData.append("declaration", declaration.did);
-      formData.append("report", rid);
+      if (file.name) {
+        upload = true;
+        formData.append("src", file);
+        formData.append("filetype", "pdf");
+        formData.append("declaration", declaration.did);
+        formData.append("report", rid);
+      }
     });
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Token ${localStorage.getItem("service_token")}`,
+    if (upload)
+      axios
+        .create({
+          headers: {
+            post: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
           },
-        },
-      })
-      .request({
-        url: "http://157.230.19.233/api/documents/",
-        method: "post",
-        data: formData,
-      })
-      .then((res) => {
-        setUploadingFile(false);
-        setSuccessFile(true);
-        setFiles(null);
-      })
-      .catch((err) => {
-        setReqErr(true);
-        setUploadingFile(false);
-      });
+        })
+        .request({
+          url: "http://157.230.19.233/api/documents/",
+          method: "post",
+          data: formData,
+        })
+        .then((res) => {
+          setUploadingFile(false);
+          setSuccessFile(true);
+          setFiles(null);
+          if (filesD.length > 0) DeleteFile();
+          else setSuccessDel(true);
+        })
+        .catch((err) => {
+          setReqErr(true);
+          setUploadingFile(false);
+        });
+    else {
+      setUploadingFile(false);
+      setSuccessFile(true);
+      setFiles(null);
+      if (filesD.length > 0) DeleteFile();
+      else setSuccessDel(true);
+    }
+  };
+  const DeleteFile = () => {
+    setdelFile(true);
+    for (let i = 0; i < filesD.length; i++) {
+      axios
+        .create({
+          headers: {
+            delete: {
+              "content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          },
+        })
+        .request({
+          url: `http://157.230.19.233/api/documents/${filesD[i]}/`,
+          method: "DELETE",
+        })
+        .then((res) => {
+          console.log("succes" + i + 1);
+          setFilesD([]);
+          if (i === filesD.length) {
+            setSuccessDel(true);
+            setdelFile(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setReqErr(true);
+        });
+    }
   };
   const PostReport = () => {
     setUplaodingData(true);
+    const dt = new Date().toJSON().substr(0, 19) + "+01:00";
     axios
       .create({
         headers: {
-          post: {
+          put: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
           },
         },
       })
       .request({
-        url: "http://157.230.19.233/api/reports/",
-        method: "post",
+        url: `http://157.230.19.233/api/reports/${report.rid}/`,
+        method: "put",
         data: {
           title,
           desc: description,
           declaration: declaration.did,
           service,
           status: "not_validated",
+          modified_at: dt,
         },
       })
       .then((res) => {
         setSuccessData(true);
         setUplaodingData(false);
-        if (files) {
-          PostFile(res.data.rid);
-        } else if (!files) {
+        if (files.length > 0) {
+          PostFile(report.rid);
+        } else if (files === 0) {
+          if (filesD.length > 0) DeleteFile();
+          else setSuccessDel(true);
           setSuccessFile(true);
         }
       })
@@ -265,7 +342,11 @@ const UpdateReport = (props) => {
               files.map((file, index) => {
                 return (
                   <span key={index}>
-                    <p className="text-default">{file.name}</p>
+                    <p className="text-default">
+                      {file.name
+                        ? file.name
+                        : file.src.slice(11, file.src.length - 12)}
+                    </p>
                     <Icon
                       onClick={handleDelete}
                       name="times circle"
@@ -299,25 +380,24 @@ const UpdateReport = (props) => {
             {fileErr && (
               <Message error content={"Please upload a valid PDF file."} />
             )}
-            <Modal open={successFile && successData}>
-              <Modal.Header>Success Message</Modal.Header>
+            <Modal open={successFile && successData} className="_success_modal">
+              <Modal.Header color>Success Message</Modal.Header>
               <Modal.Content>
-                <Message
-                  success
-                  content={
-                    "Your changes has been sent successfully. Press Done and you will be redirected to declarations page."
-                  }
-                />
+                <p className="text-default">
+                  {" "}
+                  Your changes has been sent successfully. Press the button and you
+                  will be redirected back to reports page.
+                </p>
               </Modal.Content>
               <Modal.Actions>
                 <Button
                   className="_primary"
                   color="blue"
                   onClick={() => {
-                    history.push("/service/declaration");
+                    history.push("/service/rapports");
                   }}
                 >
-                  Done
+                  Got it !
                 </Button>
               </Modal.Actions>
             </Modal>
@@ -349,6 +429,7 @@ const UpdateReport = (props) => {
         </Form>
         <div className="_action_button">
           <Button
+            disabled={!edit}
             loading={uploadingData || uploadingFile}
             onClick={handlePost}
             animated

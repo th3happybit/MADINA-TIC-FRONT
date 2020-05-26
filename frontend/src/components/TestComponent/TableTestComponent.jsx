@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Table, Icon } from "semantic-ui-react";
+import { Table, Icon, Button, Popup } from "semantic-ui-react";
 import axios from "axios";
 
 import ModalDetailComponent from "./ModalDetailComponent.jsx";
 import ConfirmDeleteModal from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
+import { Link } from "react-router-dom";
 
 const SortedRow = (props) => {
   const { elm, handleSort, setsortDate } = props;
@@ -89,8 +90,72 @@ const TableTestComponent = (props) => {
                         margin: "0 1rem",
                       }}
                     />
-                    //? hna dir test taek b isRapport w status w hot props taw3k
-                    nrml
+                    {isRapport && activeFilter === "not_validated" && (
+                      <Button.Group>
+                        <Link
+                          to={{
+                            pathname: "/update/rapport",
+                            state: {
+                              rid: element.rid,
+                              did: element.declaration,
+                            },
+                          }}
+                        >
+                          <Popup
+                            content="Edit"
+                            trigger={
+                              <Button
+                                className="shadow _hide_on_mobile _infos_btn_desktop"
+                                color="black"
+                                icon={{
+                                  name: "pencil alternate",
+                                  color: "white",
+                                  inverted: true,
+                                }}
+                              />
+                            }
+                          />
+                          <Button
+                            color={"black"}
+                            className="shadow btn_account_detail pointer _show_on_mobile"
+                            content="Edit"
+                          />
+                        </Link>
+                      </Button.Group>
+                    )}
+                    {isRapport && activeFilter === "lack_of_info" && (
+                      <Button.Group>
+                        <Link
+                          to={{
+                            pathname: "/complement/rapport",
+                            state: {
+                              rid: element.rid,
+                              did: element.declaration,
+                            },
+                          }}
+                        >
+                          <Popup
+                            content="Complement"
+                            trigger={
+                              <Button
+                                className="shadow _hide_on_mobile _infos_btn_desktop"
+                                color="orange"
+                                icon={{
+                                  name: "sync alternate",
+                                  color: "white",
+                                  inverted: true,
+                                }}
+                              />
+                            }
+                          />
+                          <Button
+                            color={"orange"}
+                            className="shadow btn_account_detail _show_on_mobile"
+                            content="Complement"
+                          />
+                        </Link>
+                      </Button.Group>
+                    )}
                     {activeFilter === "not_validated" && (
                       <ConfirmDeleteModal
                         onConfirm={() => {
