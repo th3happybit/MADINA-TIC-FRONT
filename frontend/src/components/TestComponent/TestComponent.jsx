@@ -158,10 +158,13 @@ const TestComponent = (props) => {
         getData();
       }
     }
+    if (role === "maire") {
+      getUserId();
+    }
     return () => {
       setData([]);
     };
-  }, [term, activeFilter, sortDate, permission, uid]);
+  }, [term, activeFilter, sortDate, role, permission, uid]);
   return (
     <div className="service_rapports _service_declarations">
       <div className="_main_header">
@@ -238,6 +241,7 @@ const TestComponent = (props) => {
               title={title}
               token={token}
               url={url}
+              uid={uid}
               role={role}
               activeFilter={activeFilter}
             />

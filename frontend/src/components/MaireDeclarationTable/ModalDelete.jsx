@@ -15,7 +15,7 @@ const ModalComplement = (props) => {
   const [motif, setmotif] = useState(null);
   const [error, setError] = useState(false);
 
-  const { modal } = props;
+  const { modal, icon } = props;
 
   const handlechange = (e) => {
     setError(false);
@@ -43,17 +43,23 @@ const ModalComplement = (props) => {
       className="_redirect_modal"
       trigger={
         <>
-          <Button
-            onClick={handleopen}
-            animated
-            color="red"
-            className={modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"}
-          >
-            <Button.Content visible content="reject" />
-            <Button.Content hidden>
-              <Icon name="delete" />
-            </Button.Content>
-          </Button>
+          {!icon && (
+            <Button
+              onClick={handleopen}
+              animated
+              color="red"
+              className={
+                modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"
+              }
+            >
+              {!icon && <Button.Content visible content="reject" />}
+              {icon && (
+                <Button.Content hidden>
+                  <Icon name="delete" />
+                </Button.Content>
+              )}
+            </Button>
+          )}{" "}
           <Button
             onClick={handleopen}
             color="red"
