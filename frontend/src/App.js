@@ -38,6 +38,8 @@ import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
 import MaireRapports from "./components/MaireRapports/MaireRapports.jsx";
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
+import UpdateRapport from "./components/ServiceUpdateReport/UpdateReport.jsx";
+import ComplementRapport from "./components/ServiceComplementReport/ComplementReport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
 
 function App() {
@@ -160,12 +162,34 @@ function App() {
         />
         <Route
           exact
-          path="/add/report"
+          path="/add/rapport"
           component={(prop) => (
             <Service
               props={prop}
-              active="reports"
+              active="rapports"
               childComponent={<DeposeRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/update/rapport"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="rapports"
+              childComponent={<UpdateRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/rapport"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="rapports"
+              childComponent={<ComplementRapport props={prop} />}
             />
           )}
         />

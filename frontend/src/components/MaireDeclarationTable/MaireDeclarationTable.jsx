@@ -158,37 +158,37 @@ const MaireDeclarationTable = (props) => {
                 </Table.Cell>
                 <Table.Cell textAlign="center" className="_left">
                   <ModalDetails
-                    fullname={names[index]}
-                    did={did}
-                    citizen={citizen}
-                    title={title}
-                    type={editType(dtype)}
-                    dtype={dtype}
-                    address={address}
-                    description={desc}
-                    attachements={filterAttachments(attachments)}
-                    created_on={
-                      created_on
+                    title="Declarations Details"
+                    data={{
+                      fullname: names[index],
+                      did: did,
+                      citizen: citizen,
+                      title: title,
+                      type: editType(dtype),
+                      dtype: dtype,
+                      address: address,
+                      description: desc,
+                      attachements: filterAttachments(attachments),
+                      created_on: created_on
                         ? created_on.slice(8, 10) +
                           " - " +
                           getMonth(created_on.slice(5, 7)) +
                           " - " +
                           created_on.slice(0, 4)
-                        : "/"
-                    }
-                    priority={priority}
-                    validated_at={
-                      validated_at
+                        : "/",
+                      priority: priority,
+                      validated_at: validated_at
                         ? validated_at.slice(8, 10) +
                           " - " +
                           getMonth(validated_at.slice(5, 7)) +
                           " - " +
                           validated_at.slice(0, 4)
-                        : "/"
-                    }
-                    services={services}
-                    // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
-                    status={getStatus(status).status}
+                        : "/",
+                      services: services,
+                      // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
+                      status: getStatus(status).status,
+                    }}
+                    Maire
                     reject={props.rejectDeclaration}
                     archive={props.archiveDeclaration}
                     complement={props.demandComplement}
