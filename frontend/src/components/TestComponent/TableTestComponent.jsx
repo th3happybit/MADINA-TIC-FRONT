@@ -83,10 +83,13 @@ const TableTestComponent = (props) => {
                 <Table.Cell>
                   <div className="btns_actionsx">
                     <ModalDetailComponent
+                      report={element.rid}
                       data={element}
                       detail={detail}
+                      activeFilter={activeFilter}
                       isRapport={isRapport}
                       title={title}
+                      role={role}
                       token={token}
                       style={{
                         margin: "0 1rem",
@@ -209,6 +212,7 @@ const TableTestComponent = (props) => {
                         }}
                       />
                     )}
+
                     {activeFilter === "not_validated" && role === "service" && (
                       <ConfirmDeleteModal
                         onConfirm={() => {
