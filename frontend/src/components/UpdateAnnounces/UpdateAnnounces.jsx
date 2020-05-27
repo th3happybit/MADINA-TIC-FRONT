@@ -5,8 +5,6 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-
-
 const UpdateAnnounces = (props) => {
   const [data, setData] = useState([]);
   const [succes, setSucces] = useState(false);
@@ -21,11 +19,6 @@ const UpdateAnnounces = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [aid, setAid] = useState(null);
   const [selected, setSelected] = useState(null);
-
-
-
-
-
 
   const handleUpdate = () => {
     console.log("raha tedkhoul");
@@ -72,6 +65,9 @@ const UpdateAnnounces = (props) => {
             case "end_at":
               setEndDateErr(true);
               break;
+            case "non_field_errors":
+              setStartDateErr(true);
+              setEndDateErr(true);
             default:
               break;
           }
@@ -80,8 +76,6 @@ const UpdateAnnounces = (props) => {
         setIsLoading(false);
       });
   };
-
-
 
   useEffect(() => {
     axios
@@ -141,8 +135,6 @@ const UpdateAnnounces = (props) => {
             className={titleErr ? "add_dec_err" : ""}
           />
 
-
-
           <div className="date_annonce">
             <div className="one_input">
               <label htmlFor="begin">Date debut</label>
@@ -150,7 +142,10 @@ const UpdateAnnounces = (props) => {
                 id="begin"
                 selected={Date.parse(startDate)}
                 onChange={(date) => {
-                  if (startDateErr) setStartDateErr(false);
+                  if (startDateErr) {
+                    setStartDateErr(false);
+                    setEndDateErr(false);
+                  }
                   setStartDate(date);
                 }}
                 className={startDateErr ? "date_picker_err" : ""}
@@ -167,7 +162,10 @@ const UpdateAnnounces = (props) => {
                 id="end"
                 selected={Date.parse(endDate)}
                 onChange={(date) => {
-                  if (endDateErr) setEndDateErr(false);
+                  if (endDateErr) {
+                    setEndDateErr(false);
+                    setStartDateErr(false);
+                  }
                   setEndDate(date);
                 }}
                 className={endDateErr ? "date_picker_err" : ""}
@@ -179,9 +177,6 @@ const UpdateAnnounces = (props) => {
               />
             </div>
           </div>
-
-
-
 
           <Form.TextArea
             label="Description"
