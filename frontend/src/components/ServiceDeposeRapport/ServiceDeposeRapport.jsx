@@ -276,7 +276,7 @@ const DeposeRapport = (props) => {
             {fileErr && (
               <Message error content={"Please upload a valid PDF file."} />
             )}
-            <Modal open={successFile && successData}>
+            <Modal open={successFile && successData} className="_success_modal">
               <Modal.Header>Success Message</Modal.Header>
               <Modal.Content>
                 <p className="text-default">

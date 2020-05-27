@@ -193,7 +193,7 @@ const ServiceDesclarationTable = (props) => {
                   {status === "under_treatment" && (
                     <Link
                       to={{
-                        pathname: "/add/report",
+                        pathname: "/add/rapport",
                         state: { did: did },
                       }}
                     >

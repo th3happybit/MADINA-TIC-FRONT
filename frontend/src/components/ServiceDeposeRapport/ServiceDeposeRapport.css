@@ -15,6 +15,16 @@
   align-items: center;
 }
 
+._success_modal .header {
+  border: none !important;
+  color: var(--primary) !important;
+}
+
+._success_modal .actions {
+  border: none !important;
+  background: #fff !important;
+}
+
 ._add_form ._upload_section {
   display: flex;
   flex-direction: column !important;

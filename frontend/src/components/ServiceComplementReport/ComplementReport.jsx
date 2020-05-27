@@ -18,6 +18,7 @@ const ComplementReport = (props) => {
   const [Loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [upload, setUpload] = useState(false);
+  const [zeroFiles, setZeroFiles] = useState(false);
   const [reqError, setReqErr] = useState(false);
   const [duplicateErr, setDuplicateErr] = useState(false);
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -37,88 +38,96 @@ const ComplementReport = (props) => {
   const [declaration, setDeclaration] = useState(null);
   const [service, setService] = useState(null);
   const [reason, setReason] = useState();
-  const [report, setReport] = useState(null);
+  const [report, setReport] = useState({});
+  const [allow, setAllow] = useState(false);
 
   let history = useHistory();
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://157.230.19.233/api/user", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("service_token")}`,
-        },
-      })
-      .then((res) => {
-        setService(res.data.uid);
-      });
-    axios
-      .get("http://157.230.19.233/api/reports_complement_demand", {
-        params: {
-          report: props.props.location.state.rid,
-        },
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("service_token")}`,
-        },
-      })
-      .then((res) => {
-        setReason(res.data.results[0].reason);
-      })
-      .catch((err) => {});
+    if (props.props.location.state) {
+      setLoading(true);
+      axios
+        .get("http://157.230.19.233/api/user", {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        })
+        .then((res) => {
+          setService(res.data.uid);
+        });
+      if (props.props.location.state.rid) {
+        axios
+          .get("http://157.230.19.233/api/reports_complement_demand", {
+            params: {
+              report: props.props.location.state.rid,
+            },
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          })
+          .then((res) => {
+            setReason(res.data.results[0].reason);
+          })
+          .catch((err) => {});
 
-    axios
-      .get(
-        `http://157.230.19.233/api/reports/${props.props.location.state.rid}`,
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("service_token")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setReport(res.data);
-        setTitle(res.data.title);
-        setDescription(res.data.desc);
-      })
-      .catch((err) => {});
-    axios
-      .get("http://157.230.19.233/api/documents/", {
-        params: {
-          report__rid: props.props.location.state.rid,
-        },
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("service_token")}`,
-        },
-      })
-      .then((res) => {
-        setFiles(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .get(
-        "http://157.230.19.233/api/declarations/" +
-          props.props.location.state.did +
-          "/",
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("service_token")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setDeclaration(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        axios
+          .get(
+            `http://157.230.19.233/api/reports/${props.props.location.state.rid}`,
+            {
+              headers: {
+                "content-type": "application/json",
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
+              },
+            }
+          )
+          .then((res) => {
+            setReport(res.data);
+            setTitle(res.data.title);
+            setDescription(res.data.desc);
+            if (res.data.status !== "lack_of_info") setAllow(true);
+          })
+          .catch((err) => {});
+        axios
+          .get("http://157.230.19.233/api/documents/", {
+            params: {
+              report__rid: props.props.location.state.rid,
+            },
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          })
+          .then((res) => {
+            setFiles(res.data);
+            if (res.data.length === 0) setZeroFiles(true);
+            setLoading(false);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      if (props.props.location.state.did)
+        axios
+          .get(
+            "http://157.230.19.233/api/declarations/" +
+              props.props.location.state.did +
+              "/",
+            {
+              headers: {
+                "content-type": "application/json",
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
+              },
+            }
+          )
+          .then((res) => {
+            setDeclaration(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    }
   }, []);
 
   const handleTitle = (e, { value }) => {
@@ -169,13 +178,25 @@ const ComplementReport = (props) => {
       if (j !== i) arr.push(files[j]);
       if (files[e.currentTarget.attributes["data-id"].value].dmid)
         if (filesD.length === 0)
-          setFilesD([files[e.currentTarget.attributes["data-id"].value].dmid]);
-        else {
-          let Tarr = filesD;
-          Tarr.push(files[e.currentTarget.attributes["data-id"].value].dmid);
-          setFilesD(Tarr);
-        }
+          if (filesD.length === 0) {
+            setFilesD([
+              files[e.currentTarget.attributes["data-id"].value].dmid,
+            ]);
+          } else {
+            if (
+              !filesD.includes(
+                files[e.currentTarget.attributes["data-id"].value].dmid
+              )
+            ) {
+              let Tarr = filesD;
+              Tarr.push(
+                files[e.currentTarget.attributes["data-id"].value].dmid
+              );
+              setFilesD(Tarr);
+            }
+          }
     }
+    if (arr.length === 0 && zeroFiles) setUpload(false);
     setFiles(arr);
   };
   const handlePost = () => {
@@ -197,15 +218,17 @@ const ComplementReport = (props) => {
   const PostFile = (rid) => {
     setUploadingFile(true);
     const formData = new FormData();
+    var up = false;
     files.map((file, index) => {
       if (file.name) {
+        up = true;
         formData.append("src", file);
         formData.append("filetype", "pdf");
         formData.append("declaration", declaration.did);
         formData.append("report", report.rid);
       }
     });
-    if (upload)
+    if (up)
       axios
         .create({
           headers: {
@@ -223,7 +246,6 @@ const ComplementReport = (props) => {
         .then((res) => {
           setUploadingFile(false);
           setSuccessFile(true);
-          setFiles([]);
           if (filesD.length > 0) DeleteFile();
           else setSuccessDel(true);
         })
@@ -234,7 +256,6 @@ const ComplementReport = (props) => {
     else {
       setUploadingFile(false);
       setSuccessFile(true);
-      setFiles([]);
       if (filesD.length > 0) DeleteFile();
       else setSuccessDel(true);
     }
@@ -253,18 +274,15 @@ const ComplementReport = (props) => {
         })
         .request({
           url: `http://157.230.19.233/api/documents/${filesD[i]}/`,
-          method: "DELETE",
+          method: "delete",
         })
         .then((res) => {
-          console.log("succes" + i + 1);
-          setFilesD([]);
-          if (i === filesD.length) {
+          if (i === filesD.length - 1) {
             setSuccessDel(true);
             setdelFile(false);
           }
         })
         .catch((err) => {
-          console.log(err);
           setReqErr(true);
         });
     }
@@ -298,7 +316,7 @@ const ComplementReport = (props) => {
         setUplaodingData(false);
         if (files.length > 0) {
           PostFile(report.rid);
-        } else if (files === 0) {
+        } else if (files.length === 0) {
           if (filesD.length > 0) DeleteFile();
           else setSuccessDel(true);
           setSuccessFile(true);
@@ -316,153 +334,185 @@ const ComplementReport = (props) => {
   return (
     <div className="_rapport_form">
       <Segment className="_add_form" loading={Loading}>
-        <h3 className="large-title text-default bold _margin_vertical_md">
-          Complement Report
-        </h3>
-        <Form
-          error={fileErr || reqError || duplicateErr || maxErr}
-          success={successData && successFile}
-        >
-          <Message info header="Motif :" content={reason} />
-          {declaration && (
-            <p className="text-default">Declaration : {declaration.title}</p>
-          )}
-          <Form.Field
-            type="text"
-            control={Input}
-            label="Title"
-            placeholder="Enter title here..."
-            value={title}
-            onChange={handleTitle}
-            name="title"
-            error={
-              titleErr && {
-                content:
-                  "This field can't be empty or shorter than 5 characters",
-                class: "ui basic red label pointing",
-              }
-            }
-          />
-          <Form.TextArea
-            label="Description"
-            name="description"
-            placeholder="..."
-            value={description}
-            onChange={handleDesc}
-            error={
-              descErr && {
-                content:
-                  "This field can't be empty or shorter than 10 characters",
-                class: "ui basic red label pointing",
-              }
-            }
-          />
-          <div className="_upload_section">
-            <p className="text-default">Add Files ( Optional )</p>
-            {files &&
-              files.map((file, index) => {
-                return (
-                  <span key={index}>
-                    <p className="text-default">
-                      {file.name
-                        ? file.name
-                        : file.src.slice(11, file.src.length - 12)}
-                    </p>
-                    <Icon
-                      onClick={handleDelete}
-                      name="times circle"
-                      className="pointer"
-                      data-id={index}
-                      style={{ "margin-left": "10px" }}
-                    />
-                  </span>
-                );
-              })}
-            <Button
-              as={"label"}
-              htmlFor="myInput"
-              animated
-              color="blue"
-              className="_primary"
+        {props.props.location.state &&
+        props.props.location.state.rid &&
+        props.props.location.state.did &&
+        !allow &&
+        report.status === "lack_of_info" ? (
+          <>
+            <h3 className="large-title text-default bold _margin_vertical_md">
+              Complement Report
+            </h3>
+            <Form
+              error={fileErr || reqError || duplicateErr || maxErr}
+              success={successData && successFile}
             >
-              <Button.Content visible content="Upload" />
-              <Button.Content hidden>
-                <Icon name="upload" />
-              </Button.Content>
-            </Button>
-            <input
-              id="myInput"
-              style={{ display: "none" }}
-              type="file"
-              accept=".pdf"
-              className="pointer"
-              onChange={handleUpload}
-            />
-            {fileErr && (
-              <Message error content={"Please upload a valid PDF file."} />
-            )}
-            <Modal open={successFile && successData}>
-              <Modal.Header color="blue">Success Message</Modal.Header>
-              <Modal.Content>
+              <Message info header="Motif :" content={reason} />
+              {declaration && (
                 <p className="text-default">
-                  {" "}
-                  Your changes has been sent successfully. Press the button and
-                  you will be redirected back to reports page.
+                  Declaration : {declaration.title}
                 </p>
-              </Modal.Content>
-              <Modal.Actions>
+              )}
+              <Form.Field
+                type="text"
+                control={Input}
+                label="Title"
+                placeholder="Enter title here..."
+                value={title}
+                onChange={handleTitle}
+                name="title"
+                error={
+                  titleErr && {
+                    content:
+                      "This field can't be empty or shorter than 5 characters",
+                    class: "ui basic red label pointing",
+                  }
+                }
+              />
+              <Form.TextArea
+                label="Description"
+                name="description"
+                placeholder="..."
+                value={description}
+                onChange={handleDesc}
+                error={
+                  descErr && {
+                    content:
+                      "This field can't be empty or shorter than 10 characters",
+                    class: "ui basic red label pointing",
+                  }
+                }
+              />
+              <div className="_upload_section">
+                <p className="text-default">Add Files ( Optional )</p>
+                {files &&
+                  files.map((file, index) => {
+                    return (
+                      <span key={index}>
+                        <p className="text-default">
+                          {file.name
+                            ? file.name
+                            : file.src.slice(11, file.src.length - 12)}
+                        </p>
+                        <Icon
+                          onClick={handleDelete}
+                          name="times circle"
+                          className="pointer"
+                          data-id={index}
+                          style={{ "margin-left": "10px" }}
+                        />
+                      </span>
+                    );
+                  })}
                 <Button
-                  className="_primary"
+                  as={"label"}
+                  htmlFor="myInput"
+                  animated
                   color="blue"
-                  onClick={() => {
-                    history.push("/service/rapports");
-                  }}
+                  className="_primary"
                 >
-                  Got it !
+                  <Button.Content visible content="Upload" />
+                  <Button.Content hidden>
+                    <Icon name="upload" />
+                  </Button.Content>
                 </Button>
-              </Modal.Actions>
-            </Modal>
-            <Transition visible={reqError} animation="scale" duration={200}>
-              <Message
-                className="pointer"
-                onClick={removeMessage}
-                error
-                content={"Something went wrong while sending request !"}
-              />
-            </Transition>
-            <Transition visible={maxErr} animation="scale" duration={200}>
-              <Message
-                className="pointer"
-                onClick={removeMessage}
-                error
-                content={"Maximum is 3 files !"}
-              />
-            </Transition>
-            <Transition visible={duplicateErr} animation="scale" duration={200}>
-              <Message
-                className="pointer"
-                onClick={removeMessage}
-                error
-                content={"A report is already attached to this declaration !"}
-              />
-            </Transition>
-          </div>
-        </Form>
-        <div className="_action_button">
-          <Button
-            disabled={upload ? false : !edit}
-            loading={uploadingData || uploadingFile}
-            onClick={handlePost}
-            animated
-            color="blue"
-            className="_primary"
-          >
-            <Button.Content visible content="Confirm" />
-            <Button.Content hidden>
-              <Icon name="checkmark" />
-            </Button.Content>
-          </Button>
-        </div>
+                <input
+                  id="myInput"
+                  style={{ display: "none" }}
+                  type="file"
+                  accept=".pdf"
+                  className="pointer"
+                  onChange={handleUpload}
+                />
+                {fileErr && (
+                  <Message error content={"Please upload a valid PDF file."} />
+                )}
+                <Modal
+                  open={successFile && successData && successDel}
+                  className="_success_modal"
+                >
+                  <Modal.Header>Success Message</Modal.Header>
+                  <Modal.Content>
+                    <p className="text-default">
+                      {" "}
+                      Your changes has been sent successfully. Press the button
+                      and you will be redirected back to reports page.
+                    </p>
+                  </Modal.Content>
+                  <Modal.Actions>
+                    <Button
+                      className="_primary"
+                      color="blue"
+                      onClick={() => {
+                        history.push("/service/rapports");
+                      }}
+                    >
+                      Got it !
+                    </Button>
+                  </Modal.Actions>
+                </Modal>
+                <Transition visible={reqError} animation="scale" duration={200}>
+                  <Message
+                    className="pointer"
+                    onClick={removeMessage}
+                    error
+                    content={"Something went wrong while sending request !"}
+                  />
+                </Transition>
+                <Transition visible={maxErr} animation="scale" duration={200}>
+                  <Message
+                    className="pointer"
+                    onClick={removeMessage}
+                    error
+                    content={"Maximum is 3 files !"}
+                  />
+                </Transition>
+                <Transition
+                  visible={duplicateErr}
+                  animation="scale"
+                  duration={200}
+                >
+                  <Message
+                    className="pointer"
+                    onClick={removeMessage}
+                    error
+                    content={
+                      "A report is already attached to this declaration !"
+                    }
+                  />
+                </Transition>
+              </div>
+            </Form>
+            <div className="_action_button">
+              <Button
+                disabled={upload ? false : !edit}
+                loading={uploadingData || uploadingFile || DelFile}
+                onClick={handlePost}
+                animated
+                color="blue"
+                className="_primary"
+              >
+                <Button.Content visible content="Confirm" />
+                <Button.Content hidden>
+                  <Icon name="checkmark" />
+                </Button.Content>
+              </Button>
+            </div>{" "}
+          </>
+        ) : (
+          allow && (
+            <h1
+              className="text-default"
+              style={{
+                margin: "auto",
+                "font-size": "xxx-large",
+                width: "600px",
+              }}
+            >
+              Something went wrong :( ...
+            </h1>
+          )
+        )}
       </Segment>
     </div>
   );
