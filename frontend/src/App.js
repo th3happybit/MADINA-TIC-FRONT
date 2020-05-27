@@ -41,6 +41,9 @@ import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRappor
 import UpdateRapport from "./components/ServiceUpdateReport/UpdateReport.jsx";
 import ComplementRapport from "./components/ServiceComplementReport/ComplementReport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
+import UpdateAnnounces from "./components/UpdateAnnounces/UpdateAnnounces.jsx";
+import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnnounces.jsx";
+
 
 function App() {
   return (
@@ -201,6 +204,28 @@ function App() {
               props={prop}
               active="annonce"
               childComponent={<DeposerAnnonces props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/update/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<UpdateAnnounces props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<ComplementAnnounces props={prop} />}
             />
           )}
         />
