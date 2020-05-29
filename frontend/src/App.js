@@ -92,7 +92,7 @@ function App() {
         <Route
           exact
           path="/home"
-          component={() => <CitoyenHome active="home" />}
+          component={() => <CitoyenHome annonce active="home" />}
         />
         <Route
           exact
