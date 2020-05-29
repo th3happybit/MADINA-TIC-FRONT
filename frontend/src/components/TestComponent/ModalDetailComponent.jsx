@@ -3,10 +3,20 @@ import axios from "axios";
 import { Modal, Button, Icon, Image } from "semantic-ui-react";
 
 const ModalDetailComponent = (props) => {
-  const { detail, isRapport, title, token, data } = props;
+  const {
+    detail,
+    isRapport,
+    title,
+    token,
+    data,
+    role,
+    activeFilter,
+    report,
+  } = props;
   const [open, setOpen] = useState(false);
   const [titleDec, setTitleDec] = useState("");
   const [files, setFiles] = useState([]);
+  const [motif, setMorif] = useState(null);
 
   const handleopen = () => {
     setOpen(true);
@@ -16,6 +26,27 @@ const ModalDetailComponent = (props) => {
   };
 
   useEffect(() => {
+    if (role === "service" && activeFilter === "archived" && report) {
+      let instance = axios.create({
+        baseURL: "http://157.230.19.233/api/",
+        responseType: "json",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem(token)}`,
+        },
+      });
+      instance
+        .get(`reports_complement_demand/?report=${report}`)
+        .then((res) => {
+          if (res.data.results.length > 0) {
+            setMorif(res.data.results[0].reason);
+          }
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
     if (isRapport) {
       let url = `http://157.230.19.233/api/declarations/${data.declaration}`;
       axios
@@ -95,6 +126,9 @@ const ModalDetailComponent = (props) => {
           <div className="_content_modal ">
             <div>
               {isRapport && <p>Title Decaration</p>}
+              {motif && activeFilter === "archived" && (
+                <p>motif of rejection</p>
+              )}
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
@@ -106,6 +140,7 @@ const ModalDetailComponent = (props) => {
               }}
             >
               {isRapport && <p>{titleDec}</p>}
+              {motif && activeFilter === "archived" && <p>{motif}</p>}
               {detail.map((elm) => (
                 <p>{data[elm.value] ? data[elm.value] : "/"}</p>
               ))}

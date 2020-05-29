@@ -95,6 +95,11 @@ const ServiceHeaderSideBar = (props) => {
           </Link>
         </List.Item>
       </List>
+      
+        <a href="/add/annonce" className="add_annonce_mobile pointer  text-default text-active">
+          <p>Add annonce</p>
+        </a>
+      
       <div className="_logout_header _margin_vertical_sm">
         <p
           onClick={handleLogout}

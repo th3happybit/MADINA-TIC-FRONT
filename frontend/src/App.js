@@ -36,10 +36,14 @@ import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenD
 import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
+import MaireRapports from "./components/MaireRapports/MaireRapports.jsx";
 import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
 import UpdateRapport from "./components/ServiceUpdateReport/UpdateReport.jsx";
 import ComplementRapport from "./components/ServiceComplementReport/ComplementReport.jsx";
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
+import UpdateAnnounces from "./components/UpdateAnnounces/UpdateAnnounces.jsx";
+import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnnounces.jsx";
+
 
 function App() {
   return (
@@ -61,6 +65,13 @@ function App() {
           path="/maire/declaration/"
           component={() => (
             <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
+        <Route
+          exact
+          path="/maire/rapports/"
+          component={() => (
+            <Maire active="rapports" childComponent={MaireRapports} />
           )}
         />
         <Route
@@ -191,8 +202,30 @@ function App() {
           component={(prop) => (
             <Service
               props={prop}
-              active="annonces"
+              active="annonce"
               childComponent={<DeposerAnnonces props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/update/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<UpdateAnnounces props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<ComplementAnnounces props={prop} />}
             />
           )}
         />

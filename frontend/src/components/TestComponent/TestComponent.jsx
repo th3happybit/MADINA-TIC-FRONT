@@ -23,9 +23,7 @@ const TestComponent = (props) => {
   const [data, setData] = useState([]);
   const [searchLoading, setsearchLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [activeFilter, setactiveFilter] = useState(
-    isRapport ? "not_validated" : "published"
-  );
+  const [activeFilter, setactiveFilter] = useState("not_validated");
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
   };
@@ -105,6 +103,7 @@ const TestComponent = (props) => {
       });
   };
   const getData = () => {
+    setData([]);
     let ord = "";
     if (sortDate) {
       sortDate === "asc"
@@ -159,7 +158,13 @@ const TestComponent = (props) => {
         getData();
       }
     }
-  }, [term, activeFilter, sortDate, permission, uid]);
+    if (role === "maire") {
+      getUserId();
+    }
+    return () => {
+      setData([]);
+    };
+  }, [term, activeFilter, sortDate, role, permission, uid]);
   return (
     <div className="service_rapports _service_declarations">
       <div className="_main_header">
@@ -236,6 +241,8 @@ const TestComponent = (props) => {
               title={title}
               token={token}
               url={url}
+              uid={uid}
+              role={role}
               activeFilter={activeFilter}
             />
             <Pagination

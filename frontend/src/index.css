@@ -41,6 +41,9 @@ button {
 a {
   text-decoration: none !important;
 }
+._sidebar_maire > .row > .menu > .d-flex {
+  width: auto !important;
+}
 .bg-white {
   background-color: white !important;
 }

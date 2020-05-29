@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table, Icon, Button, Popup } from "semantic-ui-react";
 import axios from "axios";
 
+import DeleteModal from "../MaireDeclarationTable/ModalDelete.jsx";
 import ModalDetailComponent from "./ModalDetailComponent.jsx";
 import ConfirmDeleteModal from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
 import { Link } from "react-router-dom";
@@ -35,9 +36,10 @@ const TableTestComponent = (props) => {
     url,
     activeFilter,
     refresh,
+    role,
+    uid,
   } = props;
   const [Data, setData] = useState([]);
-  console.log({ activeFilter });
   useEffect(() => {
     setData(data);
     return () => {
@@ -72,6 +74,9 @@ const TableTestComponent = (props) => {
       {Data && (
         <Table.Body>
           {Data.map((element, index) => {
+            if (role === "service" && !isRapport) {
+              console.log(element);
+            }
             return (
               <Table.Row>
                 {header.map((elm) => (
@@ -81,24 +86,62 @@ const TableTestComponent = (props) => {
                 <Table.Cell>
                   <div className="btns_actionsx">
                     <ModalDetailComponent
+                      report={element.rid}
                       data={element}
                       detail={detail}
+                      activeFilter={activeFilter}
                       isRapport={isRapport}
                       title={title}
+                      role={role}
                       token={token}
                       style={{
                         margin: "0 1rem",
                       }}
                     />
-                    {isRapport && activeFilter === "not_validated" && (
+                    {isRapport &&
+                      activeFilter === "not_validated" &&
+                      role === "service" && (
+                        <Button.Group>
+                          <Link
+                            to={{
+                              pathname: "/update/rapport",
+                              state: {
+                                rid: element.rid,
+                                did: element.declaration,
+                              },
+                            }}
+                          >
+                            <Popup
+                              content="Edit"
+                              trigger={
+                                <Button
+                                  className="shadow _hide_on_mobile _infos_btn_desktop"
+                                  color="black"
+                                  icon={{
+                                    name: "pencil alternate",
+                                    color: "white",
+                                    inverted: true,
+                                  }}
+                                />
+                              }
+                            />
+                            <Button
+                              color={"black"}
+                              className="shadow btn_account_detail pointer _show_on_mobile"
+                              content="Edit"
+                            />
+                          </Link>
+                        </Button.Group>
+                      )}
+                    {activeFilter === "not_validated" && role === "service" && (
                       <Button.Group>
                         <Link
                           to={{
-                            pathname: "/update/rapport",
+                            pathname: "/update/annonce",
                             state: {
-                              rid: element.rid,
-                              did: element.declaration,
+                              aid: element.aid,
                             },
+                            query: { aid: element.aid },
                           }}
                         >
                           <Popup
@@ -123,13 +166,15 @@ const TableTestComponent = (props) => {
                         </Link>
                       </Button.Group>
                     )}
-                    {isRapport && activeFilter === "lack_of_info" && (
+                    {activeFilter === "lack_of_info" && (
                       <Button.Group>
                         <Link
                           to={{
-                            pathname: "/complement/rapport",
+                            pathname: isRapport
+                              ? "/complement/rapport"
+                              : "/complement/annonce",
                             state: {
-                              rid: element.rid,
+                              rid: isRapport ? element.rid : element.aid,
                               did: element.declaration,
                             },
                           }}
@@ -156,30 +201,48 @@ const TableTestComponent = (props) => {
                         </Link>
                       </Button.Group>
                     )}
-                    {activeFilter === "not_validated" && (
-                      <ConfirmDeleteModal
-                        onConfirm={() => {
-                          axios
-                            .create({
-                              headers: {
-                                patch: {
+
+                    {activeFilter === "not_validated" && role === "maire" && (
+                      <DeleteModal
+                        modal
+                        icon
+                        reject={(data, motif) => {
+                          const instance = axios.create({
+                            baseURL: `url`,
+                            responseType: "json",
+                            headers: {
+                              "Content-Type": "application/json",
+                              Authorization: `Token ${localStorage.getItem(
+                                token
+                              )}`,
+                            },
+                          });
+                          instance
+                            .patch(`${url}${element.rid}/`, {
+                              status: "refused",
+                            })
+                            .then((res) => {
+                              let instance2 = axios.create({
+                                responseType: "json",
+                                baseURL: "http://157.230.19.233/api/",
+                                headers: {
                                   "Content-Type": "application/json",
                                   Authorization: `Token ${localStorage.getItem(
                                     token
                                   )}`,
                                 },
-                              },
-                            })
-                            .request({
-                              url: `${url}${element.rid}/`,
-                              method: "patch",
-                              data: {
-                                status: "archived",
-                              },
-                            })
-                            .then((res) => {
-                              console.log(res);
-                              refresh();
+                              });
+                              let body = {
+                                maire: uid,
+                                reason: motif,
+                                report: element.rid,
+                              };
+                              instance2
+                                .post("reports_rejection/", body)
+                                .then((res) => {
+                                  console.log(res);
+                                  refresh();
+                                });
                             })
                             .catch((err) => {
                               console.log(err.response);
@@ -187,6 +250,70 @@ const TableTestComponent = (props) => {
                         }}
                       />
                     )}
+
+                    {isRapport &&
+                      activeFilter === "not_validated" &&
+                      role === "service" && (
+                        <ConfirmDeleteModal
+                          onConfirm={() => {
+                            axios
+                              .create({
+                                headers: {
+                                  patch: {
+                                    "Content-Type": "application/json",
+                                    Authorization: `Token ${localStorage.getItem(
+                                      token
+                                    )}`,
+                                  },
+                                },
+                              })
+                              .request({
+                                url: `${url}${element.rid}/`,
+                                method: "patch",
+                                data: {
+                                  status: "archived",
+                                },
+                              })
+                              .then((res) => {
+                                console.log(res);
+                                refresh();
+                              })
+                              .catch((err) => {
+                                console.log(err.response);
+                              });
+                          }}
+                        />
+                      )}
+                    {!isRapport &&
+                      activeFilter === "not_validated" &&
+                      role === "service" && (
+                        <ConfirmDeleteModal
+                          onConfirm={() => {
+                            let instance = axios.create({
+                              baseURL: `${url}`,
+                              responseType: "json",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Token ${localStorage.getItem(
+                                  "service_token"
+                                )}`,
+                              },
+                            });
+                            let body = {
+                              status: "archived",
+                            };
+                            instance
+                              .patch(`${element.aid}/`, body)
+                              .then((res) => {
+                                console.log(res);
+                                refresh();
+                              })
+                              .catch((err) => {
+                                console.log(err.response);
+                              });
+                          }}
+                        />
+                      )}
                   </div>
                 </Table.Cell>
               </Table.Row>
