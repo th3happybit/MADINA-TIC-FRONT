@@ -4,8 +4,10 @@ import { Form, Image, Button, Segment, Message, Icon } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { withRouter, useHistory } from "react-router-dom";
 
 const UpdateAnnounces = (props) => {
+  const history = useHistory();
   const [data, setData] = useState([]);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
@@ -18,10 +20,9 @@ const UpdateAnnounces = (props) => {
   const [endDateErr, setEndDateErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [aid, setAid] = useState(null);
-  const [selected, setSelected] = useState(null);
+  const [loadingSeg, setIsLoadingSeg] = useState(false);
 
   const handleUpdate = () => {
-    console.log("raha tedkhoul");
     setIsLoading(true);
     axios
       .create({
@@ -40,17 +41,14 @@ const UpdateAnnounces = (props) => {
           start_at: startDate,
           end_at: endDate,
           desc: description,
+          status: "modified",
         },
       })
       .then((res) => {
-        console.log("raha tekhdem");
-        let aid = res.data.aid;
-        setAid(aid);
         setSucces(true);
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log("marahech tekhdem");
         Object.entries(err.response.data).map((elm) => {
           switch (elm[0]) {
             case "title":
@@ -76,29 +74,37 @@ const UpdateAnnounces = (props) => {
         setIsLoading(false);
       });
   };
+  useEffect(() => {
+    if (!props.location.state) {
+      history.push("/service/annonce/");
+    }
+    if (props.location && props.location.state) {
+      setAid(props.location.state.aid);
+    }
+  }, [props]);
 
   useEffect(() => {
-    axios
-      .get(
-        `http://157.230.19.233/api/announces/9da1981d-4c6e-4208-b445-1f3145887de6/`,
-        {
+    if (aid) {
+      setIsLoadingSeg(true);
+      axios
+        .get(`http://157.230.19.233/api/announces/${aid}/`, {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
           },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        setTitle(res.data.title);
-        setDesctiption(res.data.desc);
-        setStartDate(res.data.start_at);
-        setEndDate(res.data.end_at);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  }, []);
+        })
+        .then((res) => {
+          setTitle(res.data.title);
+          setDesctiption(res.data.desc);
+          setStartDate(res.data.start_at);
+          setEndDate(res.data.end_at);
+          setIsLoadingSeg(false);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+  }, [aid]);
   const handleChange = (e, { name, value }) => {
     switch (name) {
       case "title":
@@ -121,6 +127,7 @@ const UpdateAnnounces = (props) => {
         style={{
           margin: "auto",
         }}
+        loading={loadingSeg}
       >
         <h3 className="large-title text-default bold _margin_vertical_md">
           Update Announce
@@ -212,4 +219,4 @@ const UpdateAnnounces = (props) => {
   );
 };
 
-export default UpdateAnnounces;
+export default withRouter(UpdateAnnounces);

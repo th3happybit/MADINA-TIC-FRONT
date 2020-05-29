@@ -74,6 +74,9 @@ const TableTestComponent = (props) => {
       {Data && (
         <Table.Body>
           {Data.map((element, index) => {
+            if (role === "service" && !isRapport) {
+              console.log(element);
+            }
             return (
               <Table.Row>
                 {header.map((elm) => (
@@ -130,13 +133,48 @@ const TableTestComponent = (props) => {
                           </Link>
                         </Button.Group>
                       )}
-                    {isRapport && activeFilter === "lack_of_info" && (
+                    {activeFilter === "not_validated" && role === "service" && (
                       <Button.Group>
                         <Link
                           to={{
-                            pathname: "/complement/rapport",
+                            pathname: "/update/annonce",
                             state: {
-                              rid: element.rid,
+                              aid: element.aid,
+                            },
+                            query: { aid: element.aid },
+                          }}
+                        >
+                          <Popup
+                            content="Edit"
+                            trigger={
+                              <Button
+                                className="shadow _hide_on_mobile _infos_btn_desktop"
+                                color="black"
+                                icon={{
+                                  name: "pencil alternate",
+                                  color: "white",
+                                  inverted: true,
+                                }}
+                              />
+                            }
+                          />
+                          <Button
+                            color={"black"}
+                            className="shadow btn_account_detail pointer _show_on_mobile"
+                            content="Edit"
+                          />
+                        </Link>
+                      </Button.Group>
+                    )}
+                    {activeFilter === "lack_of_info" && (
+                      <Button.Group>
+                        <Link
+                          to={{
+                            pathname: isRapport
+                              ? "/complement/rapport"
+                              : "/complement/annonce",
+                            state: {
+                              rid: isRapport ? element.rid : element.aid,
                               did: element.declaration,
                             },
                           }}
@@ -213,37 +251,69 @@ const TableTestComponent = (props) => {
                       />
                     )}
 
-                    {activeFilter === "not_validated" && role === "service" && (
-                      <ConfirmDeleteModal
-                        onConfirm={() => {
-                          axios
-                            .create({
-                              headers: {
-                                patch: {
-                                  "Content-Type": "application/json",
-                                  Authorization: `Token ${localStorage.getItem(
-                                    token
-                                  )}`,
+                    {isRapport &&
+                      activeFilter === "not_validated" &&
+                      role === "service" && (
+                        <ConfirmDeleteModal
+                          onConfirm={() => {
+                            axios
+                              .create({
+                                headers: {
+                                  patch: {
+                                    "Content-Type": "application/json",
+                                    Authorization: `Token ${localStorage.getItem(
+                                      token
+                                    )}`,
+                                  },
                                 },
+                              })
+                              .request({
+                                url: `${url}${element.rid}/`,
+                                method: "patch",
+                                data: {
+                                  status: "archived",
+                                },
+                              })
+                              .then((res) => {
+                                console.log(res);
+                                refresh();
+                              })
+                              .catch((err) => {
+                                console.log(err.response);
+                              });
+                          }}
+                        />
+                      )}
+                    {!isRapport &&
+                      activeFilter === "not_validated" &&
+                      role === "service" && (
+                        <ConfirmDeleteModal
+                          onConfirm={() => {
+                            let instance = axios.create({
+                              baseURL: `${url}`,
+                              responseType: "json",
+                              headers: {
+                                "Content-Type": "application/json",
+                                Authorization: `Token ${localStorage.getItem(
+                                  "service_token"
+                                )}`,
                               },
-                            })
-                            .request({
-                              url: `${url}${element.rid}/`,
-                              method: "patch",
-                              data: {
-                                status: "archived",
-                              },
-                            })
-                            .then((res) => {
-                              console.log(res);
-                              refresh();
-                            })
-                            .catch((err) => {
-                              console.log(err.response);
                             });
-                        }}
-                      />
-                    )}
+                            let body = {
+                              status: "archived",
+                            };
+                            instance
+                              .patch(`${element.aid}/`, body)
+                              .then((res) => {
+                                console.log(res);
+                                refresh();
+                              })
+                              .catch((err) => {
+                                console.log(err.response);
+                              });
+                          }}
+                        />
+                      )}
                   </div>
                 </Table.Cell>
               </Table.Row>

@@ -18,6 +18,7 @@ export default function DeposerAnnonces(props) {
   const [description, setDesctiption] = useState("");
   const [descriptionErr, setDescriptionErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [service, setSerivce] = useState(null);
 
   const AddAnnonce = () => {
     setIsLoading(true);
@@ -38,6 +39,7 @@ export default function DeposerAnnonces(props) {
           end_at: endDate,
           status: "not_validated",
           desc: description,
+          service,
         },
       })
       .then((res) => {
@@ -83,7 +85,19 @@ export default function DeposerAnnonces(props) {
         break;
     }
   };
-
+  useEffect(() => {
+    axios
+      .get("http://157.230.19.233/api/user/", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("service_token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setSerivce(res.data.uid);
+      });
+  }, []);
   return (
     <div className="container_add_dec service">
       <div className="_add_dec">
