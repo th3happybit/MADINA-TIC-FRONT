@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./AnnonceHome.css";
-import { Segment, Rail, Divider } from "semantic-ui-react";
+import { Segment, Rail, Divider, Pagination } from "semantic-ui-react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -9,6 +9,8 @@ import { useState } from "react";
 const AnnonceHome = (props) => {
   const [Data, setData] = useState([]);
   const [Loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
+  const [page, setPage] = useState(1);
 
   function getMonth(month) {
     switch (month) {
@@ -40,7 +42,6 @@ const AnnonceHome = (props) => {
         break;
     }
   }
-
   function TimeExtract(date) {
     let ConvertedDate,
       year,
@@ -66,6 +67,9 @@ const AnnonceHome = (props) => {
       " +01 GMT";
     return ConvertedDate;
   }
+  const changePage = (e, { activePage }) => {
+    setPage(activePage);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -73,6 +77,7 @@ const AnnonceHome = (props) => {
       .get("http://157.230.19.233/api/announces/", {
         params: {
           status: "published",
+          page: page,
           // start_at : "2020-06-07T14:00:00+01:00"
           // title : {"eq" : "hello"}
         },
@@ -85,37 +90,58 @@ const AnnonceHome = (props) => {
         console.log(res);
         setData(res.data.results);
         setLoading(false);
+        if (res.data.count % 10 === 0) {
+          setCount(parseInt(res.data.count / 10));
+        } else {
+          setCount(parseInt(res.data.count / 10) + 1);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [page]);
 
   return (
     <Segment className="_annonce_tab shadow" loading={Loading}>
-      <h3 className="text-default pointer">
-        Active Announcements
-      </h3>
-      {Data.map((annonce, index) => {
-        return (
-          <div key={index} className="_annonce">
-            <h4 className="">{annonce.title}</h4>
-            <span>
-              <p className="_title">From :</p>
-              &nbsp;
-              <p>{TimeExtract(annonce.start_at)}</p>
-            </span>
-            <span>
-              <p className="_title">To :</p>
-              &nbsp;
-              <p>{TimeExtract(annonce.end_at)}</p>
-            </span>
-            <p className="_title">Details :</p>
-            <p>{annonce.desc}</p>
-            {index + 1 < Data.length && <Divider />}
-          </div>
-        );
-      })}
+      <h3 className="text-default">Active Announcements</h3>
+
+      <div className="_tab_content">
+        <div className="_announces">
+          {Data.map((annonce, index) => {
+            return (
+              <div key={index} className="_annonce">
+                <h4 className="">{annonce.title}</h4>
+                <span>
+                  <p className="_title">From :</p>
+                  &nbsp;
+                  <p>{TimeExtract(annonce.start_at)}</p>
+                </span>
+                <span>
+                  <p className="_title">To :</p>
+                  &nbsp;
+                  <p>{TimeExtract(annonce.end_at)}</p>
+                </span>
+                <p className="_title">Details :</p>
+                <p>{annonce.desc}</p>
+                {index + 1 < Data.length && <Divider />}
+              </div>
+            );
+          })}
+        </div>
+        {count > 1 && (
+          <Pagination
+            className="_annonce_pagination"
+            defaultActivePage={1}
+            activePage={page}
+            firstItem={null}
+            lastItem={null}
+            pointing
+            secondary
+            totalPages={count}
+            onPageChange={changePage}
+          />
+        )}
+      </div>
     </Segment>
   );
 };
