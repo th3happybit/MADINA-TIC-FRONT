@@ -1,0 +1,58 @@
+._maire_annonces {
+  position: relative;
+  width: 100%;
+  min-height: 650px;
+  padding-top: 6rem;
+  padding-left: 19rem !important;
+  padding-right: 2rem !important;
+}
+
+._maire_annonces .text-default {
+  color: var(--primary) !important;
+  position: sticky !important;
+}
+
+._main_body .filter_annonce {
+  color: var(--primary) !important;
+  background-color: white !important;
+  border: 1px solid var(--primary) !important;
+  border-radius: 3px !important;
+  text-align: center !important;
+}
+
+._main_body .filter_annonce > i {
+  background-color: white !important;
+}
+
+._main_body .filter_annonce:hover {
+  color: white !important;
+  background-color: var(--primary) !important;
+}
+
+._main_body .filter_annonce:hover > i {
+  background-color: var(--primary) !important;
+}
+
+@media (max-width: 899px) {
+  ._maire_annonces {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    padding-top: 8rem !important;
+    width: 100%;
+    position: unset;
+    min-height: 0 !important;
+  }
+  ._main_body .filter_annonce > i {
+    color: var(--primary) !important;
+  }
+  ._main_body .filter_annonce:hover > i {
+    color: white !important;
+  }
+
+  @media (max-width: 750px) {
+    ._main_body .filter_annonce {
+      width: 100% !important;
+      margin-bottom: 1rem !important;
+    }
+  }
+}

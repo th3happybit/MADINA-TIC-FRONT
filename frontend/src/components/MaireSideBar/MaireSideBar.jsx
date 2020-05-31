@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./MaireSideBar.css";
 import { ReactComponent as Rapports } from "../../assets/icons/rapport_icon.svg";
 import { ReactComponent as Declarations } from "../../assets/icons/Declarations.svg";
+import { ReactComponent as Announcements } from "../../assets/icons/annonce_icon.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 
 const MaireSideBar = (props) => {
@@ -18,6 +19,21 @@ const MaireSideBar = (props) => {
           </div>
         </Link>
         <Menu text vertical>
+          <div className="d-flex">
+            <Declarations
+              className={
+                props.active === "declarations"
+                  ? "_sidebar_icons active"
+                  : "_sidebar_icons"
+              }
+            />
+            <Menu.Item
+              as={Link}
+              to="/maire/declaration"
+              name="Declarations"
+              className={props.active === "declarations" ? "active" : ""}
+            />
+          </div>
           <div className="d-flex">
             <Rapports
               className={
@@ -33,20 +49,19 @@ const MaireSideBar = (props) => {
               className={props.active === "rapports" ? "active" : ""}
             />
           </div>
-
           <div className="d-flex">
-            <Declarations
+            <Announcements
               className={
-                props.active === "declarations"
+                props.active === "announce"
                   ? "_sidebar_icons active"
                   : "_sidebar_icons"
               }
             />
             <Menu.Item
               as={Link}
-              to="/maire/declaration"
-              name="Declarations"
-              className={props.active === "declarations" ? "active" : ""}
+              to="/maire/announce/"
+              name="Announcements"
+              className={props.active === "announce" ? "active" : ""}
             />
           </div>
         </Menu>

@@ -43,7 +43,7 @@ import ComplementRapport from "./components/ServiceComplementReport/ComplementRe
 import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
 import UpdateAnnounces from "./components/UpdateAnnounces/UpdateAnnounces.jsx";
 import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnnounces.jsx";
-
+import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
 
 function App() {
   return (
@@ -65,6 +65,13 @@ function App() {
           path="/maire/declaration/"
           component={() => (
             <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
+        <Route
+          exact
+          path="/maire/announce/"
+          component={() => (
+            <Maire active="announce" childComponent={MaireAnnonce} />
           )}
         />
         <Route

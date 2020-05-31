@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./AnnonceHome.css";
-import { Segment, Rail, Divider, Pagination } from "semantic-ui-react";
+import { Segment, Divider, Pagination } from "semantic-ui-react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
