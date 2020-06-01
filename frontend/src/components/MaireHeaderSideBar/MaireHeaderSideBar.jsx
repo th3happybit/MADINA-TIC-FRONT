@@ -61,7 +61,7 @@ const SidebarHeader = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/maire/annonce"
+            to="/maire/announce"
             className={
               props.active === "announce"
                 ? "medium-text text-default text-active"

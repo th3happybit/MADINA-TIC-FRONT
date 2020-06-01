@@ -58,12 +58,12 @@
 }
 
 ._maire_pagination {
-  /* position: r !important; */
   margin-bottom: 1.5rem !important;
   margin-left: 1.5rem !important;
   bottom: 10px !important;
   border: none !important;
   border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
+  width : fit-content;
 }
 
 ._maire_table th {

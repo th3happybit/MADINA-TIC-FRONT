@@ -22,6 +22,7 @@ const ServiceDeclaration = (props) => {
   const [id, setId] = useState(null);
 
   const handle_filter = (e) => {
+    setTerm("")
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -40,7 +41,7 @@ const ServiceDeclaration = (props) => {
     const pa = {
       page: page,
       service: sid,
-      ordering:"priority"
+      ordering: "priority",
     };
     if (term) {
       pa["search"] = term;
@@ -189,23 +190,22 @@ const ServiceDeclaration = (props) => {
           </Dropdown>
         </div>
         {Data.length > 0 ? (
-          <>
-            <DeclarationsTable
-              data={Data}
-              filter={activeFilter}
-            />
-            <Pagination
-              className="_service_pagination"
-              boundaryRange={0}
-              activePage={page}
-              onPageChange={changePage}
-              firstItem={null}
-              lastItem={null}
-              totalPages={pages}
-              pointing
-              secondary
-            />
-          </>
+          <div className="_data_section">
+            <DeclarationsTable data={Data} filter={activeFilter} />
+            {pages > 1 && (
+              <Pagination
+                className="_service_pagination"
+                boundaryRange={0}
+                activePage={page}
+                onPageChange={changePage}
+                firstItem={null}
+                lastItem={null}
+                totalPages={pages}
+                pointing
+                secondary
+              />
+            )}
+          </div>
         ) : (
           perm && (
             <p class="zero-data">

@@ -75,6 +75,7 @@ const MaireDeclarations = (props) => {
     }
   };
   const handle_filter = (e) => {
+    setTerm("")
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -275,7 +276,7 @@ const MaireDeclarations = (props) => {
       status: "validated",
       service: decData.service,
       validated_at: decData.validated_at,
-      priority : decData.priority,
+      priority: decData.priority,
     };
     updateDecStatus(data, decData.did);
   };
@@ -383,7 +384,7 @@ const MaireDeclarations = (props) => {
           </Dropdown>
         </div>
         {Data.length > 0 && allow ? (
-          <>
+          <div className="_data_section">
             <MaireDeclarationTable
               data={Data}
               names={names}
@@ -397,18 +398,20 @@ const MaireDeclarations = (props) => {
               types={types}
               maire={props.maire}
             />
-            <Pagination
-              className="_maire_pagination"
-              boundaryRange={0}
-              activePage={page}
-              onPageChange={changePage}
-              firstItem={null}
-              lastItem={null}
-              totalPages={pages}
-              pointing
-              secondary
-            />
-          </>
+            {pages > 1 && (
+              <Pagination
+                className="_maire_pagination"
+                boundaryRange={0}
+                activePage={page}
+                onPageChange={changePage}
+                firstItem={null}
+                lastItem={null}
+                totalPages={pages}
+                pointing
+                secondary
+              />
+            )}
+          </div>
         ) : (
           perm && (
             <p class="zero-data">
