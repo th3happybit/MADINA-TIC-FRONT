@@ -21,7 +21,7 @@
     font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
     width: 100%;
     height: 70px;
-    box-shadow: inset 0 -1px 0 rgba(100, 121, 143, 0.122);
+    background-color: #f2f2f2;
   }
 ._sidebar_service .part_top p {
     margin: 0 0.5rem;

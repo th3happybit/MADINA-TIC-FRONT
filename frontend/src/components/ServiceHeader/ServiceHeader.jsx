@@ -11,6 +11,7 @@ import "./ServiceHeader.css";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
+import { Link } from "react-router-dom";
 
 //sfc shortcut
 const HeaderService = (props) => {
@@ -68,19 +69,14 @@ const HeaderService = (props) => {
       <header className="_header_service">
         <div className="row">
           <div className="right_part">
-            <div
-              className={
-                props.active === "annonce"
-                  ? "btn_segment active"
-                  : "btn_segment"
-              }
+            <Button
+              href="/add/annonce"
+              color="blue"
+              className="_add_link"
+              disabled={props.active !== "annonce"}
             >
-              <a href="/add/annonce">
-                <Button disabled={props.active === "annonce"}>
-                  Add Annonce
-                </Button>
-              </a>
-            </div>
+              Add Annonce
+            </Button>
             <div className="profile_img">
               {" "}
               <Notification className="_margin_horizontal_md pointer" />
