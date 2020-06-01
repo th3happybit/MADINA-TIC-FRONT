@@ -76,7 +76,10 @@ const ModalComplement = (props) => {
               placeholder="Enter text here..."
               error={
                 error
-                  ? { content: "This field can't be empty", pointing: "above" }
+                  ? {
+                      content: "This field can't be empty",
+                      class: "ui basic red label pointing",
+                    }
                   : false
               }
             />

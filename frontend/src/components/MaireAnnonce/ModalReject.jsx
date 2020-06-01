@@ -4,7 +4,11 @@ import { Modal, Button, Icon, ModalContent } from "semantic-ui-react";
 const ModalApprove = (props) => {
   const [open, setOpen] = useState(false);
 
-  const { modal } = props;
+  const { modal, data } = props;
+
+  const handle_reject = () => {
+    props.reject(data)
+  }
 
   const handleopen = () => {
     setOpen(true);
@@ -50,7 +54,7 @@ const ModalApprove = (props) => {
             <p>Confirm reject</p>
           </div>
           <div className="_redirection_content">
-            <p>Confirm Deleting this announcement ?</p>
+            <p>Confirm rejecting this announcement ?</p>
           </div>
         </ModalContent>
         <ModalContent className="content_modal_btns">
@@ -58,7 +62,7 @@ const ModalApprove = (props) => {
             animated
             color="blue"
             className="_primary"
-            onClick={props.approve}
+            onClick={handle_reject}
           >
             <Button.Content visible content="Confirm" />
             <Button.Content hidden>

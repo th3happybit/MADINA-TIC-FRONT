@@ -33,6 +33,18 @@
   background-color: var(--primary) !important;
 }
 
+._limit_size {
+  max-width: 500px;
+  text-align: justify;
+}
+
+._data_section {
+  min-height : 500px;
+  display : flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 @media (max-width: 899px) {
   ._maire_annonces {
     padding-left: 1.5rem !important;
@@ -41,6 +53,9 @@
     width: 100%;
     position: unset;
     min-height: 0 !important;
+  }
+  ._limit_size {
+    max-width: 400px;
   }
   ._main_body .filter_annonce > i {
     color: var(--primary) !important;
@@ -53,6 +68,10 @@
     ._main_body .filter_annonce {
       width: 100% !important;
       margin-bottom: 1rem !important;
+    }
+
+    ._limit_size {
+      max-width: 200px;
     }
   }
 }

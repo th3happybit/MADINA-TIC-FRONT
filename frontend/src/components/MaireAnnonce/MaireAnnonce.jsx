@@ -1,11 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import {
-  Segment,
-  Search,
-  Dropdown,
-  Pagination,
-} from "semantic-ui-react";
+import { Segment, Search, Dropdown, Pagination } from "semantic-ui-react";
 
 import AnnonceTable from "./AnnonceTable.jsx";
 import "./MaireAnnonce.css";
@@ -32,7 +27,6 @@ const MaireAnnonce = (props) => {
     setSortStartAt(null);
     setPage(1);
   };
-
   const handle_StartAtFirst = () => {
     setSortStartAt("asc");
     setsortMobile("Start at (Asc)");
@@ -57,7 +51,6 @@ const MaireAnnonce = (props) => {
     setSortStartAt(null);
     setPage(1);
   };
-
   const handle_StartAt = () => {
     if (!sortStartAt) handle_StartAtFirst();
     else if (sortStartAt === "asc") handle_StartAtLast();
@@ -75,6 +68,7 @@ const MaireAnnonce = (props) => {
     }
   };
   const handle_filter = (e) => {
+    setTerm("")
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -128,7 +122,7 @@ const MaireAnnonce = (props) => {
     }
 
     axios
-      .get("http://157.230.19.233/api/announces/", {
+      .get("http://157.230.19.233/api/announce_nested/", {
         params: pa,
         headers: {
           "content-type": "application/json",
@@ -136,6 +130,7 @@ const MaireAnnonce = (props) => {
         },
       })
       .then((res) => {
+        console.log(res);
         setData(res.data.results);
         setLoading(false);
         if (res.data.count % 10 === 0) {
@@ -176,30 +171,6 @@ const MaireAnnonce = (props) => {
         console.log(err);
       });
   };
-  const addRejection = (data) => {
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`,
-          },
-        },
-      })
-      .request("http://157.230.19.233/api/declarations_rejection/", {
-        method: "post",
-        data: data,
-      })
-      .then((res) => {
-        setRefresh((prevState) => !prevState);
-        setPage(1);
-      })
-      .catch((err) => {
-        setRefresh((prevState) => !prevState);
-        setPage(1);
-        console.log(err);
-      });
-  };
   const addComplement = (data) => {
     axios
       .create({
@@ -224,14 +195,15 @@ const MaireAnnonce = (props) => {
         console.log(err);
       });
   };
-  const rejectAnnonce = (annData, reason) => {
-    annData["reason"] = reason;
-    const rejectionData = {
-      maire: annData.maire,
-      declaration: annData.did,
-      reason: reason,
+  const rejectAnnonce = (annData) => {
+    const data = {
+      title: annData.title,
+      desc: annData.desc,
+      status: "removed",
+      start_at: annData.start_at,
+      end_at: annData.end_at,
     };
-    addRejection(rejectionData);
+    updateAnnStatus(data, annData.aid);
   };
   const demandComplement = (annData, reason) => {
     annData["reason"] = reason;
@@ -249,16 +221,6 @@ const MaireAnnonce = (props) => {
     };
     addComplement(complementData);
     updateAnnStatus(data, annData.aid);
-  };
-  const archiveAnnonce = (annData) => {
-    const data = {
-      title: annData.title,
-      desc: annData.desc,
-      citizen: annData.citizen,
-      dtype: annData.dtype,
-      status: "archived",
-    };
-    updateAnnStatus(data, annData.did);
   };
   const validateAnnonce = (annData) => {
     const data = {
@@ -369,14 +331,13 @@ const MaireAnnonce = (props) => {
           </Dropdown>
         </div>
         {Data.length > 0 && allow ? (
-          <>
+          <div className="_data_section">
             <AnnonceTable
               data={Data}
               filter={activeFilter}
               validateAnnonce={validateAnnonce}
               rejectAnnonce={rejectAnnonce}
               demandComplement={demandComplement}
-              archiveAnnonce={archiveAnnonce}
               handle_StartAt={handle_StartAt}
               handle_EndAt={handle_EndAt}
               sortEndAt={sortEndAt}
@@ -395,7 +356,7 @@ const MaireAnnonce = (props) => {
                 secondary
               />
             )}
-          </>
+          </div>
         ) : (
           perm && (
             <p class="zero-data">
