@@ -5,3 +5,9 @@
 .btns_actionsx .buttons {
   margin: 0 1rem;
 }
+
+@media (max-width : 899px) {
+  .btns_actionsx{
+    justify-content: flex-start;
+  }
+}

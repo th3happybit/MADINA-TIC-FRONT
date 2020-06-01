@@ -11,7 +11,6 @@ const ServiceDesclarationTable = (props) => {
   const [Data, setData] = useState(null);
   useEffect(() => {
     setData(props.data);
-    console.log(props.data);
   }, [props.data]);
 
   function filterAttachments(att) {

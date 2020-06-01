@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Button, Icon, Image } from "semantic-ui-react";
+import { Modal, Button, Icon, Popup } from "semantic-ui-react";
 
 const ModalDetailComponent = (props) => {
   const {
@@ -12,6 +12,8 @@ const ModalDetailComponent = (props) => {
     role,
     activeFilter,
     report,
+    TimeExtract,
+    getMonth,
   } = props;
   const [open, setOpen] = useState(false);
   const [titleDec, setTitleDec] = useState("");
@@ -41,7 +43,6 @@ const ModalDetailComponent = (props) => {
           if (res.data.results.length > 0) {
             setMorif(res.data.results[0].reason);
           }
-          console.log(res);
         })
         .catch((err) => {
           console.log(err.response);
@@ -70,35 +71,35 @@ const ModalDetailComponent = (props) => {
         });
     }
     //? SECOND REQUEST FOR FILES
-    axios
-      .create({
-        headers: {
-          get: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem(token)}`,
+    if (isRapport)
+      axios
+        .create({
+          headers: {
+            get: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem(token)}`,
+            },
           },
-        },
-      })
-      .request({
-        url: `http://157.230.19.233/api/documents/?report__rid=${data.rid}`,
-        method: "get",
-      })
-      .then((res) => {
-        let tempArr = [];
-        if (res.data.length > 0) {
-          res.data.map((elm) => {
-            if (elm.filetype === "pdf") {
-              tempArr.push(elm);
-            }
-          });
-          setFiles(tempArr);
-        }
-      })
-      .catch((err) => {
-        console.log({ DocErr: err.reponse });
-      });
+        })
+        .request({
+          url: `http://157.230.19.233/api/documents/?report__rid=${data.rid}`,
+          method: "get",
+        })
+        .then((res) => {
+          let tempArr = [];
+          if (res.data.length > 0) {
+            res.data.map((elm) => {
+              if (elm.filetype === "pdf") {
+                tempArr.push(elm);
+              }
+            });
+            setFiles(tempArr);
+          }
+        })
+        .catch((err) => {
+          console.log({ DocErr: err.reponse });
+        });
   }, [data]);
-  console.log({ files });
   return (
     <Modal
       open={open}
@@ -106,15 +107,27 @@ const ModalDetailComponent = (props) => {
       closeIcon
       className="_add_account_modal"
       trigger={
-        <Button.Group onClick={handleopen} className="infos_button">
-          <Button icon className="shadow _hide_on_mobile _infos_btn_desktop">
-            <Icon name="info" color="black" />
-          </Button>
+        <>
+          <Button.Group onClick={handleopen} className="infos_button">
+            <Popup
+              content="More Infos"
+              trigger={
+                <Button
+                  icon
+                  className="shadow _hide_on_mobile _infos_btn_desktop"
+                >
+                  <Icon name="info" color="black" />
+                </Button>
+              }
+            />
+          </Button.Group>
           <Button
-            className="shadow btn_account_detail pointer _show_on_mobile"
-            content="Account details"
+            onClick={handleopen}
+            color="blue"
+            className="shadow btn_account_detail pointer _primary _hide_on_desktop"
+            content="More details"
           />
-        </Button.Group>
+        </>
       }
     >
       <Modal.Content>
@@ -142,7 +155,21 @@ const ModalDetailComponent = (props) => {
               {isRapport && <p>{titleDec}</p>}
               {motif && activeFilter === "archived" && <p>{motif}</p>}
               {detail.map((elm) => (
-                <p>{data[elm.value] ? data[elm.value] : "/"}</p>
+                <p className={elm.value === "desc" ? "_limit_size" : null}>
+                  {data[elm.value]
+                    ? elm.value === "start_at" || elm.value === "end_at"
+                      ? TimeExtract(data[elm.value])
+                      : elm.value === "created_on" ||
+                        elm.value === "validated_at" ||
+                        elm.value === "modified_at"
+                      ? data[elm.value].slice(8, 10) +
+                        " - " +
+                        getMonth(data[elm.value].slice(5, 7)) +
+                        " - " +
+                        data[elm.value].slice(0, 4)
+                      : data[elm.value]
+                    : "/"}
+                </p>
               ))}
               {files.length > 0 &&
                 files.map((file, index) => {

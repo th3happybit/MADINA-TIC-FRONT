@@ -64,7 +64,7 @@ const ServiceDeclaration = (props) => {
     }
     if (sid)
       axios
-        .get("http://157.230.19.233/api/declarations/", {
+        .get("http://157.230.19.233/api/declaration_nested/", {
           params: pa,
           headers: {
             "content-type": "application/json",

@@ -9,17 +9,39 @@ import { Link } from "react-router-dom";
 
 const SortedRow = (props) => {
   const { elm, handleSort, setsortDate } = props;
-  const [sorttype, setSortType] = useState("asc");
+  const [sorttype, setSortType] = useState(props.sortdate);
   const handleTypeSort = (e) => {
     let type = e.currentTarget.attributes.name.value;
-    sorttype === "asc" ? setSortType("desc") : setSortType("asc");
-    sorttype === "asc" ? setsortDate("desc") : setsortDate("asc");
+
+    if (elm.value !== props.orderfield) {
+      setSortType("asc");
+      setsortDate("asc");
+    } else {
+      if (sorttype === "asc") {
+        setSortType("desc");
+        setsortDate("desc");
+      } else if (sorttype === "desc") {
+        setSortType(null);
+        setsortDate(null);
+      } else {
+        setSortType("asc");
+        setsortDate("asc");
+      }
+    }
     handleSort(type);
   };
   return (
     <p className="sort_field pointer" name={elm.value} onClick={handleTypeSort}>
       {elm.text}
-      <Icon name={sorttype === "asc" ? "sort up" : "sort down"} />
+      {elm.value === props.orderfield ? (
+        sorttype ? (
+          <Icon name={sorttype === "asc" ? "sort up" : "sort down"} />
+        ) : (
+          <Icon name={"sort"} />
+        )
+      ) : (
+        <Icon name="sort" />
+      )}
     </p>
   );
 };
@@ -29,7 +51,9 @@ const TableTestComponent = (props) => {
     header,
     data,
     setOrderField,
+    orderfield,
     setsortDate,
+    sortdate,
     isRapport,
     token,
     title,
@@ -38,6 +62,8 @@ const TableTestComponent = (props) => {
     refresh,
     role,
     uid,
+    getStatus,
+    getMonth,
   } = props;
   const [Data, setData] = useState([]);
   useEffect(() => {
@@ -50,38 +76,95 @@ const TableTestComponent = (props) => {
     setOrderField(type);
   };
 
+  function TimeExtract(date) {
+    let ConvertedDate,
+      year,
+      month,
+      day,
+      hour,
+      minute = "";
+    year = date.slice(0, 4);
+    month = date.slice(5, 7);
+    day = date.slice(8, 10);
+    hour = date.slice(11, 13);
+    minute = date.slice(14, 16);
+    ConvertedDate =
+      year +
+      " " +
+      getMonth(month) +
+      " " +
+      day +
+      " --- " +
+      hour +
+      ":" +
+      minute +
+      " +01 GMT";
+    return ConvertedDate;
+  }
   return (
     <Table striped className="_service_table">
       <Table.Header>
         {header.map((elm) => {
-          return elm.sort ? (
-            <Table.HeaderCell width={elm.value === "desc" ? 3 : 2}>
-              <SortedRow
-                elm={elm}
-                handleSort={handleSort}
-                setsortDate={setsortDate}
+          if (elm.value !== "desc" || isRapport)
+            return elm.sort ? (
+              <Table.HeaderCell width={elm.value === "desc" ? 3 : 2}>
+                <SortedRow
+                  elm={elm}
+                  handleSort={handleSort}
+                  setsortDate={setsortDate}
+                  sortdate={sortdate}
+                  orderfield={orderfield}
+                />
+              </Table.HeaderCell>
+            ) : (
+              <Table.HeaderCell
+                className={elm.value === "desc" ? "_hide" : null}
+                width={elm.value === "desc" ? 3 : 2}
+                content={elm.text}
               />
-            </Table.HeaderCell>
-          ) : (
-            <Table.HeaderCell
-              content={elm.text}
-              width={elm.value === "desc" ? 3 : 2}
-            />
-          );
+            );
+          else return null;
         })}
         <Table.HeaderCell content="Manage" width={1} textAlign="center" />
       </Table.Header>
       {Data && (
         <Table.Body>
           {Data.map((element, index) => {
-            if (role === "service" && !isRapport) {
-              console.log(element);
-            }
             return (
               <Table.Row>
-                {header.map((elm) => (
-                  <Table.Cell>{element[elm.value]}</Table.Cell>
-                ))}
+                {header.map(
+                  (elm) =>
+                    (elm.value !== "desc" || isRapport) && (
+                      <Table.Cell
+                        className={
+                          elm.value === "desc" ? "_hide _hide_td" : null
+                        }
+                      >
+                        {elm.value === "start_at" || elm.value === "end_at" ? (
+                          TimeExtract(element[elm.value])
+                        ) : elm.value === "created_on" ? (
+                          element[elm.value].slice(8, 10) +
+                          " - " +
+                          getMonth(element[elm.value].slice(5, 7)) +
+                          " - " +
+                          element[elm.value].slice(0, 4)
+                        ) : elm.value === "desc" ? (
+                          element[elm.value].length < 40 ? (
+                            <p>{element[elm.value]}</p>
+                          ) : (
+                            <>
+                              <p>{element[elm.value].slice(0, 35) + " ..."}</p>
+                              <span className="full_text">
+                                {element[elm.value]}
+                              </span>
+                            </>
+                          )
+                        ) : (
+                          element[elm.value]
+                        )}
+                      </Table.Cell>
+                    )
+                )}
 
                 <Table.Cell>
                   <div className="btns_actionsx">
@@ -97,6 +180,9 @@ const TableTestComponent = (props) => {
                       style={{
                         margin: "0 1rem",
                       }}
+                      getMonth={getMonth}
+                      TimeExtract={TimeExtract}
+                      getStatus={getStatus}
                     />
                     {isRapport &&
                       activeFilter === "not_validated" &&
@@ -240,7 +326,6 @@ const TableTestComponent = (props) => {
                               instance2
                                 .post("reports_rejection/", body)
                                 .then((res) => {
-                                  console.log(res);
                                   refresh();
                                 });
                             })
@@ -275,7 +360,6 @@ const TableTestComponent = (props) => {
                                 },
                               })
                               .then((res) => {
-                                console.log(res);
                                 refresh();
                               })
                               .catch((err) => {
@@ -305,7 +389,6 @@ const TableTestComponent = (props) => {
                             instance
                               .patch(`${element.aid}/`, body)
                               .then((res) => {
-                                console.log(res);
                                 refresh();
                               })
                               .catch((err) => {
