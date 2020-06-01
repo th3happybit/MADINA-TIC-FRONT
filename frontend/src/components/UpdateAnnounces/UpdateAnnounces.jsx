@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Image, Button, Segment, Message, Icon } from "semantic-ui-react";
+import { Form, Button, Message, Segment } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { withRouter, useHistory } from "react-router-dom";
 
-const UpdateAnnounces = (props) => {
-  const history = useHistory();
-  const [data, setData] = useState([]);
+const ComplementAnnounces = (props) => {
+  const [titleErr, setTitleErr] = useState(false);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
-  const [titleErr, setTitleErr] = useState(false);
   const [description, setDesctiption] = useState("");
   const [descriptionErr, setDescriptionErr] = useState(false);
-  const [startDate, setStartDate] = useState(null);
+  const [startDate, setStartDate] = useState("");
   const [startDateErr, setStartDateErr] = useState(false);
-  const [endDate, setEndDate] = useState(null);
+  const [endDate, setEndDate] = useState("");
   const [endDateErr, setEndDateErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [aid, setAid] = useState(null);
-  const [loadingSeg, setIsLoadingSeg] = useState(false);
+  const [nullAid, setnullAid] = useState(false);
 
-  const handleUpdate = () => {
+  const handleComplement = () => {
     setIsLoading(true);
     axios
       .create({
@@ -34,17 +31,19 @@ const UpdateAnnounces = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/announces/9da1981d-4c6e-4208-b445-1f3145887de6/`,
+        url: `http://157.230.19.233/api/announces/${aid}/`,
         method: "patch",
         data: {
           title: title,
           start_at: startDate,
           end_at: endDate,
           desc: description,
-          status: "modified",
+          status: "not_validated",
         },
       })
       .then((res) => {
+        let aid = res.data.aid;
+        setAid(aid);
         setSucces(true);
         setIsLoading(false);
       })
@@ -63,9 +62,6 @@ const UpdateAnnounces = (props) => {
             case "end_at":
               setEndDateErr(true);
               break;
-            case "non_field_errors":
-              setStartDateErr(true);
-              setEndDateErr(true);
             default:
               break;
           }
@@ -74,149 +70,147 @@ const UpdateAnnounces = (props) => {
         setIsLoading(false);
       });
   };
-  useEffect(() => {
-    if (!props.location.state) {
-      history.push("/service/annonce/");
-    }
-    if (props.location && props.location.state) {
-      setAid(props.location.state.aid);
-    }
-  }, [props]);
 
   useEffect(() => {
-    if (aid) {
-      setIsLoadingSeg(true);
+    if (props.props.location.state) {
+      setAid(props.props.location.state.aid);
       axios
-        .get(`http://157.230.19.233/api/announces/${aid}/`, {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("service_token")}`,
-          },
-        })
+        .get(
+          `http://157.230.19.233/api/announces/${props.props.location.state.aid}/`,
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          }
+        )
         .then((res) => {
           setTitle(res.data.title);
           setDesctiption(res.data.desc);
           setStartDate(res.data.start_at);
           setEndDate(res.data.end_at);
-          setIsLoadingSeg(false);
         })
         .catch((err) => {
           console.log(err.response);
         });
-    }
-  }, [aid]);
+    } else setnullAid(true);
+  }, []);
+
   const handleChange = (e, { name, value }) => {
     switch (name) {
       case "title":
         setTitleErr(false);
         setTitle(value);
         break;
+
       case "description":
         setDescriptionErr(false);
         setDesctiption(value);
         break;
-
       default:
         break;
     }
   };
+
   return (
-    <div className="container_add_dec service">
-      <Segment
-        className="_add_dec"
-        style={{
-          margin: "auto",
-        }}
-        loading={loadingSeg}
-      >
-        <h3 className="large-title text-default bold _margin_vertical_md">
-          Update Announce
-        </h3>
-        <Form success={succes}>
-          <Form.Input
-            type="text"
-            label="Title"
-            value={title}
-            onChange={handleChange}
-            name="title"
-            className={titleErr ? "add_dec_err" : ""}
-          />
-
-          <div className="date_annonce">
-            <div className="one_input">
-              <label htmlFor="begin">Date debut</label>
-              <DatePicker
-                id="begin"
-                selected={Date.parse(startDate)}
-                onChange={(date) => {
-                  if (startDateErr) {
-                    setStartDateErr(false);
-                    setEndDateErr(false);
-                  }
-                  setStartDate(date);
-                }}
-                className={startDateErr ? "date_picker_err" : ""}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                dateFormat="MMMM d, yyyy h:mm aa"
+    <div className="container_edit_announce service">
+      <Segment className="_add_dec">
+        {!nullAid ? (
+          <>
+            <h3 className="large-title text-default bold _margin_vertical_md">
+              Update Announce
+            </h3>
+            <Form success={succes}>
+              <Form.Input
+                type="text"
+                label="Title"
+                value={title}
+                onChange={handleChange}
+                name="title"
+                className={titleErr ? "add_dec_err" : ""}
               />
-            </div>
-            <div className="one_input">
-              <label htmlFor="end">Date fin</label>
-              <DatePicker
-                id="end"
-                selected={Date.parse(endDate)}
-                onChange={(date) => {
-                  if (endDateErr) {
-                    setEndDateErr(false);
-                    setStartDateErr(false);
-                  }
-                  setEndDate(date);
-                }}
-                className={endDateErr ? "date_picker_err" : ""}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                timeCaption="time"
-                dateFormat="MMMM d, yyyy h:mm aa"
+
+              <div className="date_annonce">
+                <div className="one_input">
+                  <label htmlFor="begin">Starts at</label>
+                  <DatePicker
+                    id="begin"
+                    selected={Date.parse(startDate)}
+                    onChange={(date) => {
+                      if (startDateErr) setStartDateErr(false);
+                      setStartDate(date);
+                    }}
+                    className={startDateErr ? "date_picker_err" : ""}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                  />
+                </div>
+                <div className="one_input">
+                  <label htmlFor="end">Ends at</label>
+                  <DatePicker
+                    id="end"
+                    selected={Date.parse(endDate)}
+                    onChange={(date) => {
+                      if (endDateErr) setEndDateErr(false);
+                      setEndDate(date);
+                    }}
+                    className={endDateErr ? "date_picker_err" : ""}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="time"
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                  />
+                </div>
+              </div>
+
+              <Form.TextArea
+                label="Description"
+                name="description"
+                placeholder="..."
+                value={description}
+                className={descriptionErr ? "add_dec_err" : ""}
+                onChange={handleChange}
               />
-            </div>
-          </div>
-
-          <Form.TextArea
-            label="Description"
-            name="description"
-            placeholder="..."
-            value={description}
-            className={descriptionErr ? "add_dec_err" : ""}
-            onChange={handleChange}
-          />
-
-          <Form.Group
+              <Form.Group
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                className="_add_btn_dec here"
+              >
+                <Button
+                  loading={isLoading}
+                  className="button_primary _margin_horizontal_sm"
+                  onClick={handleComplement}
+                >
+                  Confirm Update
+                </Button>
+              </Form.Group>
+              <Message
+                success
+                content="Your complement has been send succesfully"
+              />
+            </Form>
+          </>
+        ) : (
+          <h1
+            className="text-default"
             style={{
-              display: "flex",
-              justifyContent: "center",
+              margin: "auto",
+              "font-size": "xxx-large",
+              width: "600px",
             }}
-            className="_add_btn_dec here"
           >
-            <Button
-              loading={isLoading}
-              className="button_primary _margin_horizontal_sm"
-              onClick={handleUpdate}
-            >
-              Confirm Update
-            </Button>
-          </Form.Group>
-          <Message
-            success
-            content="Your decalration has been modified succesfully"
-          />
-        </Form>
+            Something went wrong :( ...
+          </h1>
+        )}
       </Segment>
     </div>
   );
 };
 
-export default withRouter(UpdateAnnounces);
+export default ComplementAnnounces;

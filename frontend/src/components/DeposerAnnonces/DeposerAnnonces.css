@@ -5,10 +5,14 @@
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
-  margin: 8rem 0rem 5rem 5rem;
 }
+
+.container_add_dec.service {
+  padding-top: 6rem;
+}
+
 .container_add_dec.service ._add_dec {
-  margin: 8rem 0 !important;
+  margin-left: 250px;
 }
 .container_add_ann {
   max-width: 70%;
