@@ -1,44 +1,40 @@
 main {
-    padding: 0rem;
-    width : 100%
+  padding: 0rem;
+  width: 100%;
 }
 
 main > #container_profile {
-    margin-left: 10px !important;
-    margin-top: 20px;
+  margin-left: 10px !important;
+  margin-top: 20px;
 }
 
- 
 .citoyen-profile {
-    width: 100%;
-    justify-content: center !important;
-    padding-left: 15% !important;
+  width: 100%;
+  justify-content: center !important;
+  padding-left: 170px !important;
 }
-  
+
 .citoyen-profile > .left {
-    width: 30% !important;
-
+  width: 30% !important;
 }
-  
+
 .citoyen-profile > .right {
-    width: 65% !important;
+  width: 65% !important;
 }
-
-
 
 .infos-form {
-    margin-top : 70px;
-    margin-bottom: -50px;
+  margin-top: 70px;
+  margin-bottom: -50px;
 }
 
 .edit-profile {
-    display: flex;
-    background-color: white;
-    justify-content: space-between;
-    flex-direction: column;
-    padding: 2rem;
-    height: 100%;
-    border-radius : 0.28571429rem !important;
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 2rem;
+  height: 100%;
+  border-radius: 0.28571429rem !important;
 }
 
 ._info_menu {
@@ -60,7 +56,6 @@ main > #container_profile {
   border-width: 0px !important;
   border-color: none !important;
 }
-
 
 .subs {
   display: flex;
@@ -97,176 +92,171 @@ main > #container_profile {
 }
 
 .infos-form > form > .fields > .disabled.field {
-  opacity : 3 !important;
-  
+  opacity: 3 !important;
 }
 
 .edit-profile-pic.mobile {
   display: none;
 }
 
-@media (min-width : 1000px){
-    .mobile-profile{
-    display : none !important;
+@media (min-width: 929px) {
+  .mobile-profile {
+    display: none !important;
   }
 }
-  
+
 @media (max-width: 1500px) {
-    .citoyen-profile > .left {
-      width: 30% !important;
-    }
-    .citoyen-profile > .right {
-      width: 70% !important;
-    }
-    main{
-        padding : 2rem;
-    }
+  .citoyen-profile > .left {
+    width: 30% !important;
+  }
+  .citoyen-profile > .right {
+    width: 70% !important;
+  }
+  main {
+    padding: 2rem;
+  }
 }
 
-@media (max-width : 1399px){
+@media (max-width: 1399px) {
   ._info_menu {
     margin: 0 !important;
-  }  
+  }
 }
 
 @media (max-width: 1299px) {
-    .citoyen-profile > .left {
-      width: 90% !important;
-    }
-    .citoyen-profile > .right {
-      width: 90% !important;
-    }
-    .citoyen-profile{
-        padding : 2rem;
-        display: flex;
-        flex-direction: column !important;
-        justify-content: center;
-        align-content: center;
-    }
-    .infos-form .form .fields .field .field .input input {
-      max-width : 220px !important;
-    }
+  .citoyen-profile > .left {
+    width: 90% !important;
+  }
+  .citoyen-profile > .right {
+    width: 90% !important;
+  }
+  .citoyen-profile {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center;
+    align-content: center;
+  }
+  .infos-form .form .fields .field .field .input input {
+    max-width: 220px !important;
+  }
 }
 
-@media (max-width : 1149px){
-  ._info_menu .item{
+@media (max-width: 1149px) {
+  ._info_menu .item {
     font-size: 16px !important;
   }
 }
 
-@media (max-width : 1080px){
+@media (max-width: 1080px) {
   .edit-profile {
-    padding : 1rem 0.5rem !important;
+    padding: 1rem 0.5rem !important;
   }
 }
 
 @media (max-width: 928px) {
-
-  main{
-    padding : 1rem 0;
+  main {
+    padding: 1rem 1rem;
   }
 
-  .mobile-input
-
-  .mobile_profile {
+  .mobile-input .mobile_profile {
     display: flex !important;
     flex-direction: column;
   }
 
-    .citoyen-profile > .right{
-      display: none !important;
-    }
-
-    .citoyen-profile > .left {
-      display: none !important;
-    }
-
-    .edit-profile-pic.mobile.hide.pointer{
-      display : none !important;
-    }
-
-    .infos-form .form .fields {
-      display: flex;
-      flex-direction: column !important;
-      margin: 0 !important;
-    }
-    .infos-form .form .fields .field {
-      margin: 1rem 0;
-    }
-    .subs {
-      flex-direction: column-reverse !important;
-      margin: 1.5rem !important;
-    }
-    .subs .button {
-      margin: 1rem 0 !important;
-    }
-    .input_p i {
-      top : 30%;
-    }
-    ._info_menu {
-      width: 100%;
-    }
-    .edit-profile-pic.hide {
-      display: none !important;
-    }
-    .edit-profile-pic.mobile {
-      display: flex !important;
-      justify-content: flex-end;
-      width: 100%;
-      padding: 0.5rem;
-    }
-    .edit-profile-pic.mobile i {
-      color: #576271;
-    }
-    .edit_mobile svg {
-      width: 30px !important;
-    }
-  }
-  .mobile-input {
-    padding-top: 0.5rem;
-  }
-  .mobile-input input {
-    border-top: 0 !important;
-    border-left: 0 !important;
-    border-right: 0 !important;
-  }
-  .row.mobile_menu > .ui.secondary.pointing.menu .active.item {
-    color: var(--primary) !important;
-    border-color: var(--primary) !important;
-  }
-  .row.mobile_menu > .ui.secondary.pointing.menu .item {
-    color: #939393 !important;
-    border-color: #939393 !important;
-  }
-  .row.mobile_menu > .ui.secondary.pointing.menu {
-    border: 0 !important;
+  .citoyen-profile > .right {
+    display: none !important;
   }
 
-  .mobile-profile .col_mobile {
+  .citoyen-profile > .left {
+    display: none !important;
+  }
+
+  .edit-profile-pic.mobile.hide.pointer {
+    display: none !important;
+  }
+
+  .infos-form .form .fields {
     display: flex;
-    justify-content: center;
-    align-items: center !important;
-    flex-direction: column;
+    flex-direction: column !important;
+    margin: 0 !important;
   }
+  .infos-form .form .fields .field {
+    margin: 1rem 0;
+  }
+  .subs {
+    flex-direction: column-reverse !important;
+    margin: 1.5rem !important;
+  }
+  .subs .button {
+    margin: 1rem 0 !important;
+  }
+  .input_p i {
+    top: 30%;
+  }
+  ._info_menu {
+    width: 100%;
+  }
+  .edit-profile-pic.hide {
+    display: none !important;
+  }
+  .edit-profile-pic.mobile {
+    display: flex !important;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 0.5rem;
+  }
+  .edit-profile-pic.mobile i {
+    color: #576271;
+  }
+  .edit_mobile svg {
+    width: 30px !important;
+  }
+}
+.mobile-input {
+  padding-top: 0.5rem;
+}
+.mobile-input input {
+  border-top: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
+}
+.row.mobile_menu > .ui.secondary.pointing.menu .active.item {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+.row.mobile_menu > .ui.secondary.pointing.menu .item {
+  color: #939393 !important;
+  border-color: #939393 !important;
+}
+.row.mobile_menu > .ui.secondary.pointing.menu {
+  border: 0 !important;
+}
 
-  .mobile-input{
-    width : 100%;
-  }
+.mobile-profile .col_mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center !important;
+  flex-direction: column;
+}
 
-  .name-input{
-    width : 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 1rem;
-  }
+.mobile-input {
+  width: 100%;
+}
 
-  .name-field{
-    padding : 0 0.5rem;
-    width : 200%;
-  }
+.name-input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.name-field {
+  padding: 0 0.5rem;
+  width: 200%;
+}
 
 @media (max-width: 899px) {
-
   .mobile_profile {
     display: flex !important;
     flex-direction: column;
@@ -275,44 +265,43 @@ main > #container_profile {
     margin: 0 !important;
   }
 
-  .mobile-profile i{
+  .mobile-profile i {
     display: inline !important;
   }
-  .name-input{
-    width : 100%;
+  .name-input {
+    width: 100%;
     display: flex;
     justify-content: center;
   }
 
-  .name-field{
-    padding : 0 0.5rem;
-    width : 100%;
-  }
-
-}
-
-@media (max-width : 500px){
-  .name-input{
-    width : 80%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .name-field{
-    padding : 0 0.5rem;
-    width : 50%;
+  .name-field {
+    padding: 0 0.5rem;
+    width: 100%;
   }
 }
 
-@media (max-width : 400px){
-  .name-input{
-    width : 70%;
+@media (max-width: 500px) {
+  .name-input {
+    width: 80%;
     display: flex;
     justify-content: center;
   }
 
-  .name-field{
-    padding : 0 0.5rem;
-    width : 50%;
+  .name-field {
+    padding: 0 0.5rem;
+    width: 50%;
+  }
+}
+
+@media (max-width: 400px) {
+  .name-input {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .name-field {
+    padding: 0 0.5rem;
+    width: 50%;
   }
 }
