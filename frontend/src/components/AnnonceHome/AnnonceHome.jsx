@@ -72,14 +72,28 @@ const AnnonceHome = (props) => {
   };
 
   useEffect(() => {
+    const date = new Date();
+    let now =
+      date.getFullYear() +
+      "-" +
+      String(date.getMonth() + 1) +
+      "-" +
+      date.getDay() +
+      " " +
+      date.getHours() +
+      ":" +
+      date.getMinutes() +
+      ":" +
+      date.getSeconds();
     setLoading(true);
+    console.log(now);
     axios
       .get("http://157.230.19.233/api/announces/", {
         params: {
           status: "published",
           page: page,
-          // start_at : "2020-06-07T14:00:00+01:00"
-          // title : {"eq" : "hello"}
+          start_at_less: now,
+          end_at_greater: now,
         },
         headers: {
           "content-type": "application/json",
@@ -122,7 +136,7 @@ const AnnonceHome = (props) => {
                   <p>{TimeExtract(annonce.end_at)}</p>
                 </span>
                 <p className="_title">Details :</p>
-                <p>{annonce.desc}</p>
+                <p style={{textAlign : "justify"}}>{annonce.desc}</p>
                 {index + 1 < Data.length && <Divider />}
               </div>
             );

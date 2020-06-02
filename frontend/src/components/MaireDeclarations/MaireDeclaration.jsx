@@ -18,34 +18,8 @@ const MaireDeclarations = (props) => {
   const [sortDate, setsortDate] = useState(null);
   const [sortMobile, setsortMobile] = useState("Random");
   const [types, settypes] = useState(null);
-  const [names, setNames] = useState([]);
-  const [allow, setAllow] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
-  const getUser = (id, key) => {
-    axios
-      .get("http://157.230.19.233/api/users/" + id + "/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
-        },
-      })
-      .then((res) => {
-        const temp = names;
-        temp[key] = res.data.last_name + " " + res.data.first_name;
-        setNames(temp);
-        if (names.filter(String).length - Data.length === 0) setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
-  const getNames = () => {
-    setNames([]);
-    for (let i = 0; i < Data.length; i++) {
-      getUser(Data[i].citizen, i);
-    }
-  };
   const handlesortRandom = () => {
     setsortDate(null);
     setsortMobile("Random");
@@ -75,7 +49,7 @@ const MaireDeclarations = (props) => {
     }
   };
   const handle_filter = (e) => {
-    setTerm("")
+    setTerm("");
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -86,6 +60,8 @@ const MaireDeclarations = (props) => {
     getData();
   };
   const getData = () => {
+    setPerm(false);
+    setData([]);
     setLoading(true);
     const pa = {
       page: page,
@@ -124,7 +100,7 @@ const MaireDeclarations = (props) => {
     }
 
     axios
-      .get("http://157.230.19.233/api/declarations/", {
+      .get("http://157.230.19.233/api/declaration_nested/", {
         params: pa,
         headers: {
           "content-type": "application/json",
@@ -133,7 +109,9 @@ const MaireDeclarations = (props) => {
       })
       .then((res) => {
         setData(res.data.results);
+        getTypes();
         setLoading(false);
+        setsearchLoading(false);
         if (res.data.count % 10 === 0) {
           setPages(parseInt(res.data.count / 10));
         } else {
@@ -141,10 +119,7 @@ const MaireDeclarations = (props) => {
         }
         if (res.data.count === 0) {
           setPerm(true);
-          setAllow(true);
-          setsearchLoading(false);
         }
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -160,7 +135,6 @@ const MaireDeclarations = (props) => {
         },
       })
       .then((res) => {
-        getData();
         settypes(res.data);
       })
       .catch((err) => {
@@ -284,19 +258,10 @@ const MaireDeclarations = (props) => {
     setPage(pageInfo.activePage);
   };
   useEffect(() => {
-    setAllow(false);
-    setPerm(false);
-    setTimeout(() => {
-      setAllow(true);
-      setPerm(true);
-      setsearchLoading(false);
-    }, 1900);
-    getTypes();
+    setData([]);
+    getData();
   }, [page, activeFilter, term, sortDate, refresh]);
 
-  useEffect(() => {
-    if (Data.length > 0) getNames();
-  }, [Data]);
   return (
     <div className="_maire_declarations">
       <div className="_main_header">
@@ -304,7 +269,10 @@ const MaireDeclarations = (props) => {
           <p className="extra-text text-default">Declarations</p>
         </div>
       </div>
-      <Segment loading={!allow ? true : Loading} className="_main_body shadow">
+      <Segment
+        loading={searchLoading ? false : Loading}
+        className="_main_body shadow"
+      >
         <div className="row">
           <Search
             loading={searchLoading}
@@ -383,42 +351,41 @@ const MaireDeclarations = (props) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        {Data.length > 0 && allow ? (
-          <div className="_data_section">
-            <MaireDeclarationTable
-              data={Data}
-              names={names}
-              filter={activeFilter}
-              handlesortDate={handle_sort_date}
-              sortdate={sortDate}
-              validateDeclaration={validateDeclaration}
-              rejectDeclaration={rejectDeclaration}
-              demandComplement={demandComplement}
-              archiveDeclaration={archiveDeclaration}
-              types={types}
-              maire={props.maire}
-            />
-            {pages > 1 && (
-              <Pagination
-                className="_maire_pagination"
-                boundaryRange={0}
-                activePage={page}
-                onPageChange={changePage}
-                firstItem={null}
-                lastItem={null}
-                totalPages={pages}
-                pointing
-                secondary
-              />
+        {Data.length > 0
+          ? types && (
+              <div className="_data_section">
+                <MaireDeclarationTable
+                  data={Data}
+                  filter={activeFilter}
+                  handlesortDate={handle_sort_date}
+                  sortdate={sortDate}
+                  validateDeclaration={validateDeclaration}
+                  rejectDeclaration={rejectDeclaration}
+                  demandComplement={demandComplement}
+                  archiveDeclaration={archiveDeclaration}
+                  types={types}
+                  maire={props.maire}
+                />
+                {pages > 1 && (
+                  <Pagination
+                    className="_maire_pagination"
+                    boundaryRange={0}
+                    activePage={page}
+                    onPageChange={changePage}
+                    firstItem={null}
+                    lastItem={null}
+                    totalPages={pages}
+                    pointing
+                    secondary
+                  />
+                )}
+              </div>
+            )
+          : perm && (
+              <p class="zero-data">
+                Sorry No declarations to display in this section
+              </p>
             )}
-          </div>
-        ) : (
-          perm && (
-            <p class="zero-data">
-              Sorry No declarations to display in this section
-            </p>
-          )
-        )}
       </Segment>
     </div>
   );

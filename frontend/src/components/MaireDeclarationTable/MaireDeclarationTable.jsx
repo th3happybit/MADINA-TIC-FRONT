@@ -6,10 +6,8 @@ import axios from "axios";
 
 const MaireDeclarationTable = (props) => {
   const { data } = props;
-  const [names, setNames] = useState([]);
   const [services, setServices] = useState([]);
   useEffect(() => {
-    setNames(props.names);
     axios
       .get("http://157.230.19.233/api/users/?role=Service", {
         headers: {
@@ -137,7 +135,7 @@ const MaireDeclarationTable = (props) => {
             } = element;
             return (
               <Table.Row key={index}>
-                <Table.Cell className="_table_title">{names[index]}</Table.Cell>
+                <Table.Cell className="_table_title">{citizen.first_name + " " + citizen.last_name}</Table.Cell>
                 <Table.Cell>{title}</Table.Cell>
                 <Table.Cell className="_hide _hide_td">
                   {address.length < 40 ? (
@@ -160,9 +158,9 @@ const MaireDeclarationTable = (props) => {
                   <ModalDetails
                     title="Declarations Details"
                     data={{
-                      fullname: names[index],
+                      fullname: citizen.first_name + " " + citizen.last_name,
                       did: did,
-                      citizen: citizen,
+                      citizen: citizen.uid,
                       title: title,
                       type: editType(dtype),
                       dtype: dtype,
@@ -185,7 +183,6 @@ const MaireDeclarationTable = (props) => {
                           validated_at.slice(0, 4)
                         : "/",
                       services: services,
-                      // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
                       status: getStatus(status).status,
                     }}
                     Maire
