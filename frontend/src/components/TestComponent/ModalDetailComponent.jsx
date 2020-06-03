@@ -314,7 +314,7 @@ const ModalDetailComponent = (props) => {
           </div>
           <div className="_content_modal ">
             <div>
-              {isRapport && <p>Title Decaration</p>}
+              {isRapport && <p>Title Declaration</p>}
               {motif && activeFilter === "archived" && (
                 <p>motif of rejection</p>
               )}
@@ -415,7 +415,7 @@ const ModalDetailComponent = (props) => {
                 button={{
                   color: "orange",
                   text: "Not finished",
-                  icon: "sync alternate",
+                  icon: "exclamation triangle",
                 }}
                 text="Confirm mark it as Work not finished ?"
                 title="Work not finished"

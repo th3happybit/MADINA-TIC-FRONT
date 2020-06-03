@@ -15,7 +15,7 @@ const MaireRapports = () => {
         { text: "Created on", value: "created_on", sort: true },
       ]}
       detail={[
-        { text: "Title Rapport", value: "title" },
+        { text: "Title Report", value: "title" },
         { text: "Description", value: "desc" },
         { text: "Created on", value: "created_on" },
         { text: "Modified on", value: "modified_at" },

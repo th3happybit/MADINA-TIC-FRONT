@@ -134,6 +134,10 @@
     width: 80px !important;
   }
 
+  .content_modal_btns ._mobile_btn .icon {
+    margin : 0 !important;
+  }
+
   ._detail_content ._header_modal p {
     font-size: 20px !important;
   }
