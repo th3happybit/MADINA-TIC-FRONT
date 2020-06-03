@@ -38,7 +38,6 @@ const TestComponent = (props) => {
   const handleRefresh = () => {
     setTerm("");
     setPage(1);
-    getData();
   };
   const handlesearch = (e, { value }) => {
     setsearchLoading(true);
@@ -143,15 +142,15 @@ const TestComponent = (props) => {
     }
   }
   const colors = {
-    refused : "red",
-    lack_of_info :"orange",
-    validated : "green",
-    modified : "yellow",
-    work_not_finished : "orange",
-    archived : "black",
-    removed : "red",
-    published : "green",
-    not_validated : "blue",
+    refused: "red",
+    lack_of_info: "orange",
+    validated: "green",
+    modified: "yellow",
+    work_not_finished: "orange",
+    archived: "black",
+    removed: "red",
+    published: "green",
+    not_validated: "blue",
   };
   const getUserId = () => {
     let url = `http://157.230.19.233/api/user/`;
@@ -229,7 +228,7 @@ const TestComponent = (props) => {
       if (permission === "self") {
         getUserId();
       } else {
-        getData();
+        // getData();
       }
     }
     if (role === "maire") {

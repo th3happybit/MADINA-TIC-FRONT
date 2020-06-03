@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Button,
@@ -8,13 +8,43 @@ import {
   Transition,
   Popup,
 } from "semantic-ui-react";
-
-import { useEffect } from "react";
+import axios from "axios";
+import ConfirmModal from "../TestComponent/ModalConfirmComponent.jsx";
 
 const ModalD = (props) => {
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
   const [max, setMax] = useState(null);
+
+  const TreatDeclaration = () => {
+    const data = {
+      did: did,
+      citizen: citizen,
+      desc: desc,
+      dtype: dtype,
+      status: "under_treatment",
+    };
+    axios
+      .create({
+        headers: {
+          patch: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        },
+      })
+      .request({
+        url: `http://157.230.19.233/api/declarations/${did}/`,
+        method: "patch",
+        data: data,
+      })
+      .then((res) => {
+        refresh();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleopen = () => {
     setOpen(true);
@@ -46,14 +76,19 @@ const ModalD = (props) => {
   }, [props.attachements.length]);
 
   const {
+    did,
     title,
     created_on,
     address,
     status,
+    desc,
+    dtype,
     validated_at,
     description,
     priority,
     attachements,
+    citizen,
+    refresh,
   } = props;
 
   return (
@@ -80,7 +115,7 @@ const ModalD = (props) => {
           <Button
             onClick={handleopen}
             color="blue"
-            className="shadow mobile_button pointer _primary _hide_on_desktop"
+            className="shadow mobile_button _primary _hide_on_desktop"
             content="More details"
           />
         </>
@@ -145,6 +180,20 @@ const ModalD = (props) => {
             </div>
           </div>
         </Modal.Content>
+        {status === "Validated" && (
+          <Modal.Content
+            style={{ "margin-top": "20px" }}
+            className="content_modal_btns"
+          >
+            <ConfirmModal
+              modal
+              button={{ color: "blue", text: "Validate", icon: "checkmark" }}
+              title="Confirm Action"
+              text="Confirm changing declaration status to In Progress ? "
+              OnConfirm={TreatDeclaration}
+            />{" "}
+          </Modal.Content>
+        )}
       </Modal.Content>
     </Modal>
   );

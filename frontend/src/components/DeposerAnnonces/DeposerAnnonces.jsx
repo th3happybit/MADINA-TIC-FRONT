@@ -115,7 +115,7 @@ export default function DeposerAnnonces(props) {
           />
           <div className="date_annonce">
             <div className="one_input">
-              <label htmlFor="begin">Date debut</label>
+              <label htmlFor="begin">Start At</label>
               <DatePicker
                 id="begin"
                 selected={startDate}
@@ -132,7 +132,7 @@ export default function DeposerAnnonces(props) {
               />
             </div>
             <div className="one_input">
-              <label htmlFor="end">Date fin</label>
+              <label htmlFor="end">End At</label>
               <DatePicker
                 id="end"
                 selected={endDate}

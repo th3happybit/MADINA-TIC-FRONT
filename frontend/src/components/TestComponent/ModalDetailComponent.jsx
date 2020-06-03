@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Icon, Popup } from "semantic-ui-react";
 
+import ConfirmModal from "./ModalConfirmComponent.jsx";
+import RejectComplement from "./ModalRejectComplement.jsx";
+
 const ModalDetailComponent = (props) => {
   const {
     detail,
     isRapport,
     title,
+    uid,
     token,
     data,
     role,
@@ -14,9 +18,12 @@ const ModalDetailComponent = (props) => {
     report,
     TimeExtract,
     getMonth,
+    refresh,
+    helper,
+    archive,
   } = props;
   const [open, setOpen] = useState(false);
-  const [titleDec, setTitleDec] = useState("");
+  const [declaration, setDeclaration] = useState("");
   const [files, setFiles] = useState([]);
   const [motif, setMorif] = useState(null);
 
@@ -26,7 +33,176 @@ const ModalDetailComponent = (props) => {
   const handleclose = () => {
     setOpen(false);
   };
-
+  const ComplementDemand = (reason) => {
+    const demand = {
+      reason: reason,
+      report: data.rid,
+      maire: uid,
+    };
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+        },
+      })
+      .request({
+        url: "http://157.230.19.233/api/reports_complement_demand/",
+        data: demand,
+        method: "post",
+      })
+      .then((res) => {
+        refresh();
+      });
+  };
+  const updateDecStatus = (dec) => {
+    axios
+      .create({
+        headers: {
+          patch: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+        },
+      })
+      .request({
+        url: `http://157.230.19.233/api/declarations/${declaration.did}/`,
+        method: "patch",
+        data: dec,
+      })
+      .then((res) => {
+        refresh();
+      })
+      .catch((err) => {});
+  };
+  const updateRepStatus = (rep, dec) => {
+    axios
+      .create({
+        headers: {
+          patch: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+        },
+      })
+      .request({
+        url: `http://157.230.19.233/api/reports/${data.rid}/`,
+        method: "patch",
+        data: rep,
+      })
+      .then((res) => {
+        if (dec) updateDecStatus(dec);
+        else refresh();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const updateAnnStatus = (ann) => {
+    axios
+      .create({
+        headers: {
+          patch: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+        },
+      })
+      .request({
+        url: `http://157.230.19.233/api/announces/${data.aid}/`,
+        method: "patch",
+        data: ann,
+      })
+      .then((res) => {
+        refresh();
+      })
+      .catch((err) => {});
+  };
+  const confirmReport = () => {
+    const date = new Date();
+    const time = date.toLocaleTimeString();
+    const now =
+      date.getFullYear() +
+      "-" +
+      helper(date.getMonth() + 1) +
+      "-" +
+      helper(date.getDay()) +
+      "T" +
+      time +
+      "+01:00";
+    const report = {
+      declaration: data.declaration,
+      title: data.title,
+      desc: data.desc,
+      service: data.service,
+      status: "validated",
+      validated_at: now,
+    };
+    const dec = {
+      citizen: declaration.citizen,
+      dtype: declaration.dtype,
+      desc: declaration.desc,
+      title: declaration.title,
+      status: "treated",
+    };
+    updateRepStatus(report, dec);
+  };
+  const ArchiveReport = () => {
+    const report = {
+      declaration: data.declaration,
+      title: data.title,
+      desc: data.desc,
+      service: data.service,
+      status: "archived",
+    };
+    updateRepStatus(report);
+  };
+  const RejectReport = (reason) => {
+    const rejection = {
+      reason: reason,
+      report: data.rid,
+      maire: uid,
+    };
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+        },
+      })
+      .request({
+        url: "http://157.230.19.233/api/reports_rejection/",
+        data: rejection,
+        method: "post",
+      })
+      .then((res) => {
+        refresh();
+      });
+  };
+  const ArchiveAnnonce = () => {
+    const annonce = {
+      title: data.title,
+      desc: data.desc,
+      start_at: data.start_at,
+      end_at: data.end_at,
+      status: "archived",
+    };
+    updateAnnStatus(annonce);
+  };
+  const WorkNotFinished = () => {
+    const report = {
+      declaration: data.declaration,
+      title: data.title,
+      desc: data.desc,
+      service: data.service,
+      status: "work_not_finished",
+    };
+    updateRepStatus(report);
+  };
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
       let instance = axios.create({
@@ -64,7 +240,7 @@ const ModalDetailComponent = (props) => {
           method: "get",
         })
         .then((res) => {
-          setTitleDec(res.data.title);
+          setDeclaration(res.data);
         })
         .catch((err) => {
           console.log(err.reponse);
@@ -152,7 +328,7 @@ const ModalDetailComponent = (props) => {
                 padding: "0 2rem",
               }}
             >
-              {isRapport && <p>{titleDec}</p>}
+              {isRapport && <p>{declaration.title}</p>}
               {motif && activeFilter === "archived" && <p>{motif}</p>}
               {detail.map((elm) => (
                 <p className={elm.value === "desc" ? "_limit_size" : null}>
@@ -201,7 +377,7 @@ const ModalDetailComponent = (props) => {
                             );
                           }}
                         >
-                          {file.src.split("/")[3]}
+                          {file.src.slice(11, file.src.length - 12).replace(/_/g," ")}
                         </p>
                       </span>
                     </div>
@@ -209,6 +385,70 @@ const ModalDetailComponent = (props) => {
                 })}
             </div>
           </div>
+        </Modal.Content>
+        <Modal.Content
+          style={{ "margin-top": "20px" }}
+          className="content_modal_btns"
+        >
+          {isRapport && data.status === "not_validated" && role === "maire" && (
+            <>
+              <ConfirmModal
+                modal
+                button={{ color: "blue", text: "Validate", icon: "checkmark" }}
+                text="Confirm approving this report and mark the declaration as completed ?"
+                title="Confirm Approval"
+                OnConfirm={confirmReport}
+              />
+              <RejectComplement
+                modal
+                button={{
+                  color: "orange",
+                  text: "Complement",
+                  icon: "sync alternate",
+                }}
+                text="Confirm demanding complement ?"
+                title="Complement Demand"
+                OnConfirm={ComplementDemand}
+              />
+              <ConfirmModal
+                modal
+                button={{
+                  color: "orange",
+                  text: "Not finished",
+                  icon: "sync alternate",
+                }}
+                text="Confirm mark it as Work not finished ?"
+                title="Work not finished"
+                OnConfirm={WorkNotFinished}
+              />
+              <RejectComplement
+                modal
+                button={{ color: "red", text: "Reject", icon: "times" }}
+                text="Confirm rejecting report ?"
+                title="Reject Report"
+                OnConfirm={RejectReport}
+              />
+            </>
+          )}
+          {data.status === "published" && role === "service" && (
+            <ConfirmModal
+              modal
+              disabled={archive ? false : true}
+              button={{ color: "black", text: "Archive", icon: "archive" }}
+              text="Confirm sending this report to archive ?"
+              title="Confirm Archive"
+              OnConfirm={ArchiveAnnonce}
+            />
+          )}
+          {archive && data.status === "validated" && role === "service" && (
+            <ConfirmModal
+              modal
+              button={{ color: "black", text: "Archive", icon: "archive" }}
+              text="Confirm sending this report to archive ?"
+              title="Confirm Archive"
+              OnConfirm={ArchiveReport}
+            />
+          )}
         </Modal.Content>
       </Modal.Content>
     </Modal>

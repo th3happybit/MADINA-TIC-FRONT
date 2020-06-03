@@ -20,9 +20,13 @@ const ServiceDeclaration = (props) => {
   const [searchLoading, setsearchLoading] = useState(false);
   const [types, settypes] = useState([]);
   const [id, setId] = useState(null);
+  const [update, setUpdate] = useState(false);
 
+  const refresh = () => {
+    page === 1 ? setUpdate((prevState) => !prevState) : setPage(1);
+  };
   const handle_filter = (e) => {
-    setTerm("")
+    setTerm("");
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -129,7 +133,7 @@ const ServiceDeclaration = (props) => {
   }, []);
   useEffect(() => {
     if (id) getData(id);
-  }, [page, term, activeFilter]);
+  }, [page, term, activeFilter, update]);
   return (
     <div className="_service_declarations">
       <div className="_main_header">
@@ -149,7 +153,7 @@ const ServiceDeclaration = (props) => {
             results={null}
             input={{
               icon: "search",
-              iconPosition: "left",
+              iconPosition: "right",
               disabled:
                 Data.length < 1 && (term === null || term === "")
                   ? true
@@ -191,7 +195,7 @@ const ServiceDeclaration = (props) => {
         </div>
         {Data.length > 0 ? (
           <div className="_data_section">
-            <DeclarationsTable data={Data} filter={activeFilter} />
+            <DeclarationsTable data={Data} filter={activeFilter} refresh={refresh}/>
             {pages > 1 && (
               <Pagination
                 className="_service_pagination"

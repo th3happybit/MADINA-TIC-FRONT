@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Table, Icon, Button, Popup } from "semantic-ui-react";
+import { Table, Icon, Button, Popup, Label } from "semantic-ui-react";
 import axios from "axios";
 
-import DeleteModal from "../MaireDeclarationTable/ModalDelete.jsx";
 import ModalDetailComponent from "./ModalDetailComponent.jsx";
+import ConfirmModal from "./ModalConfirmComponent.jsx";
 import ConfirmDeleteModal from "../CitoyenDeclarationTable/ConfirmDeleteModal.jsx";
 import { Link } from "react-router-dom";
 
@@ -75,7 +75,6 @@ const TableTestComponent = (props) => {
   const handleSort = (type) => {
     setOrderField(type);
   };
-
   function TimeExtract(date) {
     let ConvertedDate,
       year,
@@ -89,18 +88,42 @@ const TableTestComponent = (props) => {
     hour = date.slice(11, 13);
     minute = date.slice(14, 16);
     ConvertedDate =
-      year +
-      " " +
-      getMonth(month) +
-      " " +
-      day +
-      " --- " +
-      hour +
-      ":" +
-      minute +
-      " +01 GMT";
+      year + " " + getMonth(month) + " " + day + " --- " + hour + ":" + minute;
     return ConvertedDate;
   }
+  function helper(str) {
+    return str < 10 ? "0" + str : str;
+  }
+  function isActive(end_at) {
+    const date = new Date();
+    const time = date.toLocaleTimeString();
+    if (
+      date.getFullYear() +
+        "-" +
+        helper(date.getMonth() + 1) +
+        "-" +
+        helper(date.getDay()) +
+        "T" +
+        time <
+      end_at.substr(0, 19)
+    )
+      return true;
+    else return false;
+  }
+  const DeleteReport = (report) => {
+    let rid = report.rid;
+    axios
+      .delete(`http://157.230.19.233/api/reports/${rid}/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem(token)}`,
+        },
+      })
+      .then((res) => {
+        refresh();
+      })
+      .catch((err) => {});
+  };
   return (
     <Table striped className="_service_table">
       <Table.Header>
@@ -125,6 +148,9 @@ const TableTestComponent = (props) => {
             );
           else return null;
         })}
+        {!isRapport && activeFilter === "published" && (
+          <Table.HeaderCell content="Status" />
+        )}
         <Table.HeaderCell content="Manage" width={1} textAlign="center" />
       </Table.Header>
       {Data && (
@@ -165,16 +191,32 @@ const TableTestComponent = (props) => {
                       </Table.Cell>
                     )
                 )}
-
+                {!isRapport && activeFilter === "published" && (
+                  <Table.Cell width="1">
+                    <Label
+                      style={{ width: "70px", textAlign: "center" }}
+                      color={isActive(element.end_at) ? "green" : "red"}
+                      content={isActive(element.end_at) ? "Active" : "Expired"}
+                    />
+                  </Table.Cell>
+                )}
                 <Table.Cell>
                   <div className="btns_actionsx">
                     <ModalDetailComponent
+                      archive={
+                        !isRapport
+                          ? !isActive(element.end_at)
+                            ? true
+                            : false
+                          : true
+                      }
                       report={element.rid}
                       data={element}
                       detail={detail}
                       activeFilter={activeFilter}
                       isRapport={isRapport}
                       title={title}
+                      uid={uid}
                       role={role}
                       token={token}
                       style={{
@@ -183,6 +225,9 @@ const TableTestComponent = (props) => {
                       getMonth={getMonth}
                       TimeExtract={TimeExtract}
                       getStatus={getStatus}
+                      ConfirmDeleteModal={ConfirmDeleteModal}
+                      refresh={refresh}
+                      helper={helper}
                     />
                     {isRapport &&
                       activeFilter === "not_validated" &&
@@ -213,46 +258,48 @@ const TableTestComponent = (props) => {
                             />
                             <Button
                               color={"black"}
+                              className="shadow _hide_on_desktop"
+                              content="Edit"
+                            />
+                          </Link>
+                        </Button.Group>
+                      )}
+                    {!isRapport &&
+                      activeFilter === "not_validated" &&
+                      role === "service" && (
+                        <Button.Group>
+                          <Link
+                            to={{
+                              pathname: "/update/annonce",
+                              state: {
+                                aid: element.aid,
+                              },
+                              query: { aid: element.aid },
+                            }}
+                          >
+                            <Popup
+                              content="Edit"
+                              trigger={
+                                <Button
+                                  className="shadow _hide_on_mobile _infos_btn_desktop"
+                                  color="black"
+                                  icon={{
+                                    name: "pencil alternate",
+                                    color: "white",
+                                    inverted: true,
+                                  }}
+                                />
+                              }
+                            />
+                            <Button
+                              color={"black"}
                               className="shadow btn_account_detail pointer _show_on_mobile"
                               content="Edit"
                             />
                           </Link>
                         </Button.Group>
                       )}
-                    {activeFilter === "not_validated" && role === "service" && (
-                      <Button.Group>
-                        <Link
-                          to={{
-                            pathname: "/update/annonce",
-                            state: {
-                              aid: element.aid,
-                            },
-                            query: { aid: element.aid },
-                          }}
-                        >
-                          <Popup
-                            content="Edit"
-                            trigger={
-                              <Button
-                                className="shadow _hide_on_mobile _infos_btn_desktop"
-                                color="black"
-                                icon={{
-                                  name: "pencil alternate",
-                                  color: "white",
-                                  inverted: true,
-                                }}
-                              />
-                            }
-                          />
-                          <Button
-                            color={"black"}
-                            className="shadow btn_account_detail pointer _show_on_mobile"
-                            content="Edit"
-                          />
-                        </Link>
-                      </Button.Group>
-                    )}
-                    {activeFilter === "lack_of_info" && (
+                    {activeFilter === "lack_of_info" && role === "service" && (
                       <Button.Group>
                         <Link
                           to={{
@@ -287,87 +334,7 @@ const TableTestComponent = (props) => {
                         </Link>
                       </Button.Group>
                     )}
-
-                    {activeFilter === "not_validated" && role === "maire" && (
-                      <DeleteModal
-                        modal
-                        icon
-                        reject={(data, motif) => {
-                          const instance = axios.create({
-                            baseURL: `url`,
-                            responseType: "json",
-                            headers: {
-                              "Content-Type": "application/json",
-                              Authorization: `Token ${localStorage.getItem(
-                                token
-                              )}`,
-                            },
-                          });
-                          instance
-                            .patch(`${url}${element.rid}/`, {
-                              status: "refused",
-                            })
-                            .then((res) => {
-                              let instance2 = axios.create({
-                                responseType: "json",
-                                baseURL: "http://157.230.19.233/api/",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                  Authorization: `Token ${localStorage.getItem(
-                                    token
-                                  )}`,
-                                },
-                              });
-                              let body = {
-                                maire: uid,
-                                reason: motif,
-                                report: element.rid,
-                              };
-                              instance2
-                                .post("reports_rejection/", body)
-                                .then((res) => {
-                                  refresh();
-                                });
-                            })
-                            .catch((err) => {
-                              console.log(err.response);
-                            });
-                        }}
-                      />
-                    )}
-
-                    {isRapport &&
-                      activeFilter === "not_validated" &&
-                      role === "service" && (
-                        <ConfirmDeleteModal
-                          onConfirm={() => {
-                            axios
-                              .create({
-                                headers: {
-                                  patch: {
-                                    "Content-Type": "application/json",
-                                    Authorization: `Token ${localStorage.getItem(
-                                      token
-                                    )}`,
-                                  },
-                                },
-                              })
-                              .request({
-                                url: `${url}${element.rid}/`,
-                                method: "patch",
-                                data: {
-                                  status: "archived",
-                                },
-                              })
-                              .then((res) => {
-                                refresh();
-                              })
-                              .catch((err) => {
-                                console.log(err.response);
-                              });
-                          }}
-                        />
-                      )}
+                    
                     {!isRapport &&
                       activeFilter === "not_validated" &&
                       role === "service" && (
@@ -395,6 +362,20 @@ const TableTestComponent = (props) => {
                                 console.log(err.response);
                               });
                           }}
+                        />
+                      )}
+                    {isRapport &&
+                      (activeFilter === "work_not_finished" || activeFilter === "not_validated") &&
+                      role === "service" && (
+                        <ConfirmModal
+                          button={{
+                            icon: "times",
+                            color: "red",
+                            text: "Delete",
+                          }}
+                          text="Confirm deleting this report ?"
+                          title="Confirm Delete"
+                          OnConfirm={() => DeleteReport(element)}
                         />
                       )}
                   </div>

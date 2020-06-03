@@ -86,7 +86,6 @@ const AnnonceHome = (props) => {
       ":" +
       date.getSeconds();
     setLoading(true);
-    console.log(now);
     axios
       .get("http://157.230.19.233/api/announces/", {
         params: {
@@ -101,7 +100,6 @@ const AnnonceHome = (props) => {
         },
       })
       .then((res) => {
-        console.log(res);
         setData(res.data.results);
         setLoading(false);
         if (res.data.count % 10 === 0) {

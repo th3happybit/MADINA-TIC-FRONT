@@ -1,13 +1,14 @@
 .btns_actionsx {
   display: flex;
-  justify-content: center;
-}
-.btns_actionsx .buttons {
-  margin: 0 1rem;
+  justify-content: space-around;
 }
 
 @media (max-width : 899px) {
   .btns_actionsx{
     justify-content: flex-start;
+  }
+  .btns_actionsx ._hide_on_desktop {
+    margin-right: 1rem !important;
+    border-radius: .28571429rem !important;
   }
 }

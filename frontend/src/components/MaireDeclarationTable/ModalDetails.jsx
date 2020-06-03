@@ -182,7 +182,7 @@ const ModalD = (props) => {
                   modal
                   data={{
                     did: data.did,
-                    title: title,
+                    title: data.title,
                     maire: props.maire,
                     declaration: data.did,
                     citizen: data.citizen,
@@ -197,7 +197,7 @@ const ModalD = (props) => {
                   modal
                   data={{
                     did: data.did,
-                    title: title,
+                    title: data.title,
                     maire: props.maire,
                     declaration: data.did,
                     citizen: data.citizen,
@@ -211,7 +211,7 @@ const ModalD = (props) => {
                   modal
                   data={{
                     did: data.did,
-                    title: title,
+                    title: data.title,
                     maire: props.maire,
                     declaration: data.did,
                     citizen: data.citizen,

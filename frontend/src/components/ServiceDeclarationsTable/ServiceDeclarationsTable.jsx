@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import { Table, Button, Popup, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -9,9 +8,12 @@ import "./ServiceDeclarationTable.css";
 
 const ServiceDesclarationTable = (props) => {
   const [Data, setData] = useState(null);
+
+  const { data, refresh } = props;
+
   useEffect(() => {
-    setData(props.data);
-  }, [props.data]);
+    setData(data);
+  }, [data]);
 
   function filterAttachments(att) {
     var ret = [];
@@ -21,13 +23,6 @@ const ServiceDesclarationTable = (props) => {
 
     return ret;
   }
-
-  const editType = (type) => {
-    for (let j = 0; j < props.types.length; j++) {
-      if (type === props.types[j].dtid) return props.types[j].name;
-    }
-  };
-
   function getMonth(month) {
     switch (month) {
       case "01":
@@ -124,7 +119,6 @@ const ServiceDesclarationTable = (props) => {
               created_on,
               validated_at,
               address,
-              geo_cord,
               attachments,
               dtype,
               desc,
@@ -164,10 +158,12 @@ const ServiceDesclarationTable = (props) => {
                 </Table.Cell>
                 <Table.Cell id="_manage_cell" textAlign="center">
                   <DetailsModal
+                    did={did}
                     title={title}
                     dtype={dtype}
                     address={address}
                     description={desc}
+                    refresh={refresh}
                     attachements={filterAttachments(attachments)}
                     priority={getPriority(priority).priority}
                     created_on={
@@ -186,7 +182,6 @@ const ServiceDesclarationTable = (props) => {
                           validated_at.slice(0, 4)
                         : "/"
                     }
-                    // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
                     status={getStatus(status).status}
                   />
                   {status === "under_treatment" && (
