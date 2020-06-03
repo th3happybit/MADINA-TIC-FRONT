@@ -11,7 +11,7 @@ import "./ServiceHeader.css";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 //sfc shortcut
 const HeaderService = (props) => {
@@ -94,7 +94,7 @@ const HeaderService = (props) => {
                   />
                 </Dropdown.Menu>
               </Dropdown>
-              <p className="_name">{fullname}</p>
+              <p className="_name text-default medium-text">{fullname}</p>
             </div>
           </div>
         </div>

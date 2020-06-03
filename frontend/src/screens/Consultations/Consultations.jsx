@@ -4,7 +4,7 @@ import TestComponent from "../../components/TestComponent/TestComponent.jsx";
 const Consultations = () => {
   return (
     <TestComponent
-      title="Rapports"
+      title="Reports"
       url="http://157.230.19.233/api/reports/"
       token="service_token"
       role="service"

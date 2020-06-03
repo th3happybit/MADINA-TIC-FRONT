@@ -3,7 +3,8 @@ import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import "./MaireSideBar.css";
-import { ReactComponent as Rapports } from "../../assets/icons/rapport_icon.svg";
+import { ReactComponent as Dashboard } from "../../assets/icons/dashboard.svg";
+import { ReactComponent as Reports } from "../../assets/icons/rapport_icon.svg";
 import { ReactComponent as Declarations } from "../../assets/icons/Declarations.svg";
 import { ReactComponent as Announcements } from "../../assets/icons/annonce_icon.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
@@ -20,6 +21,21 @@ const MaireSideBar = (props) => {
         </Link>
         <Menu text vertical>
           <div className="d-flex">
+            <Dashboard
+              className={
+                props.active === "dashboard"
+                  ? "_sidebar_icons active"
+                  : "_sidebar_icons"
+              }
+            />
+            <Menu.Item
+              as={Link}
+              to="/maire/"
+              name="Dashboard"
+              className={props.active === "dashboard" ? "active" : ""}
+            />
+          </div>
+          <div className="d-flex">
             <Declarations
               className={
                 props.active === "declarations"
@@ -35,7 +51,7 @@ const MaireSideBar = (props) => {
             />
           </div>
           <div className="d-flex">
-            <Rapports
+            <Reports
               className={
                 props.active === "rapports"
                   ? "_sidebar_icons active"
@@ -45,7 +61,7 @@ const MaireSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/maire/rapports/"
-              name="Rapports"
+              name="Reports"
               className={props.active === "rapports" ? "active" : ""}
             />
           </div>

@@ -67,7 +67,7 @@ const ServiceHeaderSideBar = (props) => {
                 : "medium-text text-default"
             }
           >
-            Rapports
+            Reports
           </Link>
         </List.Item>
         <List.Item>

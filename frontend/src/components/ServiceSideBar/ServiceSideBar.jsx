@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu} from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 import "./ServiceSideBar.css";
@@ -19,11 +19,7 @@ const ServiceSideBar = (props) => {
             <p className="extra-text text-active">MADINA TIC</p>
           </div>
         </Link>
-
-
-
         <Menu text vertical>
-
           <div className="d-flex">
             <Dashboard
               className={
@@ -34,7 +30,7 @@ const ServiceSideBar = (props) => {
             />
             <Menu.Item
               as={Link}
-              to="/service/dashboard/"
+              to="/service"
               name="Dashboard"
               className={props.active === "dashboard" ? "active" : ""}
             />
@@ -66,7 +62,7 @@ const ServiceSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/service/rapports/"
-              name="Rapports"
+              name="Reports"
               className={props.active === "rapports" ? "active" : ""}
             />
           </div>
@@ -81,7 +77,7 @@ const ServiceSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/service/annonce/"
-              name="Announcement"
+              name="Announcements"
               className={props.active === "annonce" ? "active" : ""}
             />
           </div>

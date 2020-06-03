@@ -87,7 +87,7 @@ const HeaderAdmin = (props) => {
                   />
                 </Dropdown.Menu>
               </Dropdown>
-              <p className="_name">{fullname}</p>
+              <p className="_name text-default medium-text">{fullname}</p>
             </div>
           </div>
         </div>

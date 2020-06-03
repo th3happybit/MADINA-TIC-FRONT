@@ -47,7 +47,7 @@
   ._sidebar_maire > .row > .menu > .d-flex {
     align-items: center;
     margin: 1rem 0;
-    width: 60%;
+    width: 80% !important;
   }
   ._sidebar_maire > .row > .menu > .d-flex:hover ._sidebar_icons,
   ._sidebar_maire > .row > .menu > .d-flex:hover .item {

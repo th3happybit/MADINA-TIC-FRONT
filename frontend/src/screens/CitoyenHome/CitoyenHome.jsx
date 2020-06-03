@@ -71,7 +71,7 @@ const CitoyenHome = (props) => {
             fullname={fullname}
             image={image}
             visible={visible}
-            active=""
+            active={props.active}
             click={handleHide}
             login
           />
