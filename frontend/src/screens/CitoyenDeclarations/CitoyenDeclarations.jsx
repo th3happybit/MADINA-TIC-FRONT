@@ -57,22 +57,17 @@ const CitoyenDeclarations = () => {
     setsortDate(null);
     if (sortType === "asc") {
       setsortType(null);
-      setPage(1);
     } else {
       setsortType("asc");
-      setPage(1);
     }
   };
   const handle_sort_date = () => {
     setsortType(null);
     if (sortDate === "asc") {
       setsortDate("desc");
-      setPage(1);
     } else if (sortDate === "desc") {
       setsortDate(null);
-      setPage(1);
     } else {
-      setPage(1);
       setsortDate("asc");
     }
   };

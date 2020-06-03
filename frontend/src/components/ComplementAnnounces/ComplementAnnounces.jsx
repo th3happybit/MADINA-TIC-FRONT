@@ -44,8 +44,6 @@ const ComplementAnnounces = (props) => {
         },
       })
       .then((res) => {
-        let aid = res.data.aid;
-        setAid(aid);
         setSucces(true);
         setIsLoading(false);
       })
@@ -74,7 +72,6 @@ const ComplementAnnounces = (props) => {
   };
 
   useEffect(() => {
-    console.log(props.props)
     if (props.props.location.state) {
       setAid(props.props.location.state.rid);
       axios

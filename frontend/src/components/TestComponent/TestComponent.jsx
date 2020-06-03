@@ -38,6 +38,7 @@ const TestComponent = (props) => {
   const handleRefresh = () => {
     setTerm("");
     setPage(1);
+    getData();
   };
   const handlesearch = (e, { value }) => {
     setsearchLoading(true);

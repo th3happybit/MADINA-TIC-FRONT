@@ -130,7 +130,6 @@ const MaireAnnonce = (props) => {
         },
       })
       .then((res) => {
-        console.log(res);
         setData(res.data.results);
         setLoading(false);
         if (res.data.count % 10 === 0) {

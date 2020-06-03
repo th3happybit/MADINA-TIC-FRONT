@@ -38,12 +38,9 @@ const ComplementAnnounces = (props) => {
           start_at: startDate,
           end_at: endDate,
           desc: description,
-          status: "not_validated",
         },
       })
       .then((res) => {
-        let aid = res.data.aid;
-        setAid(aid);
         setSucces(true);
         setIsLoading(false);
       })

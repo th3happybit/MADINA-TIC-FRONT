@@ -133,7 +133,6 @@ const ComplementReport = (props) => {
   const handleTitle = (e, { value }) => {
     setTitleErr(false);
     setTitle(value);
-    console.log(title);
     if (value === report.title && description === report.desc) {
       setEdit(false);
     } else setEdit(true);

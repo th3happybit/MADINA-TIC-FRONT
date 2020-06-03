@@ -236,10 +236,8 @@ const UpdateReport = (props) => {
     }
   };
   const DeleteFile = () => {
-    console.log(filesD);
     setdelFile(true);
     for (let i = 0; i < filesD.length; i++) {
-      console.log("Deleting", filesD[i]);
       axios
         .create({
           headers: {
