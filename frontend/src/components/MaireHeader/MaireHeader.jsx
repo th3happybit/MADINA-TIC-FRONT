@@ -79,7 +79,7 @@ const HeaderAdmin = (props) => {
                 onCLick={handleLogout}
               >
                 <Dropdown.Menu>
-                  <Dropdown.Item text="Account" icon="user" as={Link} to="#" />
+                  <Dropdown.Item text="Account" icon="user" as={Link} to="/maire/profile" />
                   <Dropdown.Item
                     text="Sign Out"
                     icon="sign out"

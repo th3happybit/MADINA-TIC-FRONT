@@ -11,6 +11,7 @@ import "./ServiceHeader.css";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 //sfc shortcut
@@ -87,6 +88,12 @@ const HeaderService = (props) => {
                 onCLick={handleLogout}
               >
                 <Dropdown.Menu>
+                  <Dropdown.Item
+                    text="Account"
+                    icon="user"
+                    as={Link}
+                    to="/service/profile"
+                  />
                   <Dropdown.Item
                     text="Sign Out"
                     icon="sign out"

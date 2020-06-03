@@ -44,6 +44,7 @@ import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
 import UpdateAnnounces from "./components/UpdateAnnounces/UpdateAnnounces.jsx";
 import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnnounces.jsx";
 import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
+import Profile from "./components/Profile/Profile.jsx";
 
 function App() {
   return (
@@ -60,6 +61,13 @@ function App() {
         />
         <Route exact path="/maire" component={Maire} />
         <Route exact path="/maire/login" component={MaireAuth} />
+        <Route
+          exact
+          path="/maire/profile/"
+          component={() => (
+            <Maire active="profile" childComponent={Profile} />
+          )}
+        />
         <Route
           exact
           path="/maire/declaration/"
@@ -80,6 +88,11 @@ function App() {
           component={() => (
             <Maire active="rapports" childComponent={MaireRapports} />
           )}
+        />
+        <Route
+          exact
+          path="/service/profile"
+          component={() => <Service active="profile" childComponent={<Profile service/>} />}
         />
         <Route
           exact
