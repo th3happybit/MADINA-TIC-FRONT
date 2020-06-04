@@ -187,8 +187,8 @@ const ModalDetailComponent = (props) => {
     const annonce = {
       title: data.title,
       desc: data.desc,
-      start_at: data.start_at,
-      end_at: data.end_at,
+      start_at: "2021-06-04T15:05:00",
+      end_at: "2021-06-05T15:05:00",
       status: "archived",
     };
     updateAnnStatus(annonce);
@@ -377,7 +377,9 @@ const ModalDetailComponent = (props) => {
                             );
                           }}
                         >
-                          {file.src.slice(11, file.src.length - 12).replace(/_/g," ")}
+                          {file.src
+                            .slice(11, file.src.length - 12)
+                            .replace(/_/g, " ")}
                         </p>
                       </span>
                     </div>
@@ -440,15 +442,18 @@ const ModalDetailComponent = (props) => {
               OnConfirm={ArchiveAnnonce}
             />
           )}
-          {archive && data.status === "validated" && role === "service" && (
-            <ConfirmModal
-              modal
-              button={{ color: "black", text: "Archive", icon: "archive" }}
-              text="Confirm sending this report to archive ?"
-              title="Confirm Archive"
-              OnConfirm={ArchiveReport}
-            />
-          )}
+          {isRapport &&
+            archive &&
+            data.status === "validated" &&
+            role === "service" && (
+              <ConfirmModal
+                modal
+                button={{ color: "black", text: "Archive", icon: "archive" }}
+                text="Confirm sending this report to archive ?"
+                title="Confirm Archive"
+                OnConfirm={ArchiveReport}
+              />
+            )}
         </Modal.Content>
       </Modal.Content>
     </Modal>
