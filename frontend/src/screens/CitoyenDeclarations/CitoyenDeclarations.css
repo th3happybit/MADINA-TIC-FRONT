@@ -1,201 +1,200 @@
-._main{
-    display : flex;
-    padding : 0 !important;
+._main_declaration {
+  display: flex;
+  padding: 0 !important;
 }
 
-._main_right {
-    margin-top: 2rem !important;
-    width: 80% !important;
-    height: 100% !important;
-    min-height: 650px !important;
-    margin-left: 18rem !important;
-    margin-right: auto !important;
-    margin-bottom: 3rem !important;
-    border: none !important;
-    -ms-overflow-style: none !important;
-    background-color: white !important;
+._main_declaration_right {
+  margin-top: 1.4rem !important;
+  width: 80% !important;
+  height: 100% !important;
+  min-height: 690px !important;
+  margin-left: 18rem !important;
+  margin-right: auto !important;
+  border: none !important;
+  -ms-overflow-style: none !important;
+  background-color: white !important;
 }
 
-._main .row {
-    display : flex;
-    justify-content: space-between;
+._main_declaration .row {
+  display: flex;
+  justify-content: space-between;
 }
 
-._main .row.filters {
-    display: flex;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+._main_declaration .row.filters {
+  display: flex;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
-._main .segment {
-    padding : 2rem !important;
+._main_declaration .segment {
+  padding: 2rem !important;
 }
 
 .row.filters button {
-    color : var(--blue_darker);
-    background-color: transparent;
+  color: var(--blue_darker);
+  background-color: transparent;
 }
 
 .row.filters button:hover {
-    color : var(--primary);
-    background-color: transparent;
+  color: var(--primary);
+  background-color: transparent;
 }
 
 .row.filters button:focus {
-    color : var(--primary);
-    background-color: transparent !important;
+  color: var(--primary);
+  background-color: transparent !important;
 }
 
 ._active {
-    border-radius: 0 !important;
-    color : var(--primary) !important;
-    border-bottom: solid 1px !important;
+  border-radius: 0 !important;
+  color: var(--primary) !important;
+  border-bottom: solid 1px !important;
 }
 
 .table_header th {
-    background-color: var(--primary) !important;
-    color : white !important;
+  background-color: var(--primary) !important;
+  color: white !important;
 }
 
-.manage_button #infos_btn{
-    background-color: white !important;
+.manage_button #infos_btn {
+  background-color: white !important;
 }
 
 .manage_button #infos_btn:hover {
-    background-color: var(--gray_light) !important;
+  background-color: var(--gray_light) !important;
 }
 
 .manage_button {
-    padding-right : 12px !important;
+  padding-right: 12px !important;
 }
 
 .citoyen_declar_pagin {
-    position: relative !important;
-    margin-top: 1rem !important;
-    bottom: 5% !important;
-    left: 2% !important;
-    border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
+  width: fit-content;
+  position: relative !important;
+  margin-top: 1rem !important;
+  bottom: 5% !important;
+  left: 2% !important;
+  border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
 }
 
-._main  .ui.loading.segment:before {
-      background: rgba(247, 249, 251, 0.9);
+._main_declaration .ui.loading.segment:before {
+  background: rgba(247, 249, 251, 0.9);
 }
 
 .show_mobile {
-    display : none !important;
+  display: none !important;
 }
 
-._main > .search input {
-    width : 300px !important;
+._main_declaration > .search input {
+  width: 300px !important;
 }
 
-.sort_field > i{
-    margin-left: 10px !important;
+.sort_field > i {
+  margin-left: 10px !important;
 }
 
 .full_text {
-    display: none;
+  display: none;
 }
 
-td:hover > .full_text{
-    display: inline;
-    position: absolute;
-    color : black;
-    max-width : 300px;
-    padding: 1rem;
-    text-align: justify;
-    text-justify: inter-word;
-    border-radius: 3px;
-    background-color: #ebebeb;
-    z-index: 1;
+td:hover > .full_text {
+  display: inline;
+  position: absolute;
+  color: black;
+  max-width: 300px;
+  padding: 1rem;
+  text-align: justify;
+  text-justify: inter-word;
+  border-radius: 3px;
+  background-color: #ebebeb;
+  z-index: 1;
 }
 
 .zero-data {
-    color : var(--gray);
-    font-size: xxx-large;
-    position: relative;
-    width: 100%;
-    text-align: center;
-    margin-top: 150px;
+  color: var(--gray);
+  font-size: xxx-large;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 150px;
 }
 
-@media (max-width : 1340px){
-    ._main_right{
-        margin-left: 16rem !important;
-    }
+@media (max-width: 1340px) {
+  ._main_declaration_right {
+    margin-left: 16rem !important;
+  }
 }
 
-@media (max-width : 1150px) {
-    ._main_right {
-        margin-left: 15rem !important;
-    }
+@media (max-width: 1150px) {
+  ._main_declaration_right {
+    margin-left: 15rem !important;
+  }
 }
 
-@media (max-width : 1250px){
-    ._main #address_h {
-        display: none !important;
-    }
-    ._main #address {
-        display: none;
-    }
-    #geo_loc_h {
-        display: none;
-    }
-    #geo_loc {
-        display: none;
-    }
+@media (max-width: 1250px) {
+  ._main_declaration #address_h {
+    display: none !important;
+  }
+  ._main_declaration #address {
+    display: none;
+  }
+  #geo_loc_h {
+    display: none;
+  }
+  #geo_loc {
+    display: none;
+  }
 }
 
-@media (max-width : 928px){
-    ._main {
-        height: 100%;
-    }
+@media (max-width: 928px) {
+  ._main_declaration {
+    height: 100%;
+  }
 
-    ._main .segment {
-        padding: 1.5rem !important;
-    }
+  ._main_declaration .segment {
+    padding: 1.5rem !important;
+  }
 
-    ._main_right {
-        margin-top: 1rem !important;
-        margin-bottom: 2rem !important;
-        height: 100% !important;
-        width : 95% !important;
-        min-height: 650px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
+  ._main_declaration_right {
+    margin-top: 1rem !important;
+    margin-bottom: 2rem !important;
+    height: 100% !important;
+    width: 95% !important;
+    min-height: 650px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 
-    ._main_right > .search input {
-        margin-top : 10px !important;
-        margin-bottom: 10px !important;
-        width: 200px !important;
-    }
+  ._main_declaration_right > .search input {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    width: 200px !important;
+  }
 
-    ._main .row {
-        /* flex-direction: column; */
-        margin-bottom: 20px;
-    }
+  ._main_declaration .row {
+    /* flex-direction: column; */
+    margin-bottom: 20px;
+  }
 
-    ._main .row.filters {
-        display: none !important;
-    }
+  ._main_declaration .row.filters {
+    display: none !important;
+  }
 
-    ._sorts {
-        visibility: hidden !important;
-    }
+  ._sorts {
+    visibility: hidden !important;
+  }
 
-    ._hide_mob{
-        display: none !important;
-    }
+  ._hide_mob {
+    display: none !important;
+  }
 
-    .citoyen_declar_pagin {
-        
-        position: absolute !important;
-        bottom : 2rem !important;
-        left: 2rem !important;
-    }
+  .citoyen_declar_pagin {
+    position: absolute !important;
+    bottom: 2rem !important;
+    left: 2rem !important;
+  }
 
-    ._main_right .filter_declaration {
+  ._main_declaration_right .filter_declaration {
     color: var(--primary) !important;
     border-radius: 0px !important;
     width: 200px !important;
@@ -204,70 +203,68 @@ td:hover > .full_text{
     border-color: var(--primary);
     background-color: transparent !important;
     margin-top: 10px !important;
+  }
+
+  ._main_declaration_right .filter_declaration > i {
+    color: white !important;
+    background-color: var(--primary) !important;
+    border: solid 0.5px var(--white);
+  }
+
+  .show_mobile {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .zero-data {
+    margin-top: 100px;
+    font-size: x-large;
+  }
+
+  ._main_declaration #address {
+    display: none !important;
+  }
+
+  ._main_declaration #geo_loc {
+    display: none !important;
+  }
+  @media (max-width: 767px) {
+    ._main_declaration thead {
+      display: none !important;
     }
-    
-    ._main_right .filter_declaration > i {
-        color: white !important;
-        background-color: var(--primary) !important;
-        border: solid 0.5px var(--white);
+    ._sorts {
+      visibility: visible !important;
+    }
+    .citoyen_declar_pagin {
+      position: relative !important;
+      bottom: 0rem !important;
+      left: 0 !important;
+    }
+  }
+
+  @media (max-width: 472px) {
+    .show_mobile {
+      display: block !important;
     }
 
-    .show_mobile{
-        display: flex !important;
-        justify-content: space-between !important;
+    ._main_declaration_right .filter_declaration {
+      width: 100% !important;
     }
 
-    .zero-data{
-        margin-top: 100px;
-        font-size: x-large;
+    ._main_declaration .row {
+      flex-direction: column;
+      margin-bottom: 0px;
     }
 
-    ._main #address {
-        display: none !important;
+    ._main_declaration_right .search .input {
+      width: -webkit-fill-available;
+      margin-bottom: 10px;
+      margin-top: 10px;
     }
 
-    ._main #geo_loc {
-        display: none !important;
+    .filter_declaration {
+      width: 100% !important;
+      margin-bottom: 10px !important;
     }
-    @media (max-width : 767px) {
-        ._main thead { 
-            display: none !important;    
-        }
-        ._sorts{
-            visibility: visible !important;
-        }
-        .citoyen_declar_pagin {
-            position: relative !important;
-            bottom : 0rem !important;
-            left: 0 !important;
-        }
-    }
-
-    @media (max-width : 472px) {
-        .show_mobile{
-            display: block !important;
-        }
-
-        ._main_right .filter_declaration{
-            width : 100% !important;
-        }
-
-        ._main .row {
-            flex-direction: column;
-            margin-bottom: 0px;
-        }
-
-        ._main_right .search .input {
-            width: -webkit-fill-available ;
-            margin-bottom: 10px;
-            margin-top : 10px;
-        }
-
-        .filter_declaration{
-            width: 100% !important;
-            margin-bottom: 10px !important;
-        }
-        
-    }
+  }
 }
-

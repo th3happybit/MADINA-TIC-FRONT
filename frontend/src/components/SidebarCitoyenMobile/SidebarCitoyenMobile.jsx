@@ -42,9 +42,9 @@ const SidebarCitoyenMobile = (props) => {
       <List className="_sidebar_list">
         <List.Item>
           <Link
-            to="/admin/dashboard"
+            to="/home"
             className={
-              props.active === "dashboard"
+              props.active === "home"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
@@ -54,26 +54,14 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/admin/citoyen"
+            to="/citoyen/declaration"
             className={
-              props.active === "citoyens"
+              props.active === "declaration"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
             Declarations
-          </Link>
-        </List.Item>
-        <List.Item>
-          <Link
-            to="/admin/create/account"
-            className={
-              props.active === "account"
-                ? "medium-text text-default text-active"
-                : "medium-text text-default"
-            }
-          >
-            Annonces
           </Link>
         </List.Item>
         <List.Item>

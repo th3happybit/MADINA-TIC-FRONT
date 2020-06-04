@@ -6,10 +6,8 @@ import axios from "axios";
 
 const MaireDeclarationTable = (props) => {
   const { data } = props;
-  const [names, setNames] = useState([]);
   const [services, setServices] = useState([]);
   useEffect(() => {
-    setNames(props.names);
     axios
       .get("http://157.230.19.233/api/users/?role=Service", {
         headers: {
@@ -69,37 +67,37 @@ const MaireDeclarationTable = (props) => {
     }
 
     return ret;
-  };
+  }
   function getMonth(month) {
     switch (month) {
-        case "01":
-            return "January"
-        case "02":
-            return "February"
-        case "03":
-            return "March"
-        case "04":
-            return "April"
-        case "05":
-            return "May"
-        case "06":
-            return "June"
-        case "07":
-            return "July"
-        case "08":
-            return "August"
-        case "09":
-            return "September"
-        case "10":
-            return "October"
-        case "11":
-            return "November"
-        case "12":
-            return "December"
-        default:
-            break;
+      case "01":
+        return "January";
+      case "02":
+        return "February";
+      case "03":
+        return "March";
+      case "04":
+        return "April";
+      case "05":
+        return "May";
+      case "06":
+        return "June";
+      case "07":
+        return "July";
+      case "08":
+        return "August";
+      case "09":
+        return "September";
+      case "10":
+        return "October";
+      case "11":
+        return "November";
+      case "12":
+        return "December";
+      default:
+        break;
     }
-}
+  }
 
   return (
     <Table striped className="_maire_table">
@@ -122,7 +120,6 @@ const MaireDeclarationTable = (props) => {
       {data && (
         <Table.Body>
           {data.map((element, index) => {
-            console.log(data)
             const {
               did,
               citizen,
@@ -134,12 +131,11 @@ const MaireDeclarationTable = (props) => {
               desc,
               validated_at,
               attachments,
-              first_name,
-              last_name,
+              priority,
             } = element;
             return (
               <Table.Row key={index}>
-                <Table.Cell className="_table_title">{names[index]}</Table.Cell>
+                <Table.Cell className="_table_title">{citizen.first_name + " " + citizen.last_name}</Table.Cell>
                 <Table.Cell>{title}</Table.Cell>
                 <Table.Cell className="_hide _hide_td">
                   {address.length < 40 ? (
@@ -151,25 +147,45 @@ const MaireDeclarationTable = (props) => {
                     </>
                   )}
                 </Table.Cell>
-                <Table.Cell>{created_on.slice(8, 10) + " - " + getMonth(created_on.slice(5, 7)) + " - " + created_on.slice(0, 4)}</Table.Cell>
+                <Table.Cell>
+                  {created_on.slice(8, 10) +
+                    " - " +
+                    getMonth(created_on.slice(5, 7)) +
+                    " - " +
+                    created_on.slice(0, 4)}
+                </Table.Cell>
                 <Table.Cell textAlign="center" className="_left">
                   <ModalDetails
-                    fullname={names[index]}
-                    did={did}
-                    citizen={citizen}
-                    title={title}
-                    type={editType(dtype)}
-                    dtype={dtype}
-                    address={address}
-                    description={desc}
-                    attachements={filterAttachments(attachments)}
-                    created_on={created_on.slice(0, 10)}
-                    validated_at={
-                      validated_at ? validated_at.slice(8, 10) + " - " + getMonth(validated_at.slice(5, 7)) + " - " + validated_at.slice(0, 4) : "/"
-                    }
-                    services={services}
-                    // rejected_at = {rejected_at ? rejected_at.slice(0,10) : "/"}
-                    status={getStatus(status).status}
+                    title="Declarations Details"
+                    data={{
+                      fullname: citizen.first_name + " " + citizen.last_name,
+                      did: did,
+                      citizen: citizen.uid,
+                      title: title,
+                      type: editType(dtype),
+                      dtype: dtype,
+                      address: address,
+                      description: desc,
+                      attachements: filterAttachments(attachments),
+                      created_on: created_on
+                        ? created_on.slice(8, 10) +
+                          " - " +
+                          getMonth(created_on.slice(5, 7)) +
+                          " - " +
+                          created_on.slice(0, 4)
+                        : "/",
+                      priority: priority,
+                      validated_at: validated_at
+                        ? validated_at.slice(8, 10) +
+                          " - " +
+                          getMonth(validated_at.slice(5, 7)) +
+                          " - " +
+                          validated_at.slice(0, 4)
+                        : "/",
+                      services: services,
+                      status: getStatus(status).status,
+                    }}
+                    Maire
                     reject={props.rejectDeclaration}
                     archive={props.archiveDeclaration}
                     complement={props.demandComplement}

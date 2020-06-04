@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Image, Button, Segment, Message } from "semantic-ui-react";
+import { Form, Image, Button, Segment, Message, Icon } from "semantic-ui-react";
 import Geocode from "react-geocode";
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
@@ -25,6 +25,73 @@ const UpdateDeclaration = (props) => {
   const [options, setOptions] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
   const [loadingPage, setLoadingPage] = useState(false);
+  const [pictures, setPictures] = useState([]);
+  const [picturesPreview, setPicturesPreview] = useState([]);
+  const [did, setDid] = useState(null);
+  const [selectedFile, setSelectedFile] = useState();
+  const [sendP, setsendP] = useState([]);
+  const handledeleteImg = (e) => {
+    let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
+    let preview = [];
+    let f = [];
+    pictures.map((elm, index) => {
+      if (index !== indexElm) {
+        f.push(elm);
+      }
+      return true;
+    });
+    setPictures(f);
+  };
+  useEffect(() => {
+    if (!selectedFile) {
+      setPicturesPreview([]);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPictures((prevState) => [...prevState, objectUrl]);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
+  const onSelectFile = (e) => {
+    let es = e.target.files[0];
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(undefined);
+      return;
+    }
+    setSelectedFile(es);
+    setsendP((prevState) => [...prevState, es]);
+  };
+  useEffect(() => {
+    const formData = new FormData();
+    sendP.map((image) => {
+      console.log({ image });
+      formData.append("src", image, image.name);
+    });
+    formData.append("filetype", "image");
+    formData.append("declaration", did);
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        },
+      })
+      .request({
+        url: "http://157.230.19.233/api/documents/",
+        method: "post",
+        data: formData,
+      })
+      .then((res) => {
+        console.log(res);
+        setSucces(true);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setIsLoading(false);
+      });
+  }, [did]);
   useEffect(() => {
     Geocode.fromLatLng("48.8583701", "2.2922926").then(
       (response) => {
@@ -62,9 +129,13 @@ const UpdateDeclaration = (props) => {
         },
       })
       .then((res) => {
-        setIsLoading(false);
-        console.log(res);
-        setSucces(true);
+        let did = res.data.did;
+        if (pictures.length > 0) {
+          setDid(did);
+        } else {
+          setSucces(true);
+          setIsLoading(false);
+        }
       })
       .catch((err) => {
         console.log(err.response);
@@ -243,7 +314,76 @@ const UpdateDeclaration = (props) => {
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
-
+          {pictures.length > 0 && (
+            <p className="label_add_dec bold">Pictures</p>
+          )}
+          <div
+            className="prev_images_dec"
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              flexDirection: "column",
+            }}
+          >
+            {picturesPreview.map((elm, index) => {
+              return (
+                <div
+                  style={{
+                    position: "relative",
+                  }}
+                >
+                  <Image src={elm.src} key={index} />
+                </div>
+              );
+            })}
+            <p
+              className="label_add_dec bold"
+              style={{
+                margin: "1rem 0",
+              }}
+            >
+              {pictures.length > 0 ? "Add another Photos" : "Add pictures"}
+            </p>
+            <div className="_profile_img_edit add_dec pointer">
+              <label
+                htmlFor="myInput"
+                className="pointer"
+                style={{
+                  display: "flex",
+                  width: "100%",
+                }}
+              >
+                Upload
+              </label>
+              <input
+                id="myInput"
+                style={{ display: "none" }}
+                type="file"
+                accept="image/*"
+                className="pointer"
+                onChange={onSelectFile}
+              />
+            </div>
+            <div className="prev_images_dec">
+              {pictures.map((elm, index) => {
+                return (
+                  <div
+                    style={{
+                      position: "relative",
+                    }}
+                  >
+                    <Image src={elm} key={index} />
+                    <Icon
+                      color="black"
+                      name="delete"
+                      data-id={index}
+                      onClick={handledeleteImg}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <Form.Group
             style={{
               display: "flex",

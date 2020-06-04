@@ -8,7 +8,7 @@ const FormLogin = () => {
 
   //? for loading while post request
   const [isLoading, setIsLoading] = useState(false);
-
+  const [nonApp, setNonApproved] = useState(false);
   const [isErr, setIsErr] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -38,11 +38,41 @@ const FormLogin = () => {
         password,
       })
       .then((res) => {
-        console.log(res.data);
-        localStorage.setItem("token", res.data.key);
-        //getItem
-        setIsLoading(false);
-        return history.push("/home");
+        const key = res.data.key;
+        axios
+          .create({
+            headers: {
+              get: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${key}`,
+              },
+            },
+          })
+          .request({
+            url: "http://157.230.19.233/api/user/",
+            method: "get",
+          })
+          .then((res) => {
+            const is_approved = res.data.is_approved;
+            const role = res.data.role;
+            if (is_approved) {
+              if (role === "Client") {
+                localStorage.setItem("token", key);
+                setIsLoading(false);
+                return history.push("/home");
+              } else {
+                setIsErr(true);
+                setIsLoading(false);
+              }
+            } else {
+              setIsErr(true);
+              setNonApproved(true);
+              setIsLoading(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -70,14 +100,22 @@ const FormLogin = () => {
         size="large"
         className="_margin_vertical_sm small"
       />
-      <Message
-        error
-        content={
-          password.length === 0 && email.length === 0
-            ? "Please enter your email and password to login"
-            : "Invalid email or password"
-        }
-      />
+      {!nonApp && (
+        <Message
+          error
+          content={
+            password.length === 0 && email.length === 0
+              ? "Please enter your email and password to login"
+              : "Invalid email or password"
+          }
+        />
+      )}
+      {nonApp && (
+        <Message
+          error
+          content="Your account is not validated yet by the admin"
+        />
+      )}
       <Button
         loading={isLoading}
         className="button_primary _margin_vertical_md"

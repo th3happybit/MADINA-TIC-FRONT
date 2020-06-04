@@ -1,0 +1,138 @@
+._rapport_form {
+  padding-top: 9rem;
+  padding-left: 30rem;
+  padding-right: 13rem;
+}
+
+._rapport_form > ._add_form {
+  padding-left: 16rem;
+  padding-right: 16rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+  min-height: 530px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+._success_modal .header {
+  border: none !important;
+  color: var(--primary) !important;
+}
+
+._success_modal .actions {
+  border: none !important;
+  background: #fff !important;
+}
+
+._add_form ._upload_section {
+  display: flex;
+  flex-direction: column !important;
+}
+
+._add_form input {
+  height: 45px;
+}
+
+._add_form .field.error textarea {
+  background: white !important;
+}
+
+._add_form ._upload_section .button {
+  width: 100px !important;
+  margin-top: 10px;
+}
+
+._add_form ._upload_section > p {
+  margin-bottom: 10px;
+}
+
+._add_form ._upload_section span {
+  display: flex;
+  align-items: baseline;
+}
+
+._add_form ._upload_section span p {
+  font-weight: 550;
+}
+
+._add_form ._action_button button {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 180px !important;
+  padding: 1rem 2rem !important;
+}
+
+._add_form .form {
+  width: 100%;
+}
+
+._add_form h3 {
+  text-align: center;
+}
+
+._add_form .field label {
+  color: var(--blue_darker) !important;
+  font-size: 16px !important;
+}
+
+._add_form p {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+._add_form .field textarea {
+  font-size: 16px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
+
+._add_form .field input {
+  font-size: 16px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+}
+
+._add_form ._input_err input,
+._add_form ._input_err textarea {
+  border: 2px solid red !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 1299px) {
+  ._rapport_form > ._add_form {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+  ._rapport_form {
+    padding-left: 27rem;
+    padding-right: 10rem;
+  }
+}
+@media (max-width: 1099px) {
+  ._rapport_form > ._add_form {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+  ._rapport_form {
+    padding-left: 23rem;
+    padding-right: 6rem;
+  }
+}
+@media (max-width: 899px) {
+  ._rapport_form {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+
+  ._rapport_form > ._add_form {
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+  ._add_form ._action_button {
+    margin-top: 40px;
+    position: relative;
+  }
+}

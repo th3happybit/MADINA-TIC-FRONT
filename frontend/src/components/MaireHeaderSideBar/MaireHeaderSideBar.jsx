@@ -37,6 +37,18 @@ const SidebarHeader = (props) => {
       <List className="_sidebar_list">
         <List.Item>
           <Link
+            to="/maire/profile"
+            className={
+              props.active === "profile"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Profile
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
             to="/maire/dashboard"
             className={
               props.active === "dashboard"
@@ -57,6 +69,30 @@ const SidebarHeader = (props) => {
             }
           >
             Declarations
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
+            to="/maire/rapports/"
+            className={
+              props.active === "rapports"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Reports
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
+            to="/maire/announce"
+            className={
+              props.active === "announce"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Annoucements
           </Link>
         </List.Item>
         <List.Item>

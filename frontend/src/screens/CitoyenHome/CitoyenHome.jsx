@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import { Message } from "semantic-ui-react";
 import axios from "axios";
 
+//? import css
+import "./CitoyenHome.css";
+
 //? import components
 import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
 import CitoyenSidebar from "../../components/CitoyenSidebar/CitoyenSidebar.jsx";
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
+import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 const CitoyenHome = (props) => {
+  const { annonce } = props;
   const [visible, setVisible] = useState(false);
   const [fullname, setFullname] = useState("");
   const [image, setImage] = useState(null);
@@ -34,8 +39,7 @@ const CitoyenHome = (props) => {
           setFullname(res.data.first_name + " " + res.data.last_name);
           setImage(res.data.image);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     } else {
       setIsLogin(false);
     }
@@ -53,9 +57,7 @@ const CitoyenHome = (props) => {
             fullname={fullname}
             image={image}
           />{" "}
-          <CitoyenSidebar 
-            active={props.active} 
-            visible={visible} />{" "}
+          <CitoyenSidebar active={props.active} visible={visible} />{" "}
           <main
             style={{
               position: "relative",
@@ -69,10 +71,15 @@ const CitoyenHome = (props) => {
             fullname={fullname}
             image={image}
             visible={visible}
-            active=""
+            active={props.active}
             click={handleHide}
             login
           />
+          {annonce && (
+            <div className="_annonce_section">
+              <Annonce />
+            </div>
+          )}
         </>
       ) : (
         <div

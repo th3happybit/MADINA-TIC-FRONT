@@ -45,9 +45,31 @@ const MainForm = () => {
         data: { email, password },
       })
       .then((res) => {
-        setISLoading(false);
-        localStorage.setItem("admin_token", res.data.key);
-        return history.push("/admin/dashboard");
+        const key = res.data.key;
+        axios
+          .create({
+            headers: {
+              get: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${key}`,
+              },
+            },
+          })
+          .request({
+            url: "http://157.230.19.233/api/user/",
+            method: "get",
+          })
+          .then((res) => {
+            if (res.data.role === "Admin") {
+              localStorage.setItem("admin_token", key);
+              setISLoading(false);
+              return history.push("/admin/dashboard");
+            } else {
+              seterror(true);
+              setISLoading(false);
+            }
+          })
+          .catch((err) => console.log(err));
       })
       .catch(() => {
         setISLoading(false);

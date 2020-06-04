@@ -45,6 +45,7 @@ const MainForm = () => {
         data: { email, password },
       })
       .then((res) => {
+        console.log(res);
         setISLoading(false);
         localStorage.setItem("service_token", res.data.key);
         return history.push("/service/declaration");

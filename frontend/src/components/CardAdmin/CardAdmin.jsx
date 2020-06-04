@@ -124,7 +124,6 @@ const CardAdmin = (props) => {
   const handleUpdate = () => {
     const formData = new FormData();
     if (props.pictureUpdated) {
-      console.log("s");
       props.image && formData.append("image", props.image, props.image.name);
     }
 
