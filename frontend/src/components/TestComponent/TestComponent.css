@@ -1,0 +1,14 @@
+.btns_actionsx {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media (max-width : 899px) {
+  .btns_actionsx{
+    justify-content: flex-start;
+  }
+  .btns_actionsx ._hide_on_desktop {
+    margin-right: 1rem !important;
+    border-radius: .28571429rem !important;
+  }
+}

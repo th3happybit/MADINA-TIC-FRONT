@@ -19,6 +19,8 @@ import Maire from "./screens/Maire/Maire.jsx";
 import MaireAuth from "./screens/Maire/MaireLogin.jsx";
 import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
+import Consultations from "./screens/Consultations/Consultations.jsx";
+import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -34,6 +36,15 @@ import CitoyenDeclarationInfo from "./components/CitoyenDeclarationInfo/CitoyenD
 import ComplementDeclaration from "./components/ComplementDeclaration/ComplementDeclaration.jsx";
 import UpdateDeclaration from "./components/UpdateDeclaration/UpdateDeclaration.jsx";
 import ServiceDeclaration from "./components/ServiceDeclaration/ServiceDeclaration.jsx";
+import MaireRapports from "./components/MaireRapports/MaireRapports.jsx";
+import DeposeRapport from "./components/ServiceDeposeRapport/ServiceDeposeRapport.jsx";
+import UpdateRapport from "./components/ServiceUpdateReport/UpdateReport.jsx";
+import ComplementRapport from "./components/ServiceComplementReport/ComplementReport.jsx";
+import DeposerAnnonces from "./components/DeposerAnnonces/DeposerAnnonces.jsx";
+import UpdateAnnounces from "./components/UpdateAnnounces/UpdateAnnounces.jsx";
+import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnnounces.jsx";
+import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
+import Profile from "./components/Profile/Profile.jsx";
 
 function App() {
   return (
@@ -52,9 +63,52 @@ function App() {
         <Route exact path="/maire/login" component={MaireAuth} />
         <Route
           exact
+          path="/maire/profile/"
+          component={() => (
+            <Maire active="profile" childComponent={Profile} />
+          )}
+        />
+        <Route
+          exact
           path="/maire/declaration/"
           component={() => (
             <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
+        <Route
+          exact
+          path="/maire/announce/"
+          component={() => (
+            <Maire active="announce" childComponent={MaireAnnonce} />
+          )}
+        />
+        <Route
+          exact
+          path="/maire/rapports/"
+          component={() => (
+            <Maire active="rapports" childComponent={MaireRapports} />
+          )}
+        />
+        <Route
+          exact
+          path="/service/profile"
+          component={() => <Service active="profile" childComponent={<Profile service/>} />}
+        />
+        <Route
+          exact
+          path="/service/rapports/"
+          component={() => (
+            <Service active="rapports" childComponent={<Consultations />} />
+          )}
+        />
+        <Route
+          exact
+          path="/service/annonce/"
+          component={() => (
+            <Service
+              active="annonce"
+              childComponent={<ConsultationsAnnonce />}
+            />
           )}
         />
         <Route exact path="/admin" component={Admin} />
@@ -69,7 +123,7 @@ function App() {
         <Route
           exact
           path="/home"
-          component={() => <CitoyenHome active="home" />}
+          component={() => <CitoyenHome annonce active="home" />}
         />
         <Route
           exact
@@ -125,7 +179,73 @@ function App() {
           component={() => (
             <Service
               active="declarations"
-              childComponent={ServiceDeclaration}
+              childComponent={<ServiceDeclaration />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/add/rapport"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="rapports"
+              childComponent={<DeposeRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/update/rapport"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="rapports"
+              childComponent={<UpdateRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/rapport"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="rapports"
+              childComponent={<ComplementRapport props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/add/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<DeposerAnnonces props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/update/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<UpdateAnnounces props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/complement/annonce"
+          component={(prop) => (
+            <Service
+              props={prop}
+              active="annonce"
+              childComponent={<ComplementAnnounces props={prop} />}
             />
           )}
         />

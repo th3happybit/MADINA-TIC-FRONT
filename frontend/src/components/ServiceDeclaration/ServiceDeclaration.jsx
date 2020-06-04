@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import axios from "axios";
@@ -16,13 +17,16 @@ const ServiceDeclaration = (props) => {
   const [pages, setPages] = useState(0);
   const [perm, setPerm] = useState(false);
   const [term, setTerm] = useState(null);
-  const [sortmobile, setsortMobile] = useState("Random");
   const [searchLoading, setsearchLoading] = useState(false);
-  const [sortDate, setsortDate] = useState(null);
   const [types, settypes] = useState([]);
   const [id, setId] = useState(null);
+  const [update, setUpdate] = useState(false);
 
+  const refresh = () => {
+    page === 1 ? setUpdate((prevState) => !prevState) : setPage(1);
+  };
   const handle_filter = (e) => {
+    setTerm("");
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -31,50 +35,20 @@ const ServiceDeclaration = (props) => {
     setTerm(e.currentTarget.value);
     setPage(1);
   };
-  const handlesortRandom = () => {
-    setsortDate(null);
-    setsortMobile("Random");
-    setPage(1);
-  };
-  const handlesortOldFirst = () => {
-    setsortDate("asc");
-    setsortMobile("Old first");
-    setPage(1);
-  };
-  const handlesortNewFirst = () => {
-    setsortDate("desc");
-    setsortMobile("Newer first");
-    setPage(1);
-  };
-  const handle_sort_date = () => {
-    if (sortDate === "asc") {
-      setsortDate("desc");
-      setPage(1);
-    } else if (sortDate === "desc") {
-      setsortDate(null);
-      setPage(1);
-    } else {
-      setsortMobile("Random");
-      setPage(1);
-      setsortDate("asc");
-    }
-  };
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
   };
   const getData = (sid) => {
     setData([]);
     setLoading(true);
+    setPerm(false);
     const pa = {
       page: page,
       service: sid,
+      ordering: "priority",
     };
     if (term) {
       pa["search"] = term;
-    }
-    if (sortDate) {
-      if (sortDate === "asc") pa["ordering"] = "validated_at";
-      else pa["ordering"] = "-validated_at";
     }
     switch (activeFilter) {
       case "Validated":
@@ -94,7 +68,7 @@ const ServiceDeclaration = (props) => {
     }
     if (sid)
       axios
-        .get("http://157.230.19.233/api/declarations/", {
+        .get("http://157.230.19.233/api/declaration_nested/", {
           params: pa,
           headers: {
             "content-type": "application/json",
@@ -121,7 +95,6 @@ const ServiceDeclaration = (props) => {
         });
   };
   const getTypes = (sid) => {
-    console.log("ss");
     setLoading(true);
     axios
       .get("http://157.230.19.233/api/declarations_types/", {
@@ -160,7 +133,7 @@ const ServiceDeclaration = (props) => {
   }, []);
   useEffect(() => {
     if (id) getData(id);
-  }, [page, term, sortDate, sortmobile, activeFilter]);
+  }, [page, term, activeFilter, update]);
   return (
     <div className="_service_declarations">
       <div className="_main_header">
@@ -180,7 +153,7 @@ const ServiceDeclaration = (props) => {
             results={null}
             input={{
               icon: "search",
-              iconPosition: "left",
+              iconPosition: "right",
               disabled:
                 Data.length < 1 && (term === null || term === "")
                   ? true
@@ -188,20 +161,6 @@ const ServiceDeclaration = (props) => {
             }}
             placeholder="Search for declarations ..."
           />
-          <Dropdown
-            className="icon filter_declaration _mobile"
-            icon="angle down"
-            text={sortmobile}
-            button
-            selection
-            labeled
-          >
-            <Dropdown.Menu>
-              <Dropdown.Item text="Randomly" onClick={handlesortRandom} />
-              <Dropdown.Item text="Newer first" onClick={handlesortNewFirst} />
-              <Dropdown.Item text="Old first" onClick={handlesortOldFirst} />
-            </Dropdown.Menu>
-          </Dropdown>
           <Dropdown
             className="icon filter_declaration"
             icon="angle down"
@@ -235,25 +194,22 @@ const ServiceDeclaration = (props) => {
           </Dropdown>
         </div>
         {Data.length > 0 ? (
-          <>
-            <DeclarationsTable
-              data={Data}
-              filter={activeFilter}
-              handlesortDate={handle_sort_date}
-              sortdate={sortDate}
-            />
-            <Pagination
-              className="_service_pagination"
-              boundaryRange={0}
-              activePage={page}
-              onPageChange={changePage}
-              firstItem={null}
-              lastItem={null}
-              totalPages={pages}
-              pointing
-              secondary
-            />
-          </>
+          <div className="_data_section">
+            <DeclarationsTable data={Data} filter={activeFilter} refresh={refresh}/>
+            {pages > 1 && (
+              <Pagination
+                className="_service_pagination"
+                boundaryRange={0}
+                activePage={page}
+                onPageChange={changePage}
+                firstItem={null}
+                lastItem={null}
+                totalPages={pages}
+                pointing
+                secondary
+              />
+            )}
+          </div>
         ) : (
           perm && (
             <p class="zero-data">

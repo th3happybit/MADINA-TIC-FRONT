@@ -46,8 +46,8 @@
   
   ._sidebar_service > .row > .menu > .d-flex {
     align-items: center;
-    margin: 2rem 0;
-    width: 70%;
+    margin: 1rem 0;
+    width: 80%;
   }
   ._sidebar_service > .row > .menu > .d-flex:hover ._sidebar_icons,
   ._sidebar_service > .row > .menu > .d-flex:hover .item {
@@ -65,7 +65,23 @@
   }
   ._sidebar_service > .row > .menu .item.active {
     color: var(--primary) !important;
+
   }
+
+  .ui.vertical.text.menu:last-child{
+    width: 200px;
+    position: fixed;
+    top: 70px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-family: "Open Sans", sans-serif;
+    color: var(--blue_darker);
+    padding: 2rem 0;
+    margin: 1rem;
+    margin-left: 0rem !important;
+  }
+
   @media (max-width: 899px) {
     ._sidebar_service {
       display: none !important;

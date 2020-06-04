@@ -50,7 +50,6 @@ const ValidateDataUpdateProfile = (data) => {
     email.length > 0 &&
     birthday.length > 0 &&
     phone.length > 0 &&
-    national_id.length > 0 &&
     last_name.length > 0
   ) {
     if (first_name.length > 30) {

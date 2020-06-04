@@ -10,7 +10,11 @@ const CitoyenSidebar = (props) => {
         <p>Add declaration</p>
       </a>
       <List className="sidebar_list_cit">
-        <List.Item className={props.active === "home" ? "active" : ""}>
+        <List.Item
+          className={props.active === "home" ? "active file text" : "file text"}
+          as="a"
+          href="/home"
+        >
           <List.Icon name="home" />
           <List.Content>Home</List.Content>
         </List.Item>

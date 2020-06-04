@@ -1,0 +1,29 @@
+._service_table #_manage_cell {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-evenly;
+}
+
+._service_table td .ui.blue.label {
+  background-color: var(--primary) !important;
+}
+
+@media (max-width: 899px) {
+  ._service_table ._hide_on_mobile {
+    display: none;
+  }
+
+  ._service_table .mobile_button {
+    padding: 0.6rem 1rem !important;
+    min-width: 20px;
+  }
+
+  ._service_table #_manage_cell {
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+
+  ._service_table #manage_cell button {
+    height: 10px !important;
+  }
+}

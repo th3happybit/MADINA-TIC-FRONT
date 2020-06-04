@@ -56,7 +56,7 @@ const CitoyenProfile = () => {
   return (
     <>
       {isLogin ? (
-        <main>
+        <>
           <Container
             fluid
             id="container_profile"
@@ -116,7 +116,7 @@ const CitoyenProfile = () => {
               refresh={GetCitoyenInfos}
             />
           </Container>
-        </main>
+        </>
       ) : (
         <div
           style={{

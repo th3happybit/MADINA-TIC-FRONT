@@ -26,14 +26,25 @@ const ServiceHeaderSideBar = (props) => {
         localStorage.removeItem("service_token");
         return history.push("/service/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   const { visible } = props;
   return (
     <div className={visible ? "_sidebar active" : "_sidebar"}>
       <Toggle className="_header_logo pointer" onClick={props.click} />
       <List className="_sidebar_list">
+        <List.Item>
+          <Link
+            to="/service/profile"
+            className={
+              props.active === "profile"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Profile
+          </Link>
+        </List.Item>
         <List.Item>
           <Link
             to="/service/dashboard"
@@ -60,26 +71,26 @@ const ServiceHeaderSideBar = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/service/rapport"
+            to="/service/rapports"
             className={
-              props.active === "rapport"
+              props.active === "rapports"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
-            Rapports
+            Reports
           </Link>
         </List.Item>
         <List.Item>
           <Link
-            to="/service/announcement"
+            to="/service/annonce"
             className={
               props.active === "annonce"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
-            Rapports
+            Announcements
           </Link>
         </List.Item>
         <List.Item>
@@ -95,6 +106,14 @@ const ServiceHeaderSideBar = (props) => {
           </Link>
         </List.Item>
       </List>
+
+      <a
+        href="/add/annonce"
+        className="add_annonce_mobile pointer  text-default text-active"
+      >
+        <p>Add annonce</p>
+      </a>
+
       <div className="_logout_header _margin_vertical_sm">
         <p
           onClick={handleLogout}
