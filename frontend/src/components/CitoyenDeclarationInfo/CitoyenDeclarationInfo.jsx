@@ -84,7 +84,7 @@ const CitoyenDeclarationInfo = (props) => {
       });
   };
 
-  const UpdateState = () => {
+  const UpdateState = (status) => {
     axios
       .create({
         headers: {
@@ -100,7 +100,7 @@ const CitoyenDeclarationInfo = (props) => {
           title: Data.title,
           desc: Data.desc,
           citizen: Data.citizen,
-          status: "not_validated",
+          status: status,
           dtype: Data.dtype,
         },
       })
@@ -280,11 +280,25 @@ const CitoyenDeclarationInfo = (props) => {
                   animated
                   color="yellow"
                   className="action_button"
-                  onClick={UpdateState}
+                  onClick={() => UpdateState("not_validated")}
                 >
                   <Button.Content visible content="send" />
                   <Button.Content hidden icon>
                     <Icon name="paper plane alternate" />
+                  </Button.Content>
+                </Button>
+              </>
+            )}{Data.status && getStatus(Data.status).status === "Treated" && (
+              <>
+                <Button
+                  animated
+                  color="black"
+                  className="action_button"
+                  onClick={() => UpdateState("archived")}
+                >
+                  <Button.Content visible content="Archive" />
+                  <Button.Content hidden icon>
+                    <Icon name="archive" />
                   </Button.Content>
                 </Button>
               </>
