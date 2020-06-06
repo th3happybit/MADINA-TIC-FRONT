@@ -123,6 +123,7 @@ const MaireDeclarationTable = (props) => {
           {data.map((element, index) => {
             return (
               <MaireRow
+                setRefresh={props.setRefresh}
                 getMonth={getMonth}
                 editType={editType}
                 filterAttachments={filterAttachments}

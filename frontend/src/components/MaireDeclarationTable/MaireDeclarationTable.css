@@ -8,7 +8,29 @@
   flex-direction: column !important;
   align-items: center !important;
 }
-
+.btns_childs {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+.btns_childs .button {
+  margin: 0 0.5rem;
+}
+.chlp {
+  padding: 4rem 0;
+  margin-top: 4rem;
+}
+.childs_dec {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 150px;
+  padding: 4rem 0;
+  padding-bottom: 0;
+}
+.childs_dec .ui.checkbox {
+  margin: 0.5rem 0;
+}
 .details_content ._redirection_content .ui.selection {
   width: 320px !important;
   margin-bottom: 20px;

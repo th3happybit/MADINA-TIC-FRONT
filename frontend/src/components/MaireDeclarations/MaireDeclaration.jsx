@@ -59,7 +59,7 @@ const MaireDeclarations = (props) => {
         .then((res) => console.log(res))
         .catch((err) => console.log(err.response));
     });
-    //setRefresh((prevState) => !prevState);
+    setRefresh((prevState) => !prevState);
     props.add_parent(null);
   };
 
@@ -143,13 +143,16 @@ const MaireDeclarations = (props) => {
     }
 
     axios
-      .get("http://157.230.19.233/api/declaration_nested/", {
-        params: pa,
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
-        },
-      })
+      .get(
+        "http://157.230.19.233/api/declaration_nested/?parent_declaration__isnull=True",
+        {
+          params: pa,
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          },
+        }
+      )
       .then((res) => {
         setData(res.data.results);
         getTypes();
@@ -492,6 +495,7 @@ const MaireDeclarations = (props) => {
               <div className="_data_section">
                 <MaireDeclarationTable
                   isRegroup={isRegroup}
+                  setRefresh={setRefresh}
                   data={Data}
                   filter={activeFilter}
                   handlesortDate={handle_sort_date}
