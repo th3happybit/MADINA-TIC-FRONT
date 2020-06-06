@@ -159,30 +159,6 @@ const ModalDetailComponent = (props) => {
     };
     updateRepStatus(report);
   };
-  const RejectReport = (reason) => {
-    const rejection = {
-      reason: reason,
-      report: data.rid,
-      maire: uid,
-    };
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem(token)}`,
-          },
-        },
-      })
-      .request({
-        url: "http://157.230.19.233/api/reports_rejection/",
-        data: rejection,
-        method: "post",
-      })
-      .then((res) => {
-        refresh();
-      });
-  };
   const ArchiveAnnonce = () => {
     const annonce = {
       title: data.title,
@@ -192,16 +168,6 @@ const ModalDetailComponent = (props) => {
       status: "archived",
     };
     updateAnnStatus(annonce);
-  };
-  const WorkNotFinished = () => {
-    const report = {
-      declaration: data.declaration,
-      title: data.title,
-      desc: data.desc,
-      service: data.service,
-      status: "work_not_finished",
-    };
-    updateRepStatus(report);
   };
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
@@ -411,24 +377,6 @@ const ModalDetailComponent = (props) => {
                 text="Confirm demanding complement ?"
                 title="Complement Demand"
                 OnConfirm={ComplementDemand}
-              />
-              <ConfirmModal
-                modal
-                button={{
-                  color: "orange",
-                  text: "Not finished",
-                  icon: "exclamation triangle",
-                }}
-                text="Confirm mark it as Work not finished ?"
-                title="Work not finished"
-                OnConfirm={WorkNotFinished}
-              />
-              <RejectComplement
-                modal
-                button={{ color: "red", text: "Reject", icon: "times" }}
-                text="Confirm rejecting report ?"
-                title="Reject Report"
-                OnConfirm={RejectReport}
               />
             </>
           )}

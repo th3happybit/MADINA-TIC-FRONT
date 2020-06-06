@@ -27,9 +27,7 @@ const Consultations = () => {
       status={[
         "not_validated",
         "lack_of_info",
-        "work_not_finished",
         "validated",
-        "refused",
         "archived",
       ]}
     />
