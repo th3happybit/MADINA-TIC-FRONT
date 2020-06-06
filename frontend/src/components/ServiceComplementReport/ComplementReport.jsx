@@ -40,6 +40,7 @@ const ComplementReport = (props) => {
   const [reason, setReason] = useState();
   const [report, setReport] = useState({});
   const [allow, setAllow] = useState(false);
+  const [nullData, setNulldata] = useState(false);
 
   let history = useHistory();
 
@@ -86,7 +87,10 @@ const ComplementReport = (props) => {
             setReport(res.data);
             setTitle(res.data.title);
             setDescription(res.data.desc);
-            if (res.data.status !== "lack_of_info") setAllow(true);
+            if (res.data.status !== "lack_of_info") {
+              setAllow(true);
+              setNulldata(true);
+            }
           })
           .catch((err) => {});
         axios
@@ -127,6 +131,8 @@ const ComplementReport = (props) => {
           .catch((err) => {
             console.log(err);
           });
+    } else {
+      setNulldata(true);
     }
   }, []);
 
@@ -333,12 +339,7 @@ const ComplementReport = (props) => {
   return (
     <div className="_rapport_form">
       <Segment className="_add_form" loading={Loading}>
-        {
-        // props.props.location.state &&
-        // props.props.location.state.rid &&
-        // props.props.location.state.did &&
-        // !allow &&
-        report.status === "lack_of_info" ? (
+        {!nullData && report.status === "lack_of_info" ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">
               Complement Report
@@ -500,7 +501,7 @@ const ComplementReport = (props) => {
             </div>{" "}
           </>
         ) : (
-          allow && (
+          nullData && (
             <h1
               className="text-default"
               style={{

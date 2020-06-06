@@ -9,7 +9,6 @@ import "./UpdateDeclaration.css";
 Geocode.setApiKey("AIzaSyDGe5vjL8wBmilLzoJ0jNIwe9SAuH2xS_0");
 Geocode.enableDebug();
 const UpdateDeclaration = (props) => {
-  const [data, setData] = useState([]);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
@@ -27,16 +26,19 @@ const UpdateDeclaration = (props) => {
   const [loadingPage, setLoadingPage] = useState(false);
   const [pictures, setPictures] = useState([]);
   const [picturesPreview, setPicturesPreview] = useState([]);
-  const [did, setDid] = useState(null);
   const [selectedFile, setSelectedFile] = useState();
   const [sendP, setsendP] = useState([]);
+  const [delP, setdelP] = useState([]);
+  
   const handledeleteImg = (e) => {
     let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
-    let preview = [];
     let f = [];
+    let del = delP;
     pictures.map((elm, index) => {
       if (index !== indexElm) {
         f.push(elm);
+      } else {
+        if (elm.src) del.push(elm.dmid);
       }
       return true;
     });
@@ -61,38 +63,6 @@ const UpdateDeclaration = (props) => {
     setsendP((prevState) => [...prevState, es]);
   };
   useEffect(() => {
-    const formData = new FormData();
-    sendP.map((image) => {
-      console.log({ image });
-      formData.append("src", image, image.name);
-    });
-    formData.append("filetype", "image");
-    formData.append("declaration", did);
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        },
-      })
-      .request({
-        url: "http://157.230.19.233/api/documents/",
-        method: "post",
-        data: formData,
-      })
-      .then((res) => {
-        console.log(res);
-        setSucces(true);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        setIsLoading(false);
-      });
-  }, [did]);
-  useEffect(() => {
     Geocode.fromLatLng("48.8583701", "2.2922926").then(
       (response) => {
         const address = response.results[0].formatted_address;
@@ -103,7 +73,6 @@ const UpdateDeclaration = (props) => {
       }
     );
   }, []);
-
   const handleUpdate = () => {
     setIsLoading(true);
     axios
@@ -129,20 +98,79 @@ const UpdateDeclaration = (props) => {
         },
       })
       .then((res) => {
-        let did = res.data.did;
-        if (pictures.length > 0) {
-          setDid(did);
+        if (pictures.length > 0 || delP.length > 0) {
+          postFiles();
         } else {
           setSucces(true);
           setIsLoading(false);
         }
       })
       .catch((err) => {
-        console.log(err.response);
         setIsLoading(false);
       });
   };
-
+  const postFiles = () => {
+    let formData = new FormData();
+    let upload = false;
+    sendP.map((image) => {
+      if (!image.src) {
+        console.log(image);
+        upload = true;
+        formData.append("src", image);
+        formData.append("filetype", "image");
+        formData.append("declaration", props.props.location.state.data.did);
+      }
+    });
+    if (upload) {
+      axios
+        .create({
+          headers: {
+            post: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://157.230.19.233/api/documents/",
+          method: "post",
+          data: formData,
+        })
+        .then((res) => {
+          if (delP.length > 0) deleteFiles();
+          else {
+            setIsLoading(false);
+            setSucces(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (delP.length > 0) {
+      deleteFiles();
+    } else {
+      setIsLoading(false);
+      setSucces(true);
+    }
+  };
+  const deleteFiles = () => {
+    delP.map((elm) => {
+      axios
+        .delete(`http://157.230.19.233/api/documents/${elm}`, {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setIsLoading(false);
+          setSucces(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  };
   const handleCoords = (e) => {
     setAdrGeo("[" + String(e.longitude) + "," + String(e.latitude) + "]");
   };
@@ -150,9 +178,6 @@ const UpdateDeclaration = (props) => {
     setIsGeo((prevState) => !prevState);
     setAdr("");
   };
-  useEffect(() => {
-    console.log({ props: props.props.location.state.data });
-  }, []);
   useEffect(() => {
     setLoadingPage(true);
     selectedType &&
@@ -217,6 +242,8 @@ const UpdateDeclaration = (props) => {
         setDesctiption(res.data.desc);
         setAdr(res.data.address);
         setAdrGeo(res.data.geo_cord);
+        console.log(res.data.attachments);
+        setPictures(res.data.attachments);
       })
       .catch((err) => {
         console.log(err.response);
@@ -372,7 +399,7 @@ const UpdateDeclaration = (props) => {
                       position: "relative",
                     }}
                   >
-                    <Image src={elm} key={index} />
+                    <Image src={elm.src ? elm.src : elm} key={index} />
                     <Icon
                       color="black"
                       name="delete"
