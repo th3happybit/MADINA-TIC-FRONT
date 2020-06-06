@@ -13,7 +13,18 @@
   width: 320px !important;
   margin-bottom: 20px;
 }
-
+.ui.striped.table tbody tr.activated_row:nth-child(2n) {
+  background-color: #afafaf73 !important;
+}
+.ui.striped.table tbody tr.activated_row:nth-child(2n + 1) {
+  background-color: #afafaf73 !important;
+}
+.ui.striped.table tbody tr.normal:nth-child(2n + 1) {
+  background-color: transparent !important;
+}
+.Check_box {
+  position: absolute;
+}
 .detail_content ._content_modal {
   width: 100% !important;
   display: flex !important;
@@ -135,7 +146,7 @@
   }
 
   .content_modal_btns ._mobile_btn .icon {
-    margin : 0 !important;
+    margin: 0 !important;
   }
 
   ._detail_content ._header_modal p {
