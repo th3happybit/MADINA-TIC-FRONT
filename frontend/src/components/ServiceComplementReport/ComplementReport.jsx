@@ -44,7 +44,7 @@ const ComplementReport = (props) => {
   let history = useHistory();
 
   useEffect(() => {
-    if (props.props.location.state) {
+    if (props.props.props.location.state) {
       setLoading(true);
       axios
         .get("http://157.230.19.233/api/user", {
@@ -56,11 +56,11 @@ const ComplementReport = (props) => {
         .then((res) => {
           setService(res.data.uid);
         });
-      if (props.props.location.state.rid) {
+      if (props.props.props.location.state.rid) {
         axios
           .get("http://157.230.19.233/api/reports_complement_demand", {
             params: {
-              report: props.props.location.state.rid,
+              report: props.props.props.location.state.rid,
             },
             headers: {
               "content-type": "application/json",
@@ -74,7 +74,7 @@ const ComplementReport = (props) => {
 
         axios
           .get(
-            `http://157.230.19.233/api/reports/${props.props.location.state.rid}`,
+            `http://157.230.19.233/api/reports/${props.props.props.location.state.rid}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -92,7 +92,7 @@ const ComplementReport = (props) => {
         axios
           .get("http://157.230.19.233/api/documents/", {
             params: {
-              report__rid: props.props.location.state.rid,
+              report__rid: props.props.props.location.state.rid,
             },
             headers: {
               "content-type": "application/json",
@@ -108,11 +108,11 @@ const ComplementReport = (props) => {
             console.log(err);
           });
       }
-      if (props.props.location.state.did)
+      if (props.props.props.location.state.did)
         axios
           .get(
             "http://157.230.19.233/api/declarations/" +
-              props.props.location.state.did +
+              props.props.props.location.state.did +
               "/",
             {
               headers: {
@@ -299,7 +299,7 @@ const ComplementReport = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/reports/${props.props.location.state.rid}/`,
+        url: `http://157.230.19.233/api/reports/${props.props.props.location.state.rid}/`,
         method: "put",
         data: {
           title,
@@ -333,10 +333,11 @@ const ComplementReport = (props) => {
   return (
     <div className="_rapport_form">
       <Segment className="_add_form" loading={Loading}>
-        {props.props.location.state &&
-        props.props.location.state.rid &&
-        props.props.location.state.did &&
-        !allow &&
+        {
+        // props.props.location.state &&
+        // props.props.location.state.rid &&
+        // props.props.location.state.did &&
+        // !allow &&
         report.status === "lack_of_info" ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">

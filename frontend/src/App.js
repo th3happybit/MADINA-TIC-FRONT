@@ -64,9 +64,7 @@ function App() {
         <Route
           exact
           path="/maire/profile/"
-          component={() => (
-            <Maire active="profile" childComponent={Profile} />
-          )}
+          component={() => <Maire active="profile" childComponent={Profile} />}
         />
         <Route
           exact
@@ -92,13 +90,15 @@ function App() {
         <Route
           exact
           path="/service/profile"
-          component={() => <Service active="profile" childComponent={<Profile service/>} />}
+          component={() => (
+            <Service active="profile" service childComponent={Profile} />
+          )}
         />
         <Route
           exact
           path="/service/rapports/"
           component={() => (
-            <Service active="rapports" childComponent={<Consultations />} />
+            <Service active="rapports" service childComponent={Consultations} />
           )}
         />
         <Route
@@ -107,7 +107,8 @@ function App() {
           component={() => (
             <Service
               active="annonce"
-              childComponent={<ConsultationsAnnonce />}
+              service
+              childComponent={ConsultationsAnnonce}
             />
           )}
         />
@@ -179,7 +180,7 @@ function App() {
           component={() => (
             <Service
               active="declarations"
-              childComponent={<ServiceDeclaration />}
+              childComponent={ServiceDeclaration}
             />
           )}
         />
@@ -190,7 +191,7 @@ function App() {
             <Service
               props={prop}
               active="rapports"
-              childComponent={<DeposeRapport props={prop} />}
+              childComponent={DeposeRapport}
             />
           )}
         />
@@ -201,7 +202,7 @@ function App() {
             <Service
               props={prop}
               active="rapports"
-              childComponent={<UpdateRapport props={prop} />}
+              childComponent={UpdateRapport}
             />
           )}
         />
@@ -212,7 +213,7 @@ function App() {
             <Service
               props={prop}
               active="rapports"
-              childComponent={<ComplementRapport props={prop} />}
+              childComponent={ComplementRapport}
             />
           )}
         />
@@ -223,7 +224,7 @@ function App() {
             <Service
               props={prop}
               active="annonce"
-              childComponent={<DeposerAnnonces props={prop} />}
+              childComponent={DeposerAnnonces}
             />
           )}
         />
@@ -234,7 +235,7 @@ function App() {
             <Service
               props={prop}
               active="annonce"
-              childComponent={<UpdateAnnounces props={prop} />}
+              childComponent={UpdateAnnounces}
             />
           )}
         />
@@ -245,7 +246,7 @@ function App() {
             <Service
               props={prop}
               active="annonce"
-              childComponent={<ComplementAnnounces props={prop} />}
+              childComponent={ComplementAnnounces}
             />
           )}
         />

@@ -69,11 +69,11 @@ const ComplementAnnounces = (props) => {
   };
 
   useEffect(() => {
-    if (props.props.location.state) {
-      setAid(props.props.location.state.aid);
+    if (props.props.props.location.state) {
+      setAid(props.props.props.location.state.aid);
       axios
         .get(
-          `http://157.230.19.233/api/announces/${props.props.location.state.aid}/`,
+          `http://157.230.19.233/api/announces/${props.props.props.location.state.aid}/`,
           {
             headers: {
               "content-type": "application/json",

@@ -17,10 +17,10 @@ const ConsultationAnnonce = () => {
       ]}
       detail={[
         { text: "Title Rapport", value: "title" },
-        { text: "Description", value: "desc" },
         { text: "Created on", value: "created_on" },
         { text: "Start At", value: "start_at" },
         { text: "End At", value: "end_at" },
+        { text: "Description", value: "desc" },
       ]}
       permission="self" //? all or self
       status={[

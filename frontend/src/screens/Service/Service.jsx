@@ -11,6 +11,9 @@ import ServiceHeaderSideBar from "../../components/ServiceHeaderSideBar/ServiceH
 const Service = (props) => {
   const [isLogin, setIsLogin] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [image, setImage] = useState("");
+
+  const { service } = props;
 
   useEffect(() => {
     if (localStorage.getItem("service_token"))
@@ -33,6 +36,7 @@ const Service = (props) => {
           } else {
             setIsLogin(false);
             setVerified(true);
+            setImage(res.data.image);
           }
         })
         .catch((err) => {});
@@ -47,13 +51,16 @@ const Service = (props) => {
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
+  const changeImage = (image) => {
+    setImage(image);
+  };
   return (
     <>
       {isLogin ? (
         <UserProvider value={dataContext}>
           {visible && <Backdrop click={handleHide} />}
           <ServiceSideBar active={active} />
-          <HeaderService active={active} show={handleHide} />
+          <HeaderService active={active} show={handleHide} imageP={image} />
           <ServiceHeaderSideBar
             visible={visible}
             active={active}
@@ -62,7 +69,7 @@ const Service = (props) => {
           <main>
             {" "}
             {props.childComponent ? (
-              props.childComponent
+              <props.childComponent props={props} service updateImageP={changeImage} />
             ) : (
               <div
                 style={{

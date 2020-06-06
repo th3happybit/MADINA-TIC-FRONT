@@ -38,12 +38,12 @@ const DeposeRapport = (props) => {
   let histroy = useHistory();
 
   useEffect(() => {
-    setDeclaration(props.props.location.state.did);
+    setDeclaration(props.props.props.location.state.did);
     setLoading(true);
     axios
       .get(
         "http://157.230.19.233/api/declarations/" +
-          props.props.location.state.did +
+          props.props.props.location.state.did +
           "/",
         {
           headers: {

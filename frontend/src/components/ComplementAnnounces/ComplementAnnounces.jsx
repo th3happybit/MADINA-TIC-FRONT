@@ -72,11 +72,11 @@ const ComplementAnnounces = (props) => {
   };
 
   useEffect(() => {
-    if (props.props.location.state) {
-      setAid(props.props.location.state.rid);
+    if (props.props.props.location.state) {
+      setAid(props.props.props.location.state.rid);
       axios
         .get(
-          `http://157.230.19.233/api/announces/${props.props.location.state.rid}/`,
+          `http://157.230.19.233/api/announces/${props.props.props.location.state.rid}/`,
           {
             headers: {
               "content-type": "application/json",
@@ -95,7 +95,7 @@ const ComplementAnnounces = (props) => {
         });
       axios
         .get(
-          `http://157.230.19.233/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.location.state.rid}`,
+          `http://157.230.19.233/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.props.location.state.rid}`,
           {
             headers: {
               "content-type": "application/json",

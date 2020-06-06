@@ -18,6 +18,13 @@ const HeaderAdmin = (props) => {
   const { isUploaded } = useContext(UserContext);
   const [image, setImage] = useState(null);
   const [fullname, setFullname] = useState(null);
+  const { imageP } = props;
+
+  useEffect(() => {
+    if (imageP)
+    setImage(imageP);
+  }, [imageP]);
+
   useEffect(() => {
     axios
       .create({
@@ -79,7 +86,12 @@ const HeaderAdmin = (props) => {
                 onCLick={handleLogout}
               >
                 <Dropdown.Menu>
-                  <Dropdown.Item text="Account" icon="user" as={Link} to="/maire/profile" />
+                  <Dropdown.Item
+                    text="Account"
+                    icon="user"
+                    as={Link}
+                    to="/maire/profile"
+                  />
                   <Dropdown.Item
                     text="Sign Out"
                     icon="sign out"

@@ -17,8 +17,10 @@ const Profile = (props) => {
   const [token, setToken] = useState(null);
   const updateImage = (img) => {
     setImage(img);
+    updateImageP(img);
+    // console.log("profile", img)
   };
-  const { service } = props;
+  const { service, updateImageP } = props;
 
   useEffect(() => {
     if (!service) {
