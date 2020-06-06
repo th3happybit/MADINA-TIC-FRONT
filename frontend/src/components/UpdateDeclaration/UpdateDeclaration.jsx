@@ -29,7 +29,7 @@ const UpdateDeclaration = (props) => {
   const [selectedFile, setSelectedFile] = useState();
   const [sendP, setsendP] = useState([]);
   const [delP, setdelP] = useState([]);
-  
+
   const handledeleteImg = (e) => {
     let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
     let f = [];
@@ -114,7 +114,6 @@ const UpdateDeclaration = (props) => {
     let upload = false;
     sendP.map((image) => {
       if (!image.src) {
-        console.log(image);
         upload = true;
         formData.append("src", image);
         formData.append("filetype", "image");
@@ -242,7 +241,6 @@ const UpdateDeclaration = (props) => {
         setDesctiption(res.data.desc);
         setAdr(res.data.address);
         setAdrGeo(res.data.geo_cord);
-        console.log(res.data.attachments);
         setPictures(res.data.attachments);
       })
       .catch((err) => {
@@ -341,9 +339,6 @@ const UpdateDeclaration = (props) => {
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
-          {pictures.length > 0 && (
-            <p className="label_add_dec bold">Pictures</p>
-          )}
           <div
             className="prev_images_dec"
             style={{
@@ -352,24 +347,13 @@ const UpdateDeclaration = (props) => {
               flexDirection: "column",
             }}
           >
-            {picturesPreview.map((elm, index) => {
-              return (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <Image src={elm.src} key={index} />
-                </div>
-              );
-            })}
             <p
               className="label_add_dec bold"
               style={{
                 margin: "1rem 0",
               }}
             >
-              {pictures.length > 0 ? "Add another Photos" : "Add pictures"}
+              {pictures.length > 0 ? "Add another Photos" : "Add Photos"}
             </p>
             <div className="_profile_img_edit add_dec pointer">
               <label

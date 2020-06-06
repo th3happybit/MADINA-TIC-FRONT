@@ -383,7 +383,7 @@ const ComplementDeclaration = (props) => {
                 onChange={handleChange}
               />
               <p className="label_add_dec bold">
-                {pictures.length > 0 ? "Add another Photos" : "Add pictures"}
+                {pictures.length > 0 ? "Add another Photos" : "Add Photos"}
               </p>
 
               <div className="_profile_img_edit add_dec pointer">
