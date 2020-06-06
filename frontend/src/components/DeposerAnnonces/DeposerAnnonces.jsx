@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Image, Button, Icon, Message } from "semantic-ui-react";
+import { Form, Image, Button, Message, Label } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,8 +10,11 @@ import "./DeposerAnnonces.css";
 export default function DeposerAnnonces(props) {
   const [startDate, setStartDate] = useState(null);
   const [startErr, setStartErr] = useState(false);
+  const [startFrontErr, setStartFrontErr] = useState(false);
   const [endDate, setEndDate] = useState(null);
   const [endErr, setEndErr] = useState(false);
+  const [endFrontErr, setEndFrontErr] = useState(false);
+  const [datesErr, setDatesErr] = useState(false);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
@@ -20,6 +23,37 @@ export default function DeposerAnnonces(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [service, setSerivce] = useState(null);
 
+  const handle_Validation = () => {
+    let err = false;
+    if (!startDate) {
+      setStartErr(true);
+      err = true;
+    }
+    if (startDate < new Date()) {
+      err = true;
+      setStartFrontErr(true);
+    }
+    if (!endDate) {
+      err = true;
+      setEndErr(true);
+    }
+    if (endDate <= new Date()) {
+      err = true;
+      setEndFrontErr(true);
+    }
+    if (endDate < startDate) {
+      err = true;
+      setDatesErr(true);
+    }
+    if (title.length === 0) {
+      setTitleErr(true);
+      err = true;
+    }
+    if (description.length < 10) {
+      setDescriptionErr(true);
+    }
+    if (!err) AddAnnonce();
+  };
   const AddAnnonce = () => {
     setIsLoading(true);
     axios
@@ -111,6 +145,12 @@ export default function DeposerAnnonces(props) {
             value={title}
             onChange={handleChange}
             name="title"
+            error={
+              titleErr && {
+                content: "Title can't be empty",
+                class: "ui basic red label pointing fluid",
+              }
+            }
             className={titleErr ? "add_dec_err" : ""}
           />
           <div className="date_annonce">
@@ -120,16 +160,43 @@ export default function DeposerAnnonces(props) {
                 id="begin"
                 selected={startDate}
                 onChange={(date) => {
-                  if (startErr) setStartErr(false);
+                  setStartErr(false);
+                  setStartFrontErr(false);
+                  setDatesErr(false);
                   setStartDate(date);
                 }}
-                className={startErr ? "date_picker_err" : ""}
+                className={
+                  startErr || startFrontErr || datesErr ? "date_picker_err" : ""
+                }
                 showTimeSelect
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 timeCaption="time"
                 dateFormat="MMMM d, yyyy h:mm aa"
               />
+              {startErr ? (
+                startErr && (
+                  <Label
+                    className="ui pointing basic red"
+                    content="Start date is required"
+                  />
+                )
+              ) : (
+                <>
+                  {startFrontErr && (
+                    <Label
+                      className="ui pointing basic red"
+                      content="Start date must be after current date"
+                    />
+                  )}
+                  {datesErr && !startFrontErr && (
+                    <Label
+                      className="ui pointing basic red"
+                      content="Start date must be before end date"
+                    />
+                  )}
+                </>
+              )}
             </div>
             <div className="one_input">
               <label htmlFor="end">End At</label>
@@ -137,16 +204,43 @@ export default function DeposerAnnonces(props) {
                 id="end"
                 selected={endDate}
                 onChange={(date) => {
-                  if (endErr) setEndErr(false);
+                  setEndErr(false);
+                  setEndFrontErr(false);
+                  setDatesErr(false);
                   setEndDate(date);
                 }}
-                className={endErr ? "date_picker_err" : ""}
+                className={
+                  endErr || endFrontErr || datesErr ? "date_picker_err" : ""
+                }
                 showTimeSelect
                 timeFormat="HH:mm"
                 timeIntervals={15}
                 timeCaption="time"
                 dateFormat="MMMM d, yyyy h:mm aa"
               />
+              {endErr ? (
+                endErr && (
+                  <Label
+                    className="ui pointing basic red"
+                    content="End date is required"
+                  />
+                )
+              ) : (
+                <>
+                  {endFrontErr && (
+                    <Label
+                      className="ui pointing basic red"
+                      content="End date must be after current date"
+                    />
+                  )}
+                  {datesErr && !endFrontErr && (
+                    <Label
+                      className="ui pointing basic red"
+                      content="End date must be after start date"
+                    />
+                  )}
+                </>
+              )}
             </div>
           </div>
           <Form.TextArea
@@ -156,6 +250,13 @@ export default function DeposerAnnonces(props) {
             value={description}
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
+            error={
+              descriptionErr && {
+                content:
+                  "Description can't be empty or shorter than 10 caracters",
+                class: "ui basic red label pointing fluid",
+              }
+            }
           />
           <Form.Group
             style={{
@@ -167,7 +268,7 @@ export default function DeposerAnnonces(props) {
           >
             <Button
               loading={isLoading}
-              onClick={AddAnnonce}
+              onClick={handle_Validation}
               className="button_primary _margin_horizontal_sm"
             >
               Confirm

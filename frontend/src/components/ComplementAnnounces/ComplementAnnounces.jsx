@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Button, Message, Segment } from "semantic-ui-react";
+import { Form, Button, Message, Segment, Label } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 import "./ComplementAnnounces.css";
@@ -14,13 +14,47 @@ const ComplementAnnounces = (props) => {
   const [descriptionErr, setDescriptionErr] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [startDateErr, setStartDateErr] = useState(false);
+  const [startFrontErr, setStartFrontErr] = useState(false);
   const [endDate, setEndDate] = useState("");
   const [endDateErr, setEndDateErr] = useState(false);
+  const [endFrontErr, setEndFrontErr] = useState(false);
+  const [datesErr, setDatesErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [reason, setReason] = useState("");
   const [aid, setAid] = useState(null);
   const [nullAid, setNullAid] = useState(false);
+  const [reason, setReason] = useState("");
 
+  const handle_Validation = () => {
+    let err = false;
+    if (!startDate) {
+      setStartDateErr(true);
+      err = true;
+    }
+    if (startDate < new Date()) {
+      err = true;
+      setStartFrontErr(true);
+    }
+    if (!endDate) {
+      err = true;
+      setEndDateErr(true);
+    }
+    if (endDate <= new Date()) {
+      err = true;
+      setEndFrontErr(true);
+    }
+    if (endDate < startDate) {
+      err = true;
+      setDatesErr(true);
+    }
+    if (title.length === 0) {
+      setTitleErr(true);
+      err = true;
+    }
+    if (description.length < 10) {
+      setDescriptionErr(true);
+    }
+    if (!err) handleComplement();
+  };
   const handleComplement = () => {
     setIsLoading(true);
     axios
@@ -145,6 +179,12 @@ const ComplementAnnounces = (props) => {
                 onChange={handleChange}
                 name="title"
                 className={titleErr ? "add_dec_err" : ""}
+                error={
+                  titleErr && {
+                    content: "Title can't be empty",
+                    class: "ui basic red pointing label fluid",
+                  }
+                }
               />
 
               <div className="date_annonce">
@@ -154,16 +194,45 @@ const ComplementAnnounces = (props) => {
                     id="begin"
                     selected={Date.parse(startDate)}
                     onChange={(date) => {
-                      if (startDateErr) setStartDateErr(false);
+                      setStartDateErr(false);
+                      setStartFrontErr(false);
+                      setDatesErr(false);
                       setStartDate(date);
                     }}
-                    className={startDateErr ? "date_picker_err" : ""}
+                    className={
+                      startDateErr || startFrontErr || datesErr
+                        ? "date_picker_err"
+                        : ""
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     timeCaption="time"
                     dateFormat="MMMM d, yyyy h:mm aa"
                   />
+                  {startDateErr ? (
+                    startDateErr && (
+                      <Label
+                        className="ui pointing basic red"
+                        content="Start date is required"
+                      />
+                    )
+                  ) : (
+                    <>
+                      {startFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="Start date must be after current date"
+                        />
+                      )}
+                      {datesErr && !startFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="Start date must be before end date"
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="one_input">
                   <label htmlFor="end">Ends at</label>
@@ -171,16 +240,45 @@ const ComplementAnnounces = (props) => {
                     id="end"
                     selected={Date.parse(endDate)}
                     onChange={(date) => {
-                      if (endDateErr) setEndDateErr(false);
+                      setEndDateErr(false);
+                      setEndFrontErr(false);
+                      setDatesErr(false);
                       setEndDate(date);
                     }}
-                    className={endDateErr ? "date_picker_err" : ""}
+                    className={
+                      endDateErr || endFrontErr || datesErr
+                        ? "date_picker_err"
+                        : ""
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     timeCaption="time"
                     dateFormat="MMMM d, yyyy h:mm aa"
                   />
+                  {endDateErr ? (
+                    endDateErr && (
+                      <Label
+                        className="ui pointing basic red"
+                        content="End date is required"
+                      />
+                    )
+                  ) : (
+                    <>
+                      {endFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="End date must be after current date"
+                        />
+                      )}
+                      {datesErr && !endFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="End date must be after start date"
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -191,6 +289,13 @@ const ComplementAnnounces = (props) => {
                 value={description}
                 className={descriptionErr ? "add_dec_err" : ""}
                 onChange={handleChange}
+                error={
+                  descriptionErr && {
+                    content:
+                      "Description can't be empty or shorter than 10 caracters",
+                    class: "ui basic red pointing label",
+                  }
+                }
               />
               <Form.Group
                 style={{
@@ -202,7 +307,7 @@ const ComplementAnnounces = (props) => {
                 <Button
                   loading={isLoading}
                   className="button_primary _margin_horizontal_sm"
-                  onClick={handleComplement}
+                  onClick={handle_Validation}
                 >
                   Confirm Complement
                 </Button>
