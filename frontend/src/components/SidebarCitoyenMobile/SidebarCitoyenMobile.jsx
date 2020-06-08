@@ -54,6 +54,18 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
         <List.Item>
           <Link
+            to="/add/declaration"
+            className={
+              props.active === "declaration"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            Add declaration
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
             to="/citoyen/declaration"
             className={
               props.active === "declaration"

@@ -78,7 +78,7 @@ const AnnonceHome = (props) => {
       "-" +
       String(date.getMonth() + 1) +
       "-" +
-      date.getDay() +
+      date.getDate() +
       " " +
       date.getHours() +
       ":" +
