@@ -1,10 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Segment, Search, Dropdown, Pagination } from "semantic-ui-react";
+import {
+  Segment,
+  Search,
+  Dropdown,
+  Pagination,
+  Button,
+  Modal,
+} from "semantic-ui-react";
 
 import MaireDeclarationTable from "../MaireDeclarationTable/MaireDeclarationTable.jsx";
 import "./MaireDeclarations.css";
 import axios from "axios";
+
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { add_parent } from "../../actions/regroupAction.js";
 
 const MaireDeclarations = (props) => {
   const [activeFilter, setactiveFilter] = useState("New Declarations");
@@ -19,6 +32,36 @@ const MaireDeclarations = (props) => {
   const [sortMobile, setsortMobile] = useState("Random");
   const [types, settypes] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openErr, setOpenErr] = useState(false);
+
+  //? for regroupement
+  const [isRegroup, setIsRegroup] = useState(false);
+  const handleRegroup = () => {
+    setIsRegroup((prevState) => !prevState);
+  };
+
+  const fetchRegroupement = () => {
+    props.childs.map((elm) => {
+      let instance = axios.create({
+        baseURL: "http://157.230.19.233/api/",
+        responseType: "json",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
+      });
+      let body = {
+        parent_declaration: props.parent,
+      };
+      instance
+        .patch(`declarations/${elm}/`, body)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err.response));
+    });
+    setRefresh((prevState) => !prevState);
+    props.add_parent(null);
+  };
 
   const handlesortRandom = () => {
     setsortDate(null);
@@ -100,13 +143,16 @@ const MaireDeclarations = (props) => {
     }
 
     axios
-      .get("http://157.230.19.233/api/declaration_nested/", {
-        params: pa,
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
-        },
-      })
+      .get(
+        "http://157.230.19.233/api/declaration_nested/?parent_declaration__isnull=True",
+        {
+          params: pa,
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          },
+        }
+      )
       .then((res) => {
         setData(res.data.results);
         getTypes();
@@ -269,6 +315,63 @@ const MaireDeclarations = (props) => {
           <p className="extra-text text-default">Declarations</p>
         </div>
       </div>
+      <Modal open={open} className="_success_modal info">
+        <Modal.Header>Info Message</Modal.Header>
+        <Modal.Content>
+          <p
+            style={{
+              fontSize: 18,
+              fontWeight: 600,
+            }}
+            className="text-default"
+          >
+            First choose the declaration parent
+          </p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            className="_primary"
+            style={{
+              background: "#794b02",
+              color: "white",
+            }}
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            Got it !
+          </Button>
+        </Modal.Actions>
+      </Modal>
+
+      <Modal open={openErr} className="_success_modal err info">
+        <Modal.Header>Err Message</Modal.Header>
+        <Modal.Content>
+          <p
+            style={{
+              fontSize: 18,
+              fontWeight: 600,
+            }}
+            className="text-default"
+          >
+            Please choose the childs before submiting
+          </p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            className="_primary"
+            style={{
+              background: "#794b02",
+              color: "white",
+            }}
+            onClick={() => {
+              setOpenErr(false);
+            }}
+          >
+            Got it !
+          </Button>
+        </Modal.Actions>
+      </Modal>
       <Segment
         loading={searchLoading ? false : Loading}
         className="_main_body shadow"
@@ -290,71 +393,109 @@ const MaireDeclarations = (props) => {
             }}
             placeholder="Search for declarations ..."
           />
-          <Dropdown
-            className="icon filter_declaration _mobile"
-            icon="angle down"
-            text={sortMobile}
-            button
-            selection
-            labeled
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
           >
-            <Dropdown.Menu>
-              <Dropdown.Item text="Randomly" onClick={handlesortRandom} />
-              <Dropdown.Item text="Newer first" onClick={handlesortNewFirst} />
-              <Dropdown.Item text="Old first" onClick={handlesortOldFirst} />
-            </Dropdown.Menu>
-          </Dropdown>
-          <Dropdown
-            className="icon filter_declaration"
-            icon="angle down"
-            text={activeFilter}
-            button
-            selection
-            labeled
-          >
-            <Dropdown.Menu>
-              <Dropdown.Item
-                text="New Declarations"
-                onClick={handle_filter}
-                label={{ circular: true, color: "blue", empty: true }}
-              />
-              <Dropdown.Item
-                text="Validated"
-                onClick={handle_filter}
-                label={{ circular: true, color: "green", empty: true }}
-              />
-              <Dropdown.Item
-                text="In progress"
-                onClick={handle_filter}
-                label={{ circular: true, color: "yellow", empty: true }}
-              />
-              <Dropdown.Item
-                text="Treated"
-                onClick={handle_filter}
-                label={{ circular: true, color: "green", empty: true }}
-              />
-              <Dropdown.Item
-                text="Refused"
-                onClick={handle_filter}
-                label={{ circular: true, color: "red", empty: true }}
-              />
-              <Dropdown.Item
-                text="Archived"
-                onClick={handle_filter}
-                label={{ circular: true, color: "black", empty: true }}
-              />
-              <Dropdown.Item
-                text="Lack of infos"
-                onClick={handle_filter}
-                label={{ circular: true, color: "orange", empty: true }}
-              />
-            </Dropdown.Menu>
-          </Dropdown>
+            <Button
+              style={{
+                margin: "0 1rem",
+                background: "var(--secondary)",
+                color: "white",
+              }}
+              onClick={() => {
+                handleRegroup();
+                if (!props.parent && !props.childs.length > 0 && !isRegroup) {
+                  setOpen(true);
+                }
+                if (props.parent && props.childs.length > 0) {
+                  setIsRegroup(false);
+                  console.log({ parent: props.parent, childs: props.childs });
+                }
+                if (props.parent && props.childs.length === 0) {
+                  setOpenErr(true);
+                }
+                if (props.parent && props.childs.length > 0) {
+                  fetchRegroupement();
+                }
+              }}
+            >
+              {isRegroup ? "Confirmer" : "Regrouper"}
+            </Button>
+            <Dropdown
+              className="icon filter_declaration _mobile"
+              icon="angle down"
+              text={sortMobile}
+              button
+              selection
+              labeled
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item text="Randomly" onClick={handlesortRandom} />
+                <Dropdown.Item
+                  text="Newer first"
+                  onClick={handlesortNewFirst}
+                />
+                <Dropdown.Item text="Old first" onClick={handlesortOldFirst} />
+              </Dropdown.Menu>
+            </Dropdown>
+            <Dropdown
+              className="icon filter_declaration"
+              icon="angle down"
+              text={activeFilter}
+              button
+              selection
+              labeled
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  text="New Declarations"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "blue", empty: true }}
+                />
+                <Dropdown.Item
+                  text="Validated"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "green", empty: true }}
+                />
+                <Dropdown.Item
+                  text="In progress"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "yellow", empty: true }}
+                />
+                <Dropdown.Item
+                  text="Treated"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "green", empty: true }}
+                />
+                <Dropdown.Item
+                  text="Refused"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "red", empty: true }}
+                />
+                <Dropdown.Item
+                  text="Archived"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "black", empty: true }}
+                />
+                <Dropdown.Item
+                  text="Lack of infos"
+                  onClick={handle_filter}
+                  label={{ circular: true, color: "orange", empty: true }}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </div>
         {Data.length > 0
           ? types && (
               <div className="_data_section">
                 <MaireDeclarationTable
+                  isRegroup={isRegroup}
+                  setRefresh={setRefresh}
                   data={Data}
                   filter={activeFilter}
                   handlesortDate={handle_sort_date}
@@ -391,4 +532,17 @@ const MaireDeclarations = (props) => {
   );
 };
 
-export default MaireDeclarations;
+MaireDeclarations.propTypes = {
+  parent: PropTypes.string.isRequired,
+  childs: PropTypes.array.isRequired,
+  add_parent: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  parent: state.regroup.parent,
+  childs: state.regroup.childs,
+});
+
+export default connect(mapStateToProps, { add_parent })(
+  withRouter(MaireDeclarations)
+);

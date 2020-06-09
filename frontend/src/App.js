@@ -45,6 +45,7 @@ import UpdateAnnounces from "./components/UpdateAnnounces/UpdateAnnounces.jsx";
 import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnnounces.jsx";
 import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
 import Profile from "./components/Profile/Profile.jsx";
+import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
 
 function App() {
   return (
@@ -71,6 +72,13 @@ function App() {
           path="/maire/declaration/"
           component={() => (
             <Maire active="declarations" childComponent={MaireDeclarations} />
+          )}
+        />
+        <Route
+          exact
+          path="/maire/dashboard/"
+          component={() => (
+            <Maire active="dashboard" childComponent={DashboardMaire} />
           )}
         />
         <Route

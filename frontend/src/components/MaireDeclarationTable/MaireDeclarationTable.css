@@ -8,12 +8,45 @@
   flex-direction: column !important;
   align-items: center !important;
 }
-
+.btns_childs {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+.btns_childs .button {
+  margin: 0 0.5rem;
+}
+.chlp {
+  padding: 4rem 0;
+  margin-top: 4rem;
+}
+.childs_dec {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 150px;
+  padding: 4rem 0;
+  padding-bottom: 0;
+}
+.childs_dec .ui.checkbox {
+  margin: 0.5rem 0;
+}
 .details_content ._redirection_content .ui.selection {
   width: 320px !important;
   margin-bottom: 20px;
 }
-
+.ui.striped.table tbody tr.activated_row:nth-child(2n) {
+  background-color: #afafaf73 !important;
+}
+.ui.striped.table tbody tr.activated_row:nth-child(2n + 1) {
+  background-color: #afafaf73 !important;
+}
+.ui.striped.table tbody tr.normal:nth-child(2n + 1) {
+  background-color: transparent !important;
+}
+.Check_box {
+  position: absolute;
+}
 .detail_content ._content_modal {
   width: 100% !important;
   display: flex !important;
@@ -135,7 +168,7 @@
   }
 
   .content_modal_btns ._mobile_btn .icon {
-    margin : 0 !important;
+    margin: 0 !important;
   }
 
   ._detail_content ._header_modal p {

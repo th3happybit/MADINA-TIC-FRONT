@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-use-before-define */
 import React, { useState } from "react";
 import {
   Modal,
@@ -8,8 +6,11 @@ import {
   Image,
   Transition,
   Popup,
+  Checkbox,
 } from "semantic-ui-react";
 
+import Childs from "./Childs";
+import axios from "axios";
 import RedirectModel from "./ModalRedirection.jsx";
 import ComplementModal from "./ModalComplement.jsx";
 import DeleteModal from "./ModalDelete.jsx";
@@ -17,6 +18,25 @@ import ArchiveModal from "./ModalArchive.jsx";
 import { useEffect } from "react";
 
 const ModalD = (props) => {
+  const { title, data, Maire } = props;
+  const [childs, setChilds] = useState([]);
+  useEffect(() => {
+    let instance = axios.create({
+      baseURL: "http://157.230.19.233/api/",
+      responseType: "json",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${localStorage.getItem("maire_token")}`,
+      },
+    });
+    instance
+      .get(`declarations/?parent_declaration=${data.did}`)
+      .then((res) => {
+        setChilds(res.data.results);
+        console.log({ rrr: res });
+      })
+      .catch((err) => console.log(err.response));
+  }, []);
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
   const [max, setMax] = useState(null);
@@ -53,7 +73,7 @@ const ModalD = (props) => {
         break;
     }
   }
-
+  console.log({ rd: childs });
   useEffect(() => {
     if (Maire)
       if (props.data.attachements.length > 0) {
@@ -62,7 +82,6 @@ const ModalD = (props) => {
       }
   }, []);
 
-  const { title, data, Maire } = props;
   const handleClick = (e) => {
     window.open(e.currentTarget.src);
   };
@@ -119,10 +138,13 @@ const ModalD = (props) => {
                     <p className="_image">Images</p>
                   )
                 : null}
+              <p className="chlp">{childs.length > 0 ? "Childs" : null}</p>
             </div>
             <div className="_infos_section">
               <p>{data.fullname ? data.fullname : null}</p>
+
               <p>{data.title ? data.title : null}</p>
+
               <p>{data.type ? data.type : null}</p>
               <p>{data.address ? data.address : null}</p>
               <p>{data.created_on ? data.created_on : null}</p>
@@ -171,6 +193,27 @@ const ModalD = (props) => {
                     </div>
                   )
                 : null}
+
+              {childs.length > 0 && (
+                <div className="childs_dec">
+                  {childs.map((elm, index) => (
+                    <Childs elm={elm} parent={data.did} />
+                  ))}
+                  <div className="btns_childs">
+                    <Button
+                      style={{
+                        background: "var(--green)",
+                        color: "white",
+                      }}
+                      onClick={() => {
+                        props.setRefresh();
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Modal.Content>{" "}
