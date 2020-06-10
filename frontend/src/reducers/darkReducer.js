@@ -7,8 +7,11 @@ export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case DARK:
       return {
-        ...state,
         isDark: !state.isDark,
+      };
+    default:
+      return {
+        ...state,
       };
   }
 }
