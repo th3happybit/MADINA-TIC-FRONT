@@ -87,7 +87,7 @@ const AnnonceHome = (props) => {
       date.getSeconds();
     setLoading(true);
     axios
-      .get("http://157.230.19.233/api/announces/", {
+      .get("https://www.madina-tic.ml/api/announces/", {
         params: {
           status: "published",
           page: page,
@@ -134,7 +134,7 @@ const AnnonceHome = (props) => {
                   <p>{TimeExtract(annonce.end_at)}</p>
                 </span>
                 <p className="_title">Details :</p>
-                <p style={{textAlign : "justify"}}>{annonce.desc}</p>
+                <p style={{ textAlign: "justify" }}>{annonce.desc}</p>
                 {index + 1 < Data.length && <Divider />}
               </div>
             );

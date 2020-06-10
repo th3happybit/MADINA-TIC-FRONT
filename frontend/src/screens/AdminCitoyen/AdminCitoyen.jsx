@@ -35,7 +35,7 @@ const AdminCitoyen = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/users/" + id + "/",
+        url: "https://www.madina-tic.ml/api/users/" + id + "/",
         method: "patch",
         data: {
           is_active: true,
@@ -59,7 +59,7 @@ const AdminCitoyen = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/users/" + id + "/",
+        url: "https://www.madina-tic.ml/api/users/" + id + "/",
         method: "patch",
         data: {
           is_active: false,
@@ -101,7 +101,7 @@ const AdminCitoyen = (props) => {
     pa["role"] = "Client";
 
     axios
-      .get("http://157.230.19.233/api/users/", {
+      .get("https://www.madina-tic.ml/api/users/", {
         params: pa,
         headers: {
           "Content-Type": "application/json",

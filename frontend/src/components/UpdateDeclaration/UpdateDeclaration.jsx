@@ -78,7 +78,7 @@ const UpdateDeclaration = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/documents/",
+        url: "https://www.madina-tic.ml/api/documents/",
         method: "post",
         data: formData,
       })
@@ -116,7 +116,7 @@ const UpdateDeclaration = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         method: "patch",
         data: {
           title,
@@ -166,7 +166,7 @@ const UpdateDeclaration = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/declarations_types/",
+          url: "https://www.madina-tic.ml/api/declarations_types/",
           method: "get",
         })
         .then((res) => {
@@ -182,7 +182,7 @@ const UpdateDeclaration = (props) => {
           setOptions(arr);
           axios
             .get(
-              `http://157.230.19.233/api/declarations_types/${selectedType}`,
+              `https://www.madina-tic.ml/api/declarations_types/${selectedType}`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -203,7 +203,7 @@ const UpdateDeclaration = (props) => {
   useEffect(() => {
     axios
       .get(
-        `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         {
           headers: {
             "content-type": "application/json",

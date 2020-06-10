@@ -40,7 +40,7 @@ export default function AddDeclaration(props) {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/declarations_types/",
+        url: "https://www.madina-tic.ml/api/declarations_types/",
         method: "get",
       })
       .then((res) => {
@@ -69,7 +69,7 @@ export default function AddDeclaration(props) {
   useEffect(() => {
     if (uid && !isSave) {
       setIsLoading(true);
-      let url = `http://157.230.19.233/api/declarations/`;
+      let url = `https://www.madina-tic.ml/api/declarations/`;
       axios
         .create({
           headers: {
@@ -124,7 +124,7 @@ export default function AddDeclaration(props) {
   useEffect(() => {
     if (uid && isSave) {
       setSaveLoading(true);
-      let url = `http://157.230.19.233/api/declarations/`;
+      let url = `https://www.madina-tic.ml/api/declarations/`;
       axios
         .create({
           headers: {
@@ -199,7 +199,7 @@ export default function AddDeclaration(props) {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/documents/",
+        url: "https://www.madina-tic.ml/api/documents/",
         method: "post",
         data: formData,
       })
@@ -219,7 +219,7 @@ export default function AddDeclaration(props) {
       setAdrErr(true);
       setSucces(false);
     } else if (!uid) {
-      let url = `http://157.230.19.233/api/user/`;
+      let url = `https://www.madina-tic.ml/api/user/`;
       axios
         .create({
           headers: {

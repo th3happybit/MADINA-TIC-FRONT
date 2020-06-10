@@ -154,7 +154,7 @@ const TestComponent = (props) => {
     not_validated: "blue",
   };
   const getUserId = () => {
-    let url = `http://157.230.19.233/api/user/`;
+    let url = `https://www.madina-tic.ml/api/user/`;
     axios
       .create({
         headers: {

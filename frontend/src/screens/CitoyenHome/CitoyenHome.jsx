@@ -20,9 +20,9 @@ import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 const CitoyenHome = (props) => {
   //!TODO FOR MONCEF
   //? bah tjib isDark ...
-  console.log(props.isDark);
+  // console.log(props.isDark);
   //? bah tmodifi isDark
-  console.log(props.change_mode());
+  //console.log(props.change_mode());
   //? ida kan isDark true ywali false w l3ks
 
   const { annonce } = props;
@@ -45,7 +45,7 @@ const CitoyenHome = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/user/",
+          url: "https://www.madina-tic.ml/api/user/",
           method: "get",
         })
         .then((res) => {
@@ -136,6 +136,4 @@ const mapStateToProps = (state) => ({
   isDark: state.mode.isDark,
 });
 
-export default connect(mapStateToProps, { change_mode })(
-  withRouter(CitoyenHome)
-);
+export default connect(mapStateToProps, { change_mode })(CitoyenHome);

@@ -46,7 +46,7 @@ const ComplementDeclaration = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/documents/",
+        url: "https://www.madina-tic.ml/api/documents/",
         method: "post",
         data: formData,
       })
@@ -72,7 +72,7 @@ const ComplementDeclaration = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         method: "patch",
         data: {
           title,
@@ -136,7 +136,7 @@ const ComplementDeclaration = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/declarations_types/",
+          url: "https://www.madina-tic.ml/api/declarations_types/",
           method: "get",
         })
         .then((res) => {
@@ -152,7 +152,7 @@ const ComplementDeclaration = (props) => {
           setOptions(arr);
           axios
             .get(
-              `http://157.230.19.233/api/declarations_types/${selectedType}`,
+              `https://www.madina-tic.ml/api/declarations_types/${selectedType}`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -173,7 +173,7 @@ const ComplementDeclaration = (props) => {
   useEffect(() => {
     axios
       .get(
-        `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         {
           headers: {
             "content-type": "application/json",
@@ -196,7 +196,7 @@ const ComplementDeclaration = (props) => {
   useEffect(() => {
     axios
       .get(
-        `http://157.230.19.233/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
+        `https://www.madina-tic.ml/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
         {
           headers: {
             "content-type": "application/json",

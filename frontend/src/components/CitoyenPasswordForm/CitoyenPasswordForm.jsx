@@ -149,7 +149,7 @@ const PasswordForm = () => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/password/change/",
+        url: "https://www.madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,

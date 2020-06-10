@@ -44,7 +44,7 @@ const MaireDeclarations = (props) => {
   const fetchRegroupement = () => {
     props.childs.map((elm) => {
       let instance = axios.create({
-        baseURL: "http://157.230.19.233/api/",
+        baseURL: "https://www.madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "content-type": "application/json",
@@ -144,7 +144,7 @@ const MaireDeclarations = (props) => {
 
     axios
       .get(
-        "http://157.230.19.233/api/declaration_nested/?parent_declaration__isnull=True",
+        "https://www.madina-tic.ml/api/declaration_nested/?parent_declaration__isnull=True",
         {
           params: pa,
           headers: {
@@ -174,7 +174,7 @@ const MaireDeclarations = (props) => {
   const getTypes = () => {
     setLoading(true);
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
@@ -197,7 +197,7 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations/" + did + "/", {
+      .request("https://www.madina-tic.ml/api/declarations/" + did + "/", {
         method: "patch",
         data: data,
       })
@@ -221,7 +221,7 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations_rejection/", {
+      .request("https://www.madina-tic.ml/api/declarations_rejection/", {
         method: "post",
         data: data,
       })
@@ -245,10 +245,13 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations_complement_demand/", {
-        method: "post",
-        data: data,
-      })
+      .request(
+        "https://www.madina-tic.ml/api/declarations_complement_demand/",
+        {
+          method: "post",
+          data: data,
+        }
+      )
       .then((res) => {
         setRefresh((prevState) => !prevState);
         setPage(1);

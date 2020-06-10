@@ -40,7 +40,7 @@ const MainForm = () => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/login/",
+        url: "https://www.madina-tic.ml/api/login/",
         method: "post",
         data: { email, password },
       })

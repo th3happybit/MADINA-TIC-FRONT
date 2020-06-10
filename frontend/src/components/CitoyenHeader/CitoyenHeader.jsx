@@ -17,7 +17,7 @@ export default function CitoyenHeader(props) {
   useEffect(() => {
     setfullname(props.fullname);
     setImage(props.image);
-  }, [props]);
+  }, [props.fullname, props.image]);
   const { login } = props;
   const handleLogout = () => {
     axios
@@ -30,7 +30,7 @@ export default function CitoyenHeader(props) {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/logout/",
+        url: "https://www.madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {

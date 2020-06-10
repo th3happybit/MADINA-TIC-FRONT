@@ -68,7 +68,7 @@ const MaireAnnonce = (props) => {
     }
   };
   const handle_filter = (e) => {
-    setTerm("")
+    setTerm("");
     setactiveFilter(e.currentTarget.children[1].textContent);
     setPage(1);
   };
@@ -122,7 +122,7 @@ const MaireAnnonce = (props) => {
     }
 
     axios
-      .get("http://157.230.19.233/api/announce_nested/", {
+      .get("https://www.madina-tic.ml/api/announce_nested/", {
         params: pa,
         headers: {
           "content-type": "application/json",
@@ -156,7 +156,7 @@ const MaireAnnonce = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/announces/" + aid + "/", {
+      .request("https://www.madina-tic.ml/api/announces/" + aid + "/", {
         method: "patch",
         data: data,
       })
@@ -180,7 +180,7 @@ const MaireAnnonce = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/announces_complement_demand/", {
+      .request("https://www.madina-tic.ml/api/announces_complement_demand/", {
         method: "post",
         data: data,
       })

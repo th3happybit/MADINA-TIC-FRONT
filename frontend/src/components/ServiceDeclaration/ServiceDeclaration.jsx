@@ -68,7 +68,7 @@ const ServiceDeclaration = (props) => {
     }
     if (sid)
       axios
-        .get("http://157.230.19.233/api/declaration_nested/", {
+        .get("https://www.madina-tic.ml/api/declaration_nested/", {
           params: pa,
           headers: {
             "content-type": "application/json",
@@ -97,7 +97,7 @@ const ServiceDeclaration = (props) => {
   const getTypes = (sid) => {
     setLoading(true);
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -123,7 +123,7 @@ const ServiceDeclaration = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -195,7 +195,11 @@ const ServiceDeclaration = (props) => {
         </div>
         {Data.length > 0 ? (
           <div className="_data_section">
-            <DeclarationsTable data={Data} filter={activeFilter} refresh={refresh}/>
+            <DeclarationsTable
+              data={Data}
+              filter={activeFilter}
+              refresh={refresh}
+            />
             {pages > 1 && (
               <Pagination
                 className="_service_pagination"

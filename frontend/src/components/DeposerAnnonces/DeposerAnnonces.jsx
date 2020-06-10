@@ -31,7 +31,7 @@ export default function DeposerAnnonces(props) {
           },
         },
       })
-      .request("http://157.230.19.233/api/announces/", {
+      .request("https://www.madina-tic.ml/api/announces/", {
         method: "post",
         data: {
           title: title,
@@ -87,7 +87,7 @@ export default function DeposerAnnonces(props) {
   };
   useEffect(() => {
     axios
-      .get("http://157.230.19.233/api/user/", {
+      .get("https://www.madina-tic.ml/api/user/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("service_token")}`,

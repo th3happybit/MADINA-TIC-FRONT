@@ -16,7 +16,7 @@ const CitoyenDeclarationInfo = (props) => {
 
   const deleteDecla = () => {
     axios
-      .delete("http://157.230.19.233/api/declarations/" + id + "/", {
+      .delete("https://www.madina-tic.ml/api/declarations/" + id + "/", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -33,12 +33,15 @@ const CitoyenDeclarationInfo = (props) => {
   const getData = (did) => {
     if (did)
       axios
-        .get("http://157.230.19.233/api/declarations/" + String(did) + "/", {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        })
+        .get(
+          "https://www.madina-tic.ml/api/declarations/" + String(did) + "/",
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((res) => {
           setData(res.data);
           setLoading(false);
@@ -46,7 +49,7 @@ const CitoyenDeclarationInfo = (props) => {
           if (res.data.status === "lack_of_info")
             axios
               .get(
-                `http://157.230.19.233/api/declarations_complement_demand/`,
+                `https://www.madina-tic.ml/api/declarations_complement_demand/`,
                 {
                   params: {
                     declaration: did,
@@ -72,7 +75,7 @@ const CitoyenDeclarationInfo = (props) => {
 
   const getTypes = () => {
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -94,7 +97,7 @@ const CitoyenDeclarationInfo = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations/" + id + "/", {
+      .request("https://www.madina-tic.ml/api/declarations/" + id + "/", {
         method: "patch",
         data: {
           title: Data.title,
@@ -217,16 +220,17 @@ const CitoyenDeclarationInfo = (props) => {
                 {Data.attachments &&
                   Data.attachments.map((element, index) => {
                     return (
-                      element.filetype === "image" &&
-                      <Image
-                        onClick={() => {
-                          window.open(element.src);
-                        }}
-                        src={element.src}
-                        key={index}
-                        rounded
-                        className="pointer"
-                      />
+                      element.filetype === "image" && (
+                        <Image
+                          onClick={() => {
+                            window.open(element.src);
+                          }}
+                          src={element.src}
+                          key={index}
+                          rounded
+                          className="pointer"
+                        />
+                      )
                     );
                   })}
               </div>
@@ -288,7 +292,8 @@ const CitoyenDeclarationInfo = (props) => {
                   </Button.Content>
                 </Button>
               </>
-            )}{Data.status && getStatus(Data.status).status === "Treated" && (
+            )}
+            {Data.status && getStatus(Data.status).status === "Treated" && (
               <>
                 <Button
                   animated

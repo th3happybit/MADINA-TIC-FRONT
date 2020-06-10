@@ -97,7 +97,7 @@ const CitoyenDeclarations = () => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -110,7 +110,7 @@ const CitoyenDeclarations = () => {
   };
   const getdecTypes = () => {
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -170,7 +170,7 @@ const CitoyenDeclarations = () => {
     pa["citizen"] = userid;
 
     axios
-      .get("http://157.230.19.233/api/declarations/", {
+      .get("https://www.madina-tic.ml/api/declarations/", {
         params: pa,
         headers: {
           "Content-Type": "application/json",
@@ -195,12 +195,15 @@ const CitoyenDeclarations = () => {
   };
   const deleteDeclaration = (id) => {
     axios
-      .delete("http://157.230.19.233/api/declarations/" + String(id) + "/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
+      .delete(
+        "https://www.madina-tic.ml/api/declarations/" + String(id) + "/",
+        {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        }
+      )
       .then((res) => {
         if (page === 1) setRefresh((prevstate) => !prevstate);
         else setPage(1);

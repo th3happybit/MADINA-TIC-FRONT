@@ -29,7 +29,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -52,7 +52,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/logout/",
+        url: "https://www.madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {
@@ -79,7 +79,12 @@ const HeaderAdmin = (props) => {
                 onCLick={handleLogout}
               >
                 <Dropdown.Menu>
-                  <Dropdown.Item text="Account" icon="user" as={Link} to="/maire/profile" />
+                  <Dropdown.Item
+                    text="Account"
+                    icon="user"
+                    as={Link}
+                    to="/maire/profile"
+                  />
                   <Dropdown.Item
                     text="Sign Out"
                     icon="sign out"
