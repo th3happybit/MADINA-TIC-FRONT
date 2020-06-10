@@ -93,7 +93,7 @@ const InfosForm = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "http://157.230.19.233/api/user/",
         method: "patch",
         data: {
           email: email,

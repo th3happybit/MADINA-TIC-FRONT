@@ -4,7 +4,8 @@ import axios from "axios";
 import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
 import "./CitoyenPasswordForm.css";
 
-const PasswordForm = () => {
+const PasswordForm = (props) => {
+  const { isFrench } = props;
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
     isPassword: true,
@@ -192,8 +193,7 @@ const PasswordForm = () => {
               id="currentPassword"
               value={currentPassword.value}
               type={currentPassword.isPassword ? "password" : "text"}
-              label="Current Password"
-              placeholder="Current Password"
+              label={isFrench ? "Mot de passe actuel" : "كلمة المرور الحالي"}
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -211,8 +211,7 @@ const PasswordForm = () => {
               id="newPassword"
               value={newPassword.value}
               type={newPassword.isPassword ? "password" : "text"}
-              label="New Password"
-              placeholder="New Password"
+              label={isFrench ? "Mot de passe nouveau" : "كلمة السر الجديدة"}
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -230,8 +229,9 @@ const PasswordForm = () => {
               id="confirmPassword"
               value={confirmPassword.value}
               type={confirmPassword.isPassword ? "password" : "text"}
-              label="Confirm Password"
-              placeholder="Confirm Password"
+              label={
+                isFrench ? "Confirmez le mot de passe" : "تأكيد كلمة المرور"
+              }
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -277,7 +277,11 @@ const PasswordForm = () => {
         <Message error content={errMessage} />
         <Message
           success
-          content="Your infos update request has been sent successfully"
+          content={
+            isFrench
+              ? "Votre demande de mise à jour des informations a été envoyée avec succès"
+              : "تم إرسال طلب تحديث معلوماتك بنجاح"
+          }
         />
       </Form>
     </div>

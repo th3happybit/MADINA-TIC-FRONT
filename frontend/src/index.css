@@ -224,3 +224,11 @@ a {
     padding-top: 85px;
   }
 }
+._ltr {
+  direction: ltr;
+  text-align: left;
+}
+._rtl {
+  direction: rtl;
+  text-align: right;
+}

@@ -6,9 +6,16 @@ import InfosForm from "../../components/CitoyenInfosForm/CitoyenInfosForm.jsx";
 import Card from "../../components/CitoyenCard/CitoyenCard.jsx";
 import PasswordForm from "../../components/CitoyenPasswordForm/CitoyenPasswordForm.jsx";
 
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+
 import "./CitoyenProfile.css";
 
-const CitoyenProfile = () => {
+const CitoyenProfile = (props) => {
+  const { languages } = props;
   const [Infos, setInfos] = useState([]);
   const [activeItem, setActiveItem] = useState("info");
   const [isLogin, setIsLogin] = useState("null");
@@ -68,6 +75,7 @@ const CitoyenProfile = () => {
             <Grid className="citoyen-profile">
               <GridColumn className="left">
                 <Card
+                  isFrench={languages.isFrench}
                   cit_infos={Infos}
                   loading={isLoading}
                   updateImage={updateImage}
@@ -81,13 +89,21 @@ const CitoyenProfile = () => {
                     <Menu pointing secondary>
                       <Menu.Item
                         data-name="info"
-                        name="Update Infos"
+                        name={
+                          languages.isFrench
+                            ? "Mettre à jour les informations"
+                            : "تحديث معلومات"
+                        }
                         active={activeItem === "info"}
                         onClick={handleItemClick}
                       />
                       <Menu.Item
                         data-name="password"
-                        name="Update Password"
+                        name={
+                          languages.isFrench
+                            ? "Mettre à jour le mot de passe"
+                            : "تطوير كلمة السر"
+                        }
                         active={activeItem === "password"}
                         onClick={handleItemClick}
                       />
@@ -95,12 +111,15 @@ const CitoyenProfile = () => {
                     <div className="infos-form">
                       {activeItem === "info" && (
                         <InfosForm
+                          isFrench={languages.isFrench}
                           cit_infos={Infos}
                           refresh={GetCitoyenInfos}
                           loading={isLoading}
                         />
                       )}
-                      {activeItem === "password" && <PasswordForm />}
+                      {activeItem === "password" && (
+                        <PasswordForm isFrench={languages.isFrench} />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -109,6 +128,7 @@ const CitoyenProfile = () => {
           </Container>
           <Container fluid className="mobile-profile">
             <Card
+              isFrench={languages.isFrench}
               cit_infos={Infos}
               loading={isLoading}
               updateImage={updateImage}
@@ -130,7 +150,9 @@ const CitoyenProfile = () => {
           {" "}
           <Message negative>
             <Message.Header>
-              We're sorry you are not logged in :(
+              {languages.isFrench
+                ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
+                : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
             </Message.Header>
             <p
               className="text-default title _margin_vertical_sm pointer "
@@ -138,8 +160,21 @@ const CitoyenProfile = () => {
                 ccolor: "#912d2b",
               }}
             >
-              Go to login page?<a href="/login">click here</a>
-              You don't have account?<a href="/signup">click here</a>
+              {languages.isFrench
+                ? "Accéder à la page de connexion"
+                : "انتقل إلى صفحة تسجيل الدخول"}
+              ?
+              <a href="/login">
+                {" "}
+                {languages.isFrench ? "cliquez ici" : "انقر هنا"}
+              </a>
+              {languages.isFrench
+                ? "Vous n'avez pas de compte"
+                : "ليس لديك حساب"}
+              ?
+              <a href="/signup">
+                {languages.isFrench ? "cliquez ici" : "انقر هنا"}e
+              </a>
             </p>
           </Message>
         </div>
@@ -148,4 +183,18 @@ const CitoyenProfile = () => {
   );
 };
 
-export default CitoyenProfile;
+CitoyenProfile.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  CitoyenProfile
+);

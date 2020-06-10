@@ -11,7 +11,6 @@ import "./CitoyenHeader.css";
 
 export default function CitoyenHeader(props) {
   const history = useHistory();
-
   const [fullname, setfullname] = useState("");
   const [image, setImage] = useState("");
   useEffect(() => {
@@ -70,8 +69,12 @@ export default function CitoyenHeader(props) {
           <div className="form_search_header_citoyen">
             {login && (
               <Search
-                input={{ icon: "search", iconPosition: "left" }}
-                placeholder="Search..."
+                input={{
+                  icon: "search",
+                  iconPosition: props.isFrench ? "left" : "right",
+                }}
+                className={props.isFrench ? "_ltr" : "_rtl"}
+                placeholder={props.isFrench ? "chercher" : "بحث"}
               />
             )}
           </div>
@@ -102,16 +105,17 @@ export default function CitoyenHeader(props) {
                     style={{
                       width: "180px",
                     }}
+                    className={props.isFrench ? "_ltr" : "_rtl"}
                   >
                     <Dropdown.Item
-                      text="Account"
+                      text={props.isFrench ? "Compte" : "الحساب"}
                       icon="user"
                       as={Link}
                       to="/citoyen/profile"
                     />
 
                     <Dropdown.Item
-                      text="Sign Out"
+                      text={props.isFrench ? "Déconnexion" : "خروج"}
                       icon="sign out"
                       onClick={handleLogout}
                     />

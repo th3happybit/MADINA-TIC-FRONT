@@ -14,7 +14,15 @@ import DecTable from "../../components/CitoyenDeclarationTable/CitoyenDeclaratio
 
 import "./CitoyenDeclarations.css";
 
-const CitoyenDeclarations = () => {
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
+const CitoyenDeclarations = (props) => {
   const [activeFilter, setactiveFilter] = useState("New Declarations");
   const [Loading, setLoading] = useState(true);
   const [Data, setData] = useState(null);
@@ -229,9 +237,11 @@ const CitoyenDeclarations = () => {
       >
         {Data && (
           <>
-            <div className="row">
+            <div className={props.language.isFrench ? "row" : "row reverse"}>
               <div className="title_segment">
-                <p className="extra-text text-default">Declarations</p>
+                <p className="extra-text text-default">
+                  {props.language.isFrench ? "Déclarations" : "تصريحات"}
+                </p>
               </div>
               <Search
                 loading={searchLoading}
@@ -239,7 +249,11 @@ const CitoyenDeclarations = () => {
                 value={term}
                 showNoResults={false}
                 results={null}
-                placeholder="Search for declarations ..."
+                placeholder={
+                  props.language.isFrench
+                    ? "Recherche de déclarations"
+                    : "ابحث عن تصريحات"
+                }
                 input={{
                   icon: "search",
                   iconPosition: "right",
@@ -250,54 +264,63 @@ const CitoyenDeclarations = () => {
                 }}
               />
             </div>
-            <div className="row filters">
+            <div
+              className="row filters"
+              style={{
+                flexDirection: props.language.isFrench ? "row" : "row-reverse",
+              }}
+            >
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "New Declarations" ? "_active" : ""}
               >
-                New Declarations
+                {props.language.isFrench
+                  ? "Nouvelles déclarations"
+                  : "تصريحات جديدة"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "In progress" ? "_active" : ""}
               >
-                In progress
+                {props.language.isFrench ? "en cours" : "في تقدم"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "Validated" ? "_active" : ""}
               >
-                Validated
+                {props.language.isFrench ? "Validé" : "تم التحقق من صحتها"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "Treated" ? "_active" : ""}
               >
-                Treated
+                {props.language.isFrench ? "Traité" : "يعالج"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "Refused" ? "_active" : ""}
               >
-                Refused
+                {props.language.isFrench ? "Refusé" : "رفض"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "Archived" ? "_active" : ""}
               >
-                Archived
+                {props.language.isFrench ? "Archivé" : "مؤرشف"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "Lack of infos" ? "_active" : ""}
               >
-                Lack of infos
+                {props.language.isFrench
+                  ? "Manque d'informations"
+                  : "عدم وجود معلومات"}
               </Button>
               <Button
                 onClick={handleFilter}
                 className={activeFilter === "Draft" ? "_active" : ""}
               >
-                Draft
+                {props.language.isFrench ? "Brouillon" : "مشروع"}
               </Button>
             </div>
             <div className="show_mobile ">
@@ -311,16 +334,47 @@ const CitoyenDeclarations = () => {
               >
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    text="New Declarations"
+                    text={
+                      props.language.isFrench
+                        ? "Nouvelles déclarations"
+                        : "تصريحات جديدة"
+                    }
                     onClick={handleFilter}
                   />
-                  <Dropdown.Item text="In progress" onClick={handleFilter} />
-                  <Dropdown.Item text="Validated" onClick={handleFilter} />
-                  <Dropdown.Item text="Treated" onClick={handleFilter} />
-                  <Dropdown.Item text="Refused" onClick={handleFilter} />
-                  <Dropdown.Item text="Archived" onClick={handleFilter} />
-                  <Dropdown.Item text="Lack of infos" onClick={handleFilter} />
-                  <Dropdown.Item text="Draft" onClick={handleFilter} />
+                  <Dropdown.Item
+                    text={props.language.isFrench ? "en cours" : "في تقدم"}
+                    onClick={handleFilter}
+                  />
+                  <Dropdown.Item
+                    text={
+                      props.language.isFrench ? "Validé" : "تم التحقق من صحتها"
+                    }
+                    onClick={handleFilter}
+                  />
+                  <Dropdown.Item
+                    text={props.language.isFrench ? "Traité" : "يعالج"}
+                    onClick={handleFilter}
+                  />
+                  <Dropdown.Item
+                    text={props.language.isFrench ? "Refusé" : "رفض"}
+                    onClick={handleFilter}
+                  />
+                  <Dropdown.Item
+                    text={props.language.isFrench ? "Archivé" : "مؤرشف"}
+                    onClick={handleFilter}
+                  />
+                  <Dropdown.Item
+                    text={
+                      props.language.isFrench
+                        ? "Manque d'informations"
+                        : "عدم وجود معلومات"
+                    }
+                    onClick={handleFilter}
+                  />
+                  <Dropdown.Item
+                    text={props.language.isFrench ? "Brouillon" : "مشروع"}
+                    onClick={handleFilter}
+                  />
                 </Dropdown.Menu>
               </Dropdown>
               <Dropdown
@@ -391,4 +445,18 @@ const CitoyenDeclarations = () => {
   );
 };
 
-export default CitoyenDeclarations;
+CitoyenDeclarations.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  CitoyenDeclarations
+);

@@ -19,7 +19,13 @@
   display: flex;
   justify-content: space-between;
 }
-
+._main_declaration .row.reverse {
+  flex-direction: row-reverse;
+}
+._main_declaration .row.reverse .input input {
+  text-align: right;
+  direction: ltr;
+}
 ._main_declaration .row.filters {
   display: flex;
   margin-top: 2rem;

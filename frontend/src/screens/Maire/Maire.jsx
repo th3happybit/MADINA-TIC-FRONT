@@ -3,10 +3,6 @@ import axios from "axios";
 import { Message, Icon } from "semantic-ui-react";
 import { UserProvider } from "./MaireContext.jsx";
 
-import { Provider } from "react-redux";
-import { store, persistor } from "../../store.js";
-import { PersistGate } from "redux-persist/integration/react";
-
 import MaireSideBar from "../../components/MaireSideBar/MaireSideBar.jsx";
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import HeaderMaire from "../../components/MaireHeader/MaireHeader.jsx";

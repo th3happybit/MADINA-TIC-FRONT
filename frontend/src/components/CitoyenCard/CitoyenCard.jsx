@@ -20,7 +20,7 @@ import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.j
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 
 const Card = (props) => {
-  const { cit_infos, loading } = props;
+  const { cit_infos, loading, isFrench } = props;
   const [isEdit, setEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("info");
@@ -31,7 +31,6 @@ const Card = (props) => {
   const [upload, setUpload] = useState(true);
   const [cardLoading, setCardLoading] = useState(false);
   const [updated, setupdated] = useState(false);
-
   const [first_name, setfirst_name] = useState("");
   const [last_name, setlast_name] = useState("");
   const [birthday, setbirthday] = useState("");
@@ -361,7 +360,7 @@ const Card = (props) => {
             </div>
             <div className={upload ? "save_img" : "save_img hide"}>
               <Button className="button_primary" onClick={uploadImageHandler}>
-                Upload
+                {isFrench ? "confirmer" : "حفظ"}
               </Button>
             </div>
             <div
@@ -372,7 +371,7 @@ const Card = (props) => {
                 onClick={handleEdit}
                 disabled={isLoading}
               >
-                Cancel
+                {isFrench ? "Annuler" : "إلغاء"}
               </Button>
               <Button
                 className="primary"
@@ -380,7 +379,7 @@ const Card = (props) => {
                 loading={isLoading}
                 type="submit"
               >
-                Done
+                {isFrench ? "Confirmer" : "حفظ"}
               </Button>
             </div>
             <div
@@ -437,43 +436,48 @@ const Card = (props) => {
                 </div>
               )}
             </div>
-            <Divider horizontal>Citizen Informations</Divider>
+            <Divider horizontal>
+              {isFrench ? "Informations citoyen" : "معلومات المواطن"}
+            </Divider>
             {!isEdit && (
               <>
                 <div className="row">
-                  <div className="col">
+                  <div className={isFrench ? "col" : "col reverse"}>
                     <span className="small">
-                      <Icon name="mail" className="icon_card" /> Email
+                      <Icon name="mail" className="icon_card" />
+                      {isFrench ? "Email" : "البريد الإلكتروني"}
                     </span>
                     <p className="small">{cit_infos.email}</p>
                   </div>
-                  <div className="col">
+                  <div className={isFrench ? "col" : "col reverse"}>
                     <span className="small">
-                      <Icon name="birthday" className="icon_card" /> Birthday
+                      <Icon name="birthday" className="icon_card" />{" "}
+                      {!isFrench ? "عيد الميلاد" : "Anniversaire"}
                     </span>
                     <p className=" small">{cit_infos.date_of_birth}</p>
                   </div>
-                  <div className="col">
+                  <div className={isFrench ? "col" : "col reverse"}>
                     <span className=" small">
                       <Icon name="map marker alternate" className="icon_card" />{" "}
-                      Address
+                      {isFrench ? "Address" : "عنوان"}
                     </span>
                     <p className="small">{cit_infos.address}</p>
                   </div>
-                  <div className="col">
+                  <div className={isFrench ? "col" : "col reverse"}>
                     <span className="small">
                       <Icon
                         name="phone"
                         flipped={"horizontally"}
                         className="icon_card"
                       />{" "}
-                      Phone Number
+                      {isFrench ? "Numéro de téléphone" : "رقم الهاتف"}
                     </span>
                     <p className="small">{cit_infos.phone}</p>
                   </div>
-                  <div className="col">
+                  <div className={isFrench ? "col" : "col reverse"}>
                     <span className="small">
-                      <Icon name="id card" className="icon_card" /> National ID
+                      <Icon name="id card" className="icon_card" />
+                      {isFrench ? "carte d'identité" : "الهوية الوطنية"}
                     </span>
                     <p className="small">{cit_infos.national_id}</p>
                   </div>
@@ -510,14 +514,22 @@ const Card = (props) => {
               <div className="row mobile_menu">
                 <Menu pointing secondary>
                   <Menu.Item
-                    name="Update Infos"
+                    name={
+                      isFrench
+                        ? "Mettre à jour les informations"
+                        : "تحديث معلومات"
+                    }
                     data-name="info"
                     active={activeItem === "info"}
                     onClick={handleItemClick}
                     className="pointer"
                   />
                   <Menu.Item
-                    name="Update Password"
+                    name={
+                      isFrench
+                        ? "Mettre à jour le mot de passe"
+                        : "تطوير كلمة السر"
+                    }
                     data-name="password"
                     className="pointer"
                     active={activeItem === "password"}

@@ -5,6 +5,13 @@ import { Form, Image, Button, Icon, Message, Segment } from "semantic-ui-react";
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
 
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
 const ComplementDeclaration = (props) => {
   const [data, setData] = useState([]);
   const [titleErr, setTitleErr] = useState(false);
@@ -268,13 +275,13 @@ const ComplementDeclaration = (props) => {
     <div className="container_add_dec">
       <Segment className="_add_dec" loading={loadingPage}>
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Complement Declaration
+          {languages.isFrench ? "complementer declaration" : "تكملة  تصريح"}
         </h3>
         <Form success={succes}>
           <Message info header="The motif of the demand" content={reason} />
           <Form.Input
             type="text"
-            label="Title"
+            label={languages.isFrench ? "Titre" : "عنوان"}
             value={title}
             onChange={handleChange}
             name="title"
@@ -282,7 +289,7 @@ const ComplementDeclaration = (props) => {
           />
           <Form.Select
             fluid
-            label="Type"
+            label={languages.isFrench ? "Type" : "نوع"}
             options={options}
             name="type"
             value={type}
@@ -298,7 +305,7 @@ const ComplementDeclaration = (props) => {
             <Form.Input
               disabled={isGeo}
               type="text"
-              label="Address"
+              label={languages.isFrench ? "Adresse" : "عنوان"}
               value={adr}
               className={adrErr ? "add_dec_err" : ""}
               onChange={handleChange}
@@ -309,28 +316,32 @@ const ComplementDeclaration = (props) => {
           </div>
           <Form.Group inline>
             <Form.Radio
-              label="Geo-localise"
+              label={
+                languages.isFrench ? "Géo-localisation" : "التوطين الجغرافي"
+              }
               value="sm"
               checked={isGeo}
               onClick={handleGeo}
             />
             <Form.Radio
-              label="Manual address"
+              label={languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"}
               value="md"
               checked={!isGeo}
               onClick={handleGeo}
             />
           </Form.Group>
           <Form.TextArea
-            label="Description"
+            label={languages.isFrench ? "Description" : "وصف"}
             name="description"
-            placeholder="..."
             value={description}
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
           {pictures.length > 0 && (
-            <p className="label_add_dec bold">Pictures</p>
+            <p className="label_add_dec bold">
+              {" "}
+              {languages.isFrench ? "photos" : " الصور"}
+            </p>
           )}
           <div className="prev_images_dec">
             {picturesPreview.map((elm, index) => {
@@ -358,7 +369,7 @@ const ComplementDeclaration = (props) => {
                 width: "100%",
               }}
             >
-              Upload
+              {languages.isFrench ? "Ajouter photos" : "تحميل الصور"}
             </label>
             <input
               id="myInput"
@@ -400,12 +411,12 @@ const ComplementDeclaration = (props) => {
               className="button_primary _margin_horizontal_sm"
               onClick={handleComplement}
             >
-              Confirm Complement
+              {languages.isFrench ? "Confirmer" : "التأكيد"}
             </Button>
           </Form.Group>
           <Message
             success
-            content="Your complement has been send succesfully"
+            content={languages.isFrench ? "complement réussie" : "تعديل ناجح"}
           />
         </Form>
       </Segment>
@@ -413,4 +424,18 @@ const ComplementDeclaration = (props) => {
   );
 };
 
-export default ComplementDeclaration;
+ComplementDeclaration.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  ComplementDeclaration
+);
