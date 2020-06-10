@@ -21,6 +21,7 @@ import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
 import Consultations from "./screens/Consultations/Consultations.jsx";
 import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
+import Home from "./screens/Home/Home.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -291,6 +292,7 @@ function App() {
           path="/signup"
           component={() => <CitoyenAuth islogin={false} />}
         />
+        <Route exact path="/" component={Home} />
         <Redirect to="/login" />
       </Switch>
     </Router>
