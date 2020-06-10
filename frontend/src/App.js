@@ -48,6 +48,8 @@ import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
 
 function App() {
+  //find ./ -type f -exec sed -i 's/13.92.195.8/157.230.19.233/g' {} +
+  console.log(process.env);
   return (
     <Router>
       <Switch>

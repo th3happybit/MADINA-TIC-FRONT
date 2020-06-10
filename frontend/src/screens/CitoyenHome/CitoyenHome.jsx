@@ -5,6 +5,12 @@ import axios from "axios";
 //? import css
 import "./CitoyenHome.css";
 
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { change_mode } from "../../actions/darkAction";
+
 //? import components
 import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
 import CitoyenSidebar from "../../components/CitoyenSidebar/CitoyenSidebar.jsx";
@@ -12,6 +18,13 @@ import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
 import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 const CitoyenHome = (props) => {
+  //!TODO FOR MONCEF
+  //? bah tjib isDark ...
+  console.log(props.isDark);
+  //? bah tmodifi isDark
+  console.log(props.change_mode());
+  //? ida kan isDark true ywali false w l3ks
+
   const { annonce } = props;
   const [visible, setVisible] = useState(false);
   const [fullname, setFullname] = useState("");
@@ -111,4 +124,18 @@ const CitoyenHome = (props) => {
   );
 };
 
-export default CitoyenHome;
+//? hadou lzm dirhom bah typage ykn s7i7
+//? bal3arbya ida isDArk maknch bool marahch yji
+CitoyenHome.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+};
+
+//? w hedi bah state te3 reducer li reh f redux diro props l hed component
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+});
+
+export default connect(mapStateToProps, { change_mode })(
+  withRouter(CitoyenHome)
+);
