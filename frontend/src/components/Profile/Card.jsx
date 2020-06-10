@@ -197,7 +197,7 @@ const Card = (props) => {
         break;
     }
   };
-  const handleSumbit = () => {  
+  const handleSumbit = () => {
     const formData = new FormData();
     if (image) formData.append("image", image, image.name);
     formData.append("first_name", first_name);
@@ -237,7 +237,7 @@ const Card = (props) => {
             },
           })
           .request({
-            url: "http://157.230.19.233/api/user/",
+            url: "https://www.madina-tic.ml/api/user/",
             method: "patch",
             data: formData,
           })
@@ -280,7 +280,7 @@ const Card = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/password/change/",
+        url: "https://www.madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,
@@ -323,7 +323,7 @@ const Card = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/user/",
+          url: "https://www.madina-tic.ml/api/user/",
           method: "patch",
           data: formData,
         })
@@ -562,14 +562,16 @@ const Card = (props) => {
                         onChange={handleChangeInput}
                         placeholder="Phone Number ..."
                       />
-                      {!service && <Input
-                        className="mobile-input"
-                        type="text"
-                        id="national_id"
-                        value={national_id}
-                        onChange={handleChangeInput}
-                        placeholder="National ID ..."
-                      />}
+                      {!service && (
+                        <Input
+                          className="mobile-input"
+                          type="text"
+                          id="national_id"
+                          value={national_id}
+                          onChange={handleChangeInput}
+                          placeholder="National ID ..."
+                        />
+                      )}
                       <Message
                         error
                         content="Please make sur to enter a valid data"

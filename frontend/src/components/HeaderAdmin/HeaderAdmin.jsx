@@ -28,7 +28,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -51,7 +51,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/logout/",
+        url: "https://www.madina-tic.ml/api/logout/",
         method: "post",
         // data: { email, password },
       })

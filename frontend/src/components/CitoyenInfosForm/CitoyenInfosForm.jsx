@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Message } from "semantic-ui-react";
+import { Form, Input, Button, Message, Dropdown } from "semantic-ui-react";
 
 import axios from "axios";
 
 import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
 const InfosForm = (props) => {
-  const { cit_infos, loading } = props;
-  console.log({ cit_infos });
+  const { cit_infos, loading, isFrench } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [isEditing, setEditing] = useState(true);
@@ -20,6 +26,7 @@ const InfosForm = (props) => {
   const [email, setEmail] = useState("");
   const [national_id, setnational_id] = useState("");
   const [errorMessage, seterrorMessage] = useState(null);
+  const [language, setLanguage] = useState(props.isFrench);
 
   useEffect(() => {
     setfirst_name(cit_infos.first_name);
@@ -84,6 +91,9 @@ const InfosForm = (props) => {
   };
   const UpdateInfosCitoyen = () => {
     setIsLoading(true);
+    if (language) {
+      props.change_language(languages.french);
+    } else props.change_language(languages.arabic);
     axios
       .create({
         headers: {
@@ -94,7 +104,7 @@ const InfosForm = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "put",
         data: {
           email: email,
@@ -142,82 +152,98 @@ const InfosForm = (props) => {
     >
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>First Name</label>
+          <label>{isFrench ? "Prénom" : "اللقب"}</label>
           <Input
             fluid
-            placeholder={"First Name..."}
             id="first_name"
             value={first_name}
             onChange={handleChangeInput}
           />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Last Name</label>
+          <label>{isFrench ? "Nom" : "الاسم"}</label>
           <Input
             fluid
             id="last_name"
             value={last_name}
             onChange={handleChangeInput}
-            placeholder={"Last Name..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Email</label>
-          <Input
-            fluid
-            id="email"
-            value={email}
-            onChange={handleChangeInput}
-            placeholder={"Email ..."}
-          />
+          <label>{isFrench ? "Email" : "البريد الإلكتروني"}</label>
+          <Input fluid id="email" value={email} placeholder={"Email ..."} />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Birthday</label>
+          <label> {!isFrench ? "عيد الميلاد" : "Anniversaire"}</label>
           <Input
             fluid
             id="birthday"
             type="date"
             value={birthday}
             onChange={handleChangeInput}
-            placeholder={"Birthday..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Phone Number</label>
-          <Input
-            fluid
-            id="phone"
-            value={phone}
-            onChange={handleChangeInput}
-            placeholder={"Phone number ..."}
-          />
+          <label>{isFrench ? "Numéro de téléphone" : "رقم الهاتف"}</label>
+          <Input fluid id="phone" value={phone} onChange={handleChangeInput} />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Address</label>
+          <label>{isFrench ? "Address" : "عنوان"}</label>
           <Input
             fluid
             id="address"
             value={address}
             onChange={handleChangeInput}
-            placeholder={"Address ..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>National ID</label>
+          <label>
+            {" "}
+            {props.isFrench ? "carte d'identité" : "الهوية الوطنية"}
+          </label>
           <Input
             fluid
             id="national_id"
             value={national_id}
             onChange={handleChangeInput}
-            placeholder={"National ID ..."}
           />
         </Form.Field>
+        <Dropdown
+          disabled={isEditing}
+          trigger={
+            <Form.Input
+              value={language ? "Francais" : "Arabe"}
+              label={isFrench ? "langue" : "لغة"}
+            />
+          }
+          icon={null}
+        >
+          <Dropdown.Menu
+            style={{
+              width: "180px",
+            }}
+            className={props.isFrench ? "_ltr" : "_rtl"}
+          >
+            <Dropdown.Item
+              onClick={() => {
+                setLanguage(false);
+              }}
+              text={props.isFrench ? "Arabe" : "عربي"}
+            />
+            <Dropdown.Item
+              onClick={() => {
+                setLanguage(true);
+              }}
+              text={props.isFrench ? "Francais" : "فرنسي"}
+            />
+          </Dropdown.Menu>
+        </Dropdown>
       </Form.Group>
       {!isEditing && (
         <div className="_margin_vertical_md subs">
@@ -226,7 +252,7 @@ const InfosForm = (props) => {
             disabled={isLoading}
             onClick={handelEditClick}
           >
-            Cancel
+            {isFrench ? "Annuler" : "إلغاء"}
           </Button>
           <Button
             type="submit"
@@ -234,24 +260,42 @@ const InfosForm = (props) => {
             loading={isLoading}
             className="button_primary"
           >
-            Save
+            {isFrench ? "Confirmer" : "حفظ"}
           </Button>
         </div>
       )}
       {isEditing && (
         <div className="subs">
           <Button onClick={handelEditClick} className="button_primary">
-            Edit
+            {isFrench ? "Éditer" : "تعديل"}
           </Button>
         </div>
       )}
       <Message error content={errorMessage} />
       <Message
         success
-        content="Your infos update request has been sent successfully"
+        content={
+          isFrench
+            ? "Votre demande de mise à jour des informations a été envoyée avec succès"
+            : "تم إرسال طلب تحديث معلوماتك بنجاح"
+        }
       />
     </Form>
   );
 };
 
-export default InfosForm;
+InfosForm.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  InfosForm
+);

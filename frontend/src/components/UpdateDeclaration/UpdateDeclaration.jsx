@@ -6,9 +6,16 @@ import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
 //? import css
 import "./UpdateDeclaration.css";
-Geocode.setApiKey("AIzaSyDGe5vjL8wBmilLzoJ0jNIwe9SAuH2xS_0");
-Geocode.enableDebug();
+
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
 const UpdateDeclaration = (props) => {
+  const { languages } = props;
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
@@ -85,7 +92,7 @@ const UpdateDeclaration = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         method: "patch",
         data: {
           title,
@@ -190,7 +197,7 @@ const UpdateDeclaration = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/declarations_types/",
+          url: "https://www.madina-tic.ml/api/declarations_types/",
           method: "get",
         })
         .then((res) => {
@@ -206,7 +213,7 @@ const UpdateDeclaration = (props) => {
           setOptions(arr);
           axios
             .get(
-              `http://157.230.19.233/api/declarations_types/${selectedType}`,
+              `https://www.madina-tic.ml/api/declarations_types/${selectedType}`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -227,7 +234,7 @@ const UpdateDeclaration = (props) => {
   useEffect(() => {
     axios
       .get(
-        `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         {
           headers: {
             "content-type": "application/json",
@@ -279,12 +286,12 @@ const UpdateDeclaration = (props) => {
         loading={loadingPage}
       >
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Update Declaration
+          {languages.isFrench ? "Modifier declaration" : "تحديث  تصريح"}
         </h3>
         <Form success={succes}>
           <Form.Input
             type="text"
-            label="Title"
+            label={languages.isFrench ? "Titre" : "عنوان"}
             value={title}
             onChange={handleChange}
             name="title"
@@ -292,7 +299,7 @@ const UpdateDeclaration = (props) => {
           />
           <Form.Select
             fluid
-            label="Type"
+            label={languages.isFrench ? "Type" : "نوع"}
             options={options}
             name="type"
             value={type}
@@ -308,7 +315,7 @@ const UpdateDeclaration = (props) => {
             <Form.Input
               disabled={isGeo}
               type="text"
-              label="Address"
+              label={languages.isFrench ? "Adresse" : "عنوان"}
               value={adr}
               className={adrErr ? "add_dec_err" : ""}
               onChange={handleChange}
@@ -319,26 +326,33 @@ const UpdateDeclaration = (props) => {
           </div>
           <Form.Group inline>
             <Form.Radio
-              label="Geo-localise"
+              label={
+                languages.isFrench ? "Géo-localisation" : "التوطين الجغرافي"
+              }
               value="sm"
               checked={isGeo}
               onClick={handleGeo}
             />
             <Form.Radio
-              label="Manual address"
+              label={languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"}
               value="md"
               checked={!isGeo}
               onClick={handleGeo}
             />
           </Form.Group>
           <Form.TextArea
-            label="Description"
+            label={languages.isFrench ? "Description" : "وصف"}
             name="description"
-            placeholder="..."
             value={description}
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
+          {pictures.length > 0 && (
+            <p className="label_add_dec bold">
+              {" "}
+              {languages.isFrench ? "photos" : " الصور"}
+            </p>
+          )}
           <div
             className="prev_images_dec"
             style={{
@@ -407,12 +421,12 @@ const UpdateDeclaration = (props) => {
               className="button_primary _margin_horizontal_sm"
               onClick={handleUpdate}
             >
-              Confirm Update
+              {languages.isFrench ? "Confirmer" : "التأكيد"}
             </Button>
           </Form.Group>
           <Message
             success
-            content="Your decalration has been modified succesfully"
+            content={languages.isFrench ? "modification réussie" : "تعديل ناجح"}
           />
         </Form>
       </Segment>
@@ -420,4 +434,18 @@ const UpdateDeclaration = (props) => {
   );
 };
 
-export default UpdateDeclaration;
+UpdateDeclaration.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  UpdateDeclaration
+);

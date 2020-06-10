@@ -49,7 +49,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/reports_complement_demand/",
+        url: "https://www.madina-tic.ml/api/reports_complement_demand/",
         data: demand,
         method: "post",
       })
@@ -68,7 +68,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${declaration.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${declaration.did}/`,
         method: "patch",
         data: dec,
       })
@@ -88,7 +88,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/reports/${data.rid}/`,
+        url: `https://www.madina-tic.ml/api/reports/${data.rid}/`,
         method: "patch",
         data: rep,
       })
@@ -111,7 +111,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/announces/${data.aid}/`,
+        url: `https://www.madina-tic.ml/api/announces/${data.aid}/`,
         method: "patch",
         data: ann,
       })
@@ -172,7 +172,7 @@ const ModalDetailComponent = (props) => {
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
       let instance = axios.create({
-        baseURL: "http://157.230.19.233/api/",
+        baseURL: "https://www.madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "Content-Type": "application/json",
@@ -191,7 +191,7 @@ const ModalDetailComponent = (props) => {
         });
     }
     if (isRapport) {
-      let url = `http://157.230.19.233/api/declarations/${data.declaration}`;
+      let url = `https://www.madina-tic.ml/api/declarations/${data.declaration}`;
       axios
         .create({
           headers: {
@@ -224,7 +224,7 @@ const ModalDetailComponent = (props) => {
           },
         })
         .request({
-          url: `http://157.230.19.233/api/documents/?report__rid=${data.rid}`,
+          url: `https://www.madina-tic.ml/api/documents/?report__rid=${data.rid}`,
           method: "get",
         })
         .then((res) => {
@@ -339,7 +339,7 @@ const ModalDetailComponent = (props) => {
                           }}
                           onClick={() => {
                             window.open(
-                              "http://157.230.19.233/" + String(file.src)
+                              "https://www.madina-tic.ml/" + String(file.src)
                             );
                           }}
                         >

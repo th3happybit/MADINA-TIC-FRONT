@@ -3,10 +3,6 @@ import axios from "axios";
 import { Message, Icon } from "semantic-ui-react";
 import { UserProvider } from "./MaireContext.jsx";
 
-import { Provider } from "react-redux";
-import { store, persistor } from "../../store.js";
-import { PersistGate } from "redux-persist/integration/react";
-
 import MaireSideBar from "../../components/MaireSideBar/MaireSideBar.jsx";
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import HeaderMaire from "../../components/MaireHeader/MaireHeader.jsx";
@@ -58,76 +54,74 @@ const Maire = (props) => {
     setVisible((prevState) => !prevState);
   };
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        {isLogin ? (
-          <UserProvider value={dataContext}>
-            {visible && <Backdrop click={handleHide} />}
-            <MaireSideBar active={active} />
-            <HeaderMaire active={active} show={handleHide} imageP={image} />
-            <MaireHeaderSideBar
-              visible={visible}
-              active={active}
-              click={handleHide}
-            />
-            <>
-              {props.childComponent ? (
-                <props.childComponent maire={maire} updateImageP={changeImage}/>
-              ) : (
-                <div
+    <>
+      {isLogin ? (
+        <UserProvider value={dataContext}>
+          {visible && <Backdrop click={handleHide} />}
+          <MaireSideBar active={active} />
+          <HeaderMaire active={active} show={handleHide} imageP={image} />
+          <MaireHeaderSideBar
+            visible={visible}
+            active={active}
+            click={handleHide}
+          />
+          <>
+            {props.childComponent ? (
+              <props.childComponent maire={maire} updateImageP={changeImage} />
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  "flex-direction": "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100vw",
+                  height: "100vh",
+                }}
+              >
+                <Icon
+                  name="time"
+                  size="big"
                   style={{
-                    display: "flex",
-                    "flex-direction": "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100vw",
-                    height: "100vh",
+                    "margin-bottom": "10px",
                   }}
-                >
-                  <Icon
-                    name="time"
-                    size="big"
-                    style={{
-                      "margin-bottom": "10px",
-                    }}
-                  />
-                  <h1 className="text-default">
-                    This page is under construction ...
-                  </h1>
-                </div>
-              )}
-            </>
-          </UserProvider>
-        ) : (
-          verified && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100vw",
-                height: "100vh",
-              }}
-            >
-              {" "}
-              <Message negative>
-                <Message.Header>
-                  We're sorry you can't access this route
-                </Message.Header>
-                <p
-                  className="text-default title _margin_vertical_sm pointer "
-                  style={{
-                    ccolor: "#912d2b",
-                  }}
-                >
-                  Go to login page?<a href="/maire/login">click here</a>
-                </p>
-              </Message>
-            </div>
-          )
-        )}
-      </PersistGate>
-    </Provider>
+                />
+                <h1 className="text-default">
+                  This page is under construction ...
+                </h1>
+              </div>
+            )}
+          </>
+        </UserProvider>
+      ) : (
+        verified && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100vw",
+              height: "100vh",
+            }}
+          >
+            {" "}
+            <Message negative>
+              <Message.Header>
+                We're sorry you can't access this route
+              </Message.Header>
+              <p
+                className="text-default title _margin_vertical_sm pointer "
+                style={{
+                  ccolor: "#912d2b",
+                }}
+              >
+                Go to login page?<a href="/maire/login">click here</a>
+              </p>
+            </Message>
+          </div>
+        )
+      )}
+    </>
   );
 };
 

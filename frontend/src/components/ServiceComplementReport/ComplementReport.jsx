@@ -48,7 +48,7 @@ const ComplementReport = (props) => {
     if (props.props.props.location.state) {
       setLoading(true);
       axios
-        .get("http://157.230.19.233/api/user", {
+        .get("https://www.madina-tic.ml/api/user", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -59,7 +59,7 @@ const ComplementReport = (props) => {
         });
       if (props.props.props.location.state.rid) {
         axios
-          .get("http://157.230.19.233/api/reports_complement_demand", {
+          .get("https://www.madina-tic.ml/api/reports_complement_demand", {
             params: {
               report: props.props.props.location.state.rid,
             },
@@ -75,7 +75,11 @@ const ComplementReport = (props) => {
 
         axios
           .get(
+<<<<<<< HEAD
             `http://157.230.19.233/api/reports/${props.props.props.location.state.rid}`,
+=======
+            `https://www.madina-tic.ml/api/reports/${props.props.location.state.rid}`,
+>>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
             {
               headers: {
                 "content-type": "application/json",
@@ -94,7 +98,7 @@ const ComplementReport = (props) => {
           })
           .catch((err) => {});
         axios
-          .get("http://157.230.19.233/api/documents/", {
+          .get("https://www.madina-tic.ml/api/documents/", {
             params: {
               report__rid: props.props.props.location.state.rid,
             },
@@ -115,8 +119,13 @@ const ComplementReport = (props) => {
       if (props.props.props.location.state.did)
         axios
           .get(
+<<<<<<< HEAD
             "http://157.230.19.233/api/declarations/" +
               props.props.props.location.state.did +
+=======
+            "https://www.madina-tic.ml/api/declarations/" +
+              props.props.location.state.did +
+>>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
               "/",
             {
               headers: {
@@ -244,7 +253,7 @@ const ComplementReport = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/documents/",
+          url: "https://www.madina-tic.ml/api/documents/",
           method: "post",
           data: formData,
         })
@@ -278,7 +287,7 @@ const ComplementReport = (props) => {
           },
         })
         .request({
-          url: `http://157.230.19.233/api/documents/${filesD[i]}/`,
+          url: `https://www.madina-tic.ml/api/documents/${filesD[i]}/`,
           method: "delete",
         })
         .then((res) => {
@@ -305,7 +314,11 @@ const ComplementReport = (props) => {
         },
       })
       .request({
+<<<<<<< HEAD
         url: `http://157.230.19.233/api/reports/${props.props.props.location.state.rid}/`,
+=======
+        url: `https://www.madina-tic.ml/api/reports/${props.props.location.state.rid}/`,
+>>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
         method: "put",
         data: {
           title,

@@ -57,7 +57,7 @@ const Profile = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {

@@ -64,7 +64,7 @@ const ComplementAnnounces = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/announces/${aid}/`,
+        url: `https://www.madina-tic.ml/api/announces/${aid}/`,
         method: "patch",
         data: {
           title: title,
@@ -106,7 +106,7 @@ const ComplementAnnounces = (props) => {
       setAid(props.props.props.location.state.aid);
       axios
         .get(
-          `http://157.230.19.233/api/announces/${props.props.props.location.state.aid}/`,
+          `https://www.madina-tic.ml/api/announces/${props.props.props.location.state.aid}/`,
           {
             headers: {
               "content-type": "application/json",

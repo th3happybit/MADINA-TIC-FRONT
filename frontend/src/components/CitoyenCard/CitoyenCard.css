@@ -22,7 +22,9 @@
   padding-top: 20px;
   width: 80%;
 }
-
+.card-citoyen > .row > .col.reverse {
+  flex-direction: row-reverse;
+}
 .card-citoyen > .citoyen-profile-pic > .profile > .image {
   width: 130px;
   height: 130px;

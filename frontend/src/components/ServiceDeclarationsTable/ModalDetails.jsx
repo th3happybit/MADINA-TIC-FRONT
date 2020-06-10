@@ -34,7 +34,7 @@ const ModalD = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${did}/`,
         method: "patch",
         data: data,
       })

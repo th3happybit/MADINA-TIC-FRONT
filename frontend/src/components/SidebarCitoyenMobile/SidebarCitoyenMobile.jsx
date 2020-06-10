@@ -20,7 +20,7 @@ const SidebarCitoyenMobile = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/logout/",
+        url: "https://www.madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {
@@ -49,7 +49,7 @@ const SidebarCitoyenMobile = (props) => {
                 : "medium-text text-default"
             }
           >
-            Home
+            {props.isFrench ? "Accueil" : "الصفحة الرئيسية"}
           </Link>
         </List.Item>
         <List.Item>
@@ -73,7 +73,7 @@ const SidebarCitoyenMobile = (props) => {
                 : "medium-text text-default"
             }
           >
-            Declarations
+            {props.isFrench ? "déclarations" : "تصريحات"}
           </Link>
         </List.Item>
         <List.Item>
@@ -85,7 +85,19 @@ const SidebarCitoyenMobile = (props) => {
                 : "medium-text text-default"
             }
           >
-            Notification
+            {props.isFrench ? "annonces" : "إعلانات"}
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
+            to="/admin/notifications"
+            className={
+              props.active === "notifications"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            {props.isFrench ? "Notifications" : "إشعارات"}
           </Link>
         </List.Item>
       </List>

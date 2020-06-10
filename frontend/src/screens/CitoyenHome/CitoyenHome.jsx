@@ -2,8 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Message } from "semantic-ui-react";
 import axios from "axios";
 
+//? beams pusher
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+
 //? import css
 import "./CitoyenHome.css";
+
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
 
 //? import components
 import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
@@ -12,10 +23,18 @@ import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
 import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 const CitoyenHome = (props) => {
-  const { annonce } = props;
+  const { language, annonce } = props;
+  //!TODO FOR MONCEF
+  //? bah tjib isDark ...
+  // console.log(props.isDark);
+  //? bah tmodifi isDark
+  //console.log(props.change_mode());
+  //? ida kan isDark true ywali false w l3ks
+
   const [visible, setVisible] = useState(false);
   const [fullname, setFullname] = useState("");
   const [image, setImage] = useState(null);
+  const [id, setId] = useState(null);
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
@@ -32,18 +51,32 @@ const CitoyenHome = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/user/",
+          url: "https://www.madina-tic.ml/api/user/",
           method: "get",
         })
         .then((res) => {
           setFullname(res.data.first_name + " " + res.data.last_name);
           setImage(res.data.image);
+          setId(res.data.uid);
+          let tokenProvider = new PusherPushNotifications.TokenProvider({
+            url: "https://madina-tic.ml/api/beams_auth/",
+          });
+
+          PusherPushNotifications.init({
+            instanceId: "65b0754a-0713-4b71-bc41-4d2abae63fc6",
+          })
+            .then((beamsClient) => beamsClient.start())
+            .then((beamsClient) =>
+              beamsClient.setUserId(res.data.uid, tokenProvider)
+            )
+            .catch(console.error);
         })
         .catch((err) => {});
     } else {
       setIsLogin(false);
     }
   }, []);
+
   const [isLogin, setIsLogin] = useState("null");
 
   return (
@@ -56,8 +89,13 @@ const CitoyenHome = (props) => {
             login
             fullname={fullname}
             image={image}
+            isFrench={language.isFrench}
           />{" "}
-          <CitoyenSidebar active={props.active} visible={visible} />{" "}
+          <CitoyenSidebar
+            isFrench={language.isFrench}
+            active={props.active}
+            visible={visible}
+          />{" "}
           <main
             style={{
               position: "relative",
@@ -68,6 +106,7 @@ const CitoyenHome = (props) => {
             {props.childComponent}
           </main>
           <SidebarCitoyenMobile
+            isFrench={language.isFrench}
             fullname={fullname}
             image={image}
             visible={visible}
@@ -77,7 +116,7 @@ const CitoyenHome = (props) => {
           />
           {annonce && (
             <div className="_annonce_section">
-              <Annonce />
+              <Annonce isFrench={language.isFrench} />
             </div>
           )}
         </>
@@ -94,7 +133,9 @@ const CitoyenHome = (props) => {
           {" "}
           <Message negative>
             <Message.Header>
-              We're sorry you can't access this route
+              {languages.isFrench
+                ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
+                : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
             </Message.Header>
             <p
               className="text-default title _margin_vertical_sm pointer "
@@ -102,7 +143,13 @@ const CitoyenHome = (props) => {
                 ccolor: "#912d2b",
               }}
             >
-              Go to login page?<a href="/login">click here</a>
+              {languages.isFrench
+                ? "Accéder à la page de connexion"
+                : "انتقل إلى صفحة تسجيل الدخول"}
+              ?
+              <a href="/login">
+                {languages.isFrench ? "cliquez ici" : "انقر هنا"}
+              </a>
             </p>
           </Message>
         </div>
@@ -111,4 +158,21 @@ const CitoyenHome = (props) => {
   );
 };
 
-export default CitoyenHome;
+//? hadou lzm dirhom bah typage ykn s7i7
+//? bal3arbya ida isDArk maknch bool marahch yji
+CitoyenHome.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+//? w hedi bah state te3 reducer li reh f redux diro props l hed component
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  CitoyenHome
+);

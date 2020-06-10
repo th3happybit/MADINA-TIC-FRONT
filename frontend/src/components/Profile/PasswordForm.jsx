@@ -23,7 +23,7 @@ const PasswordForm = (props) => {
   const [errMessage, seterrMessage] = useState(null);
   const [isEditing, setisediting] = useState(false);
 
-  const {token} = props;
+  const { token } = props;
 
   const reset = () => {
     if (currentPassword.value !== "")
@@ -151,7 +151,7 @@ const PasswordForm = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/password/change/",
+        url: "https://www.madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,

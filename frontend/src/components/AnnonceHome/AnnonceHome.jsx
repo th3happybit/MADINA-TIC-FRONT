@@ -87,7 +87,7 @@ const AnnonceHome = (props) => {
       date.getSeconds();
     setLoading(true);
     axios
-      .get("http://157.230.19.233/api/announces/", {
+      .get("https://www.madina-tic.ml/api/announces/", {
         params: {
           status: "published",
           page: page,
@@ -115,26 +115,60 @@ const AnnonceHome = (props) => {
 
   return (
     <Segment className="_annonce_tab shadow" loading={Loading}>
-      <h3 className="text-default">Active Announcements</h3>
+      <h3 className="text-default">
+        {props.isFrench ? "Annonces actives" : "إعلانات نشطة"}
+      </h3>
 
       <div className="_tab_content">
         <div className="_announces">
           {Data.map((annonce, index) => {
             return (
-              <div key={index} className="_annonce">
+              <div
+                key={index}
+                className="_annonce"
+                style={{
+                  textAlign: props.isFrench ? "left" : "right",
+                  direction: props.isFrench ? "rtl" : "ltr",
+                }}
+              >
                 <h4 className="">{annonce.title}</h4>
-                <span>
-                  <p className="_title">From :</p>
+                <span
+                  style={{
+                    flexDirection: props.isFrench ? "row" : "row-reverse",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  <p className="_title">{props.isFrench ? "De :" : ": مذ"} </p>
                   &nbsp;
                   <p>{TimeExtract(annonce.start_at)}</p>
                 </span>
-                <span>
-                  <p className="_title">To :</p>
+                <span
+                  style={{
+                    flexDirection: props.isFrench ? "row" : "row-reverse",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  <p className="_title">{props.isFrench ? "À :" : ": إلى"} </p>
                   &nbsp;
                   <p>{TimeExtract(annonce.end_at)}</p>
                 </span>
-                <p className="_title">Details :</p>
-                <p style={{textAlign : "justify"}}>{annonce.desc}</p>
+                <p
+                  className="_title"
+                  style={{
+                    textAlign: props.isFrench ? "left" : "right",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  {props.isFrench ? "Détails :" : ": تفاصيل"}
+                </p>
+                <p
+                  style={{
+                    textAlign: props.isFrench ? "left" : "right",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  {annonce.desc}
+                </p>
                 {index + 1 < Data.length && <Divider />}
               </div>
             );

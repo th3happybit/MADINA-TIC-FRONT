@@ -10,7 +10,7 @@ export default function Childs(props) {
   };
   useEffect(() => {
     let instance = axios.create({
-      baseURL: "http://157.230.19.233/api/",
+      baseURL: "https://www.madina-tic.ml/api/",
       responseType: "json",
       headers: {
         "content-type": "application/json",

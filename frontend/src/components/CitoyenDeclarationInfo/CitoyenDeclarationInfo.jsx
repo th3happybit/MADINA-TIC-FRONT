@@ -6,7 +6,15 @@ import Status from "./StatusLabel.jsx";
 import "./CitoyenDeclarationInfo.css";
 import { Link, useHistory } from "react-router-dom";
 
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
 const CitoyenDeclarationInfo = (props) => {
+  const { languages } = props;
   const [Data, setData] = useState([]);
   const [Reason, setReason] = useState([]);
   const [Loading, setLoading] = useState(true);
@@ -16,7 +24,7 @@ const CitoyenDeclarationInfo = (props) => {
 
   const deleteDecla = () => {
     axios
-      .delete("http://157.230.19.233/api/declarations/" + id + "/", {
+      .delete("https://www.madina-tic.ml/api/declarations/" + id + "/", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -33,12 +41,15 @@ const CitoyenDeclarationInfo = (props) => {
   const getData = (did) => {
     if (did)
       axios
-        .get("http://157.230.19.233/api/declarations/" + String(did) + "/", {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        })
+        .get(
+          "https://www.madina-tic.ml/api/declarations/" + String(did) + "/",
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((res) => {
           setData(res.data);
           setLoading(false);
@@ -46,7 +57,7 @@ const CitoyenDeclarationInfo = (props) => {
           if (res.data.status === "lack_of_info")
             axios
               .get(
-                `http://157.230.19.233/api/declarations_complement_demand/`,
+                `https://www.madina-tic.ml/api/declarations_complement_demand/`,
                 {
                   params: {
                     declaration: did,
@@ -72,7 +83,7 @@ const CitoyenDeclarationInfo = (props) => {
 
   const getTypes = () => {
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -94,7 +105,7 @@ const CitoyenDeclarationInfo = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations/" + id + "/", {
+      .request("https://www.madina-tic.ml/api/declarations/" + id + "/", {
         method: "patch",
         data: {
           title: Data.title,
@@ -180,7 +191,7 @@ const CitoyenDeclarationInfo = (props) => {
         <>
           <p className="text-gray-dark _intitulé extra-text">
             {" "}
-            Declaration details
+            {languages.isFrench ? "Détails de la déclaration" : "تفاصيل تصريح"}
           </p>
           <div className="d-flex _info_container">
             <div className="_row1">
@@ -217,16 +228,17 @@ const CitoyenDeclarationInfo = (props) => {
                 {Data.attachments &&
                   Data.attachments.map((element, index) => {
                     return (
-                      element.filetype === "image" &&
-                      <Image
-                        onClick={() => {
-                          window.open(element.src);
-                        }}
-                        src={element.src}
-                        key={index}
-                        rounded
-                        className="pointer"
-                      />
+                      element.filetype === "image" && (
+                        <Image
+                          onClick={() => {
+                            window.open(element.src);
+                          }}
+                          src={element.src}
+                          key={index}
+                          rounded
+                          className="pointer"
+                        />
+                      )
                     );
                   })}
               </div>
@@ -244,7 +256,10 @@ const CitoyenDeclarationInfo = (props) => {
                   }}
                 >
                   <Button animated color="black" className="action_button">
-                    <Button.Content visible content="Modifiy" />
+                    <Button.Content
+                      visible
+                      content={languages.isFrench ? "modifier" : "تعديل"}
+                    />
                     <Button.Content hidden icon>
                       <Icon name="pencil alternate" />
                     </Button.Content>
@@ -253,7 +268,10 @@ const CitoyenDeclarationInfo = (props) => {
               )}
             {Data.status && getStatus(Data.status).status === "Refused" && (
               <Button animated color="yellow" className="action_button">
-                <Button.Content visible content="Resend" />
+                <Button.Content
+                  visible
+                  content={languages.isFrench ? "Renvoyer" : "إعادة إرسال"}
+                />
                 <Button.Content hidden icon>
                   <Icon name="sync alternate" />
                 </Button.Content>
@@ -267,7 +285,10 @@ const CitoyenDeclarationInfo = (props) => {
                 }}
               >
                 <Button animated color="green" className="action_button">
-                  <Button.Content visible content="Complete" />
+                  <Button.Content
+                    visible
+                    content={languages.isFrench ? "Completer" : "اكتمال"}
+                  />
                   <Button.Content hidden icon>
                     <Icon name="add" />
                   </Button.Content>
@@ -282,13 +303,17 @@ const CitoyenDeclarationInfo = (props) => {
                   className="action_button"
                   onClick={() => UpdateState("not_validated")}
                 >
-                  <Button.Content visible content="send" />
+                  <Button.Content
+                    visible
+                    content={languages.isFrench ? "Envoyer" : "إرسال"}
+                  />
                   <Button.Content hidden icon>
                     <Icon name="paper plane alternate" />
                   </Button.Content>
                 </Button>
               </>
-            )}{Data.status && getStatus(Data.status).status === "Treated" && (
+            )}
+            {Data.status && getStatus(Data.status).status === "Treated" && (
               <>
                 <Button
                   animated
@@ -296,7 +321,10 @@ const CitoyenDeclarationInfo = (props) => {
                   className="action_button"
                   onClick={() => UpdateState("archived")}
                 >
-                  <Button.Content visible content="Archive" />
+                  <Button.Content
+                    visible
+                    content={languages.isFrench ? "Archiver" : "أرشيف"}
+                  />
                   <Button.Content hidden icon>
                     <Icon name="archive" />
                   </Button.Content>
@@ -310,7 +338,10 @@ const CitoyenDeclarationInfo = (props) => {
               className="action_button delete_button"
               onClick={deleteDecla}
             >
-              <Button.Content visible content="Delete" />
+              <Button.Content
+                visible
+                content={languages.isFrench ? "Supprimer" : "حذف"}
+              />
               <Button.Content icon hidden>
                 {" "}
                 <Icon name="times" />{" "}
@@ -327,4 +358,18 @@ const CitoyenDeclarationInfo = (props) => {
   );
 };
 
-export default CitoyenDeclarationInfo;
+CitoyenDeclarationInfo.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  CitoyenDeclarationInfo
+);
