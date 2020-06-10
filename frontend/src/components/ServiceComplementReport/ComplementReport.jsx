@@ -75,11 +75,7 @@ const ComplementReport = (props) => {
 
         axios
           .get(
-<<<<<<< HEAD
-            `http://157.230.19.233/api/reports/${props.props.props.location.state.rid}`,
-=======
-            `https://www.madina-tic.ml/api/reports/${props.props.location.state.rid}`,
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
+            `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -119,13 +115,8 @@ const ComplementReport = (props) => {
       if (props.props.props.location.state.did)
         axios
           .get(
-<<<<<<< HEAD
-            "http://157.230.19.233/api/declarations/" +
-              props.props.props.location.state.did +
-=======
             "https://www.madina-tic.ml/api/declarations/" +
-              props.props.location.state.did +
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
+              props.props.props.location.state.did +
               "/",
             {
               headers: {
@@ -314,11 +305,7 @@ const ComplementReport = (props) => {
         },
       })
       .request({
-<<<<<<< HEAD
-        url: `http://157.230.19.233/api/reports/${props.props.props.location.state.rid}/`,
-=======
-        url: `https://www.madina-tic.ml/api/reports/${props.props.location.state.rid}/`,
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
+        url: `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}/`,
         method: "put",
         data: {
           title,

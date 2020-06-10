@@ -41,41 +41,6 @@ const ComplementDeclaration = (props) => {
   const [nullData, setnullData] = useState(false);
   const [notLack, setnotLack] = useState(true);
 
-<<<<<<< HEAD
-=======
-  useEffect(() => {
-    const formData = new FormData();
-    sendP.map((image) => {
-      console.log({ image });
-      formData.append("src", image, image.name);
-    });
-    formData.append("filetype", "image");
-    formData.append("declaration", did);
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        },
-      })
-      .request({
-        url: "https://www.madina-tic.ml/api/documents/",
-        method: "post",
-        data: formData,
-      })
-      .then((res) => {
-        console.log(res);
-        setSucces(true);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        setIsLoading(false);
-      });
-  }, [did]);
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
   const handleComplement = () => {
     setIsLoading(true);
     axios
@@ -293,13 +258,12 @@ const ComplementDeclaration = (props) => {
         .catch((err) => console.log(err));
   }, [selectedType]);
   useEffect(() => {
-<<<<<<< HEAD
     setLoadingPage(true);
     if (props.props.location.state) {
       if (props.props.location.state.data.status === "lack_of_info") {
         axios
           .get(
-            `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+            `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
             {
               headers: {
                 "content-type": "application/json",
@@ -326,7 +290,7 @@ const ComplementDeclaration = (props) => {
           });
         axios
           .get(
-            `http://157.230.19.233/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
+            `https://www.madina-tic.ml/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -343,55 +307,6 @@ const ComplementDeclaration = (props) => {
       } else {
         setnotLack(true);
         setnullData(true);
-=======
-    axios
-      .get(
-        `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setSelectedType(res.data.dtype);
-        setTitle(res.data.title);
-        setDesctiption(res.data.desc);
-        setAdr(res.data.address);
-        setAdrGeo(res.data.geo_cord);
-        setPicturesPreview(res.data.attachments);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  }, []);
-  useEffect(() => {
-    axios
-      .get(
-        `https://www.madina-tic.ml/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        }
-      )
-      .then((res) => {
-        setReason(res.data.results[0].reason);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  }, []);
-  const handledeleteImg = (e) => {
-    let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
-    let preview = [];
-    let f = [];
-    pictures.map((elm, index) => {
-      if (index !== indexElm) {
-        f.push(elm);
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
       }
     } else {
       setLoadingPage(false);
@@ -410,17 +325,16 @@ const ComplementDeclaration = (props) => {
   return (
     <div className="container_add_dec">
       <Segment className="_add_dec" loading={loadingPage}>
-<<<<<<< HEAD
         {!nullData && notLack ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">
-              Complement Declaration
+              {languages.isFrench ? "complementer declaration" : "تكملة  تصريح"}
             </h3>
             <Form success={succes}>
               <Message info header="The motif of the demand" content={reason} />
               <Form.Input
                 type="text"
-                label="Title"
+                label={languages.isFrench ? "Titre" : "عنوان"}
                 value={title}
                 onChange={handleChange}
                 name="title"
@@ -428,7 +342,7 @@ const ComplementDeclaration = (props) => {
               />
               <Form.Select
                 fluid
-                label="Type"
+                label={languages.isFrench ? "Type" : "نوع"}
                 options={options}
                 name="type"
                 value={type}
@@ -444,7 +358,7 @@ const ComplementDeclaration = (props) => {
                 <Form.Input
                   disabled={isGeo}
                   type="text"
-                  label="Address"
+                  label={languages.isFrench ? "Adresse" : "عنوان"}
                   value={adr}
                   className={adrErr ? "add_dec_err" : ""}
                   onChange={handleChange}
@@ -455,20 +369,26 @@ const ComplementDeclaration = (props) => {
               </div>
               <Form.Group inline>
                 <Form.Radio
-                  label="Geo-localise"
+                  label={
+                    languages.isFrench
+                      ? "Géo-localisation"
+                      : "الإحداثيات الجغرافية"
+                  }
                   value="sm"
                   checked={isGeo}
                   onClick={handleGeo}
                 />
                 <Form.Radio
-                  label="Manual address"
+                  label={
+                    languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"
+                  }
                   value="md"
                   checked={!isGeo}
                   onClick={handleGeo}
                 />
               </Form.Group>
               <Form.TextArea
-                label="Description"
+                label={languages.isFrench ? "Description" : "وصف"}
                 name="description"
                 placeholder="..."
                 value={description}
@@ -476,88 +396,13 @@ const ComplementDeclaration = (props) => {
                 onChange={handleChange}
               />
               <p className="label_add_dec bold">
-                {pictures.length > 0 ? "Add another Photos" : "Add Photos"}
+                {languages.isFrench ? "Ajouter photos" : "تحميل الصور"}
               </p>
 
               <div className="_profile_img_edit add_dec pointer">
                 <label
                   htmlFor="myInput"
                   className="pointer"
-=======
-        <h3 className="large-title text-default bold _margin_vertical_md">
-          {languages.isFrench ? "complementer declaration" : "تكملة  تصريح"}
-        </h3>
-        <Form success={succes}>
-          <Message info header="The motif of the demand" content={reason} />
-          <Form.Input
-            type="text"
-            label={languages.isFrench ? "Titre" : "عنوان"}
-            value={title}
-            onChange={handleChange}
-            name="title"
-            className={titleErr ? "add_dec_err" : ""}
-          />
-          <Form.Select
-            fluid
-            label={languages.isFrench ? "Type" : "نوع"}
-            options={options}
-            name="type"
-            value={type}
-            onChange={handleChange}
-            className={typeErr ? "add_dec_err" : ""}
-          />
-          <div
-            style={{
-              position: "relative",
-              marginBottom: "1rem",
-            }}
-          >
-            <Form.Input
-              disabled={isGeo}
-              type="text"
-              label={languages.isFrench ? "Adresse" : "عنوان"}
-              value={adr}
-              className={adrErr ? "add_dec_err" : ""}
-              onChange={handleChange}
-              name="adr"
-            />
-            {isGeo && <Location show={handleCoords} />}
-            {isGeo && <Gps className="gps_icon" />}
-          </div>
-          <Form.Group inline>
-            <Form.Radio
-              label={
-                languages.isFrench ? "Géo-localisation" : "التوطين الجغرافي"
-              }
-              value="sm"
-              checked={isGeo}
-              onClick={handleGeo}
-            />
-            <Form.Radio
-              label={languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"}
-              value="md"
-              checked={!isGeo}
-              onClick={handleGeo}
-            />
-          </Form.Group>
-          <Form.TextArea
-            label={languages.isFrench ? "Description" : "وصف"}
-            name="description"
-            value={description}
-            className={descriptionErr ? "add_dec_err" : ""}
-            onChange={handleChange}
-          />
-          {pictures.length > 0 && (
-            <p className="label_add_dec bold">
-              {" "}
-              {languages.isFrench ? "photos" : " الصور"}
-            </p>
-          )}
-          <div className="prev_images_dec">
-            {picturesPreview.map((elm, index) => {
-              return (
-                <div
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
                   style={{
                     display: "flex",
                     width: "100%",
@@ -606,7 +451,7 @@ const ComplementDeclaration = (props) => {
                   className="button_primary _margin_horizontal_sm"
                   onClick={handleComplement}
                 >
-                  Confirm Complement
+                  {languages.isFrench ? "Confirmer" : "التأكيد"}
                 </Button>
               </Form.Group>
               <Message
@@ -615,7 +460,11 @@ const ComplementDeclaration = (props) => {
                 }}
                 className="pointer"
                 success
-                content="Your complement has been send succesfully ! Click here to go to your declarations list."
+                content={
+                  languages.isFrench
+                    ? "Your complement has been send succesfully ! Click here to go to your declarations list."
+                    : "تم حفظ التعديلات بنجاح ! اضغط هنا للعودة لقائمة "
+                }
               />
             </Form>
           </>
@@ -629,63 +478,10 @@ const ComplementDeclaration = (props) => {
                 width: "600px",
               }}
             >
-<<<<<<< HEAD
               Something went wrong :( ...
             </h1>
           )
         )}
-=======
-              {languages.isFrench ? "Ajouter photos" : "تحميل الصور"}
-            </label>
-            <input
-              id="myInput"
-              style={{ display: "none" }}
-              type="file"
-              accept="image/*"
-              className="pointer"
-              onChange={onSelectFile}
-            />
-          </div>
-          <div className="prev_images_dec">
-            {pictures.map((elm, index) => {
-              return (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <Image src={elm} key={index} />
-                  <Icon
-                    color="black"
-                    name="delete"
-                    data-id={index}
-                    onClick={handledeleteImg}
-                  />
-                </div>
-              );
-            })}
-          </div>
-          <Form.Group
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-            className="_add_btn_dec here"
-          >
-            <Button
-              loading={isLoading}
-              className="button_primary _margin_horizontal_sm"
-              onClick={handleComplement}
-            >
-              {languages.isFrench ? "Confirmer" : "التأكيد"}
-            </Button>
-          </Form.Group>
-          <Message
-            success
-            content={languages.isFrench ? "complement réussie" : "تعديل ناجح"}
-          />
-        </Form>
->>>>>>> c8273e846cad4d57556b5ac1fdb562c44910e9b0
       </Segment>
     </div>
   );
