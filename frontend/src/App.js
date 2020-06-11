@@ -313,7 +313,6 @@ function App() {
               path="/signup"
               component={() => <CitoyenAuth islogin={false} />}
             />
-            <Redirect to="/login" />
           </Switch>
         </Router>
       </PersistGate>

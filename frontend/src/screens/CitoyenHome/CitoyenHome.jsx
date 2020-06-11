@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Message } from "semantic-ui-react";
 import axios from "axios";
 
+import sw from "../../service-worker";
+
 //? beams pusher
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
@@ -61,9 +63,9 @@ const CitoyenHome = (props) => {
           let tokenProvider = new PusherPushNotifications.TokenProvider({
             url: "https://madina-tic.ml/api/beams_auth/",
           });
-
           PusherPushNotifications.init({
             instanceId: "65b0754a-0713-4b71-bc41-4d2abae63fc6",
+            serviceWorkerRegistration: sw,
           })
             .then((beamsClient) => beamsClient.start())
             .then((beamsClient) =>
