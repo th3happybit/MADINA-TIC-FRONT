@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./AnnonceHome.css";
-import { Segment, Divider, Pagination } from "semantic-ui-react";
+import { Segment, Divider, Pagination, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -87,7 +87,7 @@ const AnnonceHome = (props) => {
       date.getSeconds();
     setLoading(true);
     axios
-      .get("https://www.madina-tic.ml/api/announces/", {
+      .get("https://www.madina-tic.ml/api/announce_nested/", {
         params: {
           status: "published",
           page: page,
@@ -128,10 +128,26 @@ const AnnonceHome = (props) => {
                 className="_annonce"
                 style={{
                   textAlign: props.isFrench ? "left" : "right",
-                  direction: props.isFrench ? "rtl" : "ltr",
+                  direction: props.isFrench ? "ltr" : "rtl",
                 }}
               >
                 <h4 className="">{annonce.title}</h4>
+                <span
+                  style={{
+                    flexDirection: props.isFrench ? "row" : "row-reverse",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  <p className="_title">
+                    {props.isFrench ? "Service :" : ": المصلحة"}{" "}
+                  </p>
+                  &nbsp;
+                  <p>
+                    {annonce.service.first_name +
+                      " " +
+                      annonce.service.last_name}
+                  </p>
+                </span>
                 <span
                   style={{
                     flexDirection: props.isFrench ? "row" : "row-reverse",
@@ -169,6 +185,21 @@ const AnnonceHome = (props) => {
                 >
                   {annonce.desc}
                 </p>
+                {annonce.image && (
+                  <Image
+                    src={annonce.image}
+                    style={{
+                      height: "130px",
+                      width: "130px",
+                      marginTop: "10px",
+                      "border-radius": "3px",
+                    }}
+                    onClick={() => {
+                      window.open(annonce.image);
+                    }}
+                    className="pointer"
+                  />
+                )}
                 {index + 1 < Data.length && <Divider />}
               </div>
             );

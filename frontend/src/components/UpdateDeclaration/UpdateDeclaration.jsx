@@ -100,6 +100,7 @@ const UpdateDeclaration = (props) => {
           geo_cord: adrGeo,
           address: adr,
           dtype: selectedType,
+          status : "not_validated",
           citizen: props.props.location.state.data.citizen,
           modified_at: new Date().toJSON().substr(0, 19) + "+01:00",
         },
@@ -122,6 +123,7 @@ const UpdateDeclaration = (props) => {
     sendP.map((image) => {
       if (!image.src) {
         upload = true;
+        console.log(image)
         formData.append("src", image);
         formData.append("filetype", "image");
         formData.append("declaration", props.props.location.state.data.did);
@@ -143,6 +145,7 @@ const UpdateDeclaration = (props) => {
           data: formData,
         })
         .then((res) => {
+          console.log(res)
           if (delP.length > 0) deleteFiles();
           else {
             setIsLoading(false);

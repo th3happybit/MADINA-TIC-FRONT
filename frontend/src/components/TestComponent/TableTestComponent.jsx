@@ -350,11 +350,8 @@ const TableTestComponent = (props) => {
                                 )}`,
                               },
                             });
-                            let body = {
-                              status: "archived",
-                            };
                             instance
-                              .patch(`${element.aid}/`, body)
+                              .delete(`${element.aid}/`)
                               .then((res) => {
                                 refresh();
                               })

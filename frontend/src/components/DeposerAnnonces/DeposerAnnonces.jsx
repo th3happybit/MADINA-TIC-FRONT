@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Image, Button, Message, Label } from "semantic-ui-react";
+import { Form, Image, Button, Message, Label, Icon } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,9 +20,47 @@ export default function DeposerAnnonces(props) {
   const [titleErr, setTitleErr] = useState(false);
   const [description, setDesctiption] = useState("");
   const [descriptionErr, setDescriptionErr] = useState(false);
+  const [image, setImage] = useState(null);
+  const [postImg, setPostImg] = useState(null);
+  const [imageErr, setimageErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [service, setSerivce] = useState(null);
 
+  function helper(str) {
+    return str < 10 ? "0" + str : str;
+  }
+  function TimeMake(dt) {
+    const time = dt.toLocaleTimeString();
+    return (
+      dt.getFullYear() +
+      "-" +
+      helper(dt.getMonth() + 1) +
+      "-" +
+      helper(dt.getDate()) +
+      "T" +
+      time + "+01:00"
+    );
+  }
+
+  const handledeleteImg = () => {
+    setimageErr(false);
+    setPostImg(null);
+    setImage(null);
+  };
+  const handleAddimage = (e) => {
+    let file = e.target.files[0];
+    if (
+      file &&
+      file.size > 0 &&
+      (file.type === "image/png" ||
+        file.type === "image/jpg" ||
+        file.type === "image/jpeg")
+    ) {
+      const objectUrl = URL.createObjectURL(file);
+      setImage(objectUrl);
+      setPostImg(file);
+    } else setimageErr(true);
+  };
   const handle_Validation = () => {
     let err = false;
     if (!startDate) {
@@ -56,32 +94,32 @@ export default function DeposerAnnonces(props) {
   };
   const AddAnnonce = () => {
     setIsLoading(true);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("start_at", TimeMake(startDate));
+    formData.append("end_at", TimeMake(endDate));
+    formData.append("status", "not_validated");
+    formData.append("desc", description);
+    formData.append("service", service);
+    if (postImg) formData.append("image", postImg);
     axios
       .create({
         headers: {
           post: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
           },
         },
       })
       .request("https://www.madina-tic.ml/api/announces/", {
         method: "post",
-        data: {
-          title: title,
-          start_at: startDate,
-          end_at: endDate,
-          status: "not_validated",
-          desc: description,
-          service,
-        },
+        data: formData,
       })
       .then((res) => {
         setIsLoading(false);
         setSucces(true);
       })
       .catch((err) => {
-        console.log(err);
         Object.entries(err.response.data).map((elm) => {
           switch (elm[0]) {
             case "title":
@@ -128,7 +166,6 @@ export default function DeposerAnnonces(props) {
         },
       })
       .then((res) => {
-        console.log(res);
         setSerivce(res.data.uid);
       });
   }, []);
@@ -258,6 +295,43 @@ export default function DeposerAnnonces(props) {
               }
             }
           />
+          <p className="label_add_dec bold">Ajouter une photo</p>
+          <div className="_profile_img_edit add_dec pointer">
+            <label
+              htmlFor="myInput"
+              className="pointer"
+              style={{
+                display: "flex",
+                width: "100%",
+              }}
+            >
+              Ajouter
+            </label>
+          </div>
+          <input
+            id="myInput"
+            style={{ display: "none" }}
+            type="file"
+            accept="image/*"
+            className="pointer"
+            onChange={handleAddimage}
+          />
+          {image && (
+            <div
+              style={{
+                position: "relative",
+                width: "140px",
+              }}
+            >
+              <Image src={image} style={{ width: "130px", height: "130px" }} />
+              <Icon
+                className="delete_icon"
+                color="black"
+                name="delete"
+                onClick={handledeleteImg}
+              />
+            </div>
+          )}
           <Form.Group
             style={{
               display: "flex",

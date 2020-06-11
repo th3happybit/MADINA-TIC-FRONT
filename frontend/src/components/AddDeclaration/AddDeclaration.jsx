@@ -222,7 +222,6 @@ const AddDeclaration = (props) => {
       });
   };
   const handleAdd = () => {
-    console.log("ee");
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
       setSucces(false);
