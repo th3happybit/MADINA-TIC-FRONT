@@ -138,7 +138,7 @@ const DeclarationStats = (props) => {
           <Button
             name="critical"
             style={{
-              background: "var(--primary)",
+              background: "red",
             }}
             onClick={handleClicked}
           >
@@ -146,9 +146,7 @@ const DeclarationStats = (props) => {
           </Button>
           <Button
             name="normal"
-            style={{
-              background: "var(--green)",
-            }}
+            color="green"
             onClick={handleClicked}
           >
             Normal
@@ -156,7 +154,7 @@ const DeclarationStats = (props) => {
           <Button
             name="low"
             style={{
-              background: "var(--secondary)",
+              background: "var(--primary)",
             }}
             onClick={handleClicked}
           >
@@ -165,7 +163,7 @@ const DeclarationStats = (props) => {
           <Button
             name="important"
             style={{
-              background: "var(--red)",
+              background: "yellow",
             }}
             onClick={handleClicked}
           >

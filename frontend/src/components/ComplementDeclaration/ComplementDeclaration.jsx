@@ -272,7 +272,7 @@ const ComplementDeclaration = (props) => {
             }
           )
           .then((res) => {
-            if (res.data.status === "lack_of_infos") {
+            if (res.data.status === "lack_of_info") {
               setSelectedType(res.data.dtype);
               setTitle(res.data.title);
               setDesctiption(res.data.desc);

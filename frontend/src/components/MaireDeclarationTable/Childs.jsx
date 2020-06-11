@@ -20,6 +20,7 @@ export default function Childs(props) {
     if (isChecked) {
       let body = {
         parent_declaration: parent,
+        status: props.elm.status,
       };
       instance
         .patch(`declarations/${props.elm.did}/`, body)
@@ -28,6 +29,7 @@ export default function Childs(props) {
     } else {
       let body = {
         parent_declaration: null,
+        status: props.elm.status,
       };
       instance
         .patch(`declarations/${props.elm.did}/`, body)

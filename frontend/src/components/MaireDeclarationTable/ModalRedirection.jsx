@@ -7,7 +7,6 @@ import {
   ModalContent,
   Select,
   Radio,
-  Form,
   Message,
 } from "semantic-ui-react";
 
@@ -44,11 +43,13 @@ const Modalredirect = (props) => {
       setPriorityErr(true);
     }
     if (!error) {
-      let dt = props.data;
+      let dt = {};
       dt["service"] = service;
       dt["validated_at"] = new Date().toJSON().substr(0, 19) + "+01:00";
       dt["priority"] = priority;
-      props.validate(dt);
+      props.validate(dt, props.data.did);
+      if (props.data.children)
+        props.data.children.map((elm) => props.validate(dt, elm.did));
     }
   };
   const handleclose = () => {

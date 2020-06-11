@@ -39,19 +39,19 @@ const MaireRow = (props) => {
   } = props.element;
   const handleClick = () => {
     setIsChecked((prevState) => !prevState);
+    const data = {did, status}
     if (!parent) {
-      props.add_parent(did);
+      props.add_parent(data);
       setOpenParent(true);
     }
     if (parent) {
-      props.add_childs(did);
+      props.add_childs(data);
     }
   };
-  console.log({ childs, parent });
 
   return (
     <Table.Row
-      disabled={parent && did === parent}
+      disabled={parent && did === parent.did}
       key={props.index}
       className={
         isRegroup ? (isChecked ? "activated_row" : "normal") : "normal"

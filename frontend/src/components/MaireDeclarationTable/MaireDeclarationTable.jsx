@@ -130,6 +130,11 @@ const MaireDeclarationTable = (props) => {
                 element={element}
                 index={index}
                 isRegroup={isRegroup}
+                validateDeclaration={props.validateDeclaration}
+                rejectDeclaration={props.rejectDeclaration}
+                demandComplement={props.demandComplement}
+                archiveDeclaration={props.archiveDeclaration}
+                maire={props.maire}
               />
             );
           })}

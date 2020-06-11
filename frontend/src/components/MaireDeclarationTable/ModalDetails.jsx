@@ -6,7 +6,6 @@ import {
   Image,
   Transition,
   Popup,
-  Checkbox,
 } from "semantic-ui-react";
 
 import Childs from "./Childs";
@@ -33,7 +32,6 @@ const ModalD = (props) => {
       .get(`declarations/?parent_declaration=${data.did}`)
       .then((res) => {
         setChilds(res.data.results);
-        console.log({ rrr: res });
       })
       .catch((err) => console.log(err.response));
   }, []);
@@ -73,7 +71,6 @@ const ModalD = (props) => {
         break;
     }
   }
-  console.log({ rd: childs });
   useEffect(() => {
     if (Maire)
       if (props.data.attachements.length > 0) {
@@ -138,7 +135,7 @@ const ModalD = (props) => {
                     <p className="_image">Images</p>
                   )
                 : null}
-              <p className="chlp">{childs.length > 0 ? "Childs" : null}</p>
+              {childs.length > 0 && <p className="chlp">"Childs"</p>}
             </div>
             <div className="_infos_section">
               <p>{data.fullname ? data.fullname : null}</p>
@@ -231,6 +228,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   validate={props.validate}
                   services={props.data.services}
@@ -246,6 +244,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   complement={props.complement}
                   close={handleclose}
@@ -260,6 +259,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   reject={props.reject}
                   close={handleclose}
@@ -276,6 +276,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   archive={props.archive}
                   close={handleclose}

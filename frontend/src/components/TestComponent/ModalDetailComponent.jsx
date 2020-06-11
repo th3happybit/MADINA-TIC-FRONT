@@ -26,6 +26,7 @@ const ModalDetailComponent = (props) => {
   const [declaration, setDeclaration] = useState("");
   const [files, setFiles] = useState([]);
   const [motif, setMorif] = useState(null);
+  const [children, setChildren] = useState([]);
 
   const handleopen = () => {
     setOpen(true);
@@ -57,7 +58,7 @@ const ModalDetailComponent = (props) => {
         refresh();
       });
   };
-  const updateDecStatus = (dec) => {
+  const updateDecStatus = (dec, id) => {
     axios
       .create({
         headers: {
@@ -68,13 +69,11 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/declarations/${declaration.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${id}/`,
         method: "patch",
         data: dec,
       })
-      .then((res) => {
-        refresh();
-      })
+      .then((res) => {})
       .catch((err) => {});
   };
   const updateRepStatus = (rep, dec) => {
@@ -93,8 +92,12 @@ const ModalDetailComponent = (props) => {
         data: rep,
       })
       .then((res) => {
-        if (dec) updateDecStatus(dec);
-        else refresh();
+        if (dec) {
+          updateDecStatus(dec, data.declaration);
+          if (children.length > 0)
+            children.map((elm) => updateDecStatus(dec, elm.did));
+          refresh();
+        } else refresh();
       })
       .catch((err) => {
         console.log(err);
@@ -141,10 +144,6 @@ const ModalDetailComponent = (props) => {
       validated_at: now,
     };
     const dec = {
-      citizen: declaration.citizen,
-      dtype: declaration.dtype,
-      desc: declaration.desc,
-      title: declaration.title,
       status: "treated",
     };
     updateRepStatus(report, dec);
@@ -208,8 +207,20 @@ const ModalDetailComponent = (props) => {
         .then((res) => {
           setDeclaration(res.data);
         })
-        .catch((err) => {
-          console.log(err.reponse);
+        .catch((err) => {});
+
+      axios
+        .get(`https://www.madina-tic.ml/api/declarations/`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+          params: {
+            parent_declaration: data.declaration,
+          },
+        })
+        .then((res) => {
+          setChildren(res.data.results);
         });
     }
     //? SECOND REQUEST FOR FILES
@@ -238,9 +249,7 @@ const ModalDetailComponent = (props) => {
             setFiles(tempArr);
           }
         })
-        .catch((err) => {
-          console.log({ DocErr: err.reponse });
-        });
+        .catch((err) => {});
   }, [data]);
   return (
     <Modal
