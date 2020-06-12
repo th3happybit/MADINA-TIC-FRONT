@@ -4,6 +4,7 @@
 }
 ._sidebar.active.citoyen {
   left: 0px;
+  padding : 1.5rem 1rem;
 }
 .profile_citoyen_mobile_x {
   display: flex;
@@ -20,4 +21,8 @@
 }
 .profile_citoyen_mobile_x {
   cursor: pointer;
+}
+
+._sidebar_list.rtl{
+  text-align: right;
 }

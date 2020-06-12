@@ -320,7 +320,7 @@ const AddDeclaration = (props) => {
     }
   };
   return (
-    <div className="container_add_dec">
+    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"}`}>
       <div className="_add_dec">
         <h3 className="large-title text-default bold _margin_vertical_md">
           {languages.isFrench ? "Ajouter une déclaration" : "إضافة تصريح"}
@@ -364,21 +364,21 @@ const AddDeclaration = (props) => {
           <Form.Group inline>
             <Form.Radio
               label={
-                languages.isFrench ? "Géo-localisation" : "التوطين الجغرافي"
+                languages.isFrench ? "Géo-localisation" : "الإحداثيات الجغرافية"
               }
               value="sm"
               checked={isGeo}
               onClick={handleGeo}
             />
             <Form.Radio
-              label={languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"}
+              label={languages.isFrench ? "Adresse manuelle" : "عنوان يدوي"}
               value="md"
               checked={!isGeo}
               onClick={handleGeo}
             />
           </Form.Group>
           <Form.TextArea
-            label={languages.isFrench ? "Description" : "وصف"}
+            label={languages.isFrench ? "Description" : "التفاصيل"}
             name="description"
             placeholder="..."
             value={description}

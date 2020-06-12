@@ -15,7 +15,7 @@ import { languages } from "../../language";
 
 const ComplementDeclaration = (props) => {
   let history = useHistory();
-
+  const { languages } = props;
   const [titleErr, setTitleErr] = useState(false);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
@@ -323,7 +323,7 @@ const ComplementDeclaration = (props) => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
   return (
-    <div className="container_add_dec">
+    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"}`}>
       <Segment className="_add_dec" loading={loadingPage}>
         {!nullData && notLack ? (
           <>
@@ -331,7 +331,15 @@ const ComplementDeclaration = (props) => {
               {languages.isFrench ? "complementer declaration" : "تكملة  تصريح"}
             </h3>
             <Form success={succes}>
-              <Message info header="The motif of the demand" content={reason} />
+              <Message
+                info
+                header={
+                  languages.isFrench
+                    ? "The motif of the demand"
+                    : "سبب طلب التكملة"
+                }
+                content={reason}
+              />
               <Form.Input
                 type="text"
                 label={languages.isFrench ? "Titre" : "عنوان"}
@@ -379,24 +387,23 @@ const ComplementDeclaration = (props) => {
                   onClick={handleGeo}
                 />
                 <Form.Radio
-                  label={
-                    languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"
-                  }
+                  label={languages.isFrench ? "Adresse manuelle" : "عنوان يدوي"}
                   value="md"
                   checked={!isGeo}
                   onClick={handleGeo}
                 />
               </Form.Group>
               <Form.TextArea
-                label={languages.isFrench ? "Description" : "وصف"}
+                label={languages.isFrench ? "Description" : "التفاصيل"}
                 name="description"
                 placeholder="..."
                 value={description}
                 className={descriptionErr ? "add_dec_err" : ""}
                 onChange={handleChange}
               />
-              <p className="label_add_dec bold">
-                {languages.isFrench ? "Ajouter photos" : "تحميل الصور"}
+              <p className="label_add_dec bold" style={{ margin: "1rem 0" }}>
+                {languages.isFrench ? "Ajouter photos" : "تحميل الصور"} (
+                {languages.isFrench ? "optionnel" : "اختياري"})
               </p>
 
               <div className="_profile_img_edit add_dec pointer">
@@ -408,7 +415,7 @@ const ComplementDeclaration = (props) => {
                     width: "100%",
                   }}
                 >
-                  Upload
+                  {languages.isFrench ? "Ajouter" : "تحميل"}
                 </label>
                 <input
                   id="myInput"

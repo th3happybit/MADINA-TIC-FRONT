@@ -45,58 +45,56 @@ const CitoyenDeclarationTable = (props) => {
   function getMonth(month) {
     switch (month) {
       case "01":
-        return "January";
+        return props.language.isFrench ? "January" : "جوان";
       case "02":
-        return "February";
+        return props.language.isFrench ? "February" : "فيفري";
       case "03":
-        return "March";
+        return props.language.isFrench ? "March" : "مارس";
       case "04":
-        return "April";
+        return props.language.isFrench ? "April" : "أفريل";
       case "05":
-        return "May";
+        return props.language.isFrench ? "May" : "ماي";
       case "06":
-        return "June";
+        return props.language.isFrench ? "June" : "جوان";
       case "07":
-        return "July";
+        return props.language.isFrench ? "July" : "جويلية";
       case "08":
-        return "August";
+        return props.language.isFrench ? "August" : "أوت";
       case "09":
-        return "September";
+        return props.language.isFrench ? "September" : "سبتمبر";
       case "10":
-        return "October";
+        return props.language.isFrench ? "October" : "أكتوبر";
       case "11":
-        return "November";
+        return props.language.isFrench ? "November" : "نوفمبر";
       case "12":
-        return "December";
+        return props.language.isFrench ? "December" : "ديسمبر";
       default:
         break;
     }
   }
 
   return (
-    <Table striped>
+    <Table striped className={props.language.isFrench ? "" : "_table_rtl"}>
       <Table.Header className="table_header">
         <Table.Row>
-          <Table.HeaderCell width={2}>Title</Table.HeaderCell>
+          <Table.HeaderCell width={2}>
+            {props.language.isFrench ? "Title" : "العنوان"}
+          </Table.HeaderCell>
           <Table.HeaderCell width={2} onClick={handlesorttype}>
             <p className="sort_field pointer">
-              Type
-              {sortType ? (
-                <Icon name="sort down" />
-              ) : (
-                <Icon name="sort" />
-              )}
+              {props.language.isFrench ? "Type" : "النوع"}
+              {sortType ? <Icon name="sort down" /> : <Icon name="sort" />}
             </p>
           </Table.HeaderCell>
           <Table.HeaderCell width={3} id="address_h">
-            Address
+            {props.language.isFrench ? "Address" : "العنوان"}
           </Table.HeaderCell>
           <Table.HeaderCell width={3} id="geo_loc_h">
-            Geo-Coordinates
+            {props.language.isFrench ? "Geo-Coordinates" : "الإحداثيات"}
           </Table.HeaderCell>
           <Table.HeaderCell width={2} onClick={handlesortdate}>
             <p className="sort_field pointer">
-              Depo. Date
+              {props.language.isFrench ? "Depo. Date" : "تاريخ الإضافة"}
               {sortDate ? (
                 <Icon name={sortDate === "desc" ? "sort down" : "sort up"} />
               ) : (
@@ -104,8 +102,8 @@ const CitoyenDeclarationTable = (props) => {
               )}
             </p>
           </Table.HeaderCell>
-          <Table.HeaderCell width={3} textAlign={"center"}>
-            Manage
+          <Table.HeaderCell width={2} textAlign={"center"}>
+            {props.language.isFrench ? "Manage" : "إدارة"}
           </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -148,7 +146,9 @@ const CitoyenDeclarationTable = (props) => {
                 <Button.Group className="manage_button">
                   <Link to={{ pathname: "/infos", state: { id: did } }}>
                     <Popup
-                      content="Infos"
+                      content={
+                        props.language.isFrench ? "Infos" : "معلومات إضافية"
+                      }
                       trigger={
                         <Button
                           icon
@@ -163,11 +163,14 @@ const CitoyenDeclarationTable = (props) => {
                   <Link to={{ pathname: "/infos", state: { id: did } }}>
                     <Button
                       className="shadow btn_account_detail pointer primary _show_on_mobile"
-                      content="Details"
+                      content={
+                        props.language.isFrench ? "Details" : "معلومات إضافية"
+                      }
                     />
                   </Link>
                 </Button.Group>
-                {Filter === "New Declarations" && (
+                {(Filter === "Nouvelles déclarations" ||
+                  Filter === "تصريحات جديدة") && (
                   <Link
                     to={{
                       pathname: "/update/declaration/",
@@ -176,7 +179,7 @@ const CitoyenDeclarationTable = (props) => {
                   >
                     <Button.Group className="manage_button">
                       <Popup
-                        content="Edit"
+                        content={props.language.isFrench ? "Modifier" : "تعديل"}
                         trigger={
                           <Button
                             icon
@@ -190,12 +193,13 @@ const CitoyenDeclarationTable = (props) => {
                       <Button
                         color={"black"}
                         className="shadow btn_account_detail pointer _show_on_mobile"
-                        content="Edit"
+                        content={props.language.isFrench ? "Modifier" : "تعديل"}
                       />
                     </Button.Group>
                   </Link>
                 )}
-                {Filter === "Lack of infos" && (
+                {(Filter === "Manque d'informations" ||
+                  Filter === "معلومات غير كافية") && (
                   <Link
                     to={{
                       pathname: "/complement/declaration",
@@ -204,7 +208,9 @@ const CitoyenDeclarationTable = (props) => {
                   >
                     <Button.Group className="manage_button">
                       <Popup
-                        content="Add Infos"
+                        content={
+                          props.language.isFrench ? "Ajouter Infos" : "تكملة"
+                        }
                         trigger={
                           <Button
                             icon
@@ -218,15 +224,24 @@ const CitoyenDeclarationTable = (props) => {
                       <Button
                         color={"green"}
                         className="shadow btn_account_detail pointer _show_on_mobile"
-                        content="Add infos"
+                        content={
+                          props.language.isFrench ? "Ajouter infos" : "تكملة"
+                        }
                       />
                     </Button.Group>
                   </Link>
                 )}
-                {(Filter === "New Declarations" ||
-                  Filter === "Refused" ||
-                  Filter === "Lack of infos") && (
-                  <ModalDelete onConfirm={handledelete} did={did} />
+                {(Filter === "Nouvelles déclarations" ||
+                  Filter === "Refusées" ||
+                  Filter === "Manque d'informations" ||
+                  Filter === "تصريحات جديدة" ||
+                  Filter === "مرفوضة" ||
+                  Filter === "معلزمات غير كافية") && (
+                  <ModalDelete
+                    onConfirm={handledelete}
+                    did={did}
+                    isArabe={props.language.isFrench ? false : true}
+                  />
                 )}
               </Table.Cell>
             </Table.Row>

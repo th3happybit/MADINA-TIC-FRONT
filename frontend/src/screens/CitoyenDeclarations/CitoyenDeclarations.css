@@ -15,6 +15,11 @@
   background-color: white !important;
 }
 
+._main_declaration.rtl ._main_declaration_right {
+  margin-right: 18rem !important;
+  margin-left: auto !important;
+}
+
 ._main_declaration .row {
   display: flex;
   justify-content: space-between;
@@ -30,6 +35,37 @@
   display: flex;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+._main_declaration ._data_section.rtl {
+  direction: rtl;
+}
+
+._main_declaration
+  ._data_section.rtl
+  .ui.table
+  thead
+  tr:first-child
+  > th:last-child {
+  border-radius: 0.28571429rem 0 0;
+}
+._main_declaration
+  ._data_section.rtl
+  .ui.table
+  thead
+  tr:first-child
+  > th:first-child {
+  border-radius: 0 0.28571429rem 0 0;
+}
+
+._table_rtl td,
+._table_rtl tr {
+  direction: rtl;
+  text-align: right;
+}
+
+._table_rtl #manage_cell:last-child {
+  padding-right: 0 !important;
 }
 
 ._main_declaration .segment {
@@ -83,12 +119,17 @@
   border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
 }
 
+._main_declaration ._data_section.rtl .citoyen_declar_pagin {
+  right: 2%;
+}
+
 ._main_declaration .ui.loading.segment:before {
   background: rgba(247, 249, 251, 0.9);
 }
 
 .show_mobile {
   display: none !important;
+  margin-bottom: 20px;
 }
 
 ._main_declaration > .search input {
@@ -161,6 +202,7 @@ td:hover > .full_text {
     padding: 1.5rem !important;
   }
 
+  ._main_declaration.rtl ._main_declaration_right,
   ._main_declaration_right {
     margin-top: 1rem !important;
     margin-bottom: 2rem !important;
@@ -211,6 +253,11 @@ td:hover > .full_text {
     margin-top: 10px !important;
   }
 
+  ._main_declaration_right .filter_declaration.ui.labeled.icon.button {
+    padding-right: 0 !important;
+    padding-left: 2.6em !important;
+  }
+
   ._main_declaration_right .filter_declaration > i {
     color: white !important;
     background-color: var(--primary) !important;
@@ -246,6 +293,9 @@ td:hover > .full_text {
       bottom: 0rem !important;
       left: 0 !important;
     }
+    ._table_rtl #manage_cell:first-child {
+      padding-right: 12px !important;
+    }
   }
 
   @media (max-width: 472px) {
@@ -260,6 +310,11 @@ td:hover > .full_text {
     ._main_declaration .row {
       flex-direction: column;
       margin-bottom: 0px;
+    }
+    ._main_declaration .row.reverse {
+      flex-direction: column;
+      margin-bottom: 0px;
+      direction: rtl;
     }
 
     ._main_declaration_right .search .input {

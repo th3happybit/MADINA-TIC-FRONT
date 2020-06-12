@@ -9,9 +9,26 @@
   color: var(--blue_darker);
   padding: 2rem 0;
   margin: 1rem;
-  margin-left: 0rem !important;
+  margin-left: 0;
   z-index: 1;
 }
+
+._citoyen_sidebar.rtl {
+  right: 0;
+  margin-right: 0;
+  margin-left: 1rem;
+}
+
+._citoyen_sidebar.rtl .file.text.item {
+  display: flex;
+  flex-direction: row-reverse
+}
+
+._citoyen_sidebar.rtl .file.text.item .content {
+  text-align: right;
+  padding-right: 20px;
+}
+
 .file.text,
 .file.text .icon {
   color: rgb(87, 98, 113) !important;
@@ -60,6 +77,10 @@
   border-radius: 0 22px 22px 0px;
   padding: 0.75rem 2rem !important;
   cursor: pointer;
+}
+
+._citoyen_sidebar.rtl .item{
+  border-radius: 22px 0 0 22px !important;
 }
 .sidebar_list_cit .item:hover {
   background-color: #f1f3f4;

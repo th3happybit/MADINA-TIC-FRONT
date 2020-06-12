@@ -42,7 +42,9 @@ const CitoyenDeclarations = (props) => {
     setsortDate(null);
     setPage(1);
     setsortType("asc");
-    props.language.isFrench ? setsortMobile("Par type") : setsortMobile("حسب النوع");
+    props.language.isFrench
+      ? setsortMobile("Par type")
+      : setsortMobile("حسب النوع");
   };
   const handlemobileNewFirst = () => {
     setsortType(null);
@@ -63,7 +65,9 @@ const CitoyenDeclarations = (props) => {
   const handleRandomSort = () => {
     setsortType(null);
     setsortType(null);
-    props.language.isFrench ? setsortMobile("Aléatoire") : setsortMobile("عشوائي");
+    props.language.isFrench
+      ? setsortMobile("Aléatoire")
+      : setsortMobile("عشوائي");
   };
   const handle_sort_type = () => {
     setsortDate(null);
@@ -232,7 +236,9 @@ const CitoyenDeclarations = (props) => {
   }, [activeFilter, term, page, sortType, sortDate, types, refresh]);
 
   return (
-    <div className="_main_declaration">
+    <div
+      className={`_main_declaration ${props.language.isFrench ? "" : "rtl"}`}
+    >
       <Segment
         className="_main_declaration_right shadow"
         loading={searchLoading ? false : Loading}
@@ -438,26 +444,29 @@ const CitoyenDeclarations = (props) => {
                     onClick={handlemobileNewFirst}
                   />
                   <Dropdown.Item
-                    text={props.language.isFrench ? "Par date (Desc)" : "الأقدم"}
+                    text={
+                      props.language.isFrench ? "Par date (Desc)" : "الأقدم"
+                    }
                     onClick={handlemobileOldFirst}
                   />
                 </Dropdown.Menu>
               </Dropdown>
             </div>
             {Data.length > 0 ? (
-              <div className="_data_section">
-                <DecTable
-                  data={Data}
-                  filter={activeFilter}
-                  refresh={getDeclarations}
-                  handlesortDate={handle_sort_date}
-                  handlesortType={handle_sort_type}
-                  sorttype={sortType}
-                  sortdate={sortDate}
-                  types={types}
-                  handledelete={deleteDeclaration}
-                />
-                {pages > 1 && (
+              <div className={`_data_section ${props.language.isFrench ? "" : "rtl"}`}>
+                  <DecTable
+                    data={Data}
+                    filter={activeFilter}
+                    refresh={getDeclarations}
+                    handlesortDate={handle_sort_date}
+                    handlesortType={handle_sort_type}
+                    sorttype={sortType}
+                    sortdate={sortDate}
+                    types={types}
+                    handledelete={deleteDeclaration}
+                    language={props.language}
+                  />
+                {pages > 0 && (
                   <Pagination
                     className="citoyen_declar_pagin"
                     boundaryRange={0}
@@ -465,7 +474,7 @@ const CitoyenDeclarations = (props) => {
                     onPageChange={onChange}
                     firstItem={null}
                     lastItem={null}
-                    totalPages={pages}
+                    totalPages={5}
                     pointing
                     secondary
                   />
@@ -475,7 +484,9 @@ const CitoyenDeclarations = (props) => {
               perm && (
                 <>
                   <p class="zero-data">
-                    Sorry No declarations to display in this section
+                    {props.language.isFrench
+                      ? "Désolé, cette section ne contient aucun informations"
+                      : "للأسف، هذه الصفحة لا تحتوي على معلومات"}
                   </p>
                 </>
               )

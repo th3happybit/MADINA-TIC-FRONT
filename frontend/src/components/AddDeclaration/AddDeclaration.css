@@ -7,6 +7,9 @@
   padding: 2rem;
   margin: 2rem 0;
 }
+.container_add_dec.rtl {
+  direction: rtl;
+}
 .container_add_dec {
   max-width: 70%;
   margin-left: auto;
@@ -63,6 +66,9 @@
 }
 ._add_dec .form .input input {
   padding: 1.5rem;
+}
+.container_add_dec.rtl .form input {
+  text-align: right;
 }
 .prev_images_dec .icon {
   position: absolute;

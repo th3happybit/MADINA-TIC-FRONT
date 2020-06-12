@@ -141,10 +141,10 @@ const MaireDeclarations = (props) => {
       default:
         break;
     }
-
+    pa["has_parent"] = false
     axios
       .get(
-        "https://www.madina-tic.ml/api/declaration_nested/?parent_declaration__isnull=True",
+        "https://www.madina-tic.ml/api/declaration_nested/",
         {
           params: pa,
           headers: {
@@ -154,7 +154,6 @@ const MaireDeclarations = (props) => {
         }
       )
       .then((res) => {
-        console.log(res);
         setData(res.data.results);
         getTypes();
         setLoading(false);
