@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200&display=swap");
+
 @font-face {
   font-family: "Segoe_UI";
   src: url("./assets/fonts/Segoe\ UI.woff");
@@ -20,6 +24,15 @@
   --dark-gray: #595959;
   --yellow: #ffcc00;
   --green: #1eb85c;
+  --main_dark: #18191a;
+  --second_dark: #242526;
+  --primary_text_dark: #e4e6eb;
+  --secondary_text_dark: #b0b3b8;
+  --hover_dark: rgba(176, 179, 184, 0.1);
+  --background_dark: #3a3b3c;
+  --primary_dark: #4ba3c7;
+  --secondary_dark: #c58267;
+  --loading_dark: rgba(150, 150, 150, 0.5);
 }
 body {
   background-color: #f7f9fb;
@@ -37,6 +50,25 @@ input,
 label,
 button {
   margin: 0;
+}
+
+p,
+span,
+.button,
+label,
+td,
+th,
+input::placeholder,
+input,
+a {
+  font-weight: 600 !important;
+  font-family: "Poppins", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Raleway", sans-serif;
 }
 a {
   text-decoration: none !important;
@@ -73,6 +105,7 @@ a {
 }
 .extra-text {
   font-size: 26px !important;
+  font-family: "Raleway", sans-serif;
 }
 .large-title {
   font-size: 24px !important;
