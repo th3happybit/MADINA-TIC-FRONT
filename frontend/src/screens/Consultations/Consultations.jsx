@@ -18,18 +18,16 @@ const Consultations = () => {
       ]}
       detail={[
         { text: "Title Report", value: "title" },
-        { text: "Description", value: "desc" },
         { text: "Created on", value: "created_on" },
         { text: "Modified on", value: "modified_at" },
         { text: "Validated on", value: "validated_at" },
+        { text: "Description", value: "desc" },
       ]}
       permission="self" //? all or self
       status={[
         "not_validated",
         "lack_of_info",
-        "work_not_finished",
         "validated",
-        "refused",
         "archived",
       ]}
     />

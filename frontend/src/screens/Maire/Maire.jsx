@@ -12,7 +12,11 @@ const Maire = (props) => {
   const [isLogin, setIsLogin] = useState(false);
   const [verified, setVerified] = useState(false);
   const [maire, setMaire] = useState(null);
+  const [image, setImage] = useState("");
 
+  const changeImage = (image) => {
+    setImage(image);
+  };
   useEffect(() => {
     if (localStorage.getItem("maire_token"))
       axios
@@ -55,7 +59,7 @@ const Maire = (props) => {
         <UserProvider value={dataContext}>
           {visible && <Backdrop click={handleHide} />}
           <MaireSideBar active={active} />
-          <HeaderMaire active={active} show={handleHide} />
+          <HeaderMaire active={active} show={handleHide} imageP={image} />
           <MaireHeaderSideBar
             visible={visible}
             active={active}
@@ -63,7 +67,7 @@ const Maire = (props) => {
           />
           <>
             {props.childComponent ? (
-              <props.childComponent maire={maire} />
+              <props.childComponent maire={maire} updateImageP={changeImage} />
             ) : (
               <div
                 style={{

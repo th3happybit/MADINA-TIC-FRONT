@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { List, Image } from "semantic-ui-react";
+import { List, Image, Radio } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import axios from "axios";
 import "./SidebarCitoyenMobile.css";
 
 const SidebarCitoyenMobile = (props) => {
-  const { fullname, image } = props;
+  const { fullname, image, isDark } = props;
   const history = useHistory();
 
   const handleLogout = () => {
@@ -33,13 +33,17 @@ const SidebarCitoyenMobile = (props) => {
   };
   return (
     <div
-      className={props.visible ? "_sidebar citoyen active" : "_sidebar citoyen"}
+      className={
+        props.visible
+          ? `_sidebar citoyen active ${isDark ? "dark" : ""}`
+          : `_sidebar citoyen ${isDark ? "dark" : ""}`
+      }
     >
       <div className="profile_citoyen_mobile_x">
         <Image src={image} />
         <p>{fullname}</p>
       </div>
-      <List className="_sidebar_list">
+      <List className={`_sidebar_list ${props.isFrench ? "" : "rtl"}`}>
         <List.Item>
           <Link
             to="/home"
@@ -53,6 +57,11 @@ const SidebarCitoyenMobile = (props) => {
           </Link>
         </List.Item>
         <List.Item>
+          <Link to="/add/declaration" className={"medium-text text-default"}>
+            {props.isFrench ? "Ajouter déclaration" : "إضافة تصريح"}
+          </Link>
+        </List.Item>
+        <List.Item>
           <Link
             to="/citoyen/declaration"
             className={
@@ -61,7 +70,7 @@ const SidebarCitoyenMobile = (props) => {
                 : "medium-text text-default"
             }
           >
-            {props.isFrench ? "déclarations" : "تصريحات"}
+            {props.isFrench ? "déclarations" : "التصريحات"}
           </Link>
         </List.Item>
         <List.Item>
@@ -73,7 +82,7 @@ const SidebarCitoyenMobile = (props) => {
                 : "medium-text text-default"
             }
           >
-            {props.isFrench ? "annonces" : "إعلانات"}
+            {props.isFrench ? "annonces" : "الإعلانات"}
           </Link>
         </List.Item>
         <List.Item>
@@ -85,7 +94,7 @@ const SidebarCitoyenMobile = (props) => {
                 : "medium-text text-default"
             }
           >
-            {props.isFrench ? "Notifications" : "إشعارات"}
+            {props.isFrench ? "Notifications" : "الإشعارات"}
           </Link>
         </List.Item>
       </List>
@@ -94,7 +103,7 @@ const SidebarCitoyenMobile = (props) => {
           className="_logout_button_header _margin_horizontal_md  button_primary  medium-text border-radius-bg pointer"
           onClick={handleLogout}
         >
-          Logout
+          {props.isFrench ? "Déconnecter" : "الخروج"}
         </p>
       </div>
     </div>

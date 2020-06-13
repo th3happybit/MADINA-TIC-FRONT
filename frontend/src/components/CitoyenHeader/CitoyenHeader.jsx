@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Search, Image, Button, Dropdown } from "semantic-ui-react";
+import {
+  Search,
+  Image,
+  Button,
+  Dropdown,
+  Radio,
+  Icon,
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
+import { ReactComponent as Logo } from "../../assets/images/logo_vectorized.svg";
+import { ReactComponent as Logo_dark } from "../../assets/images/logo_inverted.svg";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 import { useHistory } from "react-router";
@@ -15,6 +23,7 @@ export default function CitoyenHeader(props) {
   const history = useHistory();
   const [fullname, setfullname] = useState("");
   const [image, setImage] = useState("");
+  const [open, setOpen] = useState(false);
   const [isNotifated, setIsNotifated] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
   const [data, setData] = useState([]);
@@ -48,7 +57,7 @@ export default function CitoyenHeader(props) {
         });
     }
   };
-  const { login } = props;
+  const { login, isDark } = props;
   const handleLogout = () => {
     axios
       .create({
@@ -85,6 +94,7 @@ export default function CitoyenHeader(props) {
       style={{
         display: "flex",
       }}
+      onClick={() => setOpen((prevState) => !prevState)}
     >
       <Image src={image} size="small" className="pointer" />
       <p className="medium-text text-default _margin_horizontal_xs">
@@ -93,7 +103,7 @@ export default function CitoyenHeader(props) {
     </div>
   );
   return (
-    <div className={!login ? "_citoyen_header " : "_citoyen_header"}>
+    <div className={`_citoyen_header ${isDark ? "dark" : ""}`}>
       <header>
         {login && (
           <div className="toggle_citoyen">
@@ -103,7 +113,7 @@ export default function CitoyenHeader(props) {
 
         <div className="_citoyen_header_logo">
           <div className="_madinatic_logo">
-            <Logo />
+            {isDark ? <Logo_dark /> : <Logo />}
             <p className="large-title text-active ">MADINA-TIC</p>
           </div>
           <div className="form_search_header_citoyen">
@@ -179,10 +189,15 @@ export default function CitoyenHeader(props) {
               </Dropdown>
 
               <div className="profile_citoyen_img pointer">
-                <Dropdown trigger={trigger} pointing="top right" icon={null}>
+                <Dropdown
+                  trigger={trigger}
+                  pointing="top right"
+                  icon={null}
+                  simple
+                >
                   <Dropdown.Menu
                     style={{
-                      width: "180px",
+                      width: "220px",
                     }}
                     className={props.isFrench ? "_ltr" : "_rtl"}
                   >
@@ -198,6 +213,27 @@ export default function CitoyenHeader(props) {
                       icon="sign out"
                       onClick={handleLogout}
                     />
+
+                    <Dropdown.Item
+                      style={{
+                        display: "flex",
+                        "align-items": "center",
+                        "justify-content": "space-between",
+                      }}
+                    >
+                      <div className="dark_trigger">
+                        <Icon
+                          name="moon"
+                          style={{ marginRight: ".78571429rem" }}
+                        />
+                        {props.isFrench ? "Mode Sombre" : "الوضع المظلم"}
+                      </div>
+                      <Radio
+                        toggle
+                        checked={props.isDark}
+                        onClick={props.change_mode}
+                      />
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>

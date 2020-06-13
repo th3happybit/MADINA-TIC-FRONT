@@ -3,16 +3,46 @@ main {
   width: 100%;
 }
 
-main > #container_profile {
-  margin-left: 10px !important;
-  margin-top: 20px;
-}
-
 .citoyen-profile {
   width: 100%;
+  padding-top: 15px !important;
   justify-content: center !important;
-  padding-left: 170px !important;
+  padding-left: 180px !important;
 }
+
+.citoyen-profile.dark {
+  background: var(--main_dark);
+}
+
+.citoyen-profile.dark p {
+  color: var(--primary_text_dark);
+}
+
+.citoyen-profile.dark span,
+.citoyen-profile.dark .infos-form .form label,
+.citoyen-profile.dark .card-citoyen .icon_card {
+  color: var(--secondary_text_dark) !important;
+}
+
+.citoyen-profile.dark .divider {
+  color: var(--primary_text_dark);
+}
+
+.citoyen-profile.dark .button_primary {
+  background-color: var(--primary_dark) !important;
+  color: var(--primary_text_dark);
+}
+
+.citoyen-profile.dark .button_secondary {
+  background-color: var(--secondary_dark) !important;
+  color: var(--primary_text_dark);
+}
+
+.citoyen-profile.dark .ui.secondary.pointing.menu .active.item {
+  border-color: var(--primary_dark) !important;
+  color: var(--primary_dark) !important;
+}
+
 .fields .dropdown.disabled .input {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
   border-radius: 5px !important;
@@ -43,6 +73,11 @@ main > #container_profile {
   padding: 2rem;
   height: 100%;
   border-radius: 0.28571429rem !important;
+}
+
+.citoyen-profile.dark .edit-profile,
+.citoyen-profile.dark .card-citoyen {
+  background-color: var(--second_dark);
 }
 
 ._info_menu {
@@ -97,6 +132,12 @@ main > #container_profile {
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
   border-radius: 5px !important;
   min-width: 270px !important;
+}
+
+.citoyen-profile.dark .infos-form input,
+.citoyen-profile.dark .infos-form input:focus {
+  background: var(--background_dark);
+  color: var(--primary_text_dark);
 }
 
 .infos-form > form > .fields > .disabled.field {

@@ -26,6 +26,7 @@ import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
 import Consultations from "./screens/Consultations/Consultations.jsx";
 import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
+import Home from "./screens/Home/Home.jsx";
 import AdminTypes from "./components/AdminTypes/AdminTypes.jsx";
 
 //? import slick css
@@ -114,17 +115,14 @@ function App() {
               exact
               path="/service/profile"
               component={() => (
-                <Service
-                  active="profile"
-                  childComponent={<Profile service />}
-                />
+                <Service active="profile" childComponent={Profile} />
               )}
             />
             <Route
               exact
               path="/service/rapports/"
               component={() => (
-                <Service active="rapports" childComponent={<Consultations />} />
+                <Service active="rapports" childComponent={Consultations} />
               )}
             />
             <Route
@@ -133,7 +131,7 @@ function App() {
               component={() => (
                 <Service
                   active="annonce"
-                  childComponent={<ConsultationsAnnonce />}
+                  childComponent={ConsultationsAnnonce}
                 />
               )}
             />
@@ -214,7 +212,6 @@ function App() {
                 />
               )}
             />
-            />
             <Route exact path="/service/login" component={ServiceAuth} />
             <Route exact path="/service" component={Service} />
             <Route
@@ -223,7 +220,7 @@ function App() {
               component={() => (
                 <Service
                   active="declarations"
-                  childComponent={<ServiceDeclaration />}
+                  childComponent={ServiceDeclaration}
                 />
               )}
             />
@@ -234,7 +231,7 @@ function App() {
                 <Service
                   props={prop}
                   active="rapports"
-                  childComponent={<DeposeRapport props={prop} />}
+                  childComponent={DeposeRapport}
                 />
               )}
             />
@@ -245,7 +242,7 @@ function App() {
                 <Service
                   props={prop}
                   active="rapports"
-                  childComponent={<UpdateRapport props={prop} />}
+                  childComponent={UpdateRapport}
                 />
               )}
             />
@@ -256,7 +253,7 @@ function App() {
                 <Service
                   props={prop}
                   active="rapports"
-                  childComponent={<ComplementRapport props={prop} />}
+                  childComponent={ComplementRapport}
                 />
               )}
             />
@@ -267,7 +264,7 @@ function App() {
                 <Service
                   props={prop}
                   active="annonce"
-                  childComponent={<DeposerAnnonces props={prop} />}
+                  childComponent={DeposerAnnonces}
                 />
               )}
             />
@@ -278,7 +275,74 @@ function App() {
                 <Service
                   props={prop}
                   active="annonce"
-                  childComponent={<UpdateAnnounces props={prop} />}
+                  childComponent={UpdateAnnounces}
+                />
+              )}
+            />
+            <Route exact path="/service/login" component={ServiceAuth} />
+            <Route exact path="/service" component={Service} />
+            <Route
+              exact
+              path="/service/declaration"
+              component={() => (
+                <Service
+                  active="declarations"
+                  childComponent={ServiceDeclaration}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/add/rapport"
+              component={(prop) => (
+                <Service
+                  props={prop}
+                  active="rapports"
+                  childComponent={DeposeRapport}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/update/rapport"
+              component={(prop) => (
+                <Service
+                  props={prop}
+                  active="rapports"
+                  childComponent={UpdateRapport}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/complement/rapport"
+              component={(prop) => (
+                <Service
+                  props={prop}
+                  active="rapports"
+                  childComponent={ComplementRapport}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/add/annonce"
+              component={(prop) => (
+                <Service
+                  props={prop}
+                  active="annonce"
+                  childComponent={DeposerAnnonces}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/update/annonce"
+              component={(prop) => (
+                <Service
+                  props={prop}
+                  active="annonce"
+                  childComponent={UpdateAnnounces}
                 />
               )}
             />
@@ -289,7 +353,7 @@ function App() {
                 <Service
                   props={prop}
                   active="annonce"
-                  childComponent={<ComplementAnnounces props={prop} />}
+                  childComponent={ComplementAnnounces}
                 />
               )}
             />
@@ -332,6 +396,11 @@ function App() {
               path="/signup"
               component={() => <CitoyenAuth islogin={false} />}
             />
+            <Route exact path="/" component={() => <Home content="home" />} />
+            <Route
+              exact
+              path="/declaration"
+              component={() => <Home content="declaration" />} />
             <Route
               exact
               path="/admin/declarations/types"

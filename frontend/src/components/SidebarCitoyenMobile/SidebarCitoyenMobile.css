@@ -2,8 +2,28 @@
   right: 0px;
   left: -250px;
 }
+
+._citoyen_header.dark .toggle_citoyen line {
+  stroke: var(--secondary_text_dark);
+}
+
+._sidebar.citoyen.dark {
+  background-color: var(--second_dark) !important;
+  color : var(--primary_text_dark);
+}
+
+._sidebar.citoyen.dark.dark .item a {
+  color : var(--primary_text_dark) !important;
+}
+
+._sidebar.citoyen.dark .button_primary {
+  background: var(--primary_dark);
+  color : var(--primary_text_dark) !important;
+}
+
 ._sidebar.active.citoyen {
   left: 0px;
+  padding : 1.5rem 1rem;
 }
 .profile_citoyen_mobile_x {
   display: flex;
@@ -20,4 +40,8 @@
 }
 .profile_citoyen_mobile_x {
   cursor: pointer;
+}
+
+._sidebar_list.rtl{
+  text-align: right;
 }

@@ -9,7 +9,9 @@ const ModalArchive = (props) => {
   const { modal } = props;
 
   const handle_archive = () => {
-    props.archive(props.data);
+    props.archive(props.data.did);
+    if (props.data.children)
+      props.data.children.map((elm) => props.archive(elm.did));
   };
 
   const handleopen = () => {
@@ -31,7 +33,9 @@ const ModalArchive = (props) => {
             onClick={handleopen}
             animated
             color="black"
-            className={modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"}
+            className={
+              modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"
+            }
           >
             <Button.Content visible content="Archive" />
             <Button.Content hidden>

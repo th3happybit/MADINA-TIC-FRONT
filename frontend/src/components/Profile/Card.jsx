@@ -20,7 +20,7 @@ import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.j
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 
 const Card = (props) => {
-  const { cit_infos, loading, service, token } = props;
+  const { cit_infos, loading, service, token, updateImage } = props;
   const [isEdit, setEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("info");
@@ -331,6 +331,7 @@ const Card = (props) => {
           setimageP(res.data.image);
           setCardLoading(false);
           setupdated((prevState) => !prevState);
+          updateImage(res.data.image)
           props.refresh(token);
         })
         .catch((err) => {

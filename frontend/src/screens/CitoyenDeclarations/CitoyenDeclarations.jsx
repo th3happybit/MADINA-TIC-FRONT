@@ -23,7 +23,7 @@ import { change_language } from "../../actions/languageAction";
 import { languages } from "../../language";
 
 const CitoyenDeclarations = (props) => {
-  const [activeFilter, setactiveFilter] = useState("New Declarations");
+  const [activeFilter, setactiveFilter] = useState("Nouvelles déclarations");
   const [Loading, setLoading] = useState(true);
   const [Data, setData] = useState(null);
   const [page, setPage] = useState(1);
@@ -32,34 +32,44 @@ const CitoyenDeclarations = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortType, setsortType] = useState(null);
   const [sortDate, setsortDate] = useState(null);
-  const [sortMobile, setsortMobile] = useState("Random");
+  const [sortMobile, setsortMobile] = useState("Aléatoire");
   const [userid, setuserid] = useState(null);
   const [types, settypes] = useState([]);
   const [perm, setperm] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
+  const {isDark} = props;
+
   const handlemobileTypeSortAZ = () => {
     setsortDate(null);
     setPage(1);
     setsortType("asc");
-    setsortMobile("Group by type");
+    props.language.isFrench
+      ? setsortMobile("Par type")
+      : setsortMobile("حسب النوع");
   };
   const handlemobileNewFirst = () => {
     setsortType(null);
     setPage(1);
     setsortDate("desc");
-    setsortMobile("Newer First");
+    props.language.isFrench
+      ? setsortMobile("Par date (Asc)")
+      : setsortMobile("الأقدم");
   };
   const handlemobileOldFirst = () => {
     setsortType(null);
     setPage(1);
     setsortDate("asc");
-    setsortMobile("Newer First");
+    props.language.isFrench
+      ? setsortMobile("Par date (Desc)")
+      : setsortMobile("الأحدث");
   };
   const handleRandomSort = () => {
     setsortType(null);
     setsortType(null);
-    setsortMobile("Random");
+    props.language.isFrench
+      ? setsortMobile("Aléatoire")
+      : setsortMobile("عشوائي");
   };
   const handle_sort_type = () => {
     setsortDate(null);
@@ -125,7 +135,6 @@ const CitoyenDeclarations = (props) => {
         },
       })
       .then((res) => {
-        // console.log(res.data)
         settypes(res.data);
       })
       .catch((err) => {
@@ -143,32 +152,31 @@ const CitoyenDeclarations = (props) => {
       if (sortDate === "asc") pa["ordering"] = "created_on";
       else pa["ordering"] = "-created_on";
     } else if (sortType) {
-      if (sortType === "asc") pa["ordering"] = "dtype";
-      else pa["ordering"] = "-dtype";
+      pa["ordering"] = "dtype";
     }
     switch (activeFilter) {
-      case "New Declarations":
+      case "Nouvelles déclarations" || "تصريحات جديدة":
         pa["status"] = "not_validated";
         break;
-      case "Lack of infos":
+      case "Manque d'informations" || "معلومات غير كافية":
         pa["status"] = "lack_of_info";
         break;
-      case "Validated":
+      case "Validées" || "تم التحقق من صحتها":
         pa["status"] = "validated";
         break;
-      case "Refused":
+      case "Refusées" || "مرفوضة":
         pa["status"] = "refused";
         break;
-      case "In progress":
+      case "En cours" || "في تقدم":
         pa["status"] = "under_treatment";
         break;
-      case "Treated":
+      case "Traitées" || "معالجة":
         pa["status"] = "treated";
         break;
-      case "Archived":
+      case "Archivées" || "مؤرشفة":
         pa["status"] = "archived";
         break;
-      case "Draft":
+      case "Brouillons" || "مسودات":
         pa["status"] = "draft";
         break;
       default:
@@ -230,9 +238,11 @@ const CitoyenDeclarations = (props) => {
   }, [activeFilter, term, page, sortType, sortDate, types, refresh]);
 
   return (
-    <div className="_main_declaration">
+    <div
+      className={`_main_declaration ${props.language.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}
+    >
       <Segment
-        className="_main_declaration_right shadow"
+        className={`_main_declaration_right shadow ${isDark ? "dark" : ""}`}
         loading={searchLoading ? false : Loading}
       >
         {Data && (
@@ -272,7 +282,12 @@ const CitoyenDeclarations = (props) => {
             >
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "New Declarations" ? "_active" : ""}
+                className={
+                  activeFilter === "Nouvelles déclarations" ||
+                  activeFilter === "تصريحات جديدة"
+                    ? "_active"
+                    : ""
+                }
               >
                 {props.language.isFrench
                   ? "Nouvelles déclarations"
@@ -280,47 +295,77 @@ const CitoyenDeclarations = (props) => {
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "In progress" ? "_active" : ""}
+                className={
+                  activeFilter === "En cours" || activeFilter === "في تقدم"
+                    ? "_active"
+                    : ""
+                }
               >
-                {props.language.isFrench ? "en cours" : "في تقدم"}
+                {props.language.isFrench ? "En cours" : "في تقدم"}
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "Validated" ? "_active" : ""}
+                className={
+                  activeFilter === "Validées" ||
+                  activeFilter === "تم التحقق من صحتها"
+                    ? "_active"
+                    : ""
+                }
               >
-                {props.language.isFrench ? "Validé" : "تم التحقق من صحتها"}
+                {props.language.isFrench ? "Validées" : "تم التحقق من صحتها"}
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "Treated" ? "_active" : ""}
+                className={
+                  activeFilter === "Traitées" || activeFilter === "معالجة"
+                    ? "_active"
+                    : ""
+                }
               >
-                {props.language.isFrench ? "Traité" : "يعالج"}
+                {props.language.isFrench ? "Traitées" : "معالجة"}
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "Refused" ? "_active" : ""}
+                className={
+                  activeFilter === "Refusées" || activeFilter === "مرفوضة"
+                    ? "_active"
+                    : ""
+                }
               >
-                {props.language.isFrench ? "Refusé" : "رفض"}
+                {props.language.isFrench ? "Refusées" : "مرفوضة"}
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "Archived" ? "_active" : ""}
+                className={
+                  activeFilter === "Archivées" || activeFilter === "مؤرشفة"
+                    ? "_active"
+                    : ""
+                }
               >
-                {props.language.isFrench ? "Archivé" : "مؤرشف"}
+                {props.language.isFrench ? "Archivées" : "مؤرشفة"}
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "Lack of infos" ? "_active" : ""}
+                className={
+                  activeFilter === "Manque d'informations" ||
+                  activeFilter === "معلومات غير كافية"
+                    ? "_active"
+                    : ""
+                }
               >
                 {props.language.isFrench
                   ? "Manque d'informations"
-                  : "عدم وجود معلومات"}
+                  : "معلومات غير كافية"}
               </Button>
               <Button
                 onClick={handleFilter}
-                className={activeFilter === "Draft" ? "_active" : ""}
+                className={
+                  activeFilter === "Draft" || activeFilter === "مسودات"
+                    ? "_active"
+                    : ""
+                }
               >
-                {props.language.isFrench ? "Brouillon" : "مشروع"}
+                {props.language.isFrench ? "Brouillons" : "مسودات"}
               </Button>
             </div>
             <div className="show_mobile ">
@@ -342,37 +387,39 @@ const CitoyenDeclarations = (props) => {
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
-                    text={props.language.isFrench ? "en cours" : "في تقدم"}
+                    text={props.language.isFrench ? "En cours" : "في تقدم"}
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
                     text={
-                      props.language.isFrench ? "Validé" : "تم التحقق من صحتها"
+                      props.language.isFrench
+                        ? "Validées"
+                        : "تم التحقق من صحتها"
                     }
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
-                    text={props.language.isFrench ? "Traité" : "يعالج"}
+                    text={props.language.isFrench ? "Traitées" : "معالجة"}
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
-                    text={props.language.isFrench ? "Refusé" : "رفض"}
+                    text={props.language.isFrench ? "Refusées" : "مرفوضة"}
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
-                    text={props.language.isFrench ? "Archivé" : "مؤرشف"}
+                    text={props.language.isFrench ? "Archivées" : "مؤرشفة"}
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
                     text={
                       props.language.isFrench
                         ? "Manque d'informations"
-                        : "عدم وجود معلومات"
+                        : "معلومات غير كافية"
                     }
                     onClick={handleFilter}
                   />
                   <Dropdown.Item
-                    text={props.language.isFrench ? "Brouillon" : "مشروع"}
+                    text={props.language.isFrench ? "Brouillons" : "مسودات"}
                     onClick={handleFilter}
                   />
                 </Dropdown.Menu>
@@ -386,35 +433,42 @@ const CitoyenDeclarations = (props) => {
                 className="icon filter_declaration _sorts"
               >
                 <Dropdown.Menu>
-                  <Dropdown.Item text="Random" onClick={handleRandomSort} />
                   <Dropdown.Item
-                    text="Group by type"
+                    text={props.language.isFrench ? "Aléatoire" : "عشوائي"}
+                    onClick={handleRandomSort}
+                  />
+                  <Dropdown.Item
+                    text={props.language.isFrench ? "Par type" : "حسب النوع"}
                     onClick={handlemobileTypeSortAZ}
                   />
                   <Dropdown.Item
-                    text="Newer First"
+                    text={props.language.isFrench ? "Par date (Asc)" : "الأحدث"}
                     onClick={handlemobileNewFirst}
                   />
                   <Dropdown.Item
-                    text="Older first"
+                    text={
+                      props.language.isFrench ? "Par date (Desc)" : "الأقدم"
+                    }
                     onClick={handlemobileOldFirst}
                   />
                 </Dropdown.Menu>
               </Dropdown>
             </div>
             {Data.length > 0 ? (
-              <div className="_data_section">
-                <DecTable
-                  data={Data}
-                  filter={activeFilter}
-                  refresh={getDeclarations}
-                  handlesortDate={handle_sort_date}
-                  handlesortType={handle_sort_type}
-                  sorttype={sortType}
-                  sortdate={sortDate}
-                  types={types}
-                  handledelete={deleteDeclaration}
-                />
+              <div className={`_data_section ${props.language.isFrench ? null : "rtl"} ${isDark ? "dark" : null}`}>
+                  <DecTable
+                    data={Data}
+                    filter={activeFilter}
+                    refresh={getDeclarations}
+                    handlesortDate={handle_sort_date}
+                    handlesortType={handle_sort_type}
+                    sorttype={sortType}
+                    sortdate={sortDate}
+                    types={types}
+                    isDark={props.isDark}
+                    handledelete={deleteDeclaration}
+                    language={props.language}
+                  />
                 {pages > 1 && (
                   <Pagination
                     className="citoyen_declar_pagin"
@@ -433,7 +487,9 @@ const CitoyenDeclarations = (props) => {
               perm && (
                 <>
                   <p class="zero-data">
-                    Sorry No declarations to display in this section
+                    {props.language.isFrench
+                      ? "Désolé, cette section ne contient aucun informations"
+                      : "للأسف، هذه الصفحة لا تحتوي على معلومات"}
                   </p>
                 </>
               )

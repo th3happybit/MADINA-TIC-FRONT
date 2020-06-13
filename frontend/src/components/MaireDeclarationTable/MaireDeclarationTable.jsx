@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table, Icon, Modal } from "semantic-ui-react";
-import ModalDetails from "./ModalDetails.jsx";
+import { Table, Icon } from "semantic-ui-react";
 import axios from "axios";
 import MaireRow from "./MaireRow";
 const MaireDeclarationTable = (props) => {
@@ -16,7 +15,6 @@ const MaireDeclarationTable = (props) => {
         },
       })
       .then((res) => {
-        // console.log(res)
         setServices(res.data.results);
       });
   }, [props.names, props.data]);
@@ -106,7 +104,7 @@ const MaireDeclarationTable = (props) => {
         <Table.HeaderCell content="Citizen Name" width={2} />
         <Table.HeaderCell width={2} content="Title"></Table.HeaderCell>
         <Table.HeaderCell content="Address" width={3} className="_hide" />
-        <Table.HeaderCell content="Submitted On" width={1}>
+        <Table.HeaderCell content="Submitted On" width={2}>
           <p onClick={props.handlesortDate} className="sort_field pointer">
             Added On
             {props.sortdate ? (
@@ -132,6 +130,11 @@ const MaireDeclarationTable = (props) => {
                 element={element}
                 index={index}
                 isRegroup={isRegroup}
+                validateDeclaration={props.validateDeclaration}
+                rejectDeclaration={props.rejectDeclaration}
+                demandComplement={props.demandComplement}
+                archiveDeclaration={props.archiveDeclaration}
+                maire={props.maire}
               />
             );
           })}

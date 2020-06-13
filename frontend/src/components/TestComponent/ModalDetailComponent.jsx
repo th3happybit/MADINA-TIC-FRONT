@@ -26,6 +26,7 @@ const ModalDetailComponent = (props) => {
   const [declaration, setDeclaration] = useState("");
   const [files, setFiles] = useState([]);
   const [motif, setMorif] = useState(null);
+  const [children, setChildren] = useState([]);
 
   const handleopen = () => {
     setOpen(true);
@@ -57,7 +58,7 @@ const ModalDetailComponent = (props) => {
         refresh();
       });
   };
-  const updateDecStatus = (dec) => {
+  const updateDecStatus = (dec, id) => {
     axios
       .create({
         headers: {
@@ -68,13 +69,11 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/declarations/${declaration.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${id}/`,
         method: "patch",
         data: dec,
       })
-      .then((res) => {
-        refresh();
-      })
+      .then((res) => {})
       .catch((err) => {});
   };
   const updateRepStatus = (rep, dec) => {
@@ -93,8 +92,12 @@ const ModalDetailComponent = (props) => {
         data: rep,
       })
       .then((res) => {
-        if (dec) updateDecStatus(dec);
-        else refresh();
+        if (dec) {
+          updateDecStatus(dec, data.declaration);
+          if (children.length > 0)
+            children.map((elm) => updateDecStatus(dec, elm.did));
+          refresh();
+        } else refresh();
       })
       .catch((err) => {
         console.log(err);
@@ -141,10 +144,6 @@ const ModalDetailComponent = (props) => {
       validated_at: now,
     };
     const dec = {
-      citizen: declaration.citizen,
-      dtype: declaration.dtype,
-      desc: declaration.desc,
-      title: declaration.title,
       status: "treated",
     };
     updateRepStatus(report, dec);
@@ -159,30 +158,6 @@ const ModalDetailComponent = (props) => {
     };
     updateRepStatus(report);
   };
-  const RejectReport = (reason) => {
-    const rejection = {
-      reason: reason,
-      report: data.rid,
-      maire: uid,
-    };
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem(token)}`,
-          },
-        },
-      })
-      .request({
-        url: "https://www.madina-tic.ml/api/reports_rejection/",
-        data: rejection,
-        method: "post",
-      })
-      .then((res) => {
-        refresh();
-      });
-  };
   const ArchiveAnnonce = () => {
     const annonce = {
       title: data.title,
@@ -192,16 +167,6 @@ const ModalDetailComponent = (props) => {
       status: "archived",
     };
     updateAnnStatus(annonce);
-  };
-  const WorkNotFinished = () => {
-    const report = {
-      declaration: data.declaration,
-      title: data.title,
-      desc: data.desc,
-      service: data.service,
-      status: "work_not_finished",
-    };
-    updateRepStatus(report);
   };
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
@@ -242,8 +207,20 @@ const ModalDetailComponent = (props) => {
         .then((res) => {
           setDeclaration(res.data);
         })
-        .catch((err) => {
-          console.log(err.reponse);
+        .catch((err) => {});
+
+      axios
+        .get(`https://www.madina-tic.ml/api/declarations/`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+          params: {
+            parent_declaration: data.declaration,
+          },
+        })
+        .then((res) => {
+          setChildren(res.data.results);
         });
     }
     //? SECOND REQUEST FOR FILES
@@ -272,9 +249,7 @@ const ModalDetailComponent = (props) => {
             setFiles(tempArr);
           }
         })
-        .catch((err) => {
-          console.log({ DocErr: err.reponse });
-        });
+        .catch((err) => {});
   }, [data]);
   return (
     <Modal
@@ -411,24 +386,6 @@ const ModalDetailComponent = (props) => {
                 text="Confirm demanding complement ?"
                 title="Complement Demand"
                 OnConfirm={ComplementDemand}
-              />
-              <ConfirmModal
-                modal
-                button={{
-                  color: "orange",
-                  text: "Not finished",
-                  icon: "exclamation triangle",
-                }}
-                text="Confirm mark it as Work not finished ?"
-                title="Work not finished"
-                OnConfirm={WorkNotFinished}
-              />
-              <RejectComplement
-                modal
-                button={{ color: "red", text: "Reject", icon: "times" }}
-                text="Confirm rejecting report ?"
-                title="Reject Report"
-                OnConfirm={RejectReport}
               />
             </>
           )}

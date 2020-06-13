@@ -25,8 +25,12 @@
   }
 ._sidebar_service .part_top p {
     margin: 0 0.5rem;
-    font-family: "Segoe_UI_bold";
+    font-family: "Raleway", sans-serif;
   }
+
+._sidebar_service .item {
+  font-weight: 600 !important;
+}
 
   .logo_h {
     width: 30px;
@@ -47,7 +51,7 @@
   ._sidebar_service > .row > .menu > .d-flex {
     align-items: center;
     margin: 1rem 0;
-    width: 80%;
+    width: 90%;
   }
   ._sidebar_service > .row > .menu > .d-flex:hover ._sidebar_icons,
   ._sidebar_service > .row > .menu > .d-flex:hover .item {

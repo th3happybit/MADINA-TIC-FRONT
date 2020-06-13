@@ -20,6 +20,11 @@ const HeaderAdmin = (props) => {
   const [fullname, setFullname] = useState(null);
   const [isNotifated, setIsNotifated] = useState(false);
   const [data, setData] = useState([]);
+  const { imageP } = props;
+
+  useEffect(() => {
+    if (imageP) setImage(imageP);
+  }, [imageP]);
 
   useEffect(() => {
     axios

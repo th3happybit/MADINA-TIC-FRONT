@@ -52,17 +52,17 @@ const MaireDeclarations = (props) => {
         },
       });
       let body = {
-        parent_declaration: props.parent,
+        parent_declaration: props.parent.did,
+        status: elm.status,
       };
       instance
-        .patch(`declarations/${elm}/`, body)
+        .patch(`declarations/${elm.did}/`, body)
         .then((res) => console.log(res))
         .catch((err) => console.log(err.response));
     });
     setRefresh((prevState) => !prevState);
     props.add_parent(null);
   };
-
   const handlesortRandom = () => {
     setsortDate(null);
     setsortMobile("Random");
@@ -141,10 +141,10 @@ const MaireDeclarations = (props) => {
       default:
         break;
     }
-
+    pa["has_parent"] = false
     axios
       .get(
-        "https://www.madina-tic.ml/api/declaration_nested/?parent_declaration__isnull=True",
+        "https://www.madina-tic.ml/api/declaration_nested/",
         {
           params: pa,
           headers: {
@@ -262,46 +262,36 @@ const MaireDeclarations = (props) => {
         console.log(err);
       });
   };
-  const rejectDeclaration = (decData, reason) => {
-    decData["reason"] = reason;
+  const rejectDeclaration = (maire, id, reason) => {
     const rejectionData = {
-      maire: decData.maire,
-      declaration: decData.did,
+      maire: maire,
+      declaration: id,
       reason: reason,
     };
     addRejection(rejectionData);
   };
-  const demandComplement = (decData, reason) => {
-    decData["reason"] = reason;
+  const demandComplement = (maire, id, reason) => {
     const complementData = {
-      maire: decData.maire,
-      declaration: decData.did,
+      maire: maire,
+      declaration: id,
       reason: reason,
     };
     addComplement(complementData);
   };
-  const archiveDeclaration = (decData) => {
+  const archiveDeclaration = (id) => {
     const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
       status: "archived",
     };
-    updateDecStatus(data, decData.did);
+    updateDecStatus(data, id);
   };
-  const validateDeclaration = (decData) => {
+  const validateDeclaration = (decData, id) => {
     const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
       status: "validated",
       service: decData.service,
       validated_at: decData.validated_at,
       priority: decData.priority,
     };
-    updateDecStatus(data, decData.did);
+    updateDecStatus(data, id);
   };
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
@@ -403,7 +393,7 @@ const MaireDeclarations = (props) => {
               alignItems: "center",
             }}
           >
-            <Button
+            {activeFilter === "Validated" &&<Button
               style={{
                 margin: "0 1rem",
                 background: "var(--secondary)",
@@ -416,7 +406,6 @@ const MaireDeclarations = (props) => {
                 }
                 if (props.parent && props.childs.length > 0) {
                   setIsRegroup(false);
-                  console.log({ parent: props.parent, childs: props.childs });
                 }
                 if (props.parent && props.childs.length === 0) {
                   setOpenErr(true);
@@ -427,7 +416,7 @@ const MaireDeclarations = (props) => {
               }}
             >
               {isRegroup ? "Confirmer" : "Regrouper"}
-            </Button>
+            </Button>}
             <Dropdown
               className="icon filter_declaration _mobile"
               icon="angle down"

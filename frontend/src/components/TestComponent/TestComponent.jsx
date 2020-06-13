@@ -143,11 +143,9 @@ const TestComponent = (props) => {
     }
   }
   const colors = {
-    refused: "red",
     lack_of_info: "orange",
     validated: "green",
     modified: "yellow",
-    work_not_finished: "orange",
     archived: "black",
     removed: "red",
     published: "green",

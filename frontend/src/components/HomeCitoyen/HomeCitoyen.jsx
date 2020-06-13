@@ -29,16 +29,22 @@ const HomeCitoyen = (props) => {
   }, 100);
   const loadUsers = () => {
     setLoading(true);
+
+    const headers = !props.anonyme
+      ? {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        }
+      : {
+          "content-type": "application/json",
+        };
     axios
       .get(
         Data.length > 0
           ? next
           : "http://www.madina-tic.ml/api/declarations/?status=validated&status=under_treatment&status=treated&ordering=-created_on",
         {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
+          headers: headers,
         }
       )
       .then((res) => {
@@ -66,17 +72,18 @@ const HomeCitoyen = (props) => {
   }, []);
 
   const getTypes = () => {
-    axios
-      .get("http://www.madina-tic.ml/api/declarations_types/", {
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((res) => {
-        setTypes(res.data);
-        // console.log(res)
-      });
+    if (!props.anonyme)
+      axios
+        .get("http://www.madina-tic.ml/api/declarations_types/", {
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setTypes(res.data);
+          // console.log(res)
+        });
   };
 
   function getStatus(st) {
@@ -193,11 +200,13 @@ const HomeCitoyen = (props) => {
                       />
                     )}
                   </div>
-                  <div className="_contentt">
-                    <p className="text-gray-light _contentt">
-                      - {editType(element.dtype)} problem -
-                    </p>
-                  </div>
+                  {!props.anonyme && (
+                    <div className="_contentt">
+                      <p className="text-gray-light _contentt">
+                        - {editType(element.dtype)} problem -
+                      </p>
+                    </div>
+                  )}
                   <p className=" _contenttt">
                     Date de dépot :{" "}
                     {element.created_on && element.created_on.slice(0, 10)}

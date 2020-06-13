@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./AnnonceHome.css";
-import { Segment, Divider, Pagination } from "semantic-ui-react";
+import { Segment, Divider, Pagination, Image } from "semantic-ui-react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -72,13 +72,22 @@ const AnnonceHome = (props) => {
   };
 
   useEffect(() => {
+    const headers = props.anonyme
+      ? {
+          "content-type": "application/json",
+        }
+      : {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        };
+
     const date = new Date();
     let now =
       date.getFullYear() +
       "-" +
       String(date.getMonth() + 1) +
       "-" +
-      date.getDay() +
+      date.getDate() +
       " " +
       date.getHours() +
       ":" +
@@ -87,17 +96,14 @@ const AnnonceHome = (props) => {
       date.getSeconds();
     setLoading(true);
     axios
-      .get("https://www.madina-tic.ml/api/announces/", {
+      .get("https://www.madina-tic.ml/api/announce_nested/", {
         params: {
           status: "published",
           page: page,
           start_at_less: now,
           end_at_greater: now,
         },
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
+        headers: headers,
       })
       .then((res) => {
         setData(res.data.results);
@@ -128,10 +134,26 @@ const AnnonceHome = (props) => {
                 className="_annonce"
                 style={{
                   textAlign: props.isFrench ? "left" : "right",
-                  direction: props.isFrench ? "rtl" : "ltr",
+                  direction: props.isFrench ? "ltr" : "rtl",
                 }}
               >
                 <h4 className="">{annonce.title}</h4>
+                <span
+                  style={{
+                    flexDirection: props.isFrench ? "row" : "row-reverse",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  <p className="_title">
+                    {props.isFrench ? "Service :" : ": المصلحة"}{" "}
+                  </p>
+                  &nbsp;
+                  <p>
+                    {annonce.service.first_name +
+                      " " +
+                      annonce.service.last_name}
+                  </p>
+                </span>
                 <span
                   style={{
                     flexDirection: props.isFrench ? "row" : "row-reverse",
@@ -169,6 +191,21 @@ const AnnonceHome = (props) => {
                 >
                   {annonce.desc}
                 </p>
+                {annonce.image && (
+                  <Image
+                    src={annonce.image}
+                    style={{
+                      height: "130px",
+                      width: "130px",
+                      marginTop: "10px",
+                      "border-radius": "3px",
+                    }}
+                    onClick={() => {
+                      window.open(annonce.image);
+                    }}
+                    className="pointer"
+                  />
+                )}
                 {index + 1 < Data.length && <Divider />}
               </div>
             );

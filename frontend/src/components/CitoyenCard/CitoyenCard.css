@@ -5,8 +5,63 @@
   align-items: center;
   flex-direction: column;
   border: 0px !important;
+  height: 690px;
 }
 
+.card-citoyen.rtl span {
+  direction: rtl;
+}
+
+.card-citoyen.rtl span,
+.card-citoyen.rtl .divider {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+}
+
+.card-citoyen.rtl span .icon {
+  margin-left: 10px;
+}
+
+.card-citoyen.dark {
+  background-color: var(--second_dark);
+}
+
+.card-citoyen.dark .divider,
+.card-citoyen.dark p {
+  color: var(--primary_text_dark);
+}
+
+.card-citoyen.dark .row .col span,
+.card-citoyen.dark .row .col .icon {
+  color: var(--secondary_text_dark) !important;
+}
+
+.card-citoyen.dark input,
+.card-citoyen.dark input:focus,
+.card-citoyen.dark .mobile-input input,
+.card-citoyen.dark .mobile-input input:focus {
+  background: var(--background_dark);
+  color: var(--primary_text_dark);
+}
+
+.card-citoyen.dark .primary{
+  color : var(--primary_text_dark) !important;
+  background: var(--primary_dark);
+}
+
+.card-citoyen.dark .button.secondary {
+  color : var(--primary_text_dark) !important;
+  background : var(--secondary_dark);
+}
+
+.card-citoyen.dark .ui.secondary.pointing.menu a.active.item {
+  color: var(--primary_dark) !important;
+  border-color: var(--primary_dark) !important;
+}
+
+.card-citoyen.dark .edit-profile-pic .icon {
+  color : var(--secondary_text_dark);
+}
 .card-citoyen > .citoyen-profile-pic {
   display: flex;
   flex-direction: column;
@@ -83,11 +138,11 @@
 }
 
 .card-citoyen > .row > .col span {
-  color: #576271 !important;
+  color: #576271;
 }
 
 .icon_card {
-  color: #576271 !important;
+  color: #576271;
 }
 
 .social-media {

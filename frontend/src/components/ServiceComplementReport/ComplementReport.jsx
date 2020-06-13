@@ -40,11 +40,12 @@ const ComplementReport = (props) => {
   const [reason, setReason] = useState();
   const [report, setReport] = useState({});
   const [allow, setAllow] = useState(false);
+  const [nullData, setNulldata] = useState(false);
 
   let history = useHistory();
 
   useEffect(() => {
-    if (props.props.location.state) {
+    if (props.props.props.location.state) {
       setLoading(true);
       axios
         .get("https://www.madina-tic.ml/api/user", {
@@ -56,11 +57,11 @@ const ComplementReport = (props) => {
         .then((res) => {
           setService(res.data.uid);
         });
-      if (props.props.location.state.rid) {
+      if (props.props.props.location.state.rid) {
         axios
           .get("https://www.madina-tic.ml/api/reports_complement_demand", {
             params: {
-              report: props.props.location.state.rid,
+              report: props.props.props.location.state.rid,
             },
             headers: {
               "content-type": "application/json",
@@ -74,7 +75,7 @@ const ComplementReport = (props) => {
 
         axios
           .get(
-            `https://www.madina-tic.ml/api/reports/${props.props.location.state.rid}`,
+            `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -86,13 +87,16 @@ const ComplementReport = (props) => {
             setReport(res.data);
             setTitle(res.data.title);
             setDescription(res.data.desc);
-            if (res.data.status !== "lack_of_info") setAllow(true);
+            if (res.data.status !== "lack_of_info") {
+              setAllow(true);
+              setNulldata(true);
+            }
           })
           .catch((err) => {});
         axios
           .get("https://www.madina-tic.ml/api/documents/", {
             params: {
-              report__rid: props.props.location.state.rid,
+              report__rid: props.props.props.location.state.rid,
             },
             headers: {
               "content-type": "application/json",
@@ -108,11 +112,11 @@ const ComplementReport = (props) => {
             console.log(err);
           });
       }
-      if (props.props.location.state.did)
+      if (props.props.props.location.state.did)
         axios
           .get(
             "https://www.madina-tic.ml/api/declarations/" +
-              props.props.location.state.did +
+              props.props.props.location.state.did +
               "/",
             {
               headers: {
@@ -127,6 +131,8 @@ const ComplementReport = (props) => {
           .catch((err) => {
             console.log(err);
           });
+    } else {
+      setNulldata(true);
     }
   }, []);
 
@@ -299,7 +305,7 @@ const ComplementReport = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/reports/${props.props.location.state.rid}/`,
+        url: `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}/`,
         method: "put",
         data: {
           title,
@@ -333,11 +339,7 @@ const ComplementReport = (props) => {
   return (
     <div className="_rapport_form">
       <Segment className="_add_form" loading={Loading}>
-        {props.props.location.state &&
-        props.props.location.state.rid &&
-        props.props.location.state.did &&
-        !allow &&
-        report.status === "lack_of_info" ? (
+        {!nullData && report.status === "lack_of_info" ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">
               Complement Report
@@ -499,7 +501,7 @@ const ComplementReport = (props) => {
             </div>{" "}
           </>
         ) : (
-          allow && (
+          nullData && (
             <h1
               className="text-default"
               style={{

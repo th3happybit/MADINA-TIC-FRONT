@@ -15,7 +15,7 @@ import { change_language } from "../../actions/languageAction";
 import { languages } from "../../language";
 
 const AddDeclaration = (props) => {
-  const { languages } = props;
+  const { languages, isDark } = props;
   const [succes, setSucces] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [title, setTitle] = useState("");
@@ -222,7 +222,6 @@ const AddDeclaration = (props) => {
       });
   };
   const handleAdd = () => {
-    console.log("ee");
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
       setSucces(false);
@@ -321,8 +320,12 @@ const AddDeclaration = (props) => {
     }
   };
   return (
-    <div className="container_add_dec">
-      <div className="_add_dec">
+    <div
+      className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
+    >
+      <div className={`_add_dec ${isDark ? "dark" : ""}`}>
         <h3 className="large-title text-default bold _margin_vertical_md">
           {languages.isFrench ? "Ajouter une déclaration" : "إضافة تصريح"}
         </h3>
@@ -365,21 +368,21 @@ const AddDeclaration = (props) => {
           <Form.Group inline>
             <Form.Radio
               label={
-                languages.isFrench ? "Géo-localisation" : "التوطين الجغرافي"
+                languages.isFrench ? "Géo-localisation" : "الإحداثيات الجغرافية"
               }
               value="sm"
               checked={isGeo}
               onClick={handleGeo}
             />
             <Form.Radio
-              label={languages.isFrench ? "Adresse manuelle" : "العنوان اليدوي"}
+              label={languages.isFrench ? "Adresse manuelle" : "عنوان يدوي"}
               value="md"
               checked={!isGeo}
               onClick={handleGeo}
             />
           </Form.Group>
           <Form.TextArea
-            label={languages.isFrench ? "Description" : "وصف"}
+            label={languages.isFrench ? "Description" : "التفاصيل"}
             name="description"
             placeholder="..."
             value={description}

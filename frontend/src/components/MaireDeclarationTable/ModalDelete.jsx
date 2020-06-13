@@ -24,7 +24,12 @@ const ModalComplement = (props) => {
 
   const handle_reject = () => {
     if (motif && motif !== "") {
-      props.reject(props.data, motif);
+      props.reject(props.data.maire, props.data.did, motif);
+      if (props.data.children) {
+        props.data.children.map((elm) =>
+          props.reject(props.data.maire, elm.did, motif)
+        );
+      }
     } else setError(true);
   };
 

@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 //sfc shortcut
 const HeaderService = (props) => {
   const { isUploaded } = useContext(UserContext);
+  const { imageP } = props;
   const [image, setImage] = useState(null);
   const [fullname, setFullname] = useState(null);
   const [isNotifated, setIsNotifated] = useState(false);
@@ -41,6 +42,11 @@ const HeaderService = (props) => {
       })
       .catch((err) => console.log(err));
   }, [isUploaded]);
+
+  useEffect(() => {
+    if (imageP)
+    setImage(imageP)
+  }, [imageP]);
   const trigger = <Image src={image} size="small" className="pointer" />;
 
   const history = useHistory();
