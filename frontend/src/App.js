@@ -377,7 +377,12 @@ function App() {
               path="/signup"
               component={() => <CitoyenAuth islogin={false} />}
             />
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={() => <Home content="home" />} />
+            <Route
+              exact
+              path="/declaration"
+              component={() => <Home content="declaration" />}
+            />
             <Redirect to="/login" />
           </Switch>
         </Router>

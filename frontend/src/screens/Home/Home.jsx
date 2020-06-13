@@ -1,15 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+
+import DeclarationAnonyme from "../../components/DeclarationsAnonyme/DeclarationAnonyme.jsx";
 import HomeHeader from "../../components/HomeHeader/HomeHeader.jsx";
 import HomeMain from "../../components/HomeMain/HomeMain.jsx";
+
+
 import { change_language } from "../../actions/languageAction";
 import { languages } from "../../language";
 import { useEffect } from "react";
 import axios from "axios";
 
 const Home = (props) => {
-  const { language } = props;
+  const { language, content } = props;
   // useEffect(() => {
   //   axios
   //   .get("https://www.madina-tic.ml/api/declaration_nested/", {
@@ -51,8 +55,8 @@ const Home = (props) => {
   // })
   return (
     <>
-      <HomeHeader language={language}/>
-      <HomeMain language={language}/>
+      <HomeHeader language={language}/>{content === "home" ?
+      <HomeMain language={language}/> : <DeclarationAnonyme />}
     </>
   );
 };
