@@ -314,6 +314,7 @@ function App() {
               component={() => <CitoyenAuth islogin={false} />}
             />
           </Switch>
+          <Redirect to="/login" />
         </Router>
       </PersistGate>
     </Provider>
