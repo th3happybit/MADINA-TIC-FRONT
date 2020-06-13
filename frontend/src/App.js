@@ -46,6 +46,8 @@ import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnno
 import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
+import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
+import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
 
 function App() {
   return (
@@ -131,7 +133,12 @@ function App() {
         <Route
           exact
           path="/home"
-          component={() => <CitoyenHome annonce active="home" />}
+          component={() => 
+          <CitoyenHome annonce 
+          active="home" 
+          childComponent= {<HomeCitoyen />}
+          />
+          }
         />
         <Route
           exact
@@ -150,6 +157,16 @@ function App() {
             <CitoyenHome
               props={prop}
               childComponent={<CitoyenDeclarationInfo props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/infosScreen"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<InfosScreen props={prop} />}
             />
           )}
         />
