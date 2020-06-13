@@ -6,6 +6,8 @@ import { ReactComponent as Notification } from "../../assets/images/notification
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 import { useHistory } from "react-router";
 import axios from "axios";
+import Pusher from "pusher-js";
+
 //? import css
 import "./CitoyenHeader.css";
 
@@ -15,14 +17,37 @@ export default function CitoyenHeader(props) {
   const [image, setImage] = useState("");
   const [isNotifated, setIsNotifated] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
+  const [data, setData] = useState([]);
 
   const handleNotificated = () => {
     setIsNotifated((prevState) => !prevState);
   };
+
   useEffect(() => {
+    getNotif();
     setfullname(props.fullname);
     setImage(props.image);
-  }, [props.fullname, props.image]);
+  }, [props.fullname, props.image, isNotifated, props.uid]);
+  const getNotif = () => {
+    if (props.uid) {
+      let instance = axios.create({
+        baseURL: "http://madina-tic.ml/api/",
+        responseType: "json",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      });
+      instance
+        .get(`notifications/?citoyen=${props.uid}&maire=null`)
+        .then((res) => {
+          setData(res.data.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   const { login } = props;
   const handleLogout = () => {
     axios
@@ -46,6 +71,15 @@ export default function CitoyenHeader(props) {
         console.log(err);
       });
   };
+  const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
+    cluster: "eu",
+    authEndpoint: "http://madina-tic.ml/api/pusher/auth",
+  });
+  var DeclarationChannel = pusher.subscribe("Declaration");
+  DeclarationChannel.bind("Complement", function (data) {
+    setIsNotifated(true);
+  });
+
   const trigger = (
     <div
       style={{
@@ -112,6 +146,7 @@ export default function CitoyenHeader(props) {
                         ? "_margin_horizontal_md pointer notificated"
                         : "_margin_horizontal_md pointer"
                     }
+                    onClick={() => setIsNotifated(false)}
                   />
                 }
                 pointing="top right"
@@ -123,46 +158,23 @@ export default function CitoyenHeader(props) {
                   }}
                   className={props.isFrench ? "_ltr dd" : "_rtl dd"}
                 >
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
+                  {data.length > 0 &&
+                    data.map((elm, index) => (
+                      <Dropdown.Item key={index} className="item_notif">
+                        <div className="notif_item">
+                          <div className="row">
+                            <h4>{elm.title}</h4>
+                            <p>{elm.created_on}</p>
+                          </div>
+                          <p>{elm.body}</p>
+                        </div>
+                      </Dropdown.Item>
+                    ))}
+                  {data.length === 0 && (
+                    <Dropdown.Item className="item_notif">
+                      <p>Pas de notifications disponible</p>
+                    </Dropdown.Item>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
 

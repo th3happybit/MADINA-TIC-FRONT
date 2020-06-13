@@ -59,36 +59,6 @@ const CitoyenHome = (props) => {
           setImage(res.data.image);
           setId(res.data.uid);
           console.log(res);
-          let tokenProvider = new PusherPushNotifications.TokenProvider({
-            url: "https://madina-tic.ml/api/beams_auth/",
-          });
-
-          PusherPushNotifications.init({
-            instanceId: "65b0754a-0713-4b71-bc41-4d2abae63fc6",
-          })
-            .then((beamsClient) => beamsClient.start())
-            .then((beamsClient) => {
-              console.log(
-                "Successfully registered with Beams. Device ID:",
-                beamsClient.deviceId
-              );
-              return beamsClient;
-            })
-
-            .then((beamsClient) => {
-              return beamsClient
-                .setUserId(res.data.uid, tokenProvider)
-
-                .then(() => beamsClient);
-            })
-            .then((beamsClient) =>
-              console.log(
-                "Successfully associated user with device. User ID:",
-                beamsClient.userId
-              )
-            )
-
-            .catch(console.error);
         })
         .catch((err) => {});
     } else {
@@ -106,6 +76,7 @@ const CitoyenHome = (props) => {
           <CitoyenHeader
             show={handleHide}
             login
+            uid={id}
             fullname={fullname}
             image={image}
             isFrench={language.isFrench}

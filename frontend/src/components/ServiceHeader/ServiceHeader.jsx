@@ -19,6 +19,8 @@ const HeaderService = (props) => {
   const { isUploaded } = useContext(UserContext);
   const [image, setImage] = useState(null);
   const [fullname, setFullname] = useState(null);
+  const [isNotifated, setIsNotifated] = useState(false);
+  const [data, setData] = useState([]);
   useEffect(() => {
     axios
       .create({
@@ -80,7 +82,45 @@ const HeaderService = (props) => {
             </Button>
             <div className="profile_img">
               {" "}
-              <Notification className="_margin_horizontal_md pointer" />
+              <Dropdown
+                trigger={
+                  <Notification
+                    className={
+                      isNotifated
+                        ? "_margin_horizontal_md pointer notificated"
+                        : "_margin_horizontal_md pointer"
+                    }
+                    onClick={() => setIsNotifated(false)}
+                  />
+                }
+                pointing="top right"
+                icon={null}
+              >
+                <Dropdown.Menu
+                  style={{
+                    width: "180px",
+                  }}
+                  className={props.isFrench ? "_ltr dd" : "_rtl dd"}
+                >
+                  {data.length > 0 &&
+                    data.map((elm, index) => (
+                      <Dropdown.Item key={index} className="item_notif">
+                        <div className="notif_item">
+                          <div className="row">
+                            <h4>{elm.title}</h4>
+                            <p>{elm.created_on}</p>
+                          </div>
+                          <p>{elm.body}</p>
+                        </div>
+                      </Dropdown.Item>
+                    ))}
+                  {data.length === 0 && (
+                    <Dropdown.Item className="item_notif">
+                      <p>Pas de notifications disponible</p>
+                    </Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
               <Dropdown
                 trigger={trigger}
                 pointing="top right"
