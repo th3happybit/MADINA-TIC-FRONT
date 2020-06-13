@@ -16,14 +16,57 @@ import { ReactComponent as Location } from "../../assets/icons/Home/location.svg
 import { ReactComponent as Camera } from "../../assets/icons/Home/add_image.svg";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
 
 const HomeMain = (props) => {
   const { language } = props;
-  const [stats, setStats] = useState({
-    total_dec: 6111,
-    treated_dec: 5111,
-    total_users: 15687,
+  const [users, setUsers] = useState(null);
+  const [decl, setDecl] = useState(null);
+  const [treatedDec, settreatedDec] = useState(null);
+
+  function sum(tuple, feat) {
+    var ret = 0;
+    for (let i = 0; i < feat.length; i++) {
+      ret += tuple[feat[i]];
+    }
+    return ret;
+  }
+
+  const prio = ["validated", "refused", "under_treatment", "treated"];
+
+  useEffect(() => {
+    axios
+      .get("https://www.madina-tic.ml/api/declarations-statistics/", {
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        setDecl(
+          sum(res.data.critical, prio) +
+            sum(res.data.important, prio) +
+            sum(res.data.normal, prio) +
+            sum(res.data.low, prio)
+        );
+        settreatedDec(
+          sum(res.data.critical, ["treated"]) +
+            sum(res.data.important, ["treated"]) +
+            sum(res.data.normal, ["treated"]) +
+            sum(res.data.low, ["treated"])
+        );
+      });
+    axios
+      .get("https://www.madina-tic.ml/api/users-statistics/", {
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .then((res) => {
+        setUsers(res.data.all_users);
+      });
   });
+
   const items = [
     {
       comp: LaptopPhone,
@@ -129,21 +172,25 @@ const HomeMain = (props) => {
         <div className="_statistiques">
           <div className="_stat_field">
             <Users height="56" />
-            <p>{`${stats.total_users} ${
-              language.isFrench ? "utilisateurs" : "مستخدم"
-            }`}</p>
+            {users && (
+              <p>{`${users} ${
+                language.isFrench ? "utilisateurs" : "مستخدم"
+              }`}</p>
+            )}
           </div>
           <div className="_stat_field">
             <Announce height="56" />
-            <p>{`${stats.total_dec} ${
-              language.isFrench ? "Déclarations" : "تصريح"
-            }`}</p>
+            {decl && (
+              <p>{`${decl} ${language.isFrench ? "Déclarations" : "تصريح"}`}</p>
+            )}
           </div>
           <div className="_stat_field">
             <Checkmark />
-            <p>{`${stats.treated_dec} ${
-              language.isFrench ? "Déclarations traitées" : "تصريح معالج"
-            }`}</p>
+            {treatedDec && (
+              <p>{`${treatedDec} ${
+                language.isFrench ? "Déclarations traitées" : "تصريح معالج"
+              }`}</p>
+            )}
           </div>
         </div>
       </section>

@@ -61,7 +61,7 @@ th,
 input::placeholder,
 input,
 a {
-  font-weight: 600 !important;
+  font-weight: 600;
   font-family: "Poppins", sans-serif;
 }
 

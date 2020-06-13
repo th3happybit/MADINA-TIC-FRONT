@@ -10,45 +10,45 @@ import axios from "axios";
 
 const Home = (props) => {
   const { language } = props;
-  useEffect(() => {
-    axios
-    .get("https://www.madina-tic.ml/api/declaration_nested/", {
-      headers : {
-        "Content-type" : "application/json",
-      }
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    axios
-    .get("https://www.madina-tic.ml/api/declarations-statistics/", {
-      headers : {
-        "Content-type" : "application/json",
-      }
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    axios
-    .get("https://www.madina-tic.ml/api/users-statistics/", {
-      headers : {
-        "Content-type" : "application/json",
-      }
-    })
-    .then((res) => {
-      console.log(res)
-    })
-    axios
-    .get("https://www.madina-tic.ml/api/announce_nested/", {
-      headers : {
-        "Content-type" : "application/json",
-      }
-    })
-    .then((res) => {
-      console.log(res)
-    })
+  // useEffect(() => {
+  //   axios
+  //   .get("https://www.madina-tic.ml/api/declaration_nested/", {
+  //     headers : {
+  //       "Content-type" : "application/json",
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+  //   axios
+  //   .get("https://www.madina-tic.ml/api/declarations-statistics/", {
+  //     headers : {
+  //       "Content-type" : "application/json",
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+  //   axios
+  //   .get("https://www.madina-tic.ml/api/users-statistics/", {
+  //     headers : {
+  //       "Content-type" : "application/json",
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
+  //   axios
+  //   .get("https://www.madina-tic.ml/api/announce_nested/", {
+  //     headers : {
+  //       "Content-type" : "application/json",
+  //     }
+  //   })
+  //   .then((res) => {
+  //     console.log(res)
+  //   })
 
-  })
+  // })
   return (
     <>
       <HomeHeader language={language}/>

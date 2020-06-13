@@ -15,7 +15,7 @@ const CitoyenSidebar = (props) => {
         <Icon name="add" size="large" />
         <p
           style={{
-            fontWeight: !props.isFrench ? "600" : "400",
+            fontWeight: "600",
           }}
         >
           {props.isFrench ? "Ajouter une déclaration" : "إضافة تصريح"}

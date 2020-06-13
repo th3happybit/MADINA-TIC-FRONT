@@ -28,6 +28,10 @@
     font-family: "Raleway", sans-serif;
   }
 
+._sidebar_service .item {
+  font-weight: 600 !important;
+}
+
   .logo_h {
     width: 30px;
     height: 30px;

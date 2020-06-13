@@ -41,7 +41,8 @@
   padding: 1rem 3rem !important;
 }
 
-.content_modal_btns .button {
+.content_modal_btns .button,
+._maire_declarations .button {
   font-family: "Poppins", sans-serif;
 }
 

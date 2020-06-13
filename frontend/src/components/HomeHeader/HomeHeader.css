@@ -41,6 +41,7 @@
 
 ._home_nav .logo p {
   margin: 0 0.5rem;
+  font-weight: 400 !important;
   font-family: "Raleway", sans-serif;
   font-size: 36px;
 }
