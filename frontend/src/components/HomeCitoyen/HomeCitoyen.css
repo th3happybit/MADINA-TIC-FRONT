@@ -4,7 +4,7 @@
   /* width: 85% !important; */
   margin-left: 16rem !important;
   margin-right: 28rem !important;
-  margin-top: 2rem !important;
+  margin-top: 1rem !important;
   padding: 20px !important;
   border-radius: 4px !important;
   box-shadow: black;
@@ -118,5 +118,9 @@
     margin-top: 1px !important;
     text-align: center;
     margin-left: 10px !important;
+  }
+  ._pic {
+    width: 100% !important;
+    object-fit: cover !important;
   }
 }

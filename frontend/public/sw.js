@@ -8,5 +8,5 @@ PusherPushNotifications.onNotificationReceived = ({ pushEvent, payload }) => {
       data: payload.data,
     })
   );
-  console.log("notification came");
+  console.log("notification");
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { Segment, Image, Popup, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
+import Pusher from "pusher-js";
 import "./HomeCitoyen.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,6 +16,7 @@ const HomeCitoyen = (props) => {
   const [isLoading, setLoading] = useState(false);
   const [next, setNext] = useState(null);
   const [referenceNode, setReferenceNode] = useState();
+  const [notifData, setNotifData] = useState("");
   window.onscroll = debounce(() => {
     if (isLoading || !next) return;
     if (
@@ -170,7 +171,7 @@ const HomeCitoyen = (props) => {
                     }}
                   >
                     <Image
-                      className="pointer"
+                      className="pointer image_dcr"
                       src={
                         element.attachments
                           ? element.attachments[0]

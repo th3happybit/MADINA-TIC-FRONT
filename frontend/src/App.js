@@ -26,6 +26,7 @@ import ServiceAuth from "./screens/Service/ServiceLogin.jsx";
 import Service from "./screens/Service/Service.jsx";
 import Consultations from "./screens/Consultations/Consultations.jsx";
 import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
+import AdminTypes from "./components/AdminTypes/AdminTypes.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -53,6 +54,7 @@ import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
 import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
 import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
+
 function App() {
   return (
     <Provider store={store}>
@@ -330,8 +332,15 @@ function App() {
               path="/signup"
               component={() => <CitoyenAuth islogin={false} />}
             />
+            <Route
+              exact
+              path="/admin/declarations/types"
+              component={() => (
+                <Admin active="types" childComponent={<AdminTypes />} />
+              )}
+            />
+            <Redirect to="/login" />
           </Switch>
-          <Redirect to="/login" />
         </Router>
       </PersistGate>
     </Provider>

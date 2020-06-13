@@ -58,6 +58,7 @@ const CitoyenHome = (props) => {
           setFullname(res.data.first_name + " " + res.data.last_name);
           setImage(res.data.image);
           setId(res.data.uid);
+          console.log(res);
           let tokenProvider = new PusherPushNotifications.TokenProvider({
             url: "https://madina-tic.ml/api/beams_auth/",
           });
@@ -96,7 +97,7 @@ const CitoyenHome = (props) => {
   }, []);
 
   const [isLogin, setIsLogin] = useState("null");
-
+  console.log({ image });
   return (
     <>
       {isLogin ? (

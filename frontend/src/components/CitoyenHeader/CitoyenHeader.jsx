@@ -13,6 +13,12 @@ export default function CitoyenHeader(props) {
   const history = useHistory();
   const [fullname, setfullname] = useState("");
   const [image, setImage] = useState("");
+  const [isNotifated, setIsNotifated] = useState(false);
+  const [showNotif, setShowNotif] = useState(false);
+
+  const handleNotificated = () => {
+    setIsNotifated((prevState) => !prevState);
+  };
   useEffect(() => {
     setfullname(props.fullname);
     setImage(props.image);
@@ -98,7 +104,68 @@ export default function CitoyenHeader(props) {
           )}
           {login && (
             <>
-              <Notification className="_margin_horizontal_md pointer" />
+              <Dropdown
+                trigger={
+                  <Notification
+                    className={
+                      isNotifated
+                        ? "_margin_horizontal_md pointer notificated"
+                        : "_margin_horizontal_md pointer"
+                    }
+                  />
+                }
+                pointing="top right"
+                icon={null}
+              >
+                <Dropdown.Menu
+                  style={{
+                    width: "180px",
+                  }}
+                  className={props.isFrench ? "_ltr dd" : "_rtl dd"}
+                >
+                  <Dropdown.Item className="item_notif">
+                    <div className="notif_item">
+                      <div className="row">
+                        {" "}
+                        <h4>Declaration Validated</h4>
+                        <p>Just now</p>
+                      </div>
+                      <p>your declaration of fuite de gaz is validated</p>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className="item_notif">
+                    <div className="notif_item">
+                      <div className="row">
+                        {" "}
+                        <h4>Declaration Validated</h4>
+                        <p>Just now</p>
+                      </div>
+                      <p>your declaration of fuite de gaz is validated</p>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className="item_notif">
+                    <div className="notif_item">
+                      <div className="row">
+                        {" "}
+                        <h4>Declaration Validated</h4>
+                        <p>Just now</p>
+                      </div>
+                      <p>your declaration of fuite de gaz is validated</p>
+                    </div>
+                  </Dropdown.Item>
+                  <Dropdown.Item className="item_notif">
+                    <div className="notif_item">
+                      <div className="row">
+                        {" "}
+                        <h4>Declaration Validated</h4>
+                        <p>Just now</p>
+                      </div>
+                      <p>your declaration of fuite de gaz is validated</p>
+                    </div>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
               <div className="profile_citoyen_img pointer">
                 <Dropdown trigger={trigger} pointing="top right" icon={null}>
                   <Dropdown.Menu
