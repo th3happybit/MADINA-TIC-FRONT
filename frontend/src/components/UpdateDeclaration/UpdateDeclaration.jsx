@@ -15,7 +15,7 @@ import { change_language } from "../../actions/languageAction";
 import { languages } from "../../language";
 
 const UpdateDeclaration = (props) => {
-  const { languages } = props;
+  const { languages, isDark } = props;
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
@@ -280,9 +280,9 @@ const UpdateDeclaration = (props) => {
     }
   };
   return (
-    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"}`}>
+    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}>
       <Segment
-        className="_add_dec"
+        className={`_add_dec ${isDark ? "dark" : ""}`}
         style={{
           margin: "auto",
         }}

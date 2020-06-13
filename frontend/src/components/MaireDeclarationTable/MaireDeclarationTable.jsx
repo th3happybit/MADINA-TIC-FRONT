@@ -104,7 +104,7 @@ const MaireDeclarationTable = (props) => {
         <Table.HeaderCell content="Citizen Name" width={2} />
         <Table.HeaderCell width={2} content="Title"></Table.HeaderCell>
         <Table.HeaderCell content="Address" width={3} className="_hide" />
-        <Table.HeaderCell content="Submitted On" width={1}>
+        <Table.HeaderCell content="Submitted On" width={2}>
           <p onClick={props.handlesortDate} className="sort_field pointer">
             Added On
             {props.sortdate ? (

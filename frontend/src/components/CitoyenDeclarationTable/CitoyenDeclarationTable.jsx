@@ -4,6 +4,8 @@ import ModalDelete from "./ConfirmDeleteModal.jsx";
 import { Table, Button, Icon, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+import "./CitoyenDeclarationsTable.css";
+
 const CitoyenDeclarationTable = (props) => {
   const {
     data,
@@ -14,6 +16,7 @@ const CitoyenDeclarationTable = (props) => {
     sorttype,
     handledelete,
     types,
+    isDark
   } = props;
 
   const [Data, setData] = useState(data);
@@ -74,7 +77,7 @@ const CitoyenDeclarationTable = (props) => {
   }
 
   return (
-    <Table striped className={props.language.isFrench ? "" : "_table_rtl"}>
+    <Table striped className={`${props.language.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}>
       <Table.Header className="table_header">
         <Table.Row>
           <Table.HeaderCell width={2}>

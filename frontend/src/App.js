@@ -112,10 +112,7 @@ function App() {
               exact
               path="/service/profile"
               component={() => (
-                <Service
-                  active="profile"
-                  childComponent={Profile}
-                />
+                <Service active="profile" childComponent={Profile} />
               )}
             />
             <Route
@@ -196,7 +193,6 @@ function App() {
                 />
               )}
             />
-            />
             <Route exact path="/service/login" component={ServiceAuth} />
             <Route exact path="/service" component={Service} />
             <Route
@@ -264,7 +260,6 @@ function App() {
                 />
               )}
             />
-            )} /> />
             <Route exact path="/service/login" component={ServiceAuth} />
             <Route exact path="/service" component={Service} />
             <Route

@@ -38,6 +38,8 @@ const CitoyenDeclarations = (props) => {
   const [perm, setperm] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
+  const {isDark} = props;
+
   const handlemobileTypeSortAZ = () => {
     setsortDate(null);
     setPage(1);
@@ -237,10 +239,10 @@ const CitoyenDeclarations = (props) => {
 
   return (
     <div
-      className={`_main_declaration ${props.language.isFrench ? "" : "rtl"}`}
+      className={`_main_declaration ${props.language.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}
     >
       <Segment
-        className="_main_declaration_right shadow"
+        className={`_main_declaration_right shadow ${isDark ? "dark" : ""}`}
         loading={searchLoading ? false : Loading}
       >
         {Data && (
@@ -453,7 +455,7 @@ const CitoyenDeclarations = (props) => {
               </Dropdown>
             </div>
             {Data.length > 0 ? (
-              <div className={`_data_section ${props.language.isFrench ? "" : "rtl"}`}>
+              <div className={`_data_section ${props.language.isFrench ? null : "rtl"} ${isDark ? "dark" : null}`}>
                   <DecTable
                     data={Data}
                     filter={activeFilter}
@@ -463,10 +465,11 @@ const CitoyenDeclarations = (props) => {
                     sorttype={sortType}
                     sortdate={sortDate}
                     types={types}
+                    isDark={props.isDark}
                     handledelete={deleteDeclaration}
                     language={props.language}
                   />
-                {pages > 0 && (
+                {pages > 1 && (
                   <Pagination
                     className="citoyen_declar_pagin"
                     boundaryRange={0}
@@ -474,7 +477,7 @@ const CitoyenDeclarations = (props) => {
                     onPageChange={onChange}
                     firstItem={null}
                     lastItem={null}
-                    totalPages={5}
+                    totalPages={pages}
                     pointing
                     secondary
                   />

@@ -3,8 +3,14 @@ import { Icon, List } from "semantic-ui-react";
 
 import "./CitoyenSidebar.css";
 const CitoyenSidebar = (props) => {
+  const { isDark } = props;
+
   return (
-    <div className={`_citoyen_sidebar ${props.isFrench ? "" : "rtl"}`}>
+    <div
+      className={`_citoyen_sidebar ${props.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
+    >
       <a href="/add/declaration" className="add_declaration pointer">
         <Icon name="add" size="large" />
         <p

@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 import { List } from "semantic-ui-react";
 import "./HomeHeader.css";
 
-const HomeHeader = () => {
+const HomeHeader = (props) => {
+  const { language } = props;
   const [white, setWhite] = useState(true);
   const [visible, setVisible] = useState(false);
 
@@ -21,15 +22,15 @@ const HomeHeader = () => {
   };
 
   const items = [
-    { link: "#", text: "accueil" },
-    { link: "#", text: "déclarations" },
-    { link: "#", text: "contact" },
-    { link: "/signup", text: "s'inscrire" },
-    { link: "/login", text: "se connecter" },
+    { link: "#", text: language.isFrench ? "accueil" : "الصفحة الرئيسية" },
+    { link: "#", text: language.isFrench ? "déclarations" : "التصريحات" },
+    { link: "#", text: language.isFrench ? "contact" : "تواصل معنا" },
+    { link: "/signup", text: language.isFrench ? "s'inscrire" : "أنشئ حسابا" },
+    { link: "/login", text: language.isFrench ? "se connecter" : "تسجيل الدخول" },
   ];
 
   return (
-    <header className={`_home_header ${!white ? "white" : ""}`}>
+    <header className={`_home_header ${!white ? "white" : ""} ${language.isFrench ? "" : "rtl"}`}>
       {visible && <Backdrop onClick={handle_visible} />}
       <nav className="_home_nav">
         <Link className="pointer logo">
@@ -66,7 +67,11 @@ const HomeHeader = () => {
           </div>
           <List className="_sidebar_list">
             {items.map((element) => {
-              return <Link className="text-default" to={element.link}>{element.text}</Link>;
+              return (
+                <Link className="text-default" to={element.link}>
+                  {element.text}
+                </Link>
+              );
             })}
           </List>
         </div>

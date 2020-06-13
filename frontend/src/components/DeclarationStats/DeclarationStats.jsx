@@ -163,7 +163,7 @@ const DeclarationStats = (props) => {
           <Button
             name="important"
             style={{
-              background: "yellow",
+              background: "#fbbd08",
             }}
             onClick={handleClicked}
           >

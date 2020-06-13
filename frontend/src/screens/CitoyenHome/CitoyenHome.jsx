@@ -23,7 +23,7 @@ import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
 import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 const CitoyenHome = (props) => {
-  const { language, annonce } = props;
+  const { language, annonce, isDark } = props;
   //!TODO FOR MONCEF
   //? bah tjib isDark ...
   // console.log(props.isDark);
@@ -90,11 +90,14 @@ const CitoyenHome = (props) => {
             fullname={fullname}
             image={image}
             isFrench={language.isFrench}
+            isDark={isDark}
+            change_mode = {props.change_mode}
           />{" "}
           <CitoyenSidebar
             isFrench={language.isFrench}
             active={props.active}
             visible={visible}
+            isDark={isDark}
           />{" "}
           <main
             style={{
@@ -102,6 +105,7 @@ const CitoyenHome = (props) => {
               top: "70px",
               left: "0",
             }}
+            className={isDark ? "dark" : ""}
           >
             {props.childComponent}
           </main>
@@ -112,11 +116,12 @@ const CitoyenHome = (props) => {
             visible={visible}
             active={props.active}
             click={handleHide}
+            isDark={isDark}
             login
           />
           {annonce && (
             <div className="_annonce_section">
-              <Annonce isFrench={language.isFrench} />
+              <Annonce isFrench={language.isFrench} isDark={isDark}/>
             </div>
           )}
         </>

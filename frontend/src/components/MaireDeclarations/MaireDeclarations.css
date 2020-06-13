@@ -3,7 +3,6 @@
   width: 100%;
   min-height: 650px;
   padding-top: 6rem;
-  /* margin-bottom: 4rem; */
   padding-left: 19rem !important;
   padding-right: 2rem !important;
 }
@@ -42,6 +41,10 @@
   padding: 1rem 3rem !important;
 }
 
+.content_modal_btns .button {
+  font-family: "Poppins", sans-serif;
+}
+
 ._main_body .row {
   display: flex;
   justify-content: space-between;
@@ -55,6 +58,7 @@
   border: 1px solid var(--primary) !important;
   border-radius: 3px !important;
   text-align: center !important;
+  font-family: "Poppins", sans-serif;
 }
 
 ._main_body .filter_declaration > i {

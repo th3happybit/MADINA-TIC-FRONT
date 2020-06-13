@@ -20,7 +20,7 @@ import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.j
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 
 const Card = (props) => {
-  const { cit_infos, loading, isFrench } = props;
+  const { cit_infos, loading, isFrench, isDark } = props;
   const [isEdit, setEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeItem, setActiveItem] = useState("info");
@@ -344,7 +344,7 @@ const Card = (props) => {
     <>
       <Segment
         loading={loading ? loading : cardLoading}
-        className="card-citoyen shadow"
+        className={`card-citoyen ${isDark ? "dark" : "shadow"} ${isFrench ? "" : "rtl"}`}
       >
         {cit_infos && (
           <>

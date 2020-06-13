@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { List, Image } from "semantic-ui-react";
+import { List, Image, Radio } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import axios from "axios";
 import "./SidebarCitoyenMobile.css";
 
 const SidebarCitoyenMobile = (props) => {
-  const { fullname, image } = props;
+  const { fullname, image, isDark } = props;
   const history = useHistory();
 
   const handleLogout = () => {
@@ -33,7 +33,11 @@ const SidebarCitoyenMobile = (props) => {
   };
   return (
     <div
-      className={props.visible ? "_sidebar citoyen active" : "_sidebar citoyen"}
+      className={
+        props.visible
+          ? `_sidebar citoyen active ${isDark ? "dark" : ""}`
+          : `_sidebar citoyen ${isDark ? "dark" : ""}`
+      }
     >
       <div className="profile_citoyen_mobile_x">
         <Image src={image} />
@@ -54,7 +58,7 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
         <List.Item>
           <Link to="/add/declaration" className={"medium-text text-default"}>
-          {props.isFrench ? "Ajouter déclaration" : "إضافة تصريح"}
+            {props.isFrench ? "Ajouter déclaration" : "إضافة تصريح"}
           </Link>
         </List.Item>
         <List.Item>

@@ -15,6 +15,10 @@
   justify-content: space-between;
 }
 
+._home_header.rtl ._home_nav ._menu_area {
+  direction: rtl;
+}
+
 ._home_header .white-text {
   color: white;
 }
@@ -54,6 +58,11 @@
   color: white;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
+}
+
+._home_header.rtl ._menu_area p {
+  font-weight: 600;
+  font-family : "Cairo", sans-serif
 }
 
 ._mobile_nav {
@@ -138,6 +147,11 @@
   font-weight: 600;
   font-family: "Raleway", sans-serif;
   text-transform: uppercase;
+}
+
+._home_header.rtl ._sidebar_list a {
+  font-family: "Cairo", sans-serif;
+  text-align: right;
 }
 
 @media (max-width: 1300px) {

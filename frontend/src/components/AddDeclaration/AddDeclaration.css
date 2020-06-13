@@ -5,22 +5,69 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  margin: 2rem 0;
 }
 .container_add_dec.rtl {
   direction: rtl;
+  font-family: "Cairo", sans-serif;
+}
+
+.container_add_dec.rtl .button,
+.container_add_dec.rtl h3,
+.container_add_dec.rtl .form input,
+.container_add_dec.rtl textarea {
+  font-family: "Cairo", sans-serif;
+}
+
+._add_dec.dark {
+  background: var(--second_dark);
+}
+
+._add_dec.dark h3,
+._add_dec.dark .form label,
+._add_dec.dark p {
+  color: var(--primary_text_dark) !important;
+}
+
+._add_dec.dark .form input,
+._add_dec.dark .form input:focus,
+._add_dec.dark .field .selection.dropdown,
+._add_dec.dark .form textarea {
+  background-color: var(--background_dark);
+  color: var(--primary_text_dark);
+}
+
+._add_dec.dark .form input:focus,
+._add_dec.dark .form textarea:focus,
+._add_dec.dark .form input:focus {
+  border-color: var(--primary_dark) !important;
+}
+
+._add_dec.dark ._profile_img_edit.add_dec,
+._add_dec.dark .button_primary {
+  background-color: var(--primary_dark) !important;
+}
+
+._add_dec.dark .button_secondary {
+  background-color: var(--secondary_dark) !important;
+}
+
+.container_add_dec.dark {
+  background: var(--main_dark);
 }
 .container_add_dec {
   max-width: 70%;
+  padding: 2rem 0;
   margin-left: auto;
   margin-right: auto;
+
+  height: 100%;
 }
 .container_add_dec .form {
   width: 50%;
 }
 .container_add_dec .form .field label,
 .label_add_dec {
-  color: var(--blue_darker) !important;
+  color: var(--blue_darker);
   font-size: 16px !important;
 }
 .gps_icon {

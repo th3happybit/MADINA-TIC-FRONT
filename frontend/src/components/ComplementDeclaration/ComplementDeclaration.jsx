@@ -6,6 +6,8 @@ import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
 import { useHistory } from "react-router-dom";
 
+import "./ComplementDeclaration.css"
+
 //? redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -15,7 +17,7 @@ import { languages } from "../../language";
 
 const ComplementDeclaration = (props) => {
   let history = useHistory();
-  const { languages } = props;
+  const { languages, isDark } = props;
   const [titleErr, setTitleErr] = useState(false);
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
@@ -323,8 +325,8 @@ const ComplementDeclaration = (props) => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
   return (
-    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"}`}>
-      <Segment className="_add_dec" loading={loadingPage}>
+    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}>
+      <Segment className={`_add_dec ${isDark ? "dark" : ""}`} loading={loadingPage}>
         {!nullData && notLack ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">

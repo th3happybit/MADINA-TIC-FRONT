@@ -72,7 +72,7 @@ const CitoyenProfile = (props) => {
               justifyContent: "center",
             }}
           >
-            <Grid className="citoyen-profile">
+            <Grid className={`citoyen-profile ${props.isDark ? "dark": ""} ${languages.isFrench ? "" : "rtl"}`}>
               <GridColumn className="left">
                 <Card
                   isFrench={languages.isFrench}
@@ -128,6 +128,7 @@ const CitoyenProfile = (props) => {
           </Container>
           <Container fluid className="mobile-profile">
             <Card
+            isDark={props.isDark}
               isFrench={languages.isFrench}
               cit_infos={Infos}
               loading={isLoading}
