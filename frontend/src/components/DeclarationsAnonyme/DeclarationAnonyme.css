@@ -1,0 +1,21 @@
+._home_declaration_anonyme ._container_declaration {
+  margin-left: 3rem !important;
+}
+
+._home_declaration_anonyme {
+  top: 5rem;
+  position: relative;
+}
+
+@media (max-width: 1100px) {
+  ._home_declaration_anonyme ._container_declaration {
+    margin-right: 5rem !important;
+  }
+}
+
+@media (max-width: 929px) {
+  ._home_declaration_anonyme ._container_declaration {
+    margin-right: 5rem !important;
+    margin-left: 5rem !important;
+  }
+}

@@ -72,6 +72,15 @@ const AnnonceHome = (props) => {
   };
 
   useEffect(() => {
+    const headers = props.anonyme
+      ? {
+          "content-type": "application/json",
+        }
+      : {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        };
+
     const date = new Date();
     let now =
       date.getFullYear() +
@@ -94,10 +103,7 @@ const AnnonceHome = (props) => {
           start_at_less: now,
           end_at_greater: now,
         },
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        },
+        headers: headers,
       })
       .then((res) => {
         setData(res.data.results);

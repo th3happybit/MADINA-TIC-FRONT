@@ -6,7 +6,6 @@ import DeclarationAnonyme from "../../components/DeclarationsAnonyme/Declaration
 import HomeHeader from "../../components/HomeHeader/HomeHeader.jsx";
 import HomeMain from "../../components/HomeMain/HomeMain.jsx";
 
-
 import { change_language } from "../../actions/languageAction";
 import { languages } from "../../language";
 import { useEffect } from "react";
@@ -55,8 +54,12 @@ const Home = (props) => {
   // })
   return (
     <>
-      <HomeHeader language={language}/>{content === "home" ?
-      <HomeMain language={language}/> : <DeclarationAnonyme />}
+      <HomeHeader language={language} declaration={content === "declaration"}/>
+      {content === "home" ? (
+        <HomeMain language={language} />
+      ) : (
+        <DeclarationAnonyme isFrench={language.isFrench} />
+      )}
     </>
   );
 };

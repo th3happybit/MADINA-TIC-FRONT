@@ -7,9 +7,10 @@ import Backdrop from "../Backdrop/Backdrop.jsx";
 import { Link } from "react-router-dom";
 import { List } from "semantic-ui-react";
 import "./HomeHeader.css";
+import { languages } from "../../language";
 
 const HomeHeader = (props) => {
-  const { language } = props;
+  const { language, declaration } = props;
   const [white, setWhite] = useState(true);
   const [visible, setVisible] = useState(false);
 
@@ -20,22 +21,57 @@ const HomeHeader = (props) => {
   window.onscroll = function () {
     window.pageYOffset > 75 ? setWhite(false) : setWhite(true);
   };
-
   const items = [
-    { link: "#", text: language.isFrench ? "accueil" : "الصفحة الرئيسية" },
-    { link: "#", text: language.isFrench ? "déclarations" : "التصريحات" },
+    { link: "/", text: language.isFrench ? "accueil" : "الصفحة الرئيسية" },
+    {
+      link: "/declaration",
+      text: language.isFrench ? "déclarations" : "التصريحات",
+    },
     { link: "#", text: language.isFrench ? "contact" : "تواصل معنا" },
     { link: "/signup", text: language.isFrench ? "s'inscrire" : "أنشئ حسابا" },
-    { link: "/login", text: language.isFrench ? "se connecter" : "تسجيل الدخول" },
+    {
+      link: "/login",
+      text: language.isFrench ? "se connecter" : "تسجيل الدخول",
+    },
   ];
-
+  const itemsMobile = [
+    { link: "/", text: language.isFrench ? "accueil" : "الصفحة الرئيسية" },
+    {
+      link: "/declaration",
+      text: language.isFrench ? "déclarations" : "التصريحات",
+    },
+    {
+      link: "/annonce",
+      text: language.isFrench ? "annonces" : "الإعلانات",
+    },
+    { link: "#", text: language.isFrench ? "contact" : "تواصل معنا" },
+    { link: "/signup", text: language.isFrench ? "s'inscrire" : "أنشئ حسابا" },
+    {
+      link: "/login",
+      text: language.isFrench ? "se connecter" : "تسجيل الدخول",
+    },
+  ];
   return (
-    <header className={`_home_header ${!white ? "white" : ""} ${language.isFrench ? "" : "rtl"}`}>
+    <header
+      className={`_home_header ${!white && !declaration ? "white" : ""} ${
+        language.isFrench ? "" : "rtl"
+      } ${declaration ? "white_declaration" : ""}`}
+    >
       {visible && <Backdrop onClick={handle_visible} />}
       <nav className="_home_nav">
         <Link className="pointer logo">
-          {white ? <LogoI className="logo_h" /> : <Logo className="logo_h" />}
-          <p className={`extra-text ${white ? "white-text" : "text-active"}`}>
+          {declaration ? (
+            <Logo className="logo_h" />
+          ) : white ? (
+            <LogoI className="logo_h" />
+          ) : (
+            <Logo className="logo_h" />
+          )}
+          <p
+            className={`extra-text ${
+              declaration ? "text-active" : white ? "white-text" : "text-active"
+            }`}
+          >
             MADINA-TIC
           </p>
         </Link>
@@ -43,7 +79,13 @@ const HomeHeader = (props) => {
           {items.map((element) => {
             return (
               <Link to={element.link}>
-                <p className={white ? "" : "black-text"}>{element.text}</p>
+                <p
+                  className={
+                    declaration ? "black-text" : white ? "" : "black-text"
+                  }
+                >
+                  {element.text}
+                </p>
               </Link>
             );
           })}
@@ -66,7 +108,7 @@ const HomeHeader = (props) => {
             <Toggle onClick={handle_visible} />
           </div>
           <List className="_sidebar_list">
-            {items.map((element) => {
+            {itemsMobile.map((element) => {
               return (
                 <Link className="text-default" to={element.link}>
                   {element.text}

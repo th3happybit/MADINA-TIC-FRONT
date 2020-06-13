@@ -32,6 +32,10 @@
   transition: ease-out 500ms;
 }
 
+._home_header.white_declaration {
+  background: rgba(202, 202, 202, 0.8);
+}
+
 ._home_nav .logo {
   display: flex;
   flex-direction: row;
