@@ -51,6 +51,8 @@ import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnno
 import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
+import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
+import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
 
 function App() {
   return (
@@ -229,6 +231,28 @@ function App() {
                   childComponent={<UpdateRapport props={prop} />}
                 />
               )}
+          )}
+        />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin/login" component={AdminLogin} />
+       
+        <Route
+          exact
+          path="/home"
+          component={() => 
+          <CitoyenHome annonce 
+          active="home" 
+          childComponent= {<HomeCitoyen />}
+          />
+          }
+        />
+        <Route
+          exact
+          path="/citoyen/declaration/"
+          component={() => (
+            <CitoyenHome
+              active="declaration"
+              childComponent={<CitoyenDeclarations />}
             />
             <Route
               exact
@@ -251,6 +275,30 @@ function App() {
                   childComponent={<DeposerAnnonces props={prop} />}
                 />
               )}
+          )}
+        />
+        <Route
+          exact
+          path="/infosScreen"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<InfosScreen props={prop} />}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/add/declaration"
+          component={() => <CitoyenHome childComponent={<AddDeclaration />} />}
+        />
+        <Route
+          exact
+          path="/update/declaration/"
+          component={(prop) => (
+            <CitoyenHome
+              props={prop}
+              childComponent={<UpdateDeclaration props={prop} />}
             />
             <Route
               exact
