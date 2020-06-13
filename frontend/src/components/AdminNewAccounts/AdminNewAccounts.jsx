@@ -107,13 +107,17 @@ const AdminNewAccounts = () => {
         </div>
       </div>
       <div className="row_t">
-        <TableNewAccounts
-          data={data}
-          count={count}
-          activePage={activePage}
-          handlePagination={handlePagination}
-          refresh={getData}
-        />
+        {data.length > 0 ? (
+          <TableNewAccounts
+            data={data}
+            count={count}
+            activePage={activePage}
+            handlePagination={handlePagination}
+            refresh={getData}
+          />
+        ) : (
+          <p className="p_no">Sorry no new accounts are available</p>
+        )}
       </div>
     </Segment>
   );

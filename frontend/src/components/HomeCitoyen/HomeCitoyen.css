@@ -1,0 +1,126 @@
+._container_declaration {
+  height: 100% !important;
+  min-height: 200px !important;
+  /* width: 85% !important; */
+  margin-left: 16rem !important;
+  margin-right: 28rem !important;
+  margin-top: 1rem !important;
+  padding: 20px !important;
+  border-radius: 4px !important;
+  box-shadow: black;
+}
+
+._row_mobile {
+  display: none;
+}
+.gis.segment {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+}
+._contentt {
+  /* padding-top: 10px !important; */
+  padding-left: 5px;
+  font-size: medium;
+  display: flex;
+}
+
+._contenttt {
+  padding-top: 12px;
+  /* padding-left: 5px; */
+}
+._container_declaration.x {
+  padding: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex;
+  justify-content: center;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+._row {
+  width: 100%;
+}
+
+.roww {
+  margin: 20px 10px 0 0;
+}
+
+.titre {
+  width: 20%;
+  padding-top: 9px;
+}
+
+.status_label {
+  width: 100px;
+  height: 30px;
+  margin-top: 10px !important;
+  text-align: center;
+  margin-left: 30px !important;
+}
+
+@media (max-width: 1100px) {
+  ._container_declaration {
+    margin-right: 5rem !important;
+  }
+}
+
+@media (max-width: 929px) {
+  ._container_declaration {
+    margin-right: 5rem !important;
+    margin-left: 5rem !important;
+  }
+}
+
+@media (max-width: 766px) {
+  ._container_declaration {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+  }
+
+  ._contentt {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .roww {
+    display: none !important;
+  }
+
+  ._row_mobile {
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10px;
+    margin-top: 20px;
+  }
+
+  ._pic {
+    width: 100px;
+    height: 100px;
+    margin-right: 2.5px;
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .titre {
+    width: 100%;
+    padding-top: 9px;
+  }
+  ._container_declaration {
+    margin-right: 1rem !important;
+    margin-left: 1rem !important;
+  }
+  .status_label {
+    width: 150px;
+    height: 30px;
+    margin-top: 1px !important;
+    text-align: center;
+    margin-left: 10px !important;
+  }
+  ._pic {
+    width: 100% !important;
+    object-fit: cover !important;
+  }
+}

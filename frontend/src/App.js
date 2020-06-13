@@ -27,6 +27,7 @@ import Service from "./screens/Service/Service.jsx";
 import Consultations from "./screens/Consultations/Consultations.jsx";
 import ConsultationsAnnonce from "./screens/ConsultationsAnnonce/ConsultationsAnnonce.jsx";
 import Home from "./screens/Home/Home.jsx";
+import AdminTypes from "./components/AdminTypes/AdminTypes.jsx";
 
 //? import slick css
 import "slick-carousel/slick/slick.css";
@@ -52,6 +53,8 @@ import ComplementAnnounces from "./components/ComplementAnnounces/ComplementAnno
 import MaireAnnonce from "./components/MaireAnnonce/MaireAnnonce.jsx";
 import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
+import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
+import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
 
 function App() {
   return (
@@ -144,7 +147,23 @@ function App() {
             <Route
               exact
               path="/home"
-              component={() => <CitoyenHome annonce active="home" />}
+              component={() => (
+                <CitoyenHome
+                  annonce
+                  active="home"
+                  childComponent={<HomeCitoyen />}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/infosScreen"
+              component={(prop) => (
+                <CitoyenHome
+                  props={prop}
+                  childComponent={<InfosScreen props={prop} />}
+                />
+              )}
             />
             <Route
               exact
@@ -381,7 +400,13 @@ function App() {
             <Route
               exact
               path="/declaration"
-              component={() => <Home content="declaration" />}
+              component={() => <Home content="declaration" />} />
+            <Route
+              exact
+              path="/admin/declarations/types"
+              component={() => (
+                <Admin active="types" childComponent={<AdminTypes />} />
+              )}
             />
             <Redirect to="/login" />
           </Switch>

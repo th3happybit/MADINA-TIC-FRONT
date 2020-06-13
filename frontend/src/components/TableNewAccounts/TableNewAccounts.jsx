@@ -81,16 +81,18 @@ const TableNewAccounts = (props) => {
               );
             })}
           </Table.Body>
-          <Pagination
-            className="_maPgin_vertical_lg"
-            activePage={props.activePage}
-            onPageChange={props.handlePagination}
-            totalPages={props.count}
-            firstItem={null}
-            lastItem={null}
-            pointing
-            secondary
-          />
+          {data.length > 0 && (
+            <Pagination
+              className="_maPgin_vertical_lg"
+              activePage={props.activePage}
+              onPageChange={props.handlePagination}
+              totalPages={props.count}
+              firstItem={null}
+              lastItem={null}
+              pointing
+              secondary
+            />
+          )}
         </Table>
       )}
     </>

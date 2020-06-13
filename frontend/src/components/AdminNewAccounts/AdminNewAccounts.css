@@ -16,6 +16,15 @@
   align-items: center;
   padding-bottom: 2rem;
 }
+.p_no {
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--blue_darker);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 ._new_accounts > .row > .title_segment {
   display: flex;
   justify-content: center;
