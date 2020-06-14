@@ -75,9 +75,9 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/admin/notifications"
+            to="/annonce/mobile"
             className={
-              props.active === "notifications"
+              props.active === "annonce"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }

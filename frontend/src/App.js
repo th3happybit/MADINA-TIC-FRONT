@@ -55,6 +55,7 @@ import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
 import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
 import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
+import AnnonceMobile from "./components/HomeCitoyen/AnnonceMobile.jsx";
 
 function App() {
   return (
@@ -152,6 +153,17 @@ function App() {
                   annonce
                   active="home"
                   childComponent={<HomeCitoyen />}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/annonce/mobile"
+              component={() => (
+                <CitoyenHome
+                  annonce
+                  active="annonce"
+                  childComponent={<AnnonceMobile />}
                 />
               )}
             />
@@ -416,4 +428,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

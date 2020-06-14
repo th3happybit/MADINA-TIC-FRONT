@@ -1,0 +1,37 @@
+._annonce_tabb {
+  width: 350px;
+  height: 650px;
+  padding: 2rem 2rem !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+}
+
+.titre_annonce{
+ margin-bottom : 7px !important;
+ margin-left: 8px !important;
+}
+
+.contentt1{
+ margin-top : 5px;
+ margin-left: 8px;
+}
+
+._grand_titre{
+ padding-left: 85px;
+ padding-top: 25px;
+}
+
+@media (max-width : 500px){
+._container_declaration {
+  margin: 2rem 2rem !important;
+}
+._grand_titre{
+ padding-left: 45px !important;
+}
+}
+
+@media (max-width : 400px){
+._container_declaration {
+  margin: 0.5rem 0.5rem !important;
+}
+}
