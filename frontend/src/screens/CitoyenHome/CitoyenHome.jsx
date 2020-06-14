@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Message } from "semantic-ui-react";
 import axios from "axios";
 
-//? beams pusher
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
-
 //? import css
 import "./CitoyenHome.css";
 
@@ -22,6 +19,7 @@ import CitoyenSidebar from "../../components/CitoyenSidebar/CitoyenSidebar.jsx";
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
 import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
+
 const CitoyenHome = (props) => {
   const { language, annonce, isDark } = props;
   //!TODO FOR MONCEF
@@ -81,7 +79,7 @@ const CitoyenHome = (props) => {
             image={image}
             isFrench={language.isFrench}
             isDark={isDark}
-            change_mode = {props.change_mode}
+            change_mode={props.change_mode}
           />{" "}
           <CitoyenSidebar
             isFrench={language.isFrench}
@@ -111,7 +109,7 @@ const CitoyenHome = (props) => {
           />
           {annonce && (
             <div className="_annonce_section">
-              <Annonce isFrench={language.isFrench} isDark={isDark}/>
+              <Annonce isFrench={language.isFrench} isDark={isDark} />
             </div>
           )}
         </>

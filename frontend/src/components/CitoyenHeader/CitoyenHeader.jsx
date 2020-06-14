@@ -14,8 +14,12 @@ import { ReactComponent as Notification } from "../../assets/images/notification
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 import { useHistory } from "react-router";
 import axios from "axios";
-import Pusher from "pusher-js";
 
+import Pusher from "pusher-js";
+import "semantic-ui-css/semantic.min.css";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import "semantic-ui-css";
+import moment from "moment";
 //? import css
 import "./CitoyenHeader.css";
 
@@ -25,18 +29,63 @@ export default function CitoyenHeader(props) {
   const [image, setImage] = useState("");
   const [open, setOpen] = useState(false);
   const [isNotifated, setIsNotifated] = useState(false);
-  const [showNotif, setShowNotif] = useState(false);
   const [data, setData] = useState([]);
-
-  const handleNotificated = () => {
-    setIsNotifated((prevState) => !prevState);
-  };
-
+  useEffect(() => {
+    const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
+      cluster: "eu",
+      authEndpoint: "https://www.madina-tic.ml/api/pusher/auth",
+    });
+    var channel = pusher.subscribe("Declaration");
+    var annonceChannel = pusher.subscribe("Announce");
+    annonceChannel.bind("Creation", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+      });
+      setIsNotifated(true);
+    });
+    channel.bind("Rejection", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+      });
+      setIsNotifated(true);
+    });
+    channel.bind("Complement", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+      });
+      setIsNotifated(true);
+    });
+    channel.bind("Update", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+  }, []);
   useEffect(() => {
     getNotif();
     setfullname(props.fullname);
     setImage(props.image);
   }, [props.fullname, props.image, isNotifated, props.uid]);
+
   const getNotif = () => {
     if (props.uid) {
       let instance = axios.create({
@@ -48,7 +97,7 @@ export default function CitoyenHeader(props) {
         },
       });
       instance
-        .get(`notifications/?citoyen=${props.uid}&maire=null`)
+        .get(`notifications/?citoyen=${props.uid}`)
         .then((res) => {
           setData(res.data.results);
         })
@@ -80,14 +129,6 @@ export default function CitoyenHeader(props) {
         console.log(err);
       });
   };
-  const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
-    cluster: "eu",
-    authEndpoint: "http://madina-tic.ml/api/pusher/auth",
-  });
-  var DeclarationChannel = pusher.subscribe("Declaration");
-  DeclarationChannel.bind("Complement", function (data) {
-    setIsNotifated(true);
-  });
 
   const trigger = (
     <div
@@ -110,7 +151,6 @@ export default function CitoyenHeader(props) {
             <Toggle onClick={props.show} />
           </div>
         )}
-
         <div className="_citoyen_header_logo">
           <div className="_madinatic_logo">
             {isDark ? <Logo_dark /> : <Logo />}
@@ -146,6 +186,7 @@ export default function CitoyenHeader(props) {
               </Button>
             </div>
           )}
+          <SemanticToastContainer className="container_toastr" />
           {login && (
             <>
               <Dropdown
@@ -174,7 +215,7 @@ export default function CitoyenHeader(props) {
                         <div className="notif_item">
                           <div className="row">
                             <h4>{elm.title}</h4>
-                            <p>{elm.created_on}</p>
+                            <p>{moment(elm.created_on).fromNow()}</p>
                           </div>
                           <p>{elm.body}</p>
                         </div>

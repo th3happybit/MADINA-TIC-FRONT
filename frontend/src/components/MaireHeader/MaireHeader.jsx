@@ -13,7 +13,11 @@ import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 
 import { Link } from "react-router-dom";
-//sfc shortcutpro
+import Pusher from "pusher-js";
+import "semantic-ui-css/semantic.min.css";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import "semantic-ui-css";
+import moment from "moment";
 const HeaderAdmin = (props) => {
   const { isUploaded } = useContext(UserContext);
   const [image, setImage] = useState(null);
@@ -21,6 +25,67 @@ const HeaderAdmin = (props) => {
   const [isNotifated, setIsNotifated] = useState(false);
   const [data, setData] = useState([]);
   const { imageP } = props;
+  useEffect(() => {
+    const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
+      cluster: "eu",
+      authEndpoint: "https://www.madina-tic.ml/api/pusher/auth",
+    });
+    var channel = pusher.subscribe("Declaration");
+    var rapport_channel = pusher.subscribe("Report");
+    var annonceChannel = pusher.subscribe("Announce");
+    rapport_channel.bind("Creation", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 500000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    annonceChannel.bind("Creation", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 500000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    channel.bind("Creation", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 500000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    channel.bind("Update", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 500000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (imageP) setImage(imageP);
@@ -43,6 +108,22 @@ const HeaderAdmin = (props) => {
       .then((res) => {
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
+        let instance = axios.create({
+          baseURL: "http://madina-tic.ml/api/",
+          responseType: "json",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        });
+        instance
+          .get(`notifications/?maire=${res.data.uid}`)
+          .then((res) => {
+            setData(res.data.results);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => console.log(err));
   }, [isUploaded]);
@@ -79,6 +160,7 @@ const HeaderAdmin = (props) => {
           <div className="right_part">
             <div className="profile_img">
               {" "}
+              <SemanticToastContainer className="container_toastr_service" />{" "}
               <Dropdown
                 trigger={
                   <Notification
