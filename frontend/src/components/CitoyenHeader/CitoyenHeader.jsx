@@ -16,9 +16,7 @@ import { useHistory } from "react-router";
 import axios from "axios";
 
 import Pusher from "pusher-js";
-import "semantic-ui-css/semantic.min.css";
 import { SemanticToastContainer, toast } from "react-semantic-toasts";
-import "semantic-ui-css";
 import moment from "moment";
 //? import css
 import "./CitoyenHeader.css";

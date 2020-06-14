@@ -14,9 +14,7 @@ import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 
 import { Link } from "react-router-dom";
 import Pusher from "pusher-js";
-import "semantic-ui-css/semantic.min.css";
 import { SemanticToastContainer, toast } from "react-semantic-toasts";
-import "semantic-ui-css";
 import moment from "moment";
 const HeaderAdmin = (props) => {
   const { isUploaded } = useContext(UserContext);
