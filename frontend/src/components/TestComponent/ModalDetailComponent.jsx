@@ -131,7 +131,7 @@ const ModalDetailComponent = (props) => {
       "-" +
       helper(date.getMonth() + 1) +
       "-" +
-      helper(date.getDay()) +
+      helper(date.getDate()) +
       "T" +
       time +
       "+01:00";

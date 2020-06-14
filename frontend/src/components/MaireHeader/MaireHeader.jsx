@@ -38,7 +38,7 @@ const HeaderAdmin = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -51,7 +51,7 @@ const HeaderAdmin = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -64,20 +64,7 @@ const HeaderAdmin = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-    });
-    channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -105,7 +92,7 @@ const HeaderAdmin = (props) => {
       })
       .then((res) => {
         setImage(res.data.image);
-        setIsNotifated(res.data.notif_seen);
+        setIsNotifated(!res.data.notif_seen);
         setFullname(res.data.first_name + " " + res.data.last_name);
         let instance = axios.create({
           baseURL: "http://madina-tic.ml/api/",
@@ -151,7 +138,33 @@ const HeaderAdmin = (props) => {
         console.log(err);
       });
   };
-
+  const handleChangeNotif = () => {
+    if (isNotifated) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/user/",
+          method: "patch",
+          data: {
+            notif_seen: true,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsNotifated(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <>
       <header className="_header_maire">
@@ -168,7 +181,7 @@ const HeaderAdmin = (props) => {
                         ? "_margin_horizontal_md pointer notificated"
                         : "_margin_horizontal_md pointer"
                     }
-                    onClick={() => setIsNotifated(false)}
+                    onClick={handleChangeNotif}
                   />
                 }
                 pointing="top right"
@@ -185,8 +198,8 @@ const HeaderAdmin = (props) => {
                       <Dropdown.Item key={index} className="item_notif">
                         <div className="notif_item">
                           <div className="row">
+                            <p>{moment(elm.created_on).fromNow()}</p>
                             <h4>{elm.title}</h4>
-                            <p>{elm.created_on}</p>
                           </div>
                           <p>{elm.body}</p>
                         </div>

@@ -42,7 +42,7 @@ const DeposeRapport = (props) => {
     setLoading(true);
     axios
       .get(
-        "https://157.230.19.233/api/declarations/" +
+        "https://madina-tic.ml/api/declarations/" +
           props.props.props.location.state.did +
           "/",
         {
