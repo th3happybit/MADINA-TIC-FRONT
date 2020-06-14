@@ -52,24 +52,6 @@ button {
   margin: 0;
 }
 
-p,
-span,
-.button,
-label,
-td,
-th,
-input::placeholder,
-input,
-a {
-  font-weight: 600;
-  font-family: "Poppins", sans-serif;
-}
-
-h1,
-h2,
-h3 {
-  font-family: "Raleway", sans-serif;
-}
 a {
   text-decoration: none !important;
 }

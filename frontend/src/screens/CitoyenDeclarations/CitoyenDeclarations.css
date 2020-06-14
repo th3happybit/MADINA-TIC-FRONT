@@ -15,16 +15,6 @@
   margin-bottom: initial;
 }
 
-.filter_declaration,
-.button.filter_annonce,
-.button._add_link {
-  font-family: "Poppins", sans-serif;
-}
-
-.filters .button {
-  font-family: "Poppins", sans-serif;
-}
-
 ._main_declaration_right {
   margin-top: 1.4rem !important;
   width: 80% !important;

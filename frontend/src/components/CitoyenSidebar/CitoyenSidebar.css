@@ -1,5 +1,5 @@
 ._citoyen_sidebar {
-  width: 200px;
+  width: 210px;
   position: fixed;
   top: 70px;
   display: flex;
@@ -12,7 +12,8 @@
   z-index: 1;
 }
 
-._citoyen_sidebar.rtl {
+._citoyen_sidebar.rtl a,
+._citoyen_sidebar.rtl p{
   font-family: "Cairo", sans-serif;
 }
 

@@ -16,11 +16,6 @@
   font-family: "Cairo", sans-serif;
 }
 
-.dark_trigger {
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-}
-
 ._citoyen_header.dark {
   background-color: var(--second_dark);
 }

@@ -25,7 +25,6 @@
 }
 ._sidebar_maire .part_top p {
   margin: 0 0.5rem;
-  font-family: "Raleway", sans-serif;
 }
 
 .logo_h {
@@ -62,7 +61,6 @@
   display: flex;
   align-items: center;
   color: #4a535f;
-  font-weight: 600 !important;
 }
 ._sidebar_maire > .row > .menu .item.active {
   color: var(--primary) !important;
