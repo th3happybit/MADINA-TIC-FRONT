@@ -33,6 +33,8 @@ const CitoyenHome = (props) => {
   const [fullname, setFullname] = useState("");
   const [image, setImage] = useState(null);
   const [id, setId] = useState(null);
+  const [seen, setSeen] = useState(false);
+
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
@@ -57,6 +59,7 @@ const CitoyenHome = (props) => {
           setImage(res.data.image);
           setId(res.data.uid);
           console.log(res);
+          setSeen(res.data.notif_seen);
         })
         .catch((err) => {});
     } else {
@@ -72,6 +75,7 @@ const CitoyenHome = (props) => {
         <>
           <>{visible && <Backdrop click={handleHide} />}</>
           <CitoyenHeader
+            seen={seen}
             show={handleHide}
             login
             uid={id}

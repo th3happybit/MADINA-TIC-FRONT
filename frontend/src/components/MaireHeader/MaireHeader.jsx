@@ -107,6 +107,7 @@ const HeaderAdmin = (props) => {
       })
       .then((res) => {
         setImage(res.data.image);
+        setIsNotifated(res.data.notif_seen);
         setFullname(res.data.first_name + " " + res.data.last_name);
         let instance = axios.create({
           baseURL: "http://madina-tic.ml/api/",
@@ -117,7 +118,7 @@ const HeaderAdmin = (props) => {
           },
         });
         instance
-          .get(`notifications/?maire=${res.data.uid}`)
+          .get(`notifications/?maire=${res.data.uid}&ordering=-created_on`)
           .then((res) => {
             setData(res.data.results);
           })

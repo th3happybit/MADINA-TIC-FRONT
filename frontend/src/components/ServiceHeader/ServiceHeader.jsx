@@ -35,19 +35,7 @@ const HeaderService = (props) => {
     var channel = pusher.subscribe("Declaration");
     var rapport_channel = pusher.subscribe("Report");
     var annonceChannel = pusher.subscribe("Announce");
-    annonceChannel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 500000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-    });
+
     annonceChannel.bind("Complement", function ({ message }) {
       setIsNotifated(true);
       toast({
@@ -154,9 +142,10 @@ const HeaderService = (props) => {
           },
         });
         instance
-          .get(`notifications/?service=${res.data.uid}`)
+          .get(`notifications/?service=${res.data.uid}&ordering=-created_on`)
           .then((res) => {
             setData(res.data.results);
+            setIsNotifated(res.data.notif_seen);
           })
           .catch((err) => {
             console.log(err);
@@ -195,6 +184,33 @@ const HeaderService = (props) => {
         console.log(err);
       });
   };
+  const handleChangeNotif = () => {
+    if (isNotifated) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/user/",
+          method: "patch",
+          data: {
+            notif_seen: true,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsNotifated(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <>
@@ -220,7 +236,7 @@ const HeaderService = (props) => {
                         ? "_margin_horizontal_md pointer notificated"
                         : "_margin_horizontal_md pointer"
                     }
-                    onClick={() => setIsNotifated(false)}
+                    onClick={handleChangeNotif}
                   />
                 }
                 pointing="top right"

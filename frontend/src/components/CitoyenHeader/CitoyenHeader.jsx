@@ -97,7 +97,7 @@ export default function CitoyenHeader(props) {
         },
       });
       instance
-        .get(`notifications/?citoyen=${props.uid}`)
+        .get(`notifications/?citoyen=${props.uid}&ordering=-created_on`)
         .then((res) => {
           setData(res.data.results);
         })
@@ -129,7 +129,9 @@ export default function CitoyenHeader(props) {
         console.log(err);
       });
   };
-
+  useEffect(() => {
+    setIsNotifated(props.seen);
+  }, [props.seen]);
   const trigger = (
     <div
       style={{
@@ -143,6 +145,33 @@ export default function CitoyenHeader(props) {
       </p>
     </div>
   );
+  const handleChangeNotif = () => {
+    if (isNotifated) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/user/",
+          method: "patch",
+          data: {
+            notif_seen: true,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsNotifated(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div className={`_citoyen_header ${isDark ? "dark" : ""}`}>
       <header>
@@ -197,7 +226,7 @@ export default function CitoyenHeader(props) {
                         ? "_margin_horizontal_md pointer notificated"
                         : "_margin_horizontal_md pointer"
                     }
-                    onClick={() => setIsNotifated(false)}
+                    onClick={handleChangeNotif}
                   />
                 }
                 pointing="top right"
