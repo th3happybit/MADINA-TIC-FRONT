@@ -54,7 +54,7 @@ const HomeCitoyen = (props) => {
         }
       )
       .then((res) => {
-        console.log(res);
+        console.log(res);//------------------------
         if (Data.length === 0) {
           setData(res.data.results);
           setNext(res.data.next);
