@@ -21,7 +21,7 @@
 }
 
 ._citoyen_header.dark ._madinatic_logo p {
-  color : var(--primary_text_dark) !important;
+  color: var(--primary_text_dark) !important;
 }
 
 ._citoyen_header.dark .profile_citoyen_img p {
@@ -187,6 +187,7 @@
     display: flex;
     justify-content: center;
   }
+
   .toggle_citoyen {
     display: flex !important;
     justify-content: center;
@@ -235,6 +236,7 @@
   right: 25% !important;
 }
 .notif_item > p {
+  white-space: break-spaces !important;
   font-size: 14px;
   color: #576271;
   font-weight: 500;

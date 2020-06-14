@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Message } from "semantic-ui-react";
 import axios from "axios";
 
-//? beams pusher
-import * as PusherPushNotifications from "@pusher/push-notifications-web";
-
 //? import css
 import "./CitoyenHome.css";
 
@@ -22,6 +19,7 @@ import CitoyenSidebar from "../../components/CitoyenSidebar/CitoyenSidebar.jsx";
 import Backdrop from "../../components/Backdrop/Backdrop.jsx";
 import SidebarCitoyenMobile from "../../components/SidebarCitoyenMobile/SidebarCitoyenMobile.jsx";
 import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
+
 const CitoyenHome = (props) => {
   const { language, annonce, isDark } = props;
   //!TODO FOR MONCEF
@@ -35,6 +33,8 @@ const CitoyenHome = (props) => {
   const [fullname, setFullname] = useState("");
   const [image, setImage] = useState(null);
   const [id, setId] = useState(null);
+  const [seen, setSeen] = useState(false);
+
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
@@ -59,36 +59,7 @@ const CitoyenHome = (props) => {
           setImage(res.data.image);
           setId(res.data.uid);
           console.log(res);
-          let tokenProvider = new PusherPushNotifications.TokenProvider({
-            url: "https://madina-tic.ml/api/beams_auth/",
-          });
-
-          PusherPushNotifications.init({
-            instanceId: "65b0754a-0713-4b71-bc41-4d2abae63fc6",
-          })
-            .then((beamsClient) => beamsClient.start())
-            .then((beamsClient) => {
-              console.log(
-                "Successfully registered with Beams. Device ID:",
-                beamsClient.deviceId
-              );
-              return beamsClient;
-            })
-
-            .then((beamsClient) => {
-              return beamsClient
-                .setUserId(res.data.uid, tokenProvider)
-
-                .then(() => beamsClient);
-            })
-            .then((beamsClient) =>
-              console.log(
-                "Successfully associated user with device. User ID:",
-                beamsClient.userId
-              )
-            )
-
-            .catch(console.error);
+          setSeen(res.data.notif_seen);
         })
         .catch((err) => {});
     } else {
@@ -104,13 +75,15 @@ const CitoyenHome = (props) => {
         <>
           <>{visible && <Backdrop click={handleHide} />}</>
           <CitoyenHeader
+            seen={seen}
             show={handleHide}
             login
+            uid={id}
             fullname={fullname}
             image={image}
             isFrench={language.isFrench}
             isDark={isDark}
-            change_mode = {props.change_mode}
+            change_mode={props.change_mode}
           />{" "}
           <CitoyenSidebar
             isFrench={language.isFrench}

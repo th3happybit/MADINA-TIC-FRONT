@@ -14,6 +14,12 @@ import { ReactComponent as Notification } from "../../assets/images/notification
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 import { useHistory } from "react-router";
 import axios from "axios";
+
+import Pusher from "pusher-js";
+import "semantic-ui-css/semantic.min.css";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import "semantic-ui-css";
+import moment from "moment";
 //? import css
 import "./CitoyenHeader.css";
 
@@ -23,15 +29,83 @@ export default function CitoyenHeader(props) {
   const [image, setImage] = useState("");
   const [open, setOpen] = useState(false);
   const [isNotifated, setIsNotifated] = useState(false);
-  const [showNotif, setShowNotif] = useState(false);
-
-  const handleNotificated = () => {
-    setIsNotifated((prevState) => !prevState);
-  };
+  const [data, setData] = useState([]);
   useEffect(() => {
+    const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
+      cluster: "eu",
+      authEndpoint: "https://www.madina-tic.ml/api/pusher/auth",
+    });
+    var channel = pusher.subscribe("Declaration");
+    var annonceChannel = pusher.subscribe("Announce");
+    annonceChannel.bind("Creation", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+      });
+      setIsNotifated(true);
+    });
+    channel.bind("Rejection", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+      });
+      setIsNotifated(true);
+    });
+    channel.bind("Complement", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+      });
+      setIsNotifated(true);
+    });
+    channel.bind("Update", function ({ message }) {
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+  }, []);
+  useEffect(() => {
+    getNotif();
     setfullname(props.fullname);
     setImage(props.image);
-  }, [props.fullname, props.image]);
+  }, [props.fullname, props.image, isNotifated, props.uid]);
+
+  const getNotif = () => {
+    if (props.uid) {
+      let instance = axios.create({
+        baseURL: "http://madina-tic.ml/api/",
+        responseType: "json",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
+      });
+      instance
+        .get(`notifications/?citoyen=${props.uid}&ordering=-created_on`)
+        .then((res) => {
+          setData(res.data.results);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   const { login, isDark } = props;
   const handleLogout = () => {
     axios
@@ -55,6 +129,9 @@ export default function CitoyenHeader(props) {
         console.log(err);
       });
   };
+  useEffect(() => {
+    setIsNotifated(props.seen);
+  }, [props.seen]);
   const trigger = (
     <div
       style={{
@@ -68,6 +145,33 @@ export default function CitoyenHeader(props) {
       </p>
     </div>
   );
+  const handleChangeNotif = () => {
+    if (isNotifated) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/user/",
+          method: "patch",
+          data: {
+            notif_seen: true,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsNotifated(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div className={`_citoyen_header ${isDark ? "dark" : ""}`}>
       <header>
@@ -76,7 +180,6 @@ export default function CitoyenHeader(props) {
             <Toggle onClick={props.show} />
           </div>
         )}
-
         <div className="_citoyen_header_logo">
           <div className="_madinatic_logo">
             {isDark ? <Logo_dark /> : <Logo />}
@@ -112,6 +215,7 @@ export default function CitoyenHeader(props) {
               </Button>
             </div>
           )}
+          <SemanticToastContainer className="container_toastr" />
           {login && (
             <>
               <Dropdown
@@ -122,6 +226,7 @@ export default function CitoyenHeader(props) {
                         ? "_margin_horizontal_md pointer notificated"
                         : "_margin_horizontal_md pointer"
                     }
+                    onClick={handleChangeNotif}
                   />
                 }
                 pointing="top right"
@@ -133,46 +238,23 @@ export default function CitoyenHeader(props) {
                   }}
                   className={props.isFrench ? "_ltr dd" : "_rtl dd"}
                 >
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
-                  <Dropdown.Item className="item_notif">
-                    <div className="notif_item">
-                      <div className="row">
-                        {" "}
-                        <h4>Declaration Validated</h4>
-                        <p>Just now</p>
-                      </div>
-                      <p>your declaration of fuite de gaz is validated</p>
-                    </div>
-                  </Dropdown.Item>
+                  {data.length > 0 &&
+                    data.map((elm, index) => (
+                      <Dropdown.Item key={index} className="item_notif">
+                        <div className="notif_item">
+                          <div className="row">
+                            <h4>{elm.title}</h4>
+                            <p>{moment(elm.created_on).fromNow()}</p>
+                          </div>
+                          <p>{elm.body}</p>
+                        </div>
+                      </Dropdown.Item>
+                    ))}
+                  {data.length === 0 && (
+                    <Dropdown.Item className="item_notif">
+                      <p>Pas de notifications disponible</p>
+                    </Dropdown.Item>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
 

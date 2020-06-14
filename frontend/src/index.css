@@ -247,3 +247,26 @@ a {
   direction: rtl;
   text-align: right;
 }
+._citoyen_header_logo .ui-alerts.container_toastr.top-right {
+  position: absolute !important;
+  right: 1% !important;
+  top: 60% !important;
+  padding: 2rem 0 !important;
+  max-width: 400px !important;
+  z-index: 60 !important;
+}
+
+._citoyen_header_logo .ui-alerts.container_toastr.top-right .content .header {
+  font-size: 18px !important;
+}
+._citoyen_header_logo .ui-alerts.container_toastr.top-right .content p {
+  font-size: 14px !important;
+  max-width: 340px !important;
+  white-space: break-spaces !important;
+}
+._citoyen_header_logo
+  .ui-alerts.container_toastr.top-right
+  .ui.icon.message
+  > .icon:not(.close) {
+  font-size: 2rem !important;
+}

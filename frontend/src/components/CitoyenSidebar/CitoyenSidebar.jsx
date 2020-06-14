@@ -43,7 +43,11 @@ const CitoyenSidebar = (props) => {
             name="file alternate"
             className={props.active === "declaration" ? "active_ico" : ""}
           />
-          <List.Content>
+          <List.Content
+            style={{
+              whiteSpace: "nowrap",
+            }}
+          >
             {props.isFrench ? "mes déclarations" : "تصريحاتي"}
           </List.Content>
         </List.Item>

@@ -12,6 +12,7 @@ const Service = (props) => {
   const [isLogin, setIsLogin] = useState(false);
   const [verified, setVerified] = useState(false);
   const [image, setImage] = useState("");
+  const [id, setId] = useState(null);
 
   const { service } = props;
 
@@ -37,6 +38,7 @@ const Service = (props) => {
             setIsLogin(false);
             setVerified(true);
             setImage(res.data.image);
+            setId(res.data.uid);
           }
         })
         .catch((err) => {});
@@ -60,7 +62,12 @@ const Service = (props) => {
         <UserProvider value={dataContext}>
           {visible && <Backdrop click={handleHide} />}
           <ServiceSideBar active={active} />
-          <HeaderService active={active} show={handleHide} imageP={image} />
+          <HeaderService
+            uid={id}
+            active={active}
+            show={handleHide}
+            imageP={image}
+          />
           <ServiceHeaderSideBar
             visible={visible}
             active={active}
@@ -69,7 +76,11 @@ const Service = (props) => {
           <main>
             {" "}
             {props.childComponent ? (
-              <props.childComponent props={props} service updateImageP={changeImage} />
+              <props.childComponent
+                props={props}
+                service
+                updateImageP={changeImage}
+              />
             ) : (
               <div
                 style={{
