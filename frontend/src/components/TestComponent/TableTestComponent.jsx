@@ -151,7 +151,7 @@ const TableTestComponent = (props) => {
         {!isRapport && activeFilter === "published" && (
           <Table.HeaderCell content="Status" />
         )}
-        <Table.HeaderCell content="Manage" width={1} textAlign="center" />
+        <Table.HeaderCell content="Gérer" width={1} textAlign="center" />
       </Table.Header>
       {Data && (
         <Table.Body>

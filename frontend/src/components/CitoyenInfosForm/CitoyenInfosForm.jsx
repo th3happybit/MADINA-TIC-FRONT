@@ -29,6 +29,7 @@ const InfosForm = (props) => {
   const [language, setLanguage] = useState(props.isFrench);
 
   useEffect(() => {
+    //change_language(languages.french);
     setfirst_name(cit_infos.first_name);
     setlast_name(cit_infos.last_name);
     setbirthday(cit_infos.date_of_birth);
@@ -91,13 +92,15 @@ const InfosForm = (props) => {
   };
   const UpdateInfosCitoyen = () => {
     setIsLoading(true);
-    if (language) {
+    if (!isFrench) {
       props.change_language(languages.french);
-    } else props.change_language(languages.arabic);
+    } else {
+      props.change_language(languages.arabic);
+    }
     axios
       .create({
         headers: {
-          put: {
+          patch: {
             "Content-Type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
@@ -105,7 +108,7 @@ const InfosForm = (props) => {
       })
       .request({
         url: "https://www.madina-tic.ml/api/user/",
-        method: "put",
+        method: "patch",
         data: {
           email: email,
           first_name: first_name,
@@ -114,6 +117,7 @@ const InfosForm = (props) => {
           date_of_birth: birthday,
           address: address,
           national_id: national_id,
+          is_french: language,
         },
       })
       .then((res) => {
@@ -218,7 +222,15 @@ const InfosForm = (props) => {
           disabled={isEditing}
           trigger={
             <Form.Input
-              value={language ? "Francais" : "Arabe"}
+              value={
+                !language
+                  ? !props.isFrench
+                    ? "عربي"
+                    : "Arabe"
+                  : !props.isFrench
+                  ? "فرنسي"
+                  : "Francais"
+              }
               label={isFrench ? "langue" : "لغة"}
             />
           }
@@ -287,13 +299,13 @@ const InfosForm = (props) => {
 InfosForm.propTypes = {
   isDark: PropTypes.bool.isRequired,
   change_mode: PropTypes.func.isRequired,
-  languagse: PropTypes.object.isRequired,
+  language: PropTypes.object.isRequired,
   change_language: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isDark: state.mode.isDark,
-  languages: state.language,
+  language: state.language,
 });
 
 export default connect(mapStateToProps, { change_mode, change_language })(

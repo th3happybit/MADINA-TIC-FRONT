@@ -17,7 +17,10 @@ main {
 .citoyen-profile.dark p {
   color: var(--primary_text_dark);
 }
-
+.citoyen-profile.rtl {
+  padding-left: 0px !important;
+  padding-right: 180px !important;
+}
 .citoyen-profile.dark span,
 .citoyen-profile.dark .infos-form .form label,
 .citoyen-profile.dark .card-citoyen .icon_card {

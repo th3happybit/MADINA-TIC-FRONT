@@ -101,12 +101,12 @@ const MaireDeclarationTable = (props) => {
     <Table striped className="_maire_table">
       <Table.Header>
         {isRegroup && <Table.HeaderCell width={1} />}
-        <Table.HeaderCell content="Citizen Name" width={2} />
-        <Table.HeaderCell width={2} content="Title"></Table.HeaderCell>
-        <Table.HeaderCell content="Address" width={3} className="_hide" />
-        <Table.HeaderCell content="Submitted On" width={2}>
+        <Table.HeaderCell content="Nom citoyen" width={2} />
+        <Table.HeaderCell width={2} content="Titre"></Table.HeaderCell>
+        <Table.HeaderCell content="Adresse" width={3} className="_hide" />
+        <Table.HeaderCell content="Soumis le" width={2}>
           <p onClick={props.handlesortDate} className="sort_field pointer">
-            Added On
+            Ajouté le
             {props.sortdate ? (
               <Icon name={props.sortdate === "asc" ? "sort up" : "sort down"} />
             ) : (
@@ -114,7 +114,7 @@ const MaireDeclarationTable = (props) => {
             )}
           </p>
         </Table.HeaderCell>
-        <Table.HeaderCell content="Manage" width={1} textAlign="center" />
+        <Table.HeaderCell content="Gérer" width={1} textAlign="center" />
       </Table.Header>
       {data && (
         <Table.Body>

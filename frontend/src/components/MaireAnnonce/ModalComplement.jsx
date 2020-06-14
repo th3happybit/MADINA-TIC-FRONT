@@ -66,7 +66,7 @@ const ModalComplement = (props) => {
         <ModalContent className="details_content">
           {" "}
           <div className="_header_modal extra-text text-default">
-            <p>Demand complement</p>
+            <p>Demande d'un complement</p>
           </div>
           <div className="_redirection_content">
             <Form.Field
@@ -77,7 +77,7 @@ const ModalComplement = (props) => {
               error={
                 error
                   ? {
-                      content: "This field can't be empty",
+                      content: "ce champ est obligatoire",
                       class: "ui basic red label pointing",
                     }
                   : false
@@ -92,13 +92,13 @@ const ModalComplement = (props) => {
             className="_primary"
             onClick={handlecomplement}
           >
-            <Button.Content visible content="Confirm" />
+            <Button.Content visible content="Confirmer" />
             <Button.Content hidden>
               <Icon name="checkmark" />
             </Button.Content>
           </Button>
           <Button animated onClick={handleclose} color="orange">
-            <Button.Content visible content="Cancel" />
+            <Button.Content visible content="Annuler" />
             <Button.Content hidden>
               <Icon name="delete" />
             </Button.Content>

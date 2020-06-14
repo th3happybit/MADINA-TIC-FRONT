@@ -83,7 +83,7 @@ const Modalredirect = (props) => {
             color="blue"
             className="_primary _hidden_on_mobile"
           >
-            <Button.Content visible content="Validate" />
+            <Button.Content visible content="Valider" />
             <Button.Content hidden>
               <Icon name="checkmark" />
             </Button.Content>
@@ -100,11 +100,11 @@ const Modalredirect = (props) => {
       <ModalContent>
         <ModalContent className="details_content">
           <div className="_header_modal extra-text text-default">
-            <p>Confirm validation {"&"} redirect</p>
+            <p>Confirmation de validation {"&"} redirection</p>
           </div>
           <div className="_redirection_content">
             <div>
-              <label className="text-default">Redirect to :</label>
+              <label className="text-default">Redirection à :</label>
               <Select
                 onClick={() => setServiceErr(false)}
                 className="shadow"
@@ -113,7 +113,7 @@ const Modalredirect = (props) => {
                 onChange={handlechange}
                 error={
                   serviceErr && {
-                    content: "This field is necessary",
+                    content: "ce field est obligatoire",
                     class: "ui pointing label red",
                   }
                 }
@@ -121,7 +121,7 @@ const Modalredirect = (props) => {
             </div>
             <div className="_priority_section">
               <Radio
-                label="Critical"
+                label="Critique"
                 name="radioGroup"
                 value={1}
                 checked={priority === 1}
@@ -142,7 +142,7 @@ const Modalredirect = (props) => {
                 onChange={handlepriority}
               />
               <Radio
-                label="Low"
+                label="Faible"
                 name="radioGroup"
                 value={4}
                 checked={priority === 4}
@@ -155,7 +155,7 @@ const Modalredirect = (props) => {
                 style={{
                   width: "320px",
                 }}
-                content="Please choose priority level."
+                content="Veuillez choisir un niveau de priorité."
               />
             )}
           </div>
@@ -167,13 +167,13 @@ const Modalredirect = (props) => {
             className="_primary"
             onClick={handlevalidate}
           >
-            <Button.Content visible content="Confirm" />
+            <Button.Content visible content="Confirmer" />
             <Button.Content hidden>
               <Icon name="checkmark" />
             </Button.Content>
           </Button>
           <Button animated onClick={handleclose} color="orange">
-            <Button.Content visible content="Cancel" />
+            <Button.Content visible content="Annuler" />
             <Button.Content hidden>
               <Icon name="delete" />
             </Button.Content>

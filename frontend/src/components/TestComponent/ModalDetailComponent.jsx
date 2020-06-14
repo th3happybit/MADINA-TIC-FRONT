@@ -131,7 +131,7 @@ const ModalDetailComponent = (props) => {
       "-" +
       helper(date.getMonth() + 1) +
       "-" +
-      helper(date.getDay()) +
+      helper(date.getDate()) +
       "T" +
       time +
       "+01:00";
@@ -261,7 +261,7 @@ const ModalDetailComponent = (props) => {
         <>
           <Button.Group onClick={handleopen} className="infos_button">
             <Popup
-              content="More Infos"
+              content="Plus d'informations"
               trigger={
                 <Button
                   icon
@@ -276,7 +276,7 @@ const ModalDetailComponent = (props) => {
             onClick={handleopen}
             color="blue"
             className="shadow btn_account_detail pointer _primary _hide_on_desktop"
-            content="More details"
+            content="Plus de détails"
           />
         </>
       }
@@ -290,9 +290,7 @@ const ModalDetailComponent = (props) => {
           <div className="_content_modal ">
             <div>
               {isRapport && <p>Title Declaration</p>}
-              {motif && activeFilter === "archived" && (
-                <p>motif of rejection</p>
-              )}
+              {motif && activeFilter === "archived" && <p>motif of rejet</p>}
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
@@ -372,7 +370,7 @@ const ModalDetailComponent = (props) => {
               <ConfirmModal
                 modal
                 button={{ color: "blue", text: "Validate", icon: "checkmark" }}
-                text="Confirm approving this report and mark the declaration as completed ?"
+                text="Confirmer l'approbation de ce rapport et marquer la déclaration comme terminée?"
                 title="Confirm Approval"
                 OnConfirm={confirmReport}
               />
@@ -383,7 +381,7 @@ const ModalDetailComponent = (props) => {
                   text: "Complement",
                   icon: "sync alternate",
                 }}
-                text="Confirm demanding complement ?"
+                text="Confirmer le complément exigeant?"
                 title="Complement Demand"
                 OnConfirm={ComplementDemand}
               />
@@ -394,7 +392,7 @@ const ModalDetailComponent = (props) => {
               modal
               disabled={archive ? false : true}
               button={{ color: "black", text: "Archive", icon: "archive" }}
-              text="Confirm sending this report to archive ?"
+              text="Confirmer l'envoi de ce rapport aux archives?"
               title="Confirm Archive"
               OnConfirm={ArchiveAnnonce}
             />
@@ -406,7 +404,7 @@ const ModalDetailComponent = (props) => {
               <ConfirmModal
                 modal
                 button={{ color: "black", text: "Archive", icon: "archive" }}
-                text="Confirm sending this report to archive ?"
+                text="Confirmer l'envoi de ce rapport aux archives?"
                 title="Confirm Archive"
                 OnConfirm={ArchiveReport}
               />

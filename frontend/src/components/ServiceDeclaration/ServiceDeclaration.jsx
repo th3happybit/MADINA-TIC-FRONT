@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const ServiceDeclaration = (props) => {
-  const [activeFilter, setactiveFilter] = useState("Validated");
+  const [activeFilter, setactiveFilter] = useState("Validée");
   const [Loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [Data, setData] = useState([]);
@@ -51,16 +51,16 @@ const ServiceDeclaration = (props) => {
       pa["search"] = term;
     }
     switch (activeFilter) {
-      case "Validated":
+      case "Validée":
         pa["status"] = "validated";
         break;
-      case "In progress":
+      case "En cours":
         pa["status"] = "under_treatment";
         break;
-      case "Treated":
+      case "Traité":
         pa["status"] = "treated";
         break;
-      case "Archived":
+      case "Archivé":
         pa["status"] = "archived";
         break;
       default:
@@ -159,7 +159,7 @@ const ServiceDeclaration = (props) => {
                   ? true
                   : false,
             }}
-            placeholder="Search for declarations ..."
+            placeholder="Recherche des déclarations ..."
           />
           <Dropdown
             className="icon filter_declaration"
@@ -171,22 +171,22 @@ const ServiceDeclaration = (props) => {
           >
             <Dropdown.Menu>
               <Dropdown.Item
-                text="Validated"
+                text="Validée"
                 onClick={handle_filter}
                 label={{ circular: true, color: "green", empty: true }}
               />
               <Dropdown.Item
-                text="In progress"
+                text="En cours"
                 onClick={handle_filter}
                 label={{ circular: true, color: "yellow", empty: true }}
               />
               <Dropdown.Item
-                text="Treated"
+                text="Traité"
                 onClick={handle_filter}
                 label={{ circular: true, color: "green", empty: true }}
               />
               <Dropdown.Item
-                text="Archived"
+                text="Archivé"
                 onClick={handle_filter}
                 label={{ circular: true, color: "black", empty: true }}
               />

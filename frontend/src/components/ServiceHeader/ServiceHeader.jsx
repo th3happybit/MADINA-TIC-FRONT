@@ -41,7 +41,7 @@ const HeaderService = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -54,7 +54,7 @@ const HeaderService = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -68,7 +68,7 @@ const HeaderService = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -82,24 +82,13 @@ const HeaderService = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
       });
     });
-    annonceChannel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
 
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 500000,
-      });
-      setIsNotifated(true);
-    });
     channel.bind("Update", function ({ message }) {
       setIsNotifated(true);
 
@@ -108,7 +97,7 @@ const HeaderService = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -143,7 +132,11 @@ const HeaderService = (props) => {
           .get(`notifications/?service=${res.data.uid}&ordering=-created_on`)
           .then((res) => {
             setData(res.data.results);
-            setIsNotifated(res.data.notif_seen);
+            if (res.data.notif_seen) {
+              setIsNotifated(true);
+            } else {
+              setIsNotifated(false);
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -221,7 +214,7 @@ const HeaderService = (props) => {
               className="_add_link"
               disabled={props.active !== "annonce"}
             >
-              Add Annonce
+              Ajouter Annonce
             </Button>
 
             <div className="profile_img">
@@ -273,13 +266,13 @@ const HeaderService = (props) => {
               >
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    text="Account"
+                    text="Compte"
                     icon="user"
                     as={Link}
                     to="/service/profile"
                   />
                   <Dropdown.Item
-                    text="Sign Out"
+                    text="Déconnection"
                     icon="sign out"
                     onClick={handleLogout}
                   />

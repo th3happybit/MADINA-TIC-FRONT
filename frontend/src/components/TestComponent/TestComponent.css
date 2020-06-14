@@ -3,12 +3,18 @@
   justify-content: space-around;
 }
 
-@media (max-width : 899px) {
-  .btns_actionsx{
+@media (max-width: 899px) {
+  .btns_actionsx {
     justify-content: flex-start;
   }
   .btns_actionsx ._hide_on_desktop {
     margin-right: 1rem !important;
-    border-radius: .28571429rem !important;
+    border-radius: 0.28571429rem !important;
   }
+}
+.service_rapports .item {
+  display: flex !important;
+}
+.service_rapports .item span {
+  white-space: nowrap !important;
 }

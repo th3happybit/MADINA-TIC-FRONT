@@ -58,8 +58,7 @@ const CitoyenHome = (props) => {
           setFullname(res.data.first_name + " " + res.data.last_name);
           setImage(res.data.image);
           setId(res.data.uid);
-          console.log(res);
-          setSeen(res.data.notif_seen);
+          setSeen(!res.data.notif_seen);
         })
         .catch((err) => {});
     } else {
@@ -96,7 +95,7 @@ const CitoyenHome = (props) => {
               position: "relative",
               top: "70px",
               left: "0",
-              minHeight : "100vh"
+              minHeight: "100vh",
             }}
             className={isDark ? "dark" : ""}
           >
@@ -113,8 +112,10 @@ const CitoyenHome = (props) => {
             login
           />
           {annonce && (
-            <div className={`_annonce_section ${language.isFrench ? "" : "rtl"}`}>
-              <Annonce isFrench={language.isFrench} isDark={isDark}/>
+            <div
+              className={`_annonce_section ${language.isFrench ? "" : "rtl"}`}
+            >
+              <Annonce isFrench={language.isFrench} isDark={isDark} />
             </div>
           )}
         </>
@@ -131,7 +132,7 @@ const CitoyenHome = (props) => {
           {" "}
           <Message negative>
             <Message.Header>
-              {languages.isFrench
+              {true
                 ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
                 : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
             </Message.Header>
@@ -141,13 +142,10 @@ const CitoyenHome = (props) => {
                 ccolor: "#912d2b",
               }}
             >
-              {languages.isFrench
+              {true
                 ? "Accéder à la page de connexion"
                 : "انتقل إلى صفحة تسجيل الدخول"}
-              ?
-              <a href="/login">
-                {languages.isFrench ? "cliquez ici" : "انقر هنا"}
-              </a>
+              ?<a href="/login">{true ? "cliquez ici" : "انقر هنا"}</a>
             </p>
           </Message>
         </div>

@@ -28,7 +28,7 @@ const TestComponent = (props) => {
     setPage(pageInfo.activePage);
   };
   const [sortDate, setsortDate] = useState(null);
-  const [sortmobile, setsortMobile] = useState("Random");
+  const [sortmobile, setsortMobile] = useState("Aléatoire");
   const [uid, setUID] = useState(null);
   const [pages, setPages] = useState(0);
   const [Loading, setLoading] = useState(false);
@@ -51,63 +51,63 @@ const TestComponent = (props) => {
   };
   const handlesortRandom = () => {
     setsortDate(null);
-    setsortMobile("Random");
+    setsortMobile("Archivé");
     setPage(1);
   };
   const handlesortOldFirst = () => {
     setsortDate("asc");
-    setsortMobile("Old first");
+    setsortMobile("Plus ancien");
     setPage(1);
   };
   const handlesortNewFirst = () => {
     setsortDate("desc");
-    setsortMobile("Newer first");
+    setsortMobile("Plus récent");
     setPage(1);
   };
   const handle_StartAtFirst = () => {
     setsortDate("asc");
-    setsortMobile("Start at (Asc)");
+    setsortMobile("Commencer à (Asc)");
     setOrderField("start_at");
     setPage(1);
   };
   const handle_StartAtLast = () => {
     setsortDate("desc");
-    setsortMobile("Start at (Desc)");
+    setsortMobile("Commencer à (Desc)");
     setOrderField("start_at");
     setPage(1);
   };
   const handle_EndAtFirst = () => {
     setsortDate("asc");
-    setsortMobile("End at (Asc)");
+    setsortMobile("Fin à (Asc)");
     setOrderField("end_at");
     setPage(1);
   };
   const handle_EndAtLast = () => {
     setsortDate("desc");
-    setsortMobile("End at (Desc)");
+    setsortMobile("Fin à (Desc)");
     setOrderField("end_at");
     setPage(1);
   };
   function getStatus(st) {
     switch (st) {
       case "not_validated":
-        return "Not Validated";
+        return "Pas validé";
       case "lack_of_info":
-        return "Lack of info";
+        return "Manque d'informations";
       case "published":
-        return "Published";
+        return "Publié";
       case "removed":
-        return "Removed";
+        return "Supprimé";
       case "archived":
-        return "Archived";
+        return "Archivé";
       case "modified":
-        return "Modified";
+        return "Modifié";
       case "work_not_finished":
-        return "Work Not Finished";
+        return "Travail non terminé";
       case "refused":
-        return "Refused";
+        return "Refusé";
       case "validated":
-        return "Validated";
+        return "Validé";
       default:
         break;
     }
@@ -115,29 +115,29 @@ const TestComponent = (props) => {
   function getMonth(month) {
     switch (month) {
       case "01":
-        return "January";
+        return "Janvier";
       case "02":
-        return "February";
+        return "Fevrier";
       case "03":
-        return "March";
+        return "Mars";
       case "04":
-        return "April";
+        return "Avril";
       case "05":
-        return "May";
+        return "Mai";
       case "06":
-        return "June";
+        return "Juin";
       case "07":
-        return "July";
+        return "Juillet";
       case "08":
-        return "August";
+        return "Aout";
       case "09":
-        return "September";
+        return "Septembre";
       case "10":
-        return "October";
+        return "Octobre";
       case "11":
-        return "November";
+        return "Novembre";
       case "12":
-        return "December";
+        return "Decembre";
       default:
         break;
     }
@@ -265,7 +265,9 @@ const TestComponent = (props) => {
                   : false,
             }}
             placeholder={
-              isRapport ? "Search for rapports ..." : "Search for announces ..."
+              isRapport
+                ? "Recherche des rapports ..."
+                : "Recherche des announces ..."
             }
           />
           <Dropdown
@@ -277,34 +279,34 @@ const TestComponent = (props) => {
             labeled
           >
             <Dropdown.Menu>
-              <Dropdown.Item text="Random" onClick={handlesortRandom} />
+              <Dropdown.Item text="Aléatoire" onClick={handlesortRandom} />
               {isRapport ? (
                 <>
                   <Dropdown.Item
-                    text="Newer first"
+                    text="Plus récent"
                     onClick={handlesortNewFirst}
                   />
                   <Dropdown.Item
-                    text="Old first"
+                    text="Plus ancien"
                     onClick={handlesortOldFirst}
                   />
                 </>
               ) : (
                 <>
                   <Dropdown.Item
-                    text="Start at (asc)"
+                    text="Commencer à (asc)"
                     onClick={handle_StartAtFirst}
                   />
                   <Dropdown.Item
-                    text="Start at (desc)"
+                    text="Commencer à (desc)"
                     onClick={handle_StartAtLast}
                   />
                   <Dropdown.Item
-                    text="End at (asc)"
+                    text="Fin à (asc)"
                     onClick={handle_EndAtFirst}
                   />
                   <Dropdown.Item
-                    text="End at (desc)"
+                    text="Fin à (desc)"
                     onClick={handle_EndAtLast}
                   />
                 </>
@@ -371,8 +373,8 @@ const TestComponent = (props) => {
             {loaded && (
               <p class="zero-data">
                 {isRapport
-                  ? "Sorry No reports to display in this section"
-                  : "Sorry No announcements to display in this section"}
+                  ? "Désolé Aucun rapport à afficher dans cette section"
+                  : "Désolé Aucune annonce à afficher dans cette section"}
               </p>
             )}
           </>

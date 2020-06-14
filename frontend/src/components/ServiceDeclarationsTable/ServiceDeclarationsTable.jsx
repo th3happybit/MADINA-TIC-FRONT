@@ -104,11 +104,11 @@ const ServiceDesclarationTable = (props) => {
   return (
     <Table striped className="_service_table">
       <Table.Header>
-        <Table.HeaderCell content="Title" width={3} />
-        <Table.HeaderCell content="Address" width={5} className="_hide" />
-        <Table.HeaderCell width={2} content="Validated at" />
-        <Table.HeaderCell width={1} content="Priority" />
-        <Table.HeaderCell content="Manage" width={1} textAlign="center" />
+        <Table.HeaderCell content="Titre" width={3} />
+        <Table.HeaderCell content="Adresse" width={5} className="_hide" />
+        <Table.HeaderCell width={2} content="Validé à" />
+        <Table.HeaderCell width={1} content="Priorité" />
+        <Table.HeaderCell content="Gérer" width={1} textAlign="center" />
       </Table.Header>
       {Data && (
         <Table.Body>
