@@ -10,8 +10,6 @@ export default function (state = INITIAL_STATE, action) {
         isDark: !state.isDark,
       };
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 }

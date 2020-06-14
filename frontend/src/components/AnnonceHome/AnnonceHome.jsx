@@ -120,32 +120,29 @@ const AnnonceHome = (props) => {
   }, [page]);
 
   return (
-    <Segment className="_annonce_tab shadow" loading={Loading}>
+    <Segment
+      className={`_annonce_tab shadow ${props.isDark ? "dark" : ""} ${
+        props.isFrench ? "" : "rtl"
+      }`}
+      loading={Loading}
+    >
       <h3 className="text-default">
-        {props.isFrench ? "Annonces actives" : "إعلانات نشطة"}
+        {props.isFrench ? "Annonces actives" : "الإعلانات النشطة"}
       </h3>
 
       <div className="_tab_content">
         <div className="_announces">
           {Data.map((annonce, index) => {
             return (
-              <div
-                key={index}
-                className="_annonce"
-                style={{
-                  textAlign: props.isFrench ? "left" : "right",
-                  direction: props.isFrench ? "ltr" : "rtl",
-                }}
-              >
+              <div key={index} className="_annonce">
                 <h4 className="">{annonce.title}</h4>
                 <span
                   style={{
-                    flexDirection: props.isFrench ? "row" : "row-reverse",
                     direction: props.isFrench ? "ltr" : "rtl",
                   }}
                 >
                   <p className="_title">
-                    {props.isFrench ? "Service :" : ": المصلحة"}{" "}
+                    {props.isFrench ? "Service :" : "المصلحة :"}{" "}
                   </p>
                   &nbsp;
                   <p>
@@ -154,43 +151,20 @@ const AnnonceHome = (props) => {
                       annonce.service.last_name}
                   </p>
                 </span>
-                <span
-                  style={{
-                    flexDirection: props.isFrench ? "row" : "row-reverse",
-                    direction: props.isFrench ? "ltr" : "rtl",
-                  }}
-                >
-                  <p className="_title">{props.isFrench ? "De :" : ": مذ"} </p>
+                <span>
+                  <p className="_title">{props.isFrench ? "De :" : "من :"} </p>
                   &nbsp;
                   <p>{TimeExtract(annonce.start_at)}</p>
                 </span>
-                <span
-                  style={{
-                    flexDirection: props.isFrench ? "row" : "row-reverse",
-                    direction: props.isFrench ? "ltr" : "rtl",
-                  }}
-                >
-                  <p className="_title">{props.isFrench ? "À :" : ": إلى"} </p>
+                <span>
+                  <p className="_title">{props.isFrench ? "À :" : "إلى :"} </p>
                   &nbsp;
                   <p>{TimeExtract(annonce.end_at)}</p>
                 </span>
-                <p
-                  className="_title"
-                  style={{
-                    textAlign: props.isFrench ? "left" : "right",
-                    direction: props.isFrench ? "ltr" : "rtl",
-                  }}
-                >
-                  {props.isFrench ? "Détails :" : ": تفاصيل"}
+                <p className="_title">
+                  {props.isFrench ? "Détails :" : "تفاصيل :"}
                 </p>
-                <p
-                  style={{
-                    textAlign: props.isFrench ? "left" : "right",
-                    direction: props.isFrench ? "ltr" : "rtl",
-                  }}
-                >
-                  {annonce.desc}
-                </p>
+                <p>{annonce.desc}</p>
                 {annonce.image && (
                   <Image
                     src={annonce.image}

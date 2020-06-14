@@ -2,63 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { useHistory } from "react-router-dom";
+
 import DeclarationAnonyme from "../../components/DeclarationsAnonyme/DeclarationAnonyme.jsx";
 import HomeHeader from "../../components/HomeHeader/HomeHeader.jsx";
 import HomeMain from "../../components/HomeMain/HomeMain.jsx";
 
 import { change_language } from "../../actions/languageAction";
-import { languages } from "../../language";
 import { useEffect } from "react";
-import axios from "axios";
 
 const Home = (props) => {
+  let history = useHistory();
   const { language, content } = props;
-  // useEffect(() => {
-  //   axios
-  //   .get("https://www.madina-tic.ml/api/declaration_nested/", {
-  //     headers : {
-  //       "Content-type" : "application/json",
-  //     }
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //   })
-  //   axios
-  //   .get("https://www.madina-tic.ml/api/declarations-statistics/", {
-  //     headers : {
-  //       "Content-type" : "application/json",
-  //     }
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //   })
-  //   axios
-  //   .get("https://www.madina-tic.ml/api/users-statistics/", {
-  //     headers : {
-  //       "Content-type" : "application/json",
-  //     }
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //   })
-  //   axios
-  //   .get("https://www.madina-tic.ml/api/announce_nested/", {
-  //     headers : {
-  //       "Content-type" : "application/json",
-  //     }
-  //   })
-  //   .then((res) => {
-  //     console.log(res)
-  //   })
 
+  // useEffect(() => {
+  //   if (localStorage.getItem("token"))
+  //   history.push("/home")
   // })
+
   return (
     <>
-      <HomeHeader language={language} declaration={content === "declaration"}/>
+      <HomeHeader language={language} declaration={content === "declaration"} />
       {content === "home" ? (
         <HomeMain language={language} />
       ) : (
-        <DeclarationAnonyme isFrench={language.isFrench} />
+        <DeclarationAnonyme isFrench={language.isFrench} anonyme />
       )}
     </>
   );

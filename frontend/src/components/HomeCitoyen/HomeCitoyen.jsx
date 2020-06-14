@@ -7,8 +7,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Status from "../CitoyenDeclarationInfo/StatusLabel.jsx";
 import debounce from "lodash.debounce";
+
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import { change_language } from "../../actions/languageAction";
+
 const HomeCitoyen = (props) => {
-  const { filter } = props;
+  const { filter, language } = props;
 
   const [Data, setData] = useState([]);
   const [types, setTypes] = useState([]);
@@ -42,7 +48,7 @@ const HomeCitoyen = (props) => {
       .get(
         Data.length > 0
           ? next
-          : "http://www.madina-tic.ml/api/declarations/?status=validated&status=under_treatment&status=treated&ordering=-created_on",
+          : "http://www.madina-tic.ml/api/declarations/",
         {
           headers: headers,
         }
@@ -140,7 +146,10 @@ const HomeCitoyen = (props) => {
     }
   };
   return (
-    <Segment className="gis" loading={isLoading && Data.length === 0}>
+    <Segment
+      className={`gis ${language.isFrench ? "" : "rtl"}`}
+      loading={isLoading && Data.length === 0}
+    >
       {Data &&
         Data.map((element, index) => {
           return (
@@ -208,46 +217,62 @@ const HomeCitoyen = (props) => {
                     </div>
                   )}
                   <p className=" _contenttt">
-                    Date de dépot :{" "}
+                    {language.isFrench ? "Date de dépot" : "تاريخ الإضافة"} :{" "}
                     {element.created_on && element.created_on.slice(0, 10)}
                   </p>
-                  <p className="_contenttt">Adresse : {element.address}</p>
                   <p className="_contenttt">
-                    Description :<br /> {element.desc}
+                    {language.isFrench ? "Adress" : "العنوان"} :{" "}
+                    {element.address}
+                  </p>
+                  <p className="_contenttt">
+                    {language.isFrench ? "Description" : "التفاصيل"} :<br />{" "}
+                    {element.desc}
                   </p>
                 </div>
-                <div className="_roww">
-                  <Link
-                    to={{
-                      pathname: "/InfosScreen",
-                      state: { id: element.did },
-                    }}
-                  >
-                    <Popup
-                      content="Infos"
-                      trigger={
-                        <Button
-                          icon
-                          id="infos_btn"
-                          className="shadow _hide_on_mobile _infos_btn_desktop"
-                        >
-                          <Icon name="info" color="black" />
-                        </Button>
-                      }
-                    />
-                  </Link>
-                </div>
+                {!props.anonyme && (
+                  <div className="_roww">
+                    <Link
+                      to={{
+                        pathname: "/InfosScreen",
+                        state: { id: element.did },
+                      }}
+                    >
+                      <Popup
+                        content={language.isFrench ? "Infos" : "تفاصيل"}
+                        trigger={
+                          <Button
+                            icon
+                            id="infos_btn"
+                            className="shadow _hide_on_mobile _infos_btn_desktop"
+                          >
+                            <Icon name="info" color="black" />
+                          </Button>
+                        }
+                      />
+                    </Link>
+                  </div>
+                )}
               </>
             </Segment>
           );
         })}
       {isLoading && Data.length > 0 && (
         <Segment loading={isLoading} className="_container_declaration x">
-          Loading...
+          {language.isFrench ? "Loading..." : "اصبر قليلا ..."}
         </Segment>
       )}
     </Segment>
   );
 };
 
-export default HomeCitoyen;
+HomeCitoyen.propTypes = {
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_language })(HomeCitoyen);
