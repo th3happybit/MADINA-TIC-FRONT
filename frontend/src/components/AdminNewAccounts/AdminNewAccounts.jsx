@@ -92,7 +92,7 @@ const AdminNewAccounts = () => {
     <Segment loading={isLoading} className="_new_accounts shadow">
       <div className="row">
         <div className="title_segment">
-          <p className="extra-text text-default">New Accounts</p>
+          <p className="extra-text text-default">Nouveaux Comptes</p>
 
           <Search
             loading={searchLoading}
@@ -101,7 +101,7 @@ const AdminNewAccounts = () => {
             value={searchValue}
             showNoResults={false}
             results={null}
-            placeholder="Search for anything"
+            placeholder="Recherche..."
             input={{ icon: "search", iconPosition: "left" }}
           />
         </div>
@@ -116,7 +116,7 @@ const AdminNewAccounts = () => {
             refresh={getData}
           />
         ) : (
-          <p className="p_no">Sorry no new accounts are available</p>
+          <p className="p_no">Désolé, aucun nouveau compte n'est disponible </p>
         )}
       </div>
     </Segment>

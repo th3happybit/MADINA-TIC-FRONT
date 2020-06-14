@@ -191,15 +191,15 @@ const HeaderAdmin = (props) => {
                   style={{
                     width: "180px",
                   }}
-                  className={props.isFrench ? "_ltr dd" : "_rtl dd"}
+                  className={props.isFrench ? " dd" : "dd"}
                 >
                   {data.length > 0 &&
                     data.map((elm, index) => (
                       <Dropdown.Item key={index} className="item_notif">
                         <div className="notif_item">
                           <div className="row">
-                            <p>{moment(elm.created_on).fromNow()}</p>
                             <h4>{elm.title}</h4>
+                            <p>{moment(elm.created_on).fromNow()}</p>
                           </div>
                           <p>{elm.body}</p>
                         </div>

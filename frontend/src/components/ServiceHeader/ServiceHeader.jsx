@@ -214,7 +214,7 @@ const HeaderService = (props) => {
               className="_add_link"
               disabled={props.active !== "annonce"}
             >
-              Add Annonce
+              Ajouter Annonce
             </Button>
 
             <div className="profile_img">
@@ -266,13 +266,13 @@ const HeaderService = (props) => {
               >
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    text="Account"
+                    text="Compte"
                     icon="user"
                     as={Link}
                     to="/service/profile"
                   />
                   <Dropdown.Item
-                    text="Sign Out"
+                    text="Déconnection"
                     icon="sign out"
                     onClick={handleLogout}
                   />

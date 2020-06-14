@@ -77,7 +77,9 @@ const HeaderAdmin = (props) => {
                 }
               >
                 <a href="/admin/create/account">
-                  <Button disabled={active === "account"}>Add account</Button>
+                  <Button disabled={active === "account"}>
+                    Ajouter un compte
+                  </Button>
                 </a>
               </div>
               <Notification className="_margin_horizontal_md pointer" />
@@ -89,14 +91,14 @@ const HeaderAdmin = (props) => {
               >
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    text="Account"
+                    text="Compte"
                     icon="user"
                     as={Link}
                     to="/admin/profile"
                   />
 
                   <Dropdown.Item
-                    text="Sign Out"
+                    text="Déconnection"
                     icon="sign out"
                     onClick={handleLogout}
                   />

@@ -62,7 +62,7 @@ const ServiceSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/service/rapports/"
-              name="Reports"
+              name="Rapports"
               className={props.active === "rapports" ? "active" : ""}
             />
           </div>
@@ -77,7 +77,7 @@ const ServiceSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/service/annonce/"
-              name="Announcements"
+              name="Annonces"
               className={props.active === "annonce" ? "active" : ""}
             />
           </div>
