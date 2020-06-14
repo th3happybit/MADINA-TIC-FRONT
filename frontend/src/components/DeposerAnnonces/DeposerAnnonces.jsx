@@ -31,6 +31,7 @@ export default function DeposerAnnonces(props) {
   }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
+    console.log({ time });
     return (
       dt.getFullYear() +
       "-" +
@@ -38,7 +39,8 @@ export default function DeposerAnnonces(props) {
       "-" +
       helper(dt.getDate()) +
       "T" +
-      time + "+01:00"
+      time.split(" ")[0] +
+      "+01:00"
     );
   }
 
@@ -95,6 +97,7 @@ export default function DeposerAnnonces(props) {
   const AddAnnonce = () => {
     setIsLoading(true);
     const formData = new FormData();
+    console.log(TimeMake(startDate));
     formData.append("title", title);
     formData.append("start_at", TimeMake(startDate));
     formData.append("end_at", TimeMake(endDate));
@@ -169,6 +172,7 @@ export default function DeposerAnnonces(props) {
         setSerivce(res.data.uid);
       });
   }, []);
+
   return (
     <div className="container_add_dec service">
       <div className="_add_dec">
