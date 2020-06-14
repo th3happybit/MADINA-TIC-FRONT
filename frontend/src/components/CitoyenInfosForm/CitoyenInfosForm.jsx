@@ -97,7 +97,7 @@ const InfosForm = (props) => {
     axios
       .create({
         headers: {
-          put: {
+          patch: {
             "Content-Type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
@@ -105,7 +105,7 @@ const InfosForm = (props) => {
       })
       .request({
         url: "https://www.madina-tic.ml/api/user/",
-        method: "put",
+        method: "patch",
         data: {
           email: email,
           first_name: first_name,
@@ -114,6 +114,7 @@ const InfosForm = (props) => {
           date_of_birth: birthday,
           address: address,
           national_id: national_id,
+          is_french: language,
         },
       })
       .then((res) => {
@@ -218,7 +219,15 @@ const InfosForm = (props) => {
           disabled={isEditing}
           trigger={
             <Form.Input
-              value={language ? "Francais" : "Arabe"}
+              value={
+                language
+                  ? !props.isFrench
+                    ? "Arabe"
+                    : "عربي"
+                  : props.isFrench
+                  ? "Francais"
+                  : "فرنسي"
+              }
               label={isFrench ? "langue" : "لغة"}
             />
           }

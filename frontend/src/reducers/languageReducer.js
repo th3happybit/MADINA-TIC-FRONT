@@ -6,8 +6,8 @@ const INITIAL_STATE = languages.french;
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LANGUAGE:
-      console.log(action)
-      return action.payload;
+      console.log(action);
+      return !state;
     default:
       return state;
   }
