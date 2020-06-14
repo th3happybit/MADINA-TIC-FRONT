@@ -96,7 +96,7 @@ const CitoyenHome = (props) => {
               position: "relative",
               top: "70px",
               left: "0",
-              minHeight : "100vh"
+              minHeight: "100vh",
             }}
             className={isDark ? "dark" : ""}
           >
@@ -113,8 +113,10 @@ const CitoyenHome = (props) => {
             login
           />
           {annonce && (
-            <div className={`_annonce_section ${language.isFrench ? "" : "rtl"}`}>
-              <Annonce isFrench={language.isFrench} isDark={isDark}/>
+            <div
+              className={`_annonce_section ${language.isFrench ? "" : "rtl"}`}
+            >
+              <Annonce isFrench={language.isFrench} isDark={isDark} />
             </div>
           )}
         </>

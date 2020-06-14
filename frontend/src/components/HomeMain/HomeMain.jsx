@@ -18,8 +18,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const HomeMain = (props) => {
+  AOS.init();
   const { language } = props;
   const [users, setUsers] = useState(null);
   const [decl, setDecl] = useState(null);
@@ -138,8 +141,8 @@ const HomeMain = (props) => {
     <div className={`_home_main ${language.isFrench ? "" : "rtl"}`}>
       <section id="home" className="_intro">
         <div className="content">
-          <div className="_text_area">
-            <p className="_title">
+          <div className="_text_area ">
+            <p className="_title ">
               {language.isFrench ? "Madina-Tic" : "مدينة تيك"}
             </p>
             <p className="slogan">
@@ -169,7 +172,11 @@ const HomeMain = (props) => {
             ? "Statistiques de MADINA-TIC"
             : "إحصائيات مدينة تيك"}
         </h1>
-        <div className="_statistiques">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          className="_statistiques"
+        >
           <div className="_stat_field">
             <Users height="56" />
             {users && (
@@ -203,7 +210,11 @@ const HomeMain = (props) => {
           <div className="_items">
             {items.map((element) => {
               return (
-                <div className="_item">
+                <div
+                  className="_item"
+                  data-aos="fade-right"
+                  data-aos-duration="1000"
+                >
                   <element.comp height="35px" className="_icon" />
                   <div className="text_area">
                     <h2>{element.head}</h2>
@@ -221,7 +232,11 @@ const HomeMain = (props) => {
           <div className="_items">
             {inst.map((element, index) => {
               return (
-                <div className="_line">
+                <div
+                  className="_line"
+                  data-aos="fade-left"
+                  data-aos-duration="1000"
+                >
                   <Label circular size="massive">
                     {index + 1}
                   </Label>
@@ -236,15 +251,15 @@ const HomeMain = (props) => {
         </div>
       </section>
       <section id="download" className="_download">
-        <p>
+        <p data-aos="zoom-in" data-aos-duration="1000">
           {language.isFrench
             ? "Disponible sur Google Play"
             : "متوفر الآن على جوجل بلاي"}
         </p>
-        <h1>
+        <h1 data-aos="zoom-in" data-aos-duration="1000">
           {language.isFrench ? "télécharger MADINA-TIC" : "حمل تطبيق مدينة تيك"}
         </h1>
-        <Image src={badge} />
+        <Image data-aos="zoom-in" data-aos-duration="1000" src={badge} />
       </section>
       <footer className="footer_area">
         <h1>{language.isFrench ? "MADINA-TIC" : "مدينة تيك"}</h1>

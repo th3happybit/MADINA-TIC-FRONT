@@ -47,6 +47,19 @@ const HeaderService = (props) => {
         },
       });
     });
+    annonceChannel.bind("Rejection", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 500000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
     rapport_channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
       toast({
@@ -88,18 +101,7 @@ const HeaderService = (props) => {
         },
       });
     });
-    annonceChannel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
 
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 500000,
-      });
-      setIsNotifated(true);
-    });
     channel.bind("Update", function ({ message }) {
       setIsNotifated(true);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+  import React, { useState, useEffect, useContext } from "react";
 import { Image, Dropdown } from "semantic-ui-react";
 import UserContext from "../../screens/Maire/MaireContext.jsx";
 
