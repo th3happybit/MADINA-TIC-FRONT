@@ -73,11 +73,11 @@ const ModalComplement = (props) => {
               label="Motif"
               control={Input}
               onChange={handlechange}
-              placeholder="Enter text here..."
+              placeholder="Enterer du text ici"
               error={
                 error
                   ? {
-                      content: "This field can't be empty",
+                      content: "ce champ est obligatoire",
                       class: "ui basic pointing red label",
                     }
                   : false
@@ -92,13 +92,13 @@ const ModalComplement = (props) => {
             className="_primary"
             onClick={handlecomplement}
           >
-            <Button.Content visible content="Confirm" />
+            <Button.Content visible content="Confirmer" />
             <Button.Content hidden>
               <Icon name="checkmark" />
             </Button.Content>
           </Button>
           <Button animated onClick={handleclose} color="orange">
-            <Button.Content visible content="Cancel" />
+            <Button.Content visible content="Annuler" />
             <Button.Content hidden>
               <Icon name="delete" />
             </Button.Content>

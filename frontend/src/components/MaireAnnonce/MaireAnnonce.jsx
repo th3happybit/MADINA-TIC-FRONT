@@ -7,7 +7,7 @@ import "./MaireAnnonce.css";
 import axios from "axios";
 
 const MaireAnnonce = (props) => {
-  const [activeFilter, setactiveFilter] = useState("Not validated");
+  const [activeFilter, setactiveFilter] = useState("Pas validé");
   const [Loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [Data, setData] = useState([]);
@@ -96,22 +96,22 @@ const MaireAnnonce = (props) => {
         : (pa["ordering"] = "-start_at");
 
     switch (activeFilter) {
-      case "Not validated":
+      case "Pas validé":
         pa["status"] = "not_validated";
         break;
-      case "Lack of info":
+      case "Manque d'informations":
         pa["status"] = "lack_of_info";
         break;
-      case "Published":
+      case "Publié":
         pa["status"] = "published";
         break;
-      case "Removed":
+      case "Supprimé":
         pa["status"] = "removed";
         break;
-      case "Modified":
+      case "Modifié":
         pa["status"] = "modified";
         break;
-      case "Archived":
+      case "Archivé":
         pa["status"] = "archived";
         break;
       default:
@@ -297,32 +297,32 @@ const MaireAnnonce = (props) => {
           >
             <Dropdown.Menu>
               <Dropdown.Item
-                text="Not validated"
+                text="Pas validé"
                 onClick={handle_filter}
                 label={{ circular: true, color: "blue", empty: true }}
               />
               <Dropdown.Item
-                text="Published"
+                text="Publié"
                 onClick={handle_filter}
                 label={{ circular: true, color: "green", empty: true }}
               />
               <Dropdown.Item
-                text="Lack of info"
+                text="Manque d'informations"
                 onClick={handle_filter}
                 label={{ circular: true, color: "yellow", empty: true }}
               />
               <Dropdown.Item
-                text="Modified"
+                text="Modifié"
                 onClick={handle_filter}
                 label={{ circular: true, color: "yellow", empty: true }}
               />
               <Dropdown.Item
-                text="Removed"
+                text="Supprimé"
                 onClick={handle_filter}
                 label={{ circular: true, color: "red", empty: true }}
               />
               <Dropdown.Item
-                text="Archived"
+                text="Archivé"
                 onClick={handle_filter}
                 label={{ circular: true, color: "black", empty: true }}
               />

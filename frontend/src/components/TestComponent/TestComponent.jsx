@@ -373,8 +373,8 @@ const TestComponent = (props) => {
             {loaded && (
               <p class="zero-data">
                 {isRapport
-                  ? "Sorry No reports to display in this section"
-                  : "Sorry No announcements to display in this section"}
+                  ? "Désolé Aucun rapport à afficher dans cette section"
+                  : "Désolé Aucune annonce à afficher dans cette section"}
               </p>
             )}
           </>

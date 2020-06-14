@@ -57,7 +57,7 @@ const ModalComplement = (props) => {
                 modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"
               }
             >
-              {!icon && <Button.Content visible content="reject" />}
+              {!icon && <Button.Content visible content="Rejet" />}
               {icon && (
                 <Button.Content hidden>
                   <Icon name="delete" />
@@ -78,17 +78,17 @@ const ModalComplement = (props) => {
         <ModalContent className="details_content">
           {" "}
           <div className="_header_modal extra-text text-default">
-            <p>Confirm reject</p>
+            <p>Confirmation rejet</p>
           </div>
           <div className="_redirection_content">
             <Form.Field
               label="Motif"
               control={Input}
               onChange={handlechange}
-              placeholder="Enter text here..."
+              placeholder="Enter du text ici..."
               error={
                 error
-                  ? { content: "This field can't be empty", pointing: "above" }
+                  ? { content: "Ce champ est obligatoire", pointing: "above" }
                   : false
               }
             />
@@ -101,13 +101,13 @@ const ModalComplement = (props) => {
             className="_primary"
             onClick={handle_reject}
           >
-            <Button.Content visible content="Confirm" />
+            <Button.Content visible content="Confirmer" />
             <Button.Content hidden>
               <Icon name="checkmark" />
             </Button.Content>
           </Button>
           <Button animated onClick={handleclose} color="orange">
-            <Button.Content visible content="Cancel" />
+            <Button.Content visible content="Annuler" />
             <Button.Content hidden>
               <Icon name="delete" />
             </Button.Content>

@@ -20,7 +20,7 @@ import { withRouter } from "react-router-dom";
 import { add_parent } from "../../actions/regroupAction.js";
 
 const MaireDeclarations = (props) => {
-  const [activeFilter, setactiveFilter] = useState("New Declarations");
+  const [activeFilter, setactiveFilter] = useState("Nouvelles déclarations");
   const [Loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [Data, setData] = useState([]);
@@ -120,25 +120,25 @@ const MaireDeclarations = (props) => {
       else pa["ordering"] = "-created_on";
     }
     switch (activeFilter) {
-      case "New Declarations":
+      case "Nouvelles déclarations":
         pa["status"] = "not_validated";
         break;
-      case "Lack of infos":
+      case "Manque d'informations":
         pa["status"] = "lack_of_info";
         break;
-      case "Validated":
+      case "Validée":
         pa["status"] = "validated";
         break;
-      case "Refused":
+      case "Refusé":
         pa["status"] = "refused";
         break;
-      case "In progress":
+      case "En cours":
         pa["status"] = "under_treatment";
         break;
-      case "Treated":
+      case "Traité":
         pa["status"] = "treated";
         break;
-      case "Archived":
+      case "Archivé":
         pa["status"] = "archived";
         break;
       default:
@@ -384,7 +384,7 @@ const MaireDeclarations = (props) => {
                   ? true
                   : false,
             }}
-            placeholder="Search for declarations ..."
+            placeholder="Recherche des declarations ..."
           />
           <div
             style={{
@@ -393,7 +393,7 @@ const MaireDeclarations = (props) => {
               alignItems: "center",
             }}
           >
-            {activeFilter === "Validated" && (
+            {activeFilter === "Validée" && (
               <Button
                 style={{
                   margin: "0 1rem",
@@ -446,37 +446,37 @@ const MaireDeclarations = (props) => {
             >
               <Dropdown.Menu>
                 <Dropdown.Item
-                  text="New Declarations"
+                  text="Nouvelles déclarations"
                   onClick={handle_filter}
                   label={{ circular: true, color: "blue", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Validated"
+                  text="Validée"
                   onClick={handle_filter}
                   label={{ circular: true, color: "green", empty: true }}
                 />
                 <Dropdown.Item
-                  text="In progress"
+                  text="En cours"
                   onClick={handle_filter}
                   label={{ circular: true, color: "yellow", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Treated"
+                  text="Traité"
                   onClick={handle_filter}
                   label={{ circular: true, color: "green", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Refused"
+                  text="Refusé"
                   onClick={handle_filter}
                   label={{ circular: true, color: "red", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Archived"
+                  text="Archivé"
                   onClick={handle_filter}
                   label={{ circular: true, color: "black", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Lack of infos"
+                  text="Manque d'informations"
                   onClick={handle_filter}
                   label={{ circular: true, color: "orange", empty: true }}
                 />
@@ -518,7 +518,7 @@ const MaireDeclarations = (props) => {
             )
           : perm && (
               <p class="zero-data">
-                Sorry No declarations to display in this section
+                Désolé Aucune déclaration à afficher dans cette section{" "}
               </p>
             )}
       </Segment>

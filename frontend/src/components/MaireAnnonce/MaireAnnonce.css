@@ -19,7 +19,12 @@
   border-radius: 3px !important;
   text-align: center !important;
 }
-
+._maire_annonces .item span {
+  white-space: nowrap !important;
+}
+._maire_annonces .item {
+  display: flex !important;
+}
 ._main_body .filter_annonce > i {
   background-color: white !important;
 }
@@ -39,8 +44,8 @@
 }
 
 ._data_section {
-  min-height : 500px;
-  display : flex;
+  min-height: 500px;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
