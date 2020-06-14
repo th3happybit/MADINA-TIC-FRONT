@@ -29,6 +29,7 @@ const InfosForm = (props) => {
   const [language, setLanguage] = useState(props.isFrench);
 
   useEffect(() => {
+    //change_language(languages.french);
     setfirst_name(cit_infos.first_name);
     setlast_name(cit_infos.last_name);
     setbirthday(cit_infos.date_of_birth);
@@ -91,9 +92,11 @@ const InfosForm = (props) => {
   };
   const UpdateInfosCitoyen = () => {
     setIsLoading(true);
-    if (language) {
+    if (!isFrench) {
       props.change_language(languages.french);
-    } else props.change_language(languages.arabic);
+    } else {
+      props.change_language(languages.arabic);
+    }
     axios
       .create({
         headers: {
@@ -220,13 +223,13 @@ const InfosForm = (props) => {
           trigger={
             <Form.Input
               value={
-                language
+                !language
                   ? !props.isFrench
-                    ? "Arabe"
-                    : "عربي"
-                  : props.isFrench
-                  ? "Francais"
-                  : "فرنسي"
+                    ? "عربي"
+                    : "Arabe"
+                  : !props.isFrench
+                  ? "فرنسي"
+                  : "Francais"
               }
               label={isFrench ? "langue" : "لغة"}
             />
@@ -296,13 +299,13 @@ const InfosForm = (props) => {
 InfosForm.propTypes = {
   isDark: PropTypes.bool.isRequired,
   change_mode: PropTypes.func.isRequired,
-  languagse: PropTypes.object.isRequired,
+  language: PropTypes.object.isRequired,
   change_language: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isDark: state.mode.isDark,
-  languages: state.language,
+  language: state.language,
 });
 
 export default connect(mapStateToProps, { change_mode, change_language })(
