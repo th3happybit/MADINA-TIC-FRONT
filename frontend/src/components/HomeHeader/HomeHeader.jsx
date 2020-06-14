@@ -7,7 +7,6 @@ import Backdrop from "../Backdrop/Backdrop.jsx";
 import { Link } from "react-router-dom";
 import { List } from "semantic-ui-react";
 import "./HomeHeader.css";
-import { languages } from "../../language";
 
 const HomeHeader = (props) => {
   const { language, declaration } = props;
@@ -38,10 +37,12 @@ const HomeHeader = (props) => {
     { link: "/", text: language.isFrench ? "accueil" : "الصفحة الرئيسية" },
     {
       link: "/declaration",
+      onClick: props.handle_declaration,
       text: language.isFrench ? "déclarations" : "التصريحات",
     },
     {
-      link: "/annonce",
+      link: "/declaration",
+      onClick: props.handle_annonce,
       text: language.isFrench ? "annonces" : "الإعلانات",
     },
     { link: "#", text: language.isFrench ? "contact" : "تواصل معنا" },
@@ -94,11 +95,17 @@ const HomeHeader = (props) => {
       <nav className="_mobile_nav">
         <div className="_header_sidebar">
           <div className="_toggle_home">
-            <Toggle onClick={handle_visible} />
+            <Toggle onClick={handle_visible} className={declaration ? "blue" : ""}/>
           </div>
           <div className="logo">
-            {white ? <LogoI height="40px" /> : <Logo height="40px" />}
-            <p className={`extra-text ${white ? "white-text" : "text-active"}`}>
+            {declaration ? (
+              <Logo height="40px" />
+            ) : white ? (
+              <LogoI height="40px" />
+            ) : (
+              <Logo height="40px" />
+            )}
+            <p className={`extra-text ${declaration ? "text-active" : white ? "white-text" : "text-active"}`}>
               MADINA-TIC
             </p>
           </div>
@@ -110,7 +117,15 @@ const HomeHeader = (props) => {
           <List className="_sidebar_list">
             {itemsMobile.map((element) => {
               return (
-                <Link className="text-default" to={element.link}>
+                <Link
+                  className={`text-default ${
+                    props.active === element.text ? "text-active" : ""
+                  }`}
+                  to={element.link}
+                  onClick={() => {
+                    if (element.onClick) element.onClick();
+                  }}
+                >
                   {element.text}
                 </Link>
               );

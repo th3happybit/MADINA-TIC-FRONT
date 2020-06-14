@@ -25,12 +25,16 @@ const HomeCitoyen = (props) => {
   const [notifData, setNotifData] = useState("");
   window.onscroll = debounce(() => {
     if (isLoading || !next) return;
+    console.log(document.documentElement.scrollHeight);
+    console.log(document.documentElement.clientHeight);
+    console.log(document.documentElement.scrollTop)
     if (
       document.documentElement.scrollHeight -
-        document.documentElement.clientHeight ===
-      document.documentElement.scrollTop
+        document.documentElement.clientHeight <=
+      document.documentElement.scrollTop + 1
     ) {
       loadUsers();
+      console.log("dela3");
     }
   }, 100);
   const loadUsers = () => {
@@ -46,9 +50,7 @@ const HomeCitoyen = (props) => {
         };
     axios
       .get(
-        Data.length > 0
-          ? next
-          : "http://www.madina-tic.ml/api/declarations/",
+        Data.length > 0 ? next : "http://www.madina-tic.ml/api/declarations/",
         {
           headers: headers,
         }

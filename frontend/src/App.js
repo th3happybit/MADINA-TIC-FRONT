@@ -396,11 +396,11 @@ function App() {
               path="/signup"
               component={() => <CitoyenAuth islogin={false} />}
             />
-            <Route exact path="/" component={() => <Home content="home" />} />
+            <Route exact path="/" component={() => <Home content="home" active="accueil"/>} />
             <Route
               exact
               path="/declaration"
-              component={() => <Home content="declaration" />} />
+              component={() => <Home content="declaration" active="déclarations"/>} />
             <Route
               exact
               path="/admin/declarations/types"

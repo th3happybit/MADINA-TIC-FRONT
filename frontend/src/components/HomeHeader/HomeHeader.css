@@ -97,6 +97,10 @@
   stroke: white;
 }
 
+._home_header .blue line {
+  stroke: var(--primary);
+}
+
 ._home_header.white line {
   stroke: var(--primary);
 }
