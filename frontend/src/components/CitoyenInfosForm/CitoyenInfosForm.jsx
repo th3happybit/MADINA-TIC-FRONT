@@ -95,7 +95,7 @@ const InfosForm = (props) => {
     if (!isFrench) {
       props.change_language(languages.french);
     } else {
-      props.change_language(languages.arabic);
+      props.change_language(languages.arabe);
     }
     axios
       .create({
