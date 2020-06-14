@@ -21,19 +21,21 @@ export default function Childs(props) {
       let body = {
         parent_declaration: parent,
         status: props.elm.status,
+        service : props.elm.service,
       };
       instance
         .patch(`declarations/${props.elm.did}/`, body)
-        .then((res) => console.log(res))
+        .then((res) => {})
         .catch((err) => console.log(err.response));
     } else {
       let body = {
         parent_declaration: null,
         status: props.elm.status,
+        service : props.elm.service,
       };
       instance
         .patch(`declarations/${props.elm.did}/`, body)
-        .then((res) => console.log(res))
+        .then((res) => {})
         .catch((err) => console.log(err.response));
     }
   }, [isChecked]);

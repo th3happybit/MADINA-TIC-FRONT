@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Table, Modal, Checkbox, Button } from "semantic-ui-react";
 import ModalDetails from "./ModalDetails.jsx";
 
@@ -19,7 +19,6 @@ const MaireRow = (props) => {
     editType,
     isRegroup,
     parent,
-    childs,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const [openParent, setOpenParent] = useState(false);
@@ -33,13 +32,14 @@ const MaireRow = (props) => {
     created_on,
     status,
     desc,
+    service,
     validated_at,
     attachments,
     priority,
   } = props.element;
   const handleClick = () => {
     setIsChecked((prevState) => !prevState);
-    const data = {did, status}
+    const data = {did, status, service}
     if (!parent) {
       props.add_parent(data);
       setOpenParent(true);

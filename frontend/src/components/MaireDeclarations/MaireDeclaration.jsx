@@ -51,17 +51,20 @@ const MaireDeclarations = (props) => {
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
         },
       });
+      console.log(elm);
       let body = {
         parent_declaration: props.parent.did,
         status: elm.status,
+        service: elm.service,
       };
       instance
         .patch(`declarations/${elm.did}/`, body)
-        .then((res) => console.log(res))
+        .then((res) => {
+          setRefresh((prevState) => !prevState);
+          props.add_parent(null);
+        })
         .catch((err) => console.log(err.response));
     });
-    setRefresh((prevState) => !prevState);
-    props.add_parent(null);
   };
   const handlesortRandom = () => {
     setsortDate(null);
@@ -141,18 +144,15 @@ const MaireDeclarations = (props) => {
       default:
         break;
     }
-    pa["has_parent"] = false
+    pa["has_parent"] = false;
     axios
-      .get(
-        "https://www.madina-tic.ml/api/declaration_nested/",
-        {
-          params: pa,
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`,
-          },
-        }
-      )
+      .get("https://www.madina-tic.ml/api/declaration_nested/", {
+        params: pa,
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
+      })
       .then((res) => {
         setData(res.data.results);
         getTypes();
@@ -393,30 +393,32 @@ const MaireDeclarations = (props) => {
               alignItems: "center",
             }}
           >
-            {activeFilter === "Validated" &&<Button
-              style={{
-                margin: "0 1rem",
-                background: "var(--secondary)",
-                color: "white",
-              }}
-              onClick={() => {
-                handleRegroup();
-                if (!props.parent && !props.childs.length > 0 && !isRegroup) {
-                  setOpen(true);
-                }
-                if (props.parent && props.childs.length > 0) {
-                  setIsRegroup(false);
-                }
-                if (props.parent && props.childs.length === 0) {
-                  setOpenErr(true);
-                }
-                if (props.parent && props.childs.length > 0) {
-                  fetchRegroupement();
-                }
-              }}
-            >
-              {isRegroup ? "Confirmer" : "Regrouper"}
-            </Button>}
+            {activeFilter === "Validated" && (
+              <Button
+                style={{
+                  margin: "0 1rem",
+                  background: "var(--secondary)",
+                  color: "white",
+                }}
+                onClick={() => {
+                  handleRegroup();
+                  if (!props.parent && !props.childs.length > 0 && !isRegroup) {
+                    setOpen(true);
+                  }
+                  if (props.parent && props.childs.length > 0) {
+                    setIsRegroup(false);
+                  }
+                  if (props.parent && props.childs.length === 0) {
+                    setOpenErr(true);
+                  }
+                  if (props.parent && props.childs.length > 0) {
+                    fetchRegroupement();
+                  }
+                }}
+              >
+                {isRegroup ? "Confirmer" : "Regrouper"}
+              </Button>
+            )}
             <Dropdown
               className="icon filter_declaration _mobile"
               icon="angle down"
