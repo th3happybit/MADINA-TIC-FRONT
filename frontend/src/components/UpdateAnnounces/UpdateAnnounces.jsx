@@ -38,18 +38,23 @@ const ComplementAnnounces = (props) => {
   function helper(str) {
     return str < 10 ? "0" + str : str;
   }
+  function houresMake(str) {
+    let houre = parseInt(str.slice(0, 2));
+    return houre + str.slice(2, str.lenght);
+  }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
-    return (
+    console.log({ time });
+    let ret =
       dt.getFullYear() +
       "-" +
       helper(dt.getMonth() + 1) +
       "-" +
       helper(dt.getDate()) +
-      "T" +
-      time +
-      "+01:00"
-    );
+      "T";
+    if (time.split(" ").length > 1) ret += houresMake(time) + "01:00";
+    else ret += time.split(" ")[0] + "+01:00";
+    return ret;
   }
 
   const handledeleteImg = () => {
