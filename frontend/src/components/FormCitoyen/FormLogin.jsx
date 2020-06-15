@@ -95,7 +95,7 @@ const FormLogin = () => {
         onChange={handleChangeInput}
         value={password}
         id="password"
-        placeholder="Password"
+        placeholder="Mot de passe"
         type="password"
         size="large"
         className="_margin_vertical_sm small"
@@ -105,15 +105,15 @@ const FormLogin = () => {
           error
           content={
             password.length === 0 && email.length === 0
-              ? "Please enter your email and password to login"
-              : "Invalid email or password"
+              ? "Veuillez saisir votre e-mail et votre mot de passe pour vous connecter"
+              : "email ou mot de passe invalide"
           }
         />
       )}
       {nonApp && (
         <Message
           error
-          content="Your account is not validated yet by the admin"
+          content="Votre compte n'est pas encore validé par l'administrateur"
         />
       )}
       <Button
@@ -122,7 +122,7 @@ const FormLogin = () => {
         type="submit"
         onClick={LoginCitoyen}
       >
-        Login
+        S'identifier
       </Button>
     </Form>
   );

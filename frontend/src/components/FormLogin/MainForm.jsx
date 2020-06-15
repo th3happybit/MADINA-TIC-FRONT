@@ -28,8 +28,6 @@ const MainForm = () => {
     }
   };
   const Login = () => {
-    //admin@madina-tic.dz
-    //blackholE
     setISLoading(true);
     axios
       .create({
@@ -93,7 +91,7 @@ const MainForm = () => {
         <Form.Input
           id="password"
           onChange={handleChangeInput}
-          placeholder="Password"
+          placeholder=" Mot de passe"
           type="password"
           size="large"
           className="_margin_vertical_sm small"
@@ -106,7 +104,7 @@ const MainForm = () => {
           className="button_primary _margin_vertical_md"
           type="submit"
         >
-          Login
+          S'identifier
         </Button>
       </Form>
     </>
