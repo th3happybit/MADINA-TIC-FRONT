@@ -143,7 +143,6 @@ const MaireAnnonce = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const updateAnnStatus = (data, aid) => {
@@ -167,7 +166,6 @@ const MaireAnnonce = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const addComplement = (data) => {
@@ -191,7 +189,6 @@ const MaireAnnonce = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const rejectAnnonce = (annData) => {

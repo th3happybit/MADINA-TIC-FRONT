@@ -51,7 +51,6 @@ const MaireDeclarations = (props) => {
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
         },
       });
-      console.log(elm);
       let body = {
         parent_declaration: props.parent.did,
         status: elm.status,
@@ -63,7 +62,7 @@ const MaireDeclarations = (props) => {
           setRefresh((prevState) => !prevState);
           props.add_parent(null);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     });
   };
   const handlesortRandom = () => {
@@ -168,7 +167,6 @@ const MaireDeclarations = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const getTypes = () => {
@@ -184,7 +182,6 @@ const MaireDeclarations = (props) => {
         settypes(res.data);
       })
       .catch((err) => {
-        console.log(err.response);
       });
   };
   const updateDecStatus = (data, did) => {
@@ -208,7 +205,6 @@ const MaireDeclarations = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const addRejection = (data) => {
@@ -232,7 +228,6 @@ const MaireDeclarations = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const addComplement = (data) => {
@@ -259,7 +254,6 @@ const MaireDeclarations = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const rejectDeclaration = (maire, id, reason) => {

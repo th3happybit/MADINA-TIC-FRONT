@@ -18,7 +18,6 @@ const Profile = (props) => {
   const updateImage = (img) => {
     setImage(img);
     updateImageP(img);
-    // console.log("profile", img)
   };
   const { service, updateImageP } = props;
 

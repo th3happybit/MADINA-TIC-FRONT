@@ -34,7 +34,7 @@ const HeaderAdmin = (props) => {
       .then((res) => {
         setImage(res.data.image);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [isUploaded]);
   const trigger = <Image src={image} size="small" className="pointer" />;
   const { active } = props;
@@ -60,7 +60,6 @@ const HeaderAdmin = (props) => {
         return history.push("/admin/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

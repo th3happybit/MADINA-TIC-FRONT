@@ -127,10 +127,9 @@ const HeaderAdmin = (props) => {
             setData(res.data.results);
           })
           .catch((err) => {
-            console.log(err);
           });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [isUploaded]);
   const handleChangeNotif = () => {
     if (isNotifated) {
@@ -180,7 +179,6 @@ const HeaderAdmin = (props) => {
         return history.push("/maire/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

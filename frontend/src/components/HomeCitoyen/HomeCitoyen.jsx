@@ -69,7 +69,6 @@ const HomeCitoyen = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
       });
     getTypes();
     setFilter(filter);
@@ -89,7 +88,6 @@ const HomeCitoyen = (props) => {
         })
         .then((res) => {
           setTypes(res.data);
-          // console.log(res)
         });
   };
 

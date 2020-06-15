@@ -91,7 +91,6 @@ const ServiceDeclaration = (props) => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err.response);
         });
   };
   const getTypes = (sid) => {
@@ -108,7 +107,6 @@ const ServiceDeclaration = (props) => {
         settypes(res.data);
       })
       .catch((err) => {
-        console.log(err.response);
       });
   };
 

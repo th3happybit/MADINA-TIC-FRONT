@@ -67,7 +67,7 @@ const MainForm = () => {
               setISLoading(false);
             }
           })
-          .catch((err) => console.log(err));
+          .catch((err) => {});
       })
       .catch(() => {
         setISLoading(false);

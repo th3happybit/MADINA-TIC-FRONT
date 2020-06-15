@@ -28,7 +28,6 @@ const InfoScreen = (props) => {
     .then((res) => {
      setData(res.data);
      setLoading(false);
-     console.log(res.data);
      if (res.data.status === "lack_of_info")
       axios
        .get(
@@ -48,11 +47,9 @@ const InfoScreen = (props) => {
         setReason(ress.data.results[0].reason);
        })
        .catch((errr) => {
-        console.log(errr);
        });
     })
     .catch((err) => {
-     console.log(err);
     });
  };
 
@@ -66,7 +63,6 @@ const InfoScreen = (props) => {
    })
    .then((res) => {
     setTypes(res.data);
-    // console.log(res)
    });
  };
 
@@ -87,9 +83,6 @@ const InfoScreen = (props) => {
    }
   }
  };
- useEffect(() => {
-  console.log(Data);
- }, []);
 
  function getStatus(st) {
   var ret = { status: "", color: "" };
