@@ -1,0 +1,16 @@
+.table.dark .table_header th {
+  background-color: var(--primary_dark) !important;
+}
+
+.table.dark tr {
+    background: var(--second_dark);
+    color: var(--primary_text_dark);
+}
+
+.table.dark {
+    border-color: var(--background_dark);
+}
+
+.table.dark  tr:nth-child(2n){
+    background-color: var(--background_dark) !important;
+}

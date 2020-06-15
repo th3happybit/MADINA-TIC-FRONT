@@ -1,0 +1,34 @@
+.stats_maire .ui.grid > .row > .column {
+  padding: 0 2rem !important;
+}
+.apexcharts-text tspan {
+  font-size: 14px;
+  color: var(--secondary) !important;
+  font-weight: 500;
+}
+@media (max-width: 1599px) {
+  .donuts_row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .stats_maire .ui.grid > .donuts_row > .column {
+    padding: 4rem 0 !important;
+  }
+}
+@media (max-width: 799px) {
+  .actions {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-left: 2rem !important;
+  }
+  .actions .button {
+    margin: 0.5rem 0 !important;
+  }
+  .stats_maire .ui.grid > .donuts_row > .column {
+    padding: 1rem 0 !important;
+  }
+}
+.users_stats h1 {
+  white-space: nowrap;
+}

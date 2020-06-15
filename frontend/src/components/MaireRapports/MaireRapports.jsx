@@ -5,31 +5,24 @@ const MaireRapports = () => {
   return (
     <TestComponent
       title="Rapports"
-      url="http://157.230.19.233/api/reports/"
+      url="https://www.madina-tic.ml/api/reports/"
       token="maire_token"
       role="maire"
       isRapport
       header={[
-        { text: "Title", value: "title", sort: true },
+        { text: "Titre", value: "title", sort: true },
         { text: "Description", value: "desc", sort: false },
-        { text: "Created on", value: "created_on", sort: true },
+        { text: "Créé en", value: "created_on", sort: true },
       ]}
       detail={[
-        { text: "Title Report", value: "title" },
+        { text: "Titre Report", value: "title" },
         { text: "Description", value: "desc" },
-        { text: "Created on", value: "created_on" },
-        { text: "Modified on", value: "modified_at" },
-        { text: "Validated on", value: "validated_at" },
+        { text: "Créé en", value: "created_on" },
+        { text: "Modifier en", value: "modified_at" },
+        { text: "Validé en", value: "validated_at" },
       ]}
       permission="all" //? all or self
-      status={[
-        "not_validated",
-        "lack_of_info",
-        "work_not_finished",
-        "validated",
-        "refused",
-        "archived",
-      ]}
+      status={["not_validated", "lack_of_info", "validated", "archived"]}
     />
   );
 };

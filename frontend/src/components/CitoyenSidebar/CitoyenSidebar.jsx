@@ -3,11 +3,23 @@ import { Icon, List } from "semantic-ui-react";
 
 import "./CitoyenSidebar.css";
 const CitoyenSidebar = (props) => {
+  const { isDark } = props;
+
   return (
-    <div className="_citoyen_sidebar">
+    <div
+      className={`_citoyen_sidebar ${props.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
+    >
       <a href="/add/declaration" className="add_declaration pointer">
         <Icon name="add" size="large" />
-        <p>Add declaration</p>
+        <p
+          style={{
+            fontWeight: "600",
+          }}
+        >
+          {props.isFrench ? "Ajouter une déclaration" : "إضافة تصريح"}
+        </p>
       </a>
       <List className="sidebar_list_cit">
         <List.Item
@@ -16,7 +28,9 @@ const CitoyenSidebar = (props) => {
           href="/home"
         >
           <List.Icon name="home" />
-          <List.Content>Home</List.Content>
+          <List.Content>
+            {props.isFrench ? "Accueil" : "الصفحة الرئيسية"}
+          </List.Content>
         </List.Item>
         <List.Item
           as="a"
@@ -29,11 +43,13 @@ const CitoyenSidebar = (props) => {
             name="file alternate"
             className={props.active === "declaration" ? "active_ico" : ""}
           />
-          <List.Content>Declarations</List.Content>
-        </List.Item>
-        <List.Item className={props.active === "announcement" ? "active" : ""}>
-          <List.Icon name="bullhorn" />
-          <List.Content>Annoncement</List.Content>
+          <List.Content
+            style={{
+              whiteSpace: "nowrap",
+            }}
+          >
+            {props.isFrench ? "mes déclarations" : "تصريحاتي"}
+          </List.Content>
         </List.Item>
       </List>
     </div>

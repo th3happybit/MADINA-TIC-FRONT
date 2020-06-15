@@ -15,13 +15,38 @@ const ModalD = (props) => {
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
   const [max, setMax] = useState(null);
+  const [children, setChildren] = useState([]);
+
+  const TreatChildren = () => {
+    let data = {
+      status: "under_treatment",
+    };
+    children.map((elm, index) => {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          },
+        })
+        .request({
+          url: `https://www.madina-tic.ml/api/declarations/${elm.did}/`,
+          method: "patch",
+          data: data,
+        })
+        .then((res) => {
+          if (index === children.length - 1) props.refresh();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  };
 
   const TreatDeclaration = () => {
     const data = {
-      did: did,
-      citizen: citizen,
-      desc: desc,
-      dtype: dtype,
       status: "under_treatment",
     };
     axios
@@ -34,12 +59,13 @@ const ModalD = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${did}/`,
         method: "patch",
         data: data,
       })
       .then((res) => {
-        refresh();
+        if (children.length > 0) TreatChildren();
+        else refresh();
       })
       .catch((err) => {
         console.log(err);
@@ -73,6 +99,20 @@ const ModalD = (props) => {
       setactive(0);
       setMax(props.attachements.length - 1);
     }
+    let instance = axios.create({
+      baseURL: "https://www.madina-tic.ml/api/",
+      responseType: "json",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${localStorage.getItem("maire_token")}`,
+      },
+    });
+    instance
+      .get(`declarations/?parent_declaration=${did}`)
+      .then((res) => {
+        setChildren(res.data.results);
+      })
+      .catch((err) => console.log(err.response));
   }, [props.attachements.length]);
 
   const {
@@ -81,13 +121,10 @@ const ModalD = (props) => {
     created_on,
     address,
     status,
-    desc,
-    dtype,
     validated_at,
     description,
     priority,
     attachements,
-    citizen,
     refresh,
   } = props;
 

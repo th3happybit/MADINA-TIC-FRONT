@@ -36,7 +36,7 @@ const ModalC = (props) => {
             <Button
               color="green"
               className="shadow _show_on_mobile _mobile_actions"
-              content="Validate"
+              content="Valider"
             />
           </Button.Group>
         ) : (
@@ -60,19 +60,20 @@ const ModalC = (props) => {
       <Modal.Content className="_confirm_action_citoyen">
         {" "}
         <div className="_header_modal extra-text text-default">
-          <p>Confirm Your Action</p>
+          <p>Confirmation de votre action</p>
         </div>
         <div className="_content_modal_approve">
           <p>
-            Confirm {is_active ? "Ban" : "Activate"} {first_name} {last_name} ?
+            Confirmation {is_active ? "du Ban" : "d'activation"} {first_name}{" "}
+            {last_name} ?
           </p>
         </div>
         <div className="content_modal_btns">
           <Button className="button_primary" onClick={handelConfirm}>
-            Confirm
+            Confirmer
           </Button>
           <Button className="button_secondary" onClick={handleclose}>
-            Cancel
+            Annuler
           </Button>
         </div>
       </Modal.Content>

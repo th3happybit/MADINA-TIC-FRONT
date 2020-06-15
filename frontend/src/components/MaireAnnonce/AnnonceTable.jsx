@@ -84,11 +84,11 @@ const MaireAnnonceTable = (props) => {
   return (
     <Table striped className="_maire_table">
       <Table.Header>
-        <Table.HeaderCell content="Title" width={2} />
+        <Table.HeaderCell content="Titre" width={2} />
         <Table.HeaderCell content="Service" width={2} />
         <Table.HeaderCell width={3}>
           <p onClick={props.handle_StartAt} className="sort_field pointer">
-            Start at
+            Commence à
             {props.sortStartAt ? (
               <Icon
                 name={props.sortStartAt === "asc" ? "sort up" : "sort down"}
@@ -100,7 +100,7 @@ const MaireAnnonceTable = (props) => {
         </Table.HeaderCell>
         <Table.HeaderCell width={3}>
           <p onClick={props.handle_EndAt} className="sort_field pointer">
-            End at
+            Fin à
             {props.sortEndAt ? (
               <Icon
                 name={props.sortEndAt === "asc" ? "sort up" : "sort down"}
@@ -110,7 +110,7 @@ const MaireAnnonceTable = (props) => {
             )}
           </p>
         </Table.HeaderCell>
-        <Table.HeaderCell content="Manage" width={1} textAlign="center" />
+        <Table.HeaderCell content="Gérer" width={1} textAlign="center" />
       </Table.Header>
       {data && (
         <Table.Body>

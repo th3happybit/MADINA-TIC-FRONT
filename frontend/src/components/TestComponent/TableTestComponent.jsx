@@ -113,7 +113,7 @@ const TableTestComponent = (props) => {
   const DeleteReport = (report) => {
     let rid = report.rid;
     axios
-      .delete(`http://157.230.19.233/api/reports/${rid}/`, {
+      .delete(`https://www.madina-tic.ml/api/reports/${rid}/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem(token)}`,
@@ -151,7 +151,7 @@ const TableTestComponent = (props) => {
         {!isRapport && activeFilter === "published" && (
           <Table.HeaderCell content="Status" />
         )}
-        <Table.HeaderCell content="Manage" width={1} textAlign="center" />
+        <Table.HeaderCell content="Gérer" width={1} textAlign="center" />
       </Table.Header>
       {Data && (
         <Table.Body>
@@ -334,7 +334,7 @@ const TableTestComponent = (props) => {
                         </Link>
                       </Button.Group>
                     )}
-                    
+
                     {!isRapport &&
                       activeFilter === "not_validated" &&
                       role === "service" && (
@@ -350,11 +350,8 @@ const TableTestComponent = (props) => {
                                 )}`,
                               },
                             });
-                            let body = {
-                              status: "archived",
-                            };
                             instance
-                              .patch(`${element.aid}/`, body)
+                              .delete(`${element.aid}/`)
                               .then((res) => {
                                 refresh();
                               })
@@ -365,7 +362,8 @@ const TableTestComponent = (props) => {
                         />
                       )}
                     {isRapport &&
-                      (activeFilter === "work_not_finished" || activeFilter === "not_validated") &&
+                      (activeFilter === "work_not_finished" ||
+                        activeFilter === "not_validated") &&
                       role === "service" && (
                         <ConfirmModal
                           button={{

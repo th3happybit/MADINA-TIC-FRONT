@@ -1,0 +1,23 @@
+.users_stats .actions {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem 2rem;
+  padding-left: 0;
+}
+.users_stats .actions .button {
+  min-width: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+}
+.users_stats .no_action {
+  min-width: 600px;
+  min-height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--blue_darker);
+}

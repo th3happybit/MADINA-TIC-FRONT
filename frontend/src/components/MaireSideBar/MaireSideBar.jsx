@@ -30,7 +30,7 @@ const MaireSideBar = (props) => {
             />
             <Menu.Item
               as={Link}
-              to="/maire/"
+              to="/maire/dashboard"
               name="Dashboard"
               className={props.active === "dashboard" ? "active" : ""}
             />
@@ -61,7 +61,7 @@ const MaireSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/maire/rapports/"
-              name="Reports"
+              name="Rapports"
               className={props.active === "rapports" ? "active" : ""}
             />
           </div>
@@ -76,7 +76,7 @@ const MaireSideBar = (props) => {
             <Menu.Item
               as={Link}
               to="/maire/announce/"
-              name="Announcements"
+              name="Annonces"
               className={props.active === "announce" ? "active" : ""}
             />
           </div>

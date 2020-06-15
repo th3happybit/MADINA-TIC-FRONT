@@ -12,9 +12,9 @@ const AdminCitoyen = (props) => {
   const [isloading, setisloading] = useState(true);
   const [Data, setData] = useState([]);
   const [count, setcount] = useState(0);
-  const [activeFilter, setactiveFilter] = useState("All Citizens");
+  const [activeFilter, setactiveFilter] = useState("Tout les citoyens");
   const [page, setpage] = useState(1);
-  const [sort, setsort] = useState("Sort");
+  const [sort, setsort] = useState("Trier");
   const [term, setterm] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
   const [stat, setstat] = useState(false);
@@ -35,7 +35,7 @@ const AdminCitoyen = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/users/" + id + "/",
+        url: "https://www.madina-tic.ml/api/users/" + id + "/",
         method: "patch",
         data: {
           is_active: true,
@@ -43,7 +43,7 @@ const AdminCitoyen = (props) => {
       })
       .then((res) => {
         setstat(true);
-        if (activeFilter !== "All Citizens") setpage(1);
+        if (activeFilter !== "Tout les citoyens") setpage(1);
       })
       .catch((err) => {});
   };
@@ -59,7 +59,7 @@ const AdminCitoyen = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/users/" + id + "/",
+        url: "https://www.madina-tic.ml/api/users/" + id + "/",
         method: "patch",
         data: {
           is_active: false,
@@ -67,7 +67,7 @@ const AdminCitoyen = (props) => {
       })
       .then((res) => {
         setstat(true);
-        if (activeFilter !== "All Citizens") setpage(1);
+        if (activeFilter !== "Tout les citoyens") setpage(1);
       })
       .catch((err) => {});
   };
@@ -83,16 +83,16 @@ const AdminCitoyen = (props) => {
       is_approved: true,
     };
 
-    if (filter === "Desactivated") {
+    if (filter === "Désactivée") {
       pa["is_active"] = false;
     } else if (filter === "Active") {
       pa["is_active"] = true;
     }
 
-    if (sortP === "Name A-Z") pa["ordering"] = "first_name";
+    if (sortP === "Nom A-Z") pa["ordering"] = "first_name";
     else if (sortP === "Name Z-A") pa["ordering"] = "-first_name";
-    else if (sortP === "Newer First") pa["ordering"] = "-created_on";
-    else if (sortP === "Oldest First") pa["ordering"] = "created_on";
+    else if (sortP === "Plus récent") pa["ordering"] = "-created_on";
+    else if (sortP === "Plus ancien") pa["ordering"] = "created_on";
 
     if (term !== "") {
       pa["search"] = term;
@@ -101,7 +101,7 @@ const AdminCitoyen = (props) => {
     pa["role"] = "Client";
 
     axios
-      .get("http://157.230.19.233/api/users/", {
+      .get("https://www.madina-tic.ml/api/users/", {
         params: pa,
         headers: {
           "Content-Type": "application/json",
@@ -131,7 +131,7 @@ const AdminCitoyen = (props) => {
   }, [page, activeFilter, sort, term, stat]);
 
   const handel_all = () => {
-    setactiveFilter("All Citizens");
+    setactiveFilter("Tout les citoyens");
   };
 
   const handel_onlyvalidated = () => {
@@ -140,31 +140,31 @@ const AdminCitoyen = (props) => {
   };
 
   const handel_notvalidated = () => {
-    setactiveFilter("Desactivated");
+    setactiveFilter("Désactivée");
     setpage(1);
   };
 
   const sortNameAZ = () => {
-    setsort("Name A-Z");
+    setsort("Nom A-Z");
   };
   const sortNameZA = () => {
     setsort("Name Z-A");
   };
   const sortDateN = () => {
-    setsort("Newer First");
+    setsort("Plus récent");
   };
   const sortDateO = () => {
-    setsort("Oldest First");
+    setsort("Plus ancien");
   };
   const noSort = () => {
-    setsort("Sort");
+    setsort("Trier");
   };
 
   return (
     <Segment className="_admin_accounts shadow" loading={isloading}>
       <div className="row">
         <div className="title_segment">
-          <p className="extra-text text-default">Citizens List</p>
+          <p className="extra-text text-default">Liste des citoyens</p>
         </div>
 
         <div class="_filters">
@@ -175,7 +175,7 @@ const AdminCitoyen = (props) => {
             value={term}
             showNoResults={false}
             results={null}
-            placeholder="Search for users..."
+            placeholder="Recherche..."
             input={{ icon: "search", iconPosition: "left" }}
           />
           <Dropdown
@@ -190,27 +190,27 @@ const AdminCitoyen = (props) => {
             <Dropdown.Menu id="filter_menu_sort">
               <Dropdown.Item
                 label={{ color: "blue", empty: true, circular: true }}
-                text="Random"
+                text="Aléatoire"
                 onClick={noSort}
               />
               <Dropdown.Item
                 label={{ color: "green", empty: true, circular: true }}
-                text="Name A-Z"
+                text="Nom A-Z"
                 onClick={sortNameAZ}
               />
               <Dropdown.Item
                 label={{ color: "green", empty: true, circular: true }}
-                text="Name Z-A"
+                text="Nom Z-A"
                 onClick={sortNameZA}
               />
               <Dropdown.Item
                 label={{ color: "red", empty: true, circular: true }}
-                text="Date New First"
+                text="Plus récent"
                 onClick={sortDateN}
               />
               <Dropdown.Item
                 label={{ color: "red", empty: true, circular: true }}
-                text="Date Old first"
+                text="Plus ancien"
                 onClick={sortDateO}
               />
             </Dropdown.Menu>
@@ -226,7 +226,7 @@ const AdminCitoyen = (props) => {
             <Dropdown.Menu id="filter_menu_">
               <Dropdown.Item
                 label={{ color: "blue", empty: true, circular: true }}
-                text="All Users"
+                text="Tous les utilisateurs"
                 onClick={handel_all}
               />
               <Dropdown.Item
@@ -236,7 +236,7 @@ const AdminCitoyen = (props) => {
               />
               <Dropdown.Item
                 label={{ color: "red", empty: true, circular: true }}
-                text="Desactivated"
+                text="Désactivée"
                 onClick={handel_notvalidated}
               />
             </Dropdown.Menu>

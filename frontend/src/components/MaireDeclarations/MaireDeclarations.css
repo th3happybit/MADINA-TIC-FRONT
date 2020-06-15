@@ -3,7 +3,6 @@
   width: 100%;
   min-height: 650px;
   padding-top: 6rem;
-  /* margin-bottom: 4rem; */
   padding-left: 19rem !important;
   padding-right: 2rem !important;
 }
@@ -12,7 +11,20 @@
   color: var(--primary) !important;
   position: sticky !important;
 }
-
+._success_modal.info .header {
+  color: #794b02bb !important;
+}
+._success_modal.info .button {
+  background-color: #794b02bb !important;
+  color: white !important;
+}
+._success_modal.err .header {
+  color: var(--red) !important;
+}
+._success_modal.err .button {
+  background-color: var(--red) !important;
+  color: white !important;
+}
 ._main_header {
   border-bottom: solid 1px;
   border-color: #e0e3da;
@@ -63,7 +75,7 @@
   bottom: 10px !important;
   border: none !important;
   border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
-  width : fit-content;
+  width: fit-content;
 }
 
 ._maire_table th {

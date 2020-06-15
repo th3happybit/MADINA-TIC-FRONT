@@ -88,10 +88,6 @@
   color: white !important;
 }
 
-#manage_cell {
-  text-align: center;
-}
-
 ._admin_citoyen_pagin {
   position: absolute !important;
   bottom: 7% !important;
@@ -136,8 +132,15 @@
 
 #sort_filter {
   margin-right: 40px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+._filters .ui.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 ._filters + div {
   margin-right: 40px !important ;
 }

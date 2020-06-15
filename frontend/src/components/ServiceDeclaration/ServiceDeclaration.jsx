@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const ServiceDeclaration = (props) => {
-  const [activeFilter, setactiveFilter] = useState("Validated");
+  const [activeFilter, setactiveFilter] = useState("Validée");
   const [Loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [Data, setData] = useState([]);
@@ -51,16 +51,16 @@ const ServiceDeclaration = (props) => {
       pa["search"] = term;
     }
     switch (activeFilter) {
-      case "Validated":
+      case "Validée":
         pa["status"] = "validated";
         break;
-      case "In progress":
+      case "En cours":
         pa["status"] = "under_treatment";
         break;
-      case "Treated":
+      case "Traité":
         pa["status"] = "treated";
         break;
-      case "Archived":
+      case "Archivé":
         pa["status"] = "archived";
         break;
       default:
@@ -68,7 +68,7 @@ const ServiceDeclaration = (props) => {
     }
     if (sid)
       axios
-        .get("http://157.230.19.233/api/declaration_nested/", {
+        .get("https://www.madina-tic.ml/api/declaration_nested/", {
           params: pa,
           headers: {
             "content-type": "application/json",
@@ -97,7 +97,7 @@ const ServiceDeclaration = (props) => {
   const getTypes = (sid) => {
     setLoading(true);
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -123,7 +123,7 @@ const ServiceDeclaration = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -159,7 +159,7 @@ const ServiceDeclaration = (props) => {
                   ? true
                   : false,
             }}
-            placeholder="Search for declarations ..."
+            placeholder="Recherche des déclarations ..."
           />
           <Dropdown
             className="icon filter_declaration"
@@ -171,22 +171,22 @@ const ServiceDeclaration = (props) => {
           >
             <Dropdown.Menu>
               <Dropdown.Item
-                text="Validated"
+                text="Validée"
                 onClick={handle_filter}
                 label={{ circular: true, color: "green", empty: true }}
               />
               <Dropdown.Item
-                text="In progress"
+                text="En cours"
                 onClick={handle_filter}
                 label={{ circular: true, color: "yellow", empty: true }}
               />
               <Dropdown.Item
-                text="Treated"
+                text="Traité"
                 onClick={handle_filter}
                 label={{ circular: true, color: "green", empty: true }}
               />
               <Dropdown.Item
-                text="Archived"
+                text="Archivé"
                 onClick={handle_filter}
                 label={{ circular: true, color: "black", empty: true }}
               />
@@ -195,7 +195,11 @@ const ServiceDeclaration = (props) => {
         </div>
         {Data.length > 0 ? (
           <div className="_data_section">
-            <DeclarationsTable data={Data} filter={activeFilter} refresh={refresh}/>
+            <DeclarationsTable
+              data={Data}
+              filter={activeFilter}
+              refresh={refresh}
+            />
             {pages > 1 && (
               <Pagination
                 className="_service_pagination"

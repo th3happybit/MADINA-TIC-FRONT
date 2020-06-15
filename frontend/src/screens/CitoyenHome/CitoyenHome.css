@@ -3,3 +3,12 @@
   right: 1rem;
   top: 7rem;
 }
+
+._annonce_section.rtl {
+  left: 1rem;
+  width: 350px;
+}
+
+main.dark {
+  background: var(--main_dark);
+}

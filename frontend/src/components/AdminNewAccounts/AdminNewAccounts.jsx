@@ -25,7 +25,7 @@ const AdminNewAccounts = () => {
   };
   const getData = () => {
     setIsLoading(true);
-    let url = `http://157.230.19.233/api/users/`;
+    let url = `https://www.madina-tic.ml/api/users/`;
     axios
       .create({
         headers: {
@@ -57,7 +57,7 @@ const AdminNewAccounts = () => {
   };
   useEffect(() => {
     setIsLoading(true);
-    let url = `http://157.230.19.233/api/users/`;
+    let url = `https://www.madina-tic.ml/api/users/`;
     axios
       .create({
         headers: {
@@ -92,7 +92,7 @@ const AdminNewAccounts = () => {
     <Segment loading={isLoading} className="_new_accounts shadow">
       <div className="row">
         <div className="title_segment">
-          <p className="extra-text text-default">New Accounts</p>
+          <p className="extra-text text-default">Nouveaux Comptes</p>
 
           <Search
             loading={searchLoading}
@@ -101,19 +101,23 @@ const AdminNewAccounts = () => {
             value={searchValue}
             showNoResults={false}
             results={null}
-            placeholder="Search for anything"
+            placeholder="Recherche..."
             input={{ icon: "search", iconPosition: "left" }}
           />
         </div>
       </div>
       <div className="row_t">
-        <TableNewAccounts
-          data={data}
-          count={count}
-          activePage={activePage}
-          handlePagination={handlePagination}
-          refresh={getData}
-        />
+        {data.length > 0 ? (
+          <TableNewAccounts
+            data={data}
+            count={count}
+            activePage={activePage}
+            handlePagination={handlePagination}
+            refresh={getData}
+          />
+        ) : (
+          <p className="p_no">Désolé, aucun nouveau compte n'est disponible </p>
+        )}
       </div>
     </Segment>
   );

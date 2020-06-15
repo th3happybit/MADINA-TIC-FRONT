@@ -1,0 +1,64 @@
+.types_dec {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 60vh;
+}
+.types_dec h1 {
+  font-size: 22px;
+  color: var(--secondary);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.types_dec p {
+  font-size: 16px;
+  margin: 0.5rem 0;
+  color: var(--blue_darker);
+}
+.item_decx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.row_t .list .item {
+  margin: 1rem 0;
+}
+.row_t .list .item .content {
+  min-width: 400px;
+}
+.row_t .list {
+  width: 50%;
+  padding: 1rem;
+  font-size: 18px;
+  color: var(--blue_darker);
+  font-weight: 600;
+  min-height: 50vh;
+}
+.row_t .list .button.upd {
+  background: var(--secondary);
+  color: white;
+}
+.row_t .list .button {
+  background: var(--red);
+  color: white;
+  margin: 0 1rem;
+}
+.row_t .button.conf {
+  background: var(--green);
+  color: white;
+}
+.row_t .list .button.anl {
+  background: var(--secondary);
+}
+.inpt_dec_type input {
+  padding: 0.5rem 1rem !important;
+}
+.row_t .add {
+  background-color: var(--primary) !important;
+  color: white !important;
+  margin: 0 1rem;
+}
+.types_dec input {
+  font-size: 18px;
+}

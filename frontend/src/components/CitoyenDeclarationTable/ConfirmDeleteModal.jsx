@@ -4,7 +4,7 @@ import { Modal, Button, Icon, Popup } from "semantic-ui-react";
 const ModalC = (props) => {
   const [openC, setopenC] = useState(false);
 
-  const { onConfirm, did } = props;
+  const { onConfirm, did, isArabe } = props;
 
   const handleclose = () => {
     setopenC(false);
@@ -28,11 +28,15 @@ const ModalC = (props) => {
       onClose={handleclose}
       className="_change_approval"
       trigger={
-        <Button.Group onClick={handleopen}>
+        <Button.Group  className={isArabe ? "manage_button" : ""} onClick={handleopen}>
           <Popup
-            content="Delete"
+            content={props.isArabe ? "حذف" : "Delete"}
             trigger={
-              <Button icon color={"red"} className="shadow _hide_on_mobile">
+              <Button
+                icon
+                color={"red"}
+                className={`shadow _hide_on_mobile`}
+              >
                 <Icon name="delete" color="white" />
               </Button>
             }
@@ -41,7 +45,7 @@ const ModalC = (props) => {
           <Button
             color={"red"}
             className="shadow btn_account_detail pointer _show_on_mobile"
-            content="Delete"
+            content={props.isArabe ? "حذف" : "Delete"}
           />
         </Button.Group>
       }
@@ -49,18 +53,35 @@ const ModalC = (props) => {
       <Modal.Content className="_confirm_action_citoyen">
         {" "}
         <div className="_header_modal extra-text text-default">
-          <p>Confirm Your Action</p>
+          <p>{isArabe ? "تأكيد الخيار" : "Confirm Your Action"}</p>
         </div>
         <div className="_content_modal_approve">
-          <p>Confirm delete ? This action is irreversible.</p>
+          <p>
+            {isArabe
+              ? "هل تريد حذف التصريح ؟ هذه الخطوة لا يمكن التراجع عنها"
+              : "Confirm delete ? This action is irreversible."}
+          </p>
         </div>
         <div className="content_modal_btns">
-          <Button className="button_primary" onClick={handelConfirm}>
-            Confirm
-          </Button>
-          <Button className="button_secondary" onClick={handleclose}>
-            Cancel
-          </Button>
+          {!isArabe ? (
+            <>
+              <Button className="button_primary" onClick={handelConfirm}>
+                Confirm
+              </Button>
+              <Button className="button_secondary" onClick={handleclose}>
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button className="button_secondary" onClick={handleclose}>
+                إلغاء
+              </Button>
+              <Button className="button_primary" onClick={handelConfirm}>
+                تأكيد
+              </Button>
+            </>
+          )}
         </div>
       </Modal.Content>
     </Modal>

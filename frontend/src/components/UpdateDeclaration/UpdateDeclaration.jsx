@@ -6,10 +6,16 @@ import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
 //? import css
 import "./UpdateDeclaration.css";
-Geocode.setApiKey("AIzaSyDGe5vjL8wBmilLzoJ0jNIwe9SAuH2xS_0");
-Geocode.enableDebug();
+
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
 const UpdateDeclaration = (props) => {
-  const [data, setData] = useState([]);
+  const { languages, isDark } = props;
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
@@ -27,16 +33,19 @@ const UpdateDeclaration = (props) => {
   const [loadingPage, setLoadingPage] = useState(false);
   const [pictures, setPictures] = useState([]);
   const [picturesPreview, setPicturesPreview] = useState([]);
-  const [did, setDid] = useState(null);
   const [selectedFile, setSelectedFile] = useState();
   const [sendP, setsendP] = useState([]);
+  const [delP, setdelP] = useState([]);
+
   const handledeleteImg = (e) => {
     let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
-    let preview = [];
     let f = [];
+    let del = delP;
     pictures.map((elm, index) => {
       if (index !== indexElm) {
         f.push(elm);
+      } else {
+        if (elm.src) del.push(elm.dmid);
       }
       return true;
     });
@@ -61,38 +70,6 @@ const UpdateDeclaration = (props) => {
     setsendP((prevState) => [...prevState, es]);
   };
   useEffect(() => {
-    const formData = new FormData();
-    sendP.map((image) => {
-      console.log({ image });
-      formData.append("src", image, image.name);
-    });
-    formData.append("filetype", "image");
-    formData.append("declaration", did);
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-Type": "application/json",
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        },
-      })
-      .request({
-        url: "http://157.230.19.233/api/documents/",
-        method: "post",
-        data: formData,
-      })
-      .then((res) => {
-        console.log(res);
-        setSucces(true);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.response);
-        setIsLoading(false);
-      });
-  }, [did]);
-  useEffect(() => {
     Geocode.fromLatLng("48.8583701", "2.2922926").then(
       (response) => {
         const address = response.results[0].formatted_address;
@@ -103,7 +80,6 @@ const UpdateDeclaration = (props) => {
       }
     );
   }, []);
-
   const handleUpdate = () => {
     setIsLoading(true);
     axios
@@ -116,7 +92,7 @@ const UpdateDeclaration = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         method: "patch",
         data: {
           title,
@@ -124,25 +100,86 @@ const UpdateDeclaration = (props) => {
           geo_cord: adrGeo,
           address: adr,
           dtype: selectedType,
+          status: "not_validated",
           citizen: props.props.location.state.data.citizen,
           modified_at: new Date().toJSON().substr(0, 19) + "+01:00",
         },
       })
       .then((res) => {
-        let did = res.data.did;
-        if (pictures.length > 0) {
-          setDid(did);
+        if (pictures.length > 0 || delP.length > 0) {
+          postFiles();
         } else {
           setSucces(true);
           setIsLoading(false);
         }
       })
       .catch((err) => {
-        console.log(err.response);
         setIsLoading(false);
       });
   };
-
+  const postFiles = () => {
+    let formData = new FormData();
+    let upload = false;
+    sendP.map((image) => {
+      if (!image.src) {
+        upload = true;
+        console.log(image);
+        formData.append("src", image);
+        formData.append("filetype", "image");
+        formData.append("declaration", props.props.location.state.data.did);
+      }
+    });
+    if (upload) {
+      axios
+        .create({
+          headers: {
+            post: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          },
+        })
+        .request({
+          url: "http://157.230.19.233/api/documents/",
+          method: "post",
+          data: formData,
+        })
+        .then((res) => {
+          console.log(res);
+          if (delP.length > 0) deleteFiles();
+          else {
+            setIsLoading(false);
+            setSucces(true);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (delP.length > 0) {
+      deleteFiles();
+    } else {
+      setIsLoading(false);
+      setSucces(true);
+    }
+  };
+  const deleteFiles = () => {
+    delP.map((elm) => {
+      axios
+        .delete(`http://157.230.19.233/api/documents/${elm}`, {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          setIsLoading(false);
+          setSucces(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  };
   const handleCoords = (e) => {
     setAdrGeo("[" + String(e.longitude) + "," + String(e.latitude) + "]");
   };
@@ -150,9 +187,6 @@ const UpdateDeclaration = (props) => {
     setIsGeo((prevState) => !prevState);
     setAdr("");
   };
-  useEffect(() => {
-    console.log({ props: props.props.location.state.data });
-  }, []);
   useEffect(() => {
     setLoadingPage(true);
     selectedType &&
@@ -166,7 +200,7 @@ const UpdateDeclaration = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/declarations_types/",
+          url: "https://www.madina-tic.ml/api/declarations_types/",
           method: "get",
         })
         .then((res) => {
@@ -182,7 +216,7 @@ const UpdateDeclaration = (props) => {
           setOptions(arr);
           axios
             .get(
-              `http://157.230.19.233/api/declarations_types/${selectedType}`,
+              `https://www.madina-tic.ml/api/declarations_types/${selectedType}`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -203,7 +237,7 @@ const UpdateDeclaration = (props) => {
   useEffect(() => {
     axios
       .get(
-        `http://157.230.19.233/api/declarations/${props.props.location.state.data.did}/`,
+        `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         {
           headers: {
             "content-type": "application/json",
@@ -217,6 +251,7 @@ const UpdateDeclaration = (props) => {
         setDesctiption(res.data.desc);
         setAdr(res.data.address);
         setAdrGeo(res.data.geo_cord);
+        setPictures(res.data.attachments);
       })
       .catch((err) => {
         console.log(err.response);
@@ -245,21 +280,21 @@ const UpdateDeclaration = (props) => {
     }
   };
   return (
-    <div className="container_add_dec">
+    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}>
       <Segment
-        className="_add_dec"
+        className={`_add_dec ${isDark ? "dark" : ""}`}
         style={{
           margin: "auto",
         }}
         loading={loadingPage}
       >
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Update Declaration
+          {languages.isFrench ? "Modifier declaration" : "تحديث  تصريح"}
         </h3>
         <Form success={succes}>
           <Form.Input
             type="text"
-            label="Title"
+            label={languages.isFrench ? "Titre" : "عنوان"}
             value={title}
             onChange={handleChange}
             name="title"
@@ -267,7 +302,7 @@ const UpdateDeclaration = (props) => {
           />
           <Form.Select
             fluid
-            label="Type"
+            label={languages.isFrench ? "Type" : "نوع"}
             options={options}
             name="type"
             value={type}
@@ -283,7 +318,7 @@ const UpdateDeclaration = (props) => {
             <Form.Input
               disabled={isGeo}
               type="text"
-              label="Address"
+              label={languages.isFrench ? "Adresse" : "عنوان"}
               value={adr}
               className={adrErr ? "add_dec_err" : ""}
               onChange={handleChange}
@@ -294,28 +329,32 @@ const UpdateDeclaration = (props) => {
           </div>
           <Form.Group inline>
             <Form.Radio
-              label="Geo-localise"
+              label={
+                languages.isFrench ? "Géo-localisation" : "الإحداثيات الجغرافية"
+              }
               value="sm"
               checked={isGeo}
               onClick={handleGeo}
             />
             <Form.Radio
-              label="Manual address"
+              label={languages.isFrench ? "Adresse manuelle" : "عنوان يدوي"}
               value="md"
               checked={!isGeo}
               onClick={handleGeo}
             />
           </Form.Group>
           <Form.TextArea
-            label="Description"
+            label={languages.isFrench ? "Description" : "التفاصيل"}
             name="description"
-            placeholder="..."
             value={description}
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
           {pictures.length > 0 && (
-            <p className="label_add_dec bold">Pictures</p>
+            <p className="label_add_dec bold">
+              {" "}
+              {languages.isFrench ? "photos" : " الصور"}
+            </p>
           )}
           <div
             className="prev_images_dec"
@@ -325,24 +364,9 @@ const UpdateDeclaration = (props) => {
               flexDirection: "column",
             }}
           >
-            {picturesPreview.map((elm, index) => {
-              return (
-                <div
-                  style={{
-                    position: "relative",
-                  }}
-                >
-                  <Image src={elm.src} key={index} />
-                </div>
-              );
-            })}
-            <p
-              className="label_add_dec bold"
-              style={{
-                margin: "1rem 0",
-              }}
-            >
-              {pictures.length > 0 ? "Add another Photos" : "Add pictures"}
+            <p className="label_add_dec bold" style={{margin : "1rem 0"}}>
+              {languages.isFrench ? "Ajouter photos" : "تحميل الصور"} (
+              {languages.isFrench ? "optionnel" : "اختياري"})
             </p>
             <div className="_profile_img_edit add_dec pointer">
               <label
@@ -353,7 +377,7 @@ const UpdateDeclaration = (props) => {
                   width: "100%",
                 }}
               >
-                Upload
+                {languages.isFrench ? "Ajouter" : "تحميل"}
               </label>
               <input
                 id="myInput"
@@ -372,7 +396,7 @@ const UpdateDeclaration = (props) => {
                       position: "relative",
                     }}
                   >
-                    <Image src={elm} key={index} />
+                    <Image src={elm.src ? elm.src : elm} key={index} />
                     <Icon
                       color="black"
                       name="delete"
@@ -396,12 +420,12 @@ const UpdateDeclaration = (props) => {
               className="button_primary _margin_horizontal_sm"
               onClick={handleUpdate}
             >
-              Confirm Update
+              {languages.isFrench ? "Confirmer" : "التأكيد"}
             </Button>
           </Form.Group>
           <Message
             success
-            content="Your decalration has been modified succesfully"
+            content={languages.isFrench ? "modification réussie" : "تعديل ناجح"}
           />
         </Form>
       </Segment>
@@ -409,4 +433,18 @@ const UpdateDeclaration = (props) => {
   );
 };
 
-export default UpdateDeclaration;
+UpdateDeclaration.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  UpdateDeclaration
+);

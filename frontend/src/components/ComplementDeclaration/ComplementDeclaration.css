@@ -1,0 +1,12 @@
+._add_dec.dark .message.info {
+    background-color: var(--background_dark);
+    border-color : var(--primary_dark) !important;
+}
+
+._add_dec.dark .message.info .header {
+    color : var(--primary_dark) !important;
+}
+
+.container_add_dec.rtl .message.info .header{
+    font-family: "Cairo", sans-serif;
+}

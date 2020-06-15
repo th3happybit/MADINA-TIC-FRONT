@@ -1,4 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200&display=swap");
+
 @font-face {
   font-family: "Segoe_UI";
   src: url("./assets/fonts/Segoe\ UI.woff");
@@ -20,6 +24,15 @@
   --dark-gray: #595959;
   --yellow: #ffcc00;
   --green: #1eb85c;
+  --main_dark: #18191a;
+  --second_dark: #242526;
+  --primary_text_dark: #e4e6eb;
+  --secondary_text_dark: #b0b3b8;
+  --hover_dark: rgba(176, 179, 184, 0.1);
+  --background_dark: #3a3b3c;
+  --primary_dark: #4ba3c7;
+  --secondary_dark: #c58267;
+  --loading_dark: rgba(150, 150, 150, 0.5);
 }
 body {
   background-color: #f7f9fb;
@@ -38,6 +51,7 @@ label,
 button {
   margin: 0;
 }
+
 a {
   text-decoration: none !important;
 }
@@ -223,4 +237,56 @@ a {
     padding-left: 0;
     padding-top: 85px;
   }
+}
+._ltr {
+  direction: ltr;
+  text-align: left;
+}
+._rtl {
+  direction: rtl;
+  text-align: right;
+}
+.rtl,
+.rtl .button,
+.rtl input,
+.rtl input::placeholder {
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+}
+._citoyen_header_logo .ui-alerts.container_toastr.top-right {
+  position: absolute !important;
+  right: 1% !important;
+  top: 60% !important;
+  padding: 2rem 0 !important;
+  max-width: 400px !important;
+  z-index: 60 !important;
+}
+
+._citoyen_header_logo .ui-alerts.container_toastr.top-right .content .header {
+  font-size: 18px !important;
+}
+._citoyen_header_logo .ui-alerts.container_toastr.top-right .content p {
+  font-size: 14px !important;
+  max-width: 340px !important;
+  white-space: break-spaces !important;
+}
+._citoyen_header_logo
+  .ui-alerts.container_toastr.top-right
+  .ui.icon.message
+  > .icon:not(.close) {
+  font-size: 2rem !important;
+}
+.ui.loading.segment.dark {
+  background: black;
+  opacity: 0.2;
+}
+._annonce_tab.ui.segment {
+  overflow-y: scroll !important;
+  -ms-overflow-style: none !important;
+}
+._annonce_tab.ui.segment::-webkit-scrollbar {
+  display: none !important;
+}
+._citoyen_header .gis.ui.segment {
+  padding: 1em 0 !important;
 }

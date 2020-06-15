@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="138" height="131" viewBox="0 0 138 131">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 31 83">
+      <image width="31" height="83" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAABTCAYAAABnNNwuAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAABZSURBVGhD7c2hEcAwEMCwb7bp/tfVShOSHUQsYujn/f49yLolmhPNieZEc6I50ZxoTjQnmhPNieZEc6I50ZxoTjQnmhPNieZEc6I50ZxoTjQnmhPNiebAzAHAkQN5HHPDMgAAAABJRU5ErkJggg=="/>
+    </pattern>
+  </defs>
+  <g id="Groupe_112" data-name="Groupe 112" transform="translate(-299 -4057)">
+    <g id="m">
+      <rect id="Rectangle_13" data-name="Rectangle 13" width="137" height="29" transform="translate(299 4057)" fill="#29b5f6"/>
+      <rect id="Rectangle_14" data-name="Rectangle 14" width="131" height="29" transform="translate(328 4057) rotate(90)" fill="#29b5f6"/>
+      <rect id="Image_1" data-name="Image 1" width="27.614" height="83" transform="translate(354 4105)" fill="#29b5f6"/>
+      <rect id="Image_1-2" data-name="Image 1" width="27.614" height="50" transform="translate(408 4138)" fill="#29b5f6"/>
+    </g>
+    <text id="TIC" transform="translate(388 4126)" fill="#f66a29" font-size="30" font-family="SegoeUIBlack, Segoe UI"><tspan x="0" y="0">TIC</tspan></text>
+  </g>
+</svg>

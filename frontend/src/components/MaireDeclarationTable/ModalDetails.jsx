@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-use-before-define */
 import React, { useState } from "react";
 import {
   Modal,
@@ -10,6 +8,8 @@ import {
   Popup,
 } from "semantic-ui-react";
 
+import Childs from "./Childs";
+import axios from "axios";
 import RedirectModel from "./ModalRedirection.jsx";
 import ComplementModal from "./ModalComplement.jsx";
 import DeleteModal from "./ModalDelete.jsx";
@@ -17,6 +17,24 @@ import ArchiveModal from "./ModalArchive.jsx";
 import { useEffect } from "react";
 
 const ModalD = (props) => {
+  const { title, data, Maire } = props;
+  const [childs, setChilds] = useState([]);
+  useEffect(() => {
+    let instance = axios.create({
+      baseURL: "https://www.madina-tic.ml/api/",
+      responseType: "json",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${localStorage.getItem("maire_token")}`,
+      },
+    });
+    instance
+      .get(`declarations/?parent_declaration=${data.did}`)
+      .then((res) => {
+        setChilds(res.data.results);
+      })
+      .catch((err) => console.log(err.response));
+  }, []);
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
   const [max, setMax] = useState(null);
@@ -53,7 +71,6 @@ const ModalD = (props) => {
         break;
     }
   }
-
   useEffect(() => {
     if (Maire)
       if (props.data.attachements.length > 0) {
@@ -62,7 +79,6 @@ const ModalD = (props) => {
       }
   }, []);
 
-  const { title, data, Maire } = props;
   const handleClick = (e) => {
     window.open(e.currentTarget.src);
   };
@@ -119,10 +135,13 @@ const ModalD = (props) => {
                     <p className="_image">Images</p>
                   )
                 : null}
+              {childs.length > 0 && <p className="chlp">"Childs"</p>}
             </div>
             <div className="_infos_section">
               <p>{data.fullname ? data.fullname : null}</p>
+
               <p>{data.title ? data.title : null}</p>
+
               <p>{data.type ? data.type : null}</p>
               <p>{data.address ? data.address : null}</p>
               <p>{data.created_on ? data.created_on : null}</p>
@@ -171,6 +190,27 @@ const ModalD = (props) => {
                     </div>
                   )
                 : null}
+
+              {childs.length > 0 && (
+                <div className="childs_dec">
+                  {childs.map((elm, index) => (
+                    <Childs elm={elm} parent={data.did} />
+                  ))}
+                  <div className="btns_childs">
+                    <Button
+                      style={{
+                        background: "var(--green)",
+                        color: "white",
+                      }}
+                      onClick={() => {
+                        props.setRefresh();
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Modal.Content>{" "}
@@ -188,6 +228,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   validate={props.validate}
                   services={props.data.services}
@@ -203,6 +244,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   complement={props.complement}
                   close={handleclose}
@@ -217,6 +259,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   reject={props.reject}
                   close={handleclose}
@@ -233,6 +276,7 @@ const ModalD = (props) => {
                     citizen: data.citizen,
                     dtype: data.dtype,
                     desc: data.description,
+                    children: childs.length > 0 ? childs : null,
                   }}
                   archive={props.archive}
                   close={handleclose}
