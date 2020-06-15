@@ -84,10 +84,10 @@ const CitoyenResetpassword = (props) => {
           <p className="title text-active bold ">MADINA TIC</p>
           <div className="_titre ">
             <p className="text-gray-dark semi-bold small _first">
-              Welcome back !
+              Salut encore{" "}
             </p>
             <p className="text-gray-dark semi-bold small _second">
-              Modify your Password
+              Modifiez votre mot de passe{" "}
             </p>
           </div>
           <Form
@@ -101,7 +101,7 @@ const CitoyenResetpassword = (props) => {
             <Form.Input
               value={New_Password}
               id="New_Password"
-              placeholder="New Password"
+              placeholder="nouveau mot de passe"
               type="password"
               size="large"
               className="_margin_vertical_sm small"
@@ -110,7 +110,7 @@ const CitoyenResetpassword = (props) => {
             <Form.Input
               value={Confirm_New_Password}
               id="Confirm_New_Password"
-              placeholder="Confirm New Password"
+              placeholder="Confirmer le nouveau mot de passe"
               type="password"
               size="large"
               className="_margin_vertical_sm small"
@@ -125,7 +125,7 @@ const CitoyenResetpassword = (props) => {
                 onClick={handleSubmit}
                 loading={isLoanding}
               >
-                Confirm
+                Confirmer
               </Button>
             )}
             {success && (
@@ -136,7 +136,7 @@ const CitoyenResetpassword = (props) => {
                   onClick={handleSubmit}
                   loading={isLoanding}
                 >
-                  Go Login
+                  Connectez-vous
                 </Button>
               </Link>
             )}
