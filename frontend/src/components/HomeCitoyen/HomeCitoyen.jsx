@@ -48,7 +48,7 @@ const HomeCitoyen = (props) => {
       .get(
         Data.length > 0
           ? next
-          : "https://madina-tic.ml/api/home-declarations/status=validated&status=treated&status=under_treatment&ordering=-created_on",
+          : "https://madina-tic.ml/api/home-declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
         {
           headers: headers,
         }
