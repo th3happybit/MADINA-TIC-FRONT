@@ -47,7 +47,6 @@ const ComplementAnnounces = (props) => {
   }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
-    console.log({ time });
     let ret =
       dt.getFullYear() +
       "-" +
@@ -183,7 +182,6 @@ const ComplementAnnounces = (props) => {
           setImage(res.data.image);
         })
         .catch((err) => {
-          console.log(err.response);
         });
       axios
         .get(
@@ -199,7 +197,6 @@ const ComplementAnnounces = (props) => {
           setReason(res.data.results[0].reason);
         })
         .catch((err) => {
-          console.log(err.response);
         });
     } else setNullAid(true);
   }, []);

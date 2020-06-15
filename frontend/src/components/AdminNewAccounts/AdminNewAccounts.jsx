@@ -45,7 +45,6 @@ const AdminNewAccounts = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setData(res.data.results);
         setIsLoading(false);
         if (res.data.count % 5 !== 0) {
@@ -53,7 +52,7 @@ const AdminNewAccounts = () => {
         } else setCount(Math.floor(res.data.count / 5));
         setSearchLoading(false);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {});
   };
   useEffect(() => {
     setIsLoading(true);
@@ -77,7 +76,6 @@ const AdminNewAccounts = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setData(res.data.results);
         setIsLoading(false);
         if (res.data.count % 5 !== 0) {
@@ -85,7 +83,7 @@ const AdminNewAccounts = () => {
         } else setCount(Math.floor(res.data.count / 5));
         setSearchLoading(false);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {});
   }, [searchValue, activePage]);
 
   return (

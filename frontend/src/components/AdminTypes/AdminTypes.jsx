@@ -47,7 +47,6 @@ const AdminTypes = () => {
         .post("/declarations_types/", body)
         .then((res) => {
           setAdd((prevState) => !prevState);
-          console.log(res);
           setData((prevState) => [...prevState, res.data]);
         })
         .catch((err) => {
@@ -70,11 +69,9 @@ const AdminTypes = () => {
     instance
       .get("/declarations_types/?ordering=-created_on")
       .then((res) => {
-        console.log(res);
         setData(res.data);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
   const refresh = (id) => {
@@ -90,7 +87,6 @@ const AdminTypes = () => {
         tempArr.push(name);
       }
     });
-    console.log(tempArr);
     setData(tempArr);
   };
   return (

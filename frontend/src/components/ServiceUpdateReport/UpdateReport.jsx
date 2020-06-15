@@ -261,7 +261,6 @@ const UpdateReport = (props) => {
         })
         .catch((err) => {
           setReqErr(true);
-          console.log(err);
         });
     }
   };

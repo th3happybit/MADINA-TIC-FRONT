@@ -32,9 +32,7 @@ const CitoyenDeclarationInfo = (props) => {
       .then((res) => {
         history.push("/citoyen/declaration");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const getData = (did) => {
@@ -52,7 +50,6 @@ const CitoyenDeclarationInfo = (props) => {
         .then((res) => {
           setData(res.data);
           setLoading(false);
-          console.log(res.data);
           if (res.data.status === "lack_of_info")
             axios
               .get(
@@ -71,13 +68,9 @@ const CitoyenDeclarationInfo = (props) => {
               .then((ress) => {
                 setReason(ress.data.results[0].reason);
               })
-              .catch((errr) => {
-                console.log(errr);
-              });
+              .catch((errr) => {});
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
   };
 
   const getTypes = () => {
@@ -90,7 +83,6 @@ const CitoyenDeclarationInfo = (props) => {
       })
       .then((res) => {
         setTypes(res.data);
-        // console.log(res)
       });
   };
 
@@ -116,11 +108,8 @@ const CitoyenDeclarationInfo = (props) => {
       })
       .then((res) => {
         history.push("/citoyen/declaration");
-        console.log("hello");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -140,9 +129,6 @@ const CitoyenDeclarationInfo = (props) => {
       }
     }
   };
-  useEffect(() => {
-    console.log(Data);
-  }, []);
 
   function getStatus(st) {
     var ret = { status: "", color: "" };
@@ -152,7 +138,9 @@ const CitoyenDeclarationInfo = (props) => {
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
-        ret["status"] = languages.isFrench ? "Manque d'informations" : "معلومات غير كافية";
+        ret["status"] = languages.isFrench
+          ? "Manque d'informations"
+          : "معلومات غير كافية";
         ret["color"] = "orange";
         return ret;
       case "validated":
@@ -217,15 +205,21 @@ const CitoyenDeclarationInfo = (props) => {
                 {languages.isFrench ? "Date de dépot :" : "تاريخ الإضافة :"}{" "}
                 &nbsp;{Data.created_on && Data.created_on.slice(0, 10)}
               </p>
-              <p className="_content2">{languages.isFrench ? "Adresse :" : "العنوان :"} {Data.address}</p>
+              <p className="_content2">
+                {languages.isFrench ? "Adresse :" : "العنوان :"} {Data.address}
+              </p>
               {Data.status &&
                 getStatus(Data.status).status === "Lack of infos" && (
                   <p className="_content2">
-                    {languages.isFrench ? "Cause du demande :" : "سبب طلب التكملة :"} &nbsp;{Reason}
+                    {languages.isFrench
+                      ? "Cause du demande :"
+                      : "سبب طلب التكملة :"}{" "}
+                    &nbsp;{Reason}
                   </p>
                 )}
               <p className="_content3">
-                {languages.isFrench ? "Description :" : "التفاصيل :"}<br /> {Data.desc}
+                {languages.isFrench ? "Description :" : "التفاصيل :"}
+                <br /> {Data.desc}
               </p>
             </div>
 
@@ -357,7 +351,7 @@ const CitoyenDeclarationInfo = (props) => {
         </>
       ) : (
         <p className="text-gray-dark _intitulé extra-text">
-          {languages.isFrench? "Un erreur s'est produit ..." : "حدث خطأ ما"}
+          {languages.isFrench ? "Un erreur s'est produit ..." : "حدث خطأ ما"}
         </p>
       )}
     </Segment>

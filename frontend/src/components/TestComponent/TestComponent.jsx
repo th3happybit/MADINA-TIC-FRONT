@@ -170,7 +170,6 @@ const TestComponent = (props) => {
         setUID(res.data.uid);
       })
       .catch((err) => {
-        console.log(err.response);
       });
   };
   const getData = () => {
@@ -216,7 +215,6 @@ const TestComponent = (props) => {
         setsearchLoading(false);
       })
       .catch((err) => {
-        console.log({ err: err.response });
       });
   };
   useEffect(() => {

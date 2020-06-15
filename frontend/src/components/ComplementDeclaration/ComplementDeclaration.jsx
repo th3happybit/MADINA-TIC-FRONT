@@ -93,7 +93,6 @@ const ComplementDeclaration = (props) => {
           return true;
         });
         setIsLoading(false);
-        console.log(err.response);
         setIsLoading(false);
       });
   };
@@ -102,7 +101,6 @@ const ComplementDeclaration = (props) => {
     let upload = false;
     sendP.map((image) => {
       if (!image.src) {
-        console.log(image);
         upload = true;
         formData.append("src", image);
         formData.append("filetype", "image");
@@ -132,7 +130,6 @@ const ComplementDeclaration = (props) => {
           }
         })
         .catch((err) => {
-          console.log(err);
         });
     } else if (delP.length > 0) {
       deleteFiles();
@@ -155,7 +152,6 @@ const ComplementDeclaration = (props) => {
           setSucces(true);
         })
         .catch((err) => {
-          console.log(err);
         });
     });
   };
@@ -254,10 +250,9 @@ const ComplementDeclaration = (props) => {
               setLoadingPage(false);
             })
             .catch((err) => {
-              console.log(err.response);
             });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
   }, [selectedType]);
   useEffect(() => {
     setLoadingPage(true);
@@ -288,7 +283,6 @@ const ComplementDeclaration = (props) => {
             }
           })
           .catch((err) => {
-            console.log(err.response);
           });
         axios
           .get(
@@ -304,7 +298,6 @@ const ComplementDeclaration = (props) => {
             setReason(res.data.results[0].reason);
           })
           .catch((err) => {
-            console.log(err.response);
           });
       } else {
         setnotLack(true);

@@ -158,7 +158,6 @@ const AdminEditProfile = (props) => {
           },
         })
         .then((res) => {
-          //console.log(res);
           setIsLoading(false);
           handleEditShowing();
           props.refresh();

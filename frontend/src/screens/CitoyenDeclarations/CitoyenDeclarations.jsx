@@ -125,7 +125,6 @@ const CitoyenDeclarations = (props) => {
         getdecTypes();
       })
       .catch((err) => {
-        // console.log(err.response);
       });
   };
   const getdecTypes = () => {
@@ -140,7 +139,6 @@ const CitoyenDeclarations = (props) => {
         settypes(res.data);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const getDeclarations = () => {

@@ -335,15 +335,11 @@ const Card = (props) => {
         setimageP(res.data.image);
         setCardLoading(false);
         setupdated((prevState) => !prevState);
-        console.log(res);
-        //props.refresh();
       })
       .catch((err) => {
         setCardLoading(false);
       });
   };
-  console.log(image);
-
   return (
     <>
       <Segment

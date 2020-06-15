@@ -356,7 +356,6 @@ const TableTestComponent = (props) => {
                                 refresh();
                               })
                               .catch((err) => {
-                                console.log(err.response);
                               });
                           }}
                         />

@@ -26,11 +26,9 @@ const ItemType = (props) => {
     instance
       .delete(`/declarations_types/${elm.dtid}/`)
       .then((res) => {
-        console.log(res);
         props.refresh(elm.dtid);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const handleUpdate = () => {
@@ -52,7 +50,6 @@ const ItemType = (props) => {
         setClicked((prevState) => !prevState);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const handleInput = (e, { name, value }) => {

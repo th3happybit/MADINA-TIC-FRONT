@@ -119,7 +119,7 @@ const CardAdmin = (props) => {
         setCardLoading(false);
         setUser((prevState) => !prevState);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {});
   };
   const handleUpdate = () => {
     const formData = new FormData();
@@ -173,7 +173,6 @@ const CardAdmin = (props) => {
           },
         })
         .then((res) => {
-          console.log(res);
           handleEdit();
           props.refresh();
           setIsLoading(false);
