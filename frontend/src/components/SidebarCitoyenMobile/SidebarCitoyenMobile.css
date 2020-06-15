@@ -9,21 +9,25 @@
 
 ._sidebar.citoyen.dark {
   background-color: var(--second_dark) !important;
-  color : var(--primary_text_dark);
+  color: var(--primary_text_dark);
 }
 
 ._sidebar.citoyen.dark.dark .item a {
-  color : var(--primary_text_dark) !important;
+  color: var(--primary_text_dark) !important;
+}
+
+._sidebar.citoyen.dark.dark .item a.text-active {
+  color: var(--primary_dark) !important;
 }
 
 ._sidebar.citoyen.dark .button_primary {
   background: var(--primary_dark);
-  color : var(--primary_text_dark) !important;
+  color: var(--primary_text_dark) !important;
 }
 
 ._sidebar.active.citoyen {
   left: 0px;
-  padding : 1.5rem 1rem;
+  padding: 1.5rem 1rem;
 }
 .profile_citoyen_mobile_x {
   display: flex;
@@ -42,6 +46,12 @@
   cursor: pointer;
 }
 
-._sidebar_list.rtl{
+._sidebar_list.rtl {
   text-align: right;
+}
+
+._sidebar_list.rtl .item a,
+._sidebar.citoyen.rtl p {
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
 }

@@ -3,6 +3,7 @@ import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
 import "./CitoyenPasswordForm.css";
+import { languages } from "../../language.js";
 
 const PasswordForm = (props) => {
   const { isFrench } = props;
@@ -249,7 +250,7 @@ const PasswordForm = (props) => {
               disabled={isLoading}
               onClick={handleedit}
             >
-              Cancel
+              {languages.isFrench ? "Cancel" : "إلغاء"}
             </Button>
 
             <Button
@@ -258,7 +259,7 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-              Save
+              {languages.isFrench ? "Confirmer" :"حفظ"}
             </Button>
           </div>
         ) : (
@@ -269,7 +270,7 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-              Edit
+              {languages.isFrench ? "Éditer" : "تعديل"}
             </Button>
           </div>
         )}

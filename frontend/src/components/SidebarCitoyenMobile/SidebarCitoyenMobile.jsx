@@ -35,8 +35,12 @@ const SidebarCitoyenMobile = (props) => {
     <div
       className={
         props.visible
-          ? `_sidebar citoyen active ${isDark ? "dark" : ""}`
-          : `_sidebar citoyen ${isDark ? "dark" : ""}`
+          ? `_sidebar citoyen active ${isDark ? "dark" : ""} ${
+              props.isFrench ? "" : "rtl"
+            }`
+          : `_sidebar citoyen ${isDark ? "dark" : ""} ${
+              props.isFrench ? "" : "rtl"
+            }`
       }
     >
       <div className="profile_citoyen_mobile_x">

@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Message, Dropdown } from "semantic-ui-react";
+import {
+  Form,
+  Input,
+  Button,
+  Message,
+  Dropdown,
+  Flag,
+} from "semantic-ui-react";
 
 import axios from "axios";
 
+import "./CitoyenInfosForm.css";
 import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 
 //? redux stuff
@@ -95,7 +103,7 @@ const InfosForm = (props) => {
     if (!isFrench) {
       props.change_language(languages.french);
     } else {
-      props.change_language(languages.arabic);
+      props.change_language(languages.arabe);
     }
     axios
       .create({
@@ -225,11 +233,11 @@ const InfosForm = (props) => {
               value={
                 !language
                   ? !props.isFrench
-                    ? "عربي"
+                    ? "عربية"
                     : "Arabe"
                   : !props.isFrench
-                  ? "فرنسي"
-                  : "Francais"
+                  ? "فرنسية"
+                  : "Français"
               }
               label={isFrench ? "langue" : "لغة"}
             />
@@ -240,20 +248,29 @@ const InfosForm = (props) => {
             style={{
               width: "180px",
             }}
-            className={props.isFrench ? "_ltr" : "_rtl"}
+            className={props.isFrench ? "_language_field _ltr" : "_language_field _rtl"}
           >
             <Dropdown.Item
               onClick={() => {
                 setLanguage(false);
               }}
-              text={props.isFrench ? "Arabe" : "عربي"}
-            />
+              style={{"border-bottom" : "1px solid var(--secondary_text_dark)"}}
+            >
+              <div className="_language">
+                <Flag name="dz" />
+                <p>{props.isFrench ? "Arabe" : "عربية"}</p>
+              </div>
+            </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
                 setLanguage(true);
               }}
-              text={props.isFrench ? "Francais" : "فرنسي"}
-            />
+            >
+              <div className="_language">
+                <Flag name="fr" />
+                <p>{props.isFrench ? "Français" : "فرنسية"}</p>
+              </div>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Form.Group>

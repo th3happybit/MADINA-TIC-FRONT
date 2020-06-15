@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Image, Icon, Segment } from "semantic-ui-react";
+import { Image, Segment } from "semantic-ui-react";
 import Status from "../CitoyenDeclarationInfo/StatusLabel.jsx";
 
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import {change_language} from "../../actions/languageAction";
+
 const InfoScreen = (props) => {
+ const {language} = props;
  const [Data, setData] = useState([]);
  const [Reason, setReason] = useState([]);
  const [Loading, setLoading] = useState(true);
@@ -89,35 +95,35 @@ const InfoScreen = (props) => {
   var ret = { status: "", color: "" };
   switch (st) {
    case "not_validated":
-    ret["status"] = "Not Validated";
+    ret["status"] = "Non validée";
     ret["color"] = "blue";
     return ret;
    case "lack_of_info":
-    ret["status"] = "Lack of infos";
+    ret["status"] = "Manque d'informations";
     ret["color"] = "orange";
     return ret;
    case "validated":
-    ret["status"] = "Validated";
+    ret["status"] = "Validée";
     ret["color"] = "green";
     return ret;
    case "refused":
-    ret["status"] = "Refused";
+    ret["status"] = "Refusée";
     ret["color"] = "red";
     return ret;
    case "under_treatment":
-    ret["status"] = "In progress";
+    ret["status"] = "En cours";
     ret["color"] = "yellow";
     return ret;
    case "treated":
-    ret["status"] = "Treated";
-    ret["color"] = "green";
+    ret["status"] = "Treatée";
+    ret["color"] = "pink";
     return ret;
    case "archived":
-    ret["status"] = "Archived";
+    ret["status"] = "Archivée";
     ret["color"] = "black";
     return ret;
    case "draft":
-    ret["status"] = "Draft";
+    ret["status"] = "Brouillons";
     ret["color"] = "gray";
     return ret;
    default:
@@ -126,12 +132,15 @@ const InfoScreen = (props) => {
  }
 
  return (
-  <Segment loading={Loading} className="bg-white _container_declaration_info">
+  <Segment loading={Loading} 
+  className={`bg-white _container_declaration_info ${
+    props.isDark ? "dark" : ""
+    } ${props.language.isFrench ? "" : "rtl"}`}>
    {id ? (
     <>
      <p className="text-gray-dark _intitulé extra-text">
       {" "}
-            Declaration details
+      {language.isFrench ? "Détails de la déclaration" : "تفاصيل تصريح"}
           </p>
      <div className="d-flex _info_container">
       <div className="_row1">
@@ -145,21 +154,23 @@ const InfoScreen = (props) => {
         )}
        </div>
        <p className="text-gray-light _content2">
-        - {editType(Data.dtype)} problem -
+       {language.isFrench
+                  ? `- ${editType(Data.dtype)} problème -`
+                  : `- مشكل ${editType(Data.dtype)} -`}
               </p>
        <p className=" _content2">
-        Date de dépot :{" "}
-        {Data.created_on && Data.created_on.slice(0, 10)}
+       {language.isFrench ? "Date de dépot :" : "تاريخ الإضافة :"}{" "}
+        &nbsp; {Data.created_on && Data.created_on.slice(0, 10)}
        </p>
        <p className="_content2">Adresse : {Data.address}</p>
        {Data.status &&
         getStatus(Data.status).status === "Lack of infos" && (
          <p className="_content2">
-          Cause of complement demand : {Reason}
+           {language.isFrench ? "Cause du demande :" : "سبب طلب التكملة :"} &nbsp;{Reason}
          </p>
         )}
        <p className="_content3">
-        Description :<br /> {Data.desc}
+       {language.isFrench ? "Description :" : "التفاصيل :"}<br /> {Data.desc}
        </p>
       </div>
 
@@ -186,11 +197,24 @@ const InfoScreen = (props) => {
     </>
    ) : (
      <p className="text-gray-dark _intitulé extra-text">
-      Error 404 : Page Not Found
+      {language.isFrench? "Un erreur s'est produit ..." : "حدث خطأ ما"}
      </p>
     )}
   </Segment>
  );
 };
+InfoScreen.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
 
-export default InfoScreen;
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  InfoScreen
+);

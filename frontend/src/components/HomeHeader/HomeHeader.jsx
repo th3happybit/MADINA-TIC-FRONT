@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { List, Dropdown, Flag } from "semantic-ui-react";
+import { lang } from "moment";
+
 import { ReactComponent as Logo } from "../../assets/images/logo_vectorized.svg";
 import { ReactComponent as LogoI } from "../../assets/images/logo_inverted.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
+import "./HomeHeader.css";
 import Backdrop from "../Backdrop/Backdrop.jsx";
 
-import { Link } from "react-router-dom";
-import { List } from "semantic-ui-react";
-import "./HomeHeader.css";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
 
 const HomeHeader = (props) => {
   const { language, declaration } = props;
@@ -90,12 +96,49 @@ const HomeHeader = (props) => {
               </Link>
             );
           })}
+          <Dropdown
+            icon={null}
+            pointing
+            trigger={
+              <p
+                className={
+                  declaration ? "black-text" : white ? "" : "black-text"
+                }
+              >
+                {language.isFrench ? "Langue" : "اللغة"}
+              </p>
+            }
+          >
+            <Dropdown.Menu
+              style={{ position: "absolute", top: "50px", right: "20px" }}
+            >
+              <Dropdown.Item
+                onClick={() => props.change_language(languages.arabe)}
+              >
+                <div className="_language">
+                  <Flag name="dz" />
+                  {language.isFrench ? "Arabe" : "العربية"}
+                </div>
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => props.change_language(languages.french)}
+              >
+                <div className="_language">
+                  <Flag name="fr" />
+                  {language.isFrench ? "Français" : "الفرنسية"}
+                </div>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </nav>
       <nav className="_mobile_nav">
         <div className="_header_sidebar">
           <div className="_toggle_home">
-            <Toggle onClick={handle_visible} className={declaration ? "blue" : ""}/>
+            <Toggle
+              onClick={handle_visible}
+              className={declaration ? "blue" : ""}
+            />
           </div>
           <div className="logo">
             {declaration ? (
@@ -105,7 +148,15 @@ const HomeHeader = (props) => {
             ) : (
               <Logo height="40px" />
             )}
-            <p className={`extra-text ${declaration ? "text-active" : white ? "white-text" : "text-active"}`}>
+            <p
+              className={`extra-text ${
+                declaration
+                  ? "text-active"
+                  : white
+                  ? "white-text"
+                  : "text-active"
+              }`}
+            >
               MADINA-TIC
             </p>
           </div>
@@ -136,5 +187,14 @@ const HomeHeader = (props) => {
     </header>
   );
 };
+HomeHeader.propTypes = {
+  change_mode: PropTypes.func.isRequired,
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
 
-export default HomeHeader;
+const mapStateToProps = (state) => ({
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_language })(HomeHeader);

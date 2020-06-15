@@ -129,11 +129,8 @@ const HomeMain = (props) => {
       : "يتم إشعاركم بعد التأكد من إتمام العمل",
   ];
   const footerItems = [
-    { text: language.isFrench ? "ACCUEIl" : "الصفحة الرئيسية", link: "#home" },
-    // { text: "comment ca marche ?", link: "#instr" },
-    // { text: "fonctionnalités ", link: "#functions" },
-    // { text: "télécharger ", link: "#download" },
-    { text: language.isFrench ? "Déclarations" : "التصريحات", link: "#" },
+    { text: language.isFrench ? "ACCUEIl" : "الصفحة الرئيسية", link: "#" },
+    { text: language.isFrench ? "Déclarations" : "التصريحات", link: "/declarations" },
     { text: language.isFrench ? "Contact" : "تواصل معنا", link: "#" },
   ];
 

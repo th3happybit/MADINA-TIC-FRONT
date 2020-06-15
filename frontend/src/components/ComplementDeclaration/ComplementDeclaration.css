@@ -1,9 +1,9 @@
-._add_dec .message.info {
+._add_dec.dark .message.info {
     background-color: var(--background_dark);
     border-color : var(--primary_dark) !important;
 }
 
-._add_dec .message.info .header {
+._add_dec.dark .message.info .header {
     color : var(--primary_dark) !important;
 }
 

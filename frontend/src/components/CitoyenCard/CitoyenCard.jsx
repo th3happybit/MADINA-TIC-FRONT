@@ -18,6 +18,8 @@ import "./CitoyenCard.css";
 
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
+import { languages } from "../../language";
+import { lang } from "moment";
 
 const Card = (props) => {
   const { cit_infos, loading, isFrench, isDark } = props;
@@ -345,7 +347,9 @@ const Card = (props) => {
     <>
       <Segment
         loading={loading ? loading : cardLoading}
-        className={`card-citoyen ${isDark ? "dark" : "shadow"} ${isFrench ? "" : "rtl"}`}
+        className={`card-citoyen ${isDark ? "dark" : "shadow"} ${
+          isFrench ? "" : "rtl"
+        }`}
       >
         {cit_infos && (
           <>
@@ -424,7 +428,7 @@ const Card = (props) => {
                     type="text"
                     value={first_name}
                     onChange={handleChangeInput}
-                    placeholder="First Name..."
+                    placeholder={languages.isFrench ? "Prénom" : "الإسم"}
                   />
                   <Input
                     id="last_name"
@@ -432,7 +436,7 @@ const Card = (props) => {
                     type="text"
                     value={last_name}
                     onChange={handleChangeInput}
-                    placeholder="Family Name..."
+                    placeholder={languages.isFrench ? "Nom" : "اللقب"}
                   />
                 </div>
               )}
@@ -529,7 +533,7 @@ const Card = (props) => {
                     name={
                       isFrench
                         ? "Mettre à jour le mot de passe"
-                        : "تطوير كلمة السر"
+                        : "تحديث كلمة السر"
                     }
                     data-name="password"
                     className="pointer"
@@ -546,7 +550,11 @@ const Card = (props) => {
                         id="email"
                         value={email}
                         onChange={handleChangeInput}
-                        placeholder="Email ..."
+                        placeholder={
+                          languages.isFrench
+                            ? "Email ..."
+                            : "البريد الإلكتروني ..."
+                        }
                       />
                       <Input
                         className="mobile-input"
@@ -554,7 +562,11 @@ const Card = (props) => {
                         id="birthday"
                         value={birthday}
                         onChange={handleChangeInput}
-                        placeholder="Birthday ..."
+                        placeholder={
+                          languages.isFrench
+                            ? "Date de naissance ..."
+                            : "تاريخ الميلاد ..."
+                        }
                       />
                       <Input
                         className="mobile-input"
@@ -562,7 +574,9 @@ const Card = (props) => {
                         id="address"
                         value={address}
                         onChange={handleChangeInput}
-                        placeholder="Address ..."
+                        placeholder={
+                          languages.isFrench ? "Addresse ..." : "العنوان ..."
+                        }
                       />
                       <Input
                         className="mobile-input"
@@ -570,7 +584,11 @@ const Card = (props) => {
                         id="phone"
                         value={phone}
                         onChange={handleChangeInput}
-                        placeholder="Phone Number ..."
+                        placeholder={
+                          languages.isFrench
+                            ? "Numéro de téléphone ..."
+                            : "رقم الهاتف ..."
+                        }
                       />
                       <Input
                         className="mobile-input"
@@ -578,15 +596,27 @@ const Card = (props) => {
                         id="national_id"
                         value={national_id}
                         onChange={handleChangeInput}
-                        placeholder="National ID ..."
+                        placeholder={
+                          languages.isFrench
+                            ? "Numéro national ..."
+                            : "الهوية الوطنية ..."
+                        }
                       />
                       <Message
                         error
-                        content="Please make sur to enter a valid data"
+                        content={
+                          languages.isFrench
+                            ? "Assurez la validitée de vos données s'il vous plaît"
+                            : "من فضلك، تحقق من صحة معلوماتك"
+                        }
                       />
                       <Message
                         success
-                        content="Your infos update request has been sent successfully"
+                        content={
+                          languages.isFrench
+                            ? "Vos changement ont été sauvegardées avec succés"
+                            : "تم حفظ معلوماتك بنجاح"
+                        }
                       />
                     </Form>
                   </div>
@@ -603,7 +633,11 @@ const Card = (props) => {
                             currentPassword.isPassword ? "password" : "text"
                           }
                           onChange={handleInputChangeValue}
-                          placeholder="Current password"
+                          placeholder={
+                            languages.isFrench
+                              ? "Current password"
+                              : "كلمة السر الحالية"
+                          }
                         />
                         <i
                           className="eye icon pointer"
@@ -618,7 +652,11 @@ const Card = (props) => {
                           value={newPassword.value}
                           type={newPassword.isPassword ? "password" : "text"}
                           onChange={handleInputChangeValue}
-                          placeholder="New password"
+                          placeholder={
+                            languages.isFrench
+                              ? "New password"
+                              : "كلمة السر الجديد"
+                          }
                         />
                         <i
                           className="eye icon pointer"
@@ -635,7 +673,11 @@ const Card = (props) => {
                             confirmPassword.isPassword ? "password" : "text"
                           }
                           onChange={handleInputChangeValue}
-                          placeholder="Confirm password"
+                          placeholder={
+                            languages.isFrench
+                              ? "Confirm password"
+                              : "تأكيد كلمة السر"
+                          }
                         />
                         <i
                           className="eye icon pointer"

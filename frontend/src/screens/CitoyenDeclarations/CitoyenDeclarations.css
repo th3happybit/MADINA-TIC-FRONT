@@ -15,6 +15,18 @@
   margin-bottom: initial;
 }
 
+._main_declaration_right.dark .filter_declaration .item {
+  color: var(--primary_text_dark);
+  font-weight: 600;
+  text-align: right;
+  background-color: var(--background_dark);
+}
+
+._main_declaration.dark .filter_declaration .menu {
+  background-color: var(--background_dark);
+  border: 1px solid var(--background_dark);
+}
+
 ._main_declaration_right {
   margin-top: 1.4rem !important;
   width: 80% !important;
@@ -316,6 +328,10 @@ td:hover > .full_text {
   .show_mobile {
     display: flex !important;
     justify-content: space-between !important;
+  }
+
+  ._main_declaration.rtl .show_mobile {
+    flex-direction: row-reverse;
   }
 
   .zero-data {

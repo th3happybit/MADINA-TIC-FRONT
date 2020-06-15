@@ -87,7 +87,6 @@ a {
 }
 .extra-text {
   font-size: 26px !important;
-  font-family: "Raleway", sans-serif;
 }
 .large-title {
   font-size: 24px !important;
@@ -246,6 +245,13 @@ a {
 ._rtl {
   direction: rtl;
   text-align: right;
+}
+.rtl,
+.rtl .button,
+.rtl input,
+.rtl input::placeholder {
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
 }
 ._citoyen_header_logo .ui-alerts.container_toastr.top-right {
   position: absolute !important;

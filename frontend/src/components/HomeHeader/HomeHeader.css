@@ -19,6 +19,24 @@
   direction: rtl;
 }
 
+._home_header ._language {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 600;
+}
+
+._home_header.rtl ._language i {
+  margin : 0 0 0 0.5em;
+}
+
+._home_header div.item {
+  padding : 10px 0.785714rem !important;
+}
+._home_header.rtl ._language {
+
+}
+
 ._home_header .white-text {
   color: white;
 }
@@ -34,6 +52,7 @@
 
 ._home_header.white_declaration {
   background: rgba(202, 202, 202, 0.8);
+  z-index: 999;
 }
 
 ._home_nav .logo {
@@ -163,19 +182,19 @@
   text-align: right;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1200px) {
   ._home_nav {
-    width: 80%;
+    width: 90%;
   }
 }
 
 @media (max-width : 1099px){
   ._home_nav {
-    width : 95%
+    width : 98%
   }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 999px) {
   ._home_nav {
     display: none;
   }

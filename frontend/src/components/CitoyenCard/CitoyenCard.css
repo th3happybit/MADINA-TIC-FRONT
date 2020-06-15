@@ -12,6 +12,10 @@
   direction: rtl;
 }
 
+.card-citoyen.rtl .col_mobile input {
+  text-align: right;
+}
+
 .card-citoyen.rtl span,
 .card-citoyen.rtl .divider {
   font-family: "Cairo", sans-serif;
@@ -44,14 +48,14 @@
   color: var(--primary_text_dark);
 }
 
-.card-citoyen.dark .primary{
-  color : var(--primary_text_dark) !important;
+.card-citoyen.dark .primary {
+  color: var(--primary_text_dark) !important;
   background: var(--primary_dark);
 }
 
 .card-citoyen.dark .button.secondary {
-  color : var(--primary_text_dark) !important;
-  background : var(--secondary_dark);
+  color: var(--primary_text_dark) !important;
+  background: var(--secondary_dark);
 }
 
 .card-citoyen.dark .ui.secondary.pointing.menu a.active.item {
@@ -60,7 +64,7 @@
 }
 
 .card-citoyen.dark .edit-profile-pic .icon {
-  color : var(--secondary_text_dark);
+  color: var(--secondary_text_dark);
 }
 .card-citoyen > .citoyen-profile-pic {
   display: flex;

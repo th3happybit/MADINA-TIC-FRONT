@@ -11,7 +11,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { change_mode } from "../../actions/darkAction";
 import { change_language } from "../../actions/languageAction";
-import { languages } from "../../language";
 
 const CitoyenDeclarationInfo = (props) => {
   const { languages } = props;
@@ -149,35 +148,35 @@ const CitoyenDeclarationInfo = (props) => {
     var ret = { status: "", color: "" };
     switch (st) {
       case "not_validated":
-        ret["status"] = "Not Validated";
+        ret["status"] = languages.isFrench ? "Pas validée" : "تصريح جديد";
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
-        ret["status"] = "Lack of infos";
+        ret["status"] = languages.isFrench ? "Manque d'informations" : "معلومات غير كافية";
         ret["color"] = "orange";
         return ret;
       case "validated":
-        ret["status"] = "Validated";
+        ret["status"] = languages.isFrench ? "Validée" : "تم التحقق من صحتها";
         ret["color"] = "green";
         return ret;
       case "refused":
-        ret["status"] = "Refused";
+        ret["status"] = languages.isFrench ? "Refusée" : "مرفوضة";
         ret["color"] = "red";
         return ret;
       case "under_treatment":
-        ret["status"] = "In progress";
+        ret["status"] = languages.isFrench ? "In progress" : "في تقدم";
         ret["color"] = "yellow";
         return ret;
       case "treated":
-        ret["status"] = "Treated";
+        ret["status"] = languages.isFrench ? "Treated" : "معالجة";
         ret["color"] = "green";
         return ret;
       case "archived":
-        ret["status"] = "Archived";
+        ret["status"] = languages.isFrench ? "Archived" : "مؤرشفة";
         ret["color"] = "black";
         return ret;
       case "draft":
-        ret["status"] = "Draft";
+        ret["status"] = languages.isFrench ? "Draft" : "مسودة";
         ret["color"] = "gray";
         return ret;
       default:
@@ -186,7 +185,12 @@ const CitoyenDeclarationInfo = (props) => {
   }
 
   return (
-    <Segment loading={Loading} className="bg-white _container_declaration_info">
+    <Segment
+      loading={Loading}
+      className={`bg-white _container_declaration_info ${
+        props.isDark ? "dark" : ""
+      } ${languages.isFrench ? "" : "rtl"}`}
+    >
       {id ? (
         <>
           <p className="text-gray-dark _intitulé extra-text">
@@ -205,21 +209,23 @@ const CitoyenDeclarationInfo = (props) => {
                 )}
               </div>
               <p className="text-gray-light _content2">
-                - {editType(Data.dtype)} problem -
+                {languages.isFrench
+                  ? `- ${editType(Data.dtype)} problème -`
+                  : `- مشكل ${editType(Data.dtype)} -`}
               </p>
               <p className=" _content2">
-                Date de dépot :{" "}
-                {Data.created_on && Data.created_on.slice(0, 10)}
+                {languages.isFrench ? "Date de dépot :" : "تاريخ الإضافة :"}{" "}
+                &nbsp;{Data.created_on && Data.created_on.slice(0, 10)}
               </p>
-              <p className="_content2">Adresse : {Data.address}</p>
+              <p className="_content2">{languages.isFrench ? "Adresse :" : "العنوان :"} {Data.address}</p>
               {Data.status &&
                 getStatus(Data.status).status === "Lack of infos" && (
                   <p className="_content2">
-                    Cause of complement demand : {Reason}
+                    {languages.isFrench ? "Cause du demande :" : "سبب طلب التكملة :"} &nbsp;{Reason}
                   </p>
                 )}
               <p className="_content3">
-                Description :<br /> {Data.desc}
+                {languages.isFrench ? "Description :" : "التفاصيل :"}<br /> {Data.desc}
               </p>
             </div>
 
@@ -351,7 +357,7 @@ const CitoyenDeclarationInfo = (props) => {
         </>
       ) : (
         <p className="text-gray-dark _intitulé extra-text">
-          Error 404 : Page Not Found
+          {languages.isFrench? "Un erreur s'est produit ..." : "حدث خطأ ما"}
         </p>
       )}
     </Segment>

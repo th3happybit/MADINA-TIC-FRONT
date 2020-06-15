@@ -15,6 +15,7 @@
 ._citoyen_sidebar.rtl a,
 ._citoyen_sidebar.rtl p{
   font-family: "Cairo", sans-serif;
+  font-weight: 600;
 }
 
 ._citoyen_sidebar.dark {

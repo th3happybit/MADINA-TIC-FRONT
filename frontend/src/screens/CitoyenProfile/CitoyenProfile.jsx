@@ -107,7 +107,7 @@ const CitoyenProfile = (props) => {
                         name={
                           languages.isFrench
                             ? "Mettre à jour le mot de passe"
-                            : "تطوير كلمة السر"
+                            : "تحديث كلمة السر"
                         }
                         active={activeItem === "password"}
                         onClick={handleItemClick}

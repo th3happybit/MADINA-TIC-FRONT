@@ -1,0 +1,52 @@
+.citoyen-profile.rtl .infos-form {
+  direction: rtl;
+}
+
+.citoyen-profile.rtl .column.right {
+  direction: rtl;
+}
+
+.citoyen-profile.rtl .infos-form input,
+.citoyen-profile.rtl .infos-form label {
+  text-align: right;
+  font-family: "Cairo", sans-serif;
+}
+
+.citoyen-profile.rtl ._info_menu .ui.pointing,
+.card-citoyen.rtl .mobile_menu .ui.pointing {
+  font-family: "Cairo", sans-serif;
+}
+
+.citoyen-profile.dark ._info_menu .form.loading::before {
+  background: transparent;
+}
+
+.citoyen-profile ._language {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 600;
+}
+
+.citoyen-profile.rtl ._language i {
+  margin-left: 10px !important;
+  margin-right: 0 !important;
+}
+
+.citoyen-profile ._language i {
+  margin-left: 0 !important;
+  margin-right: 10px !important;
+}
+
+.citoyen-profile.dark ._language_field {
+    background-color: var(--background_dark);
+    font-weight: 600;
+}
+
+.dark .ui.message.success {
+    background-color : rgb(79, 94, 79)
+}
+
+.dark .ui.message.error {
+    background-color: rgba(179, 119, 119, 0.5);
+}

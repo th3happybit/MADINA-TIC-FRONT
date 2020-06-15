@@ -12,7 +12,23 @@
   height: 70px;
 }
 
-._citoyen_header ._rtl input {
+._citoyen_header ._rtl input,
+._citoyen_header ._rtl a,
+._citoyen_header ._rtl .item {
+  font-family: "Cairo", sans-serif;
+}
+
+._citoyen_header ._rtl .dark_trigger,
+._citoyen_header ._rtl span.text {
+  font-weight: 600;
+}
+
+._citoyen_header ._rtl .icon {
+  margin-right: 0 !important;
+  margin-left: 0.78571429rem !important;
+}
+
+._citoyen_header ._rtl .item {
   font-family: "Cairo", sans-serif;
 }
 
@@ -35,6 +51,8 @@
   display: flex;
   justify-content: space-between;
   position: relative;
+  height: 100%;
+  align-items: center;
 }
 ._add_btn_dec.here {
   margin: 4rem 0 !important;
@@ -256,4 +274,47 @@
 }
 .notificated > path:nth-of-type(3) {
   fill: var(--secondary) !important;
+}
+
+._citoyen_header.dark .notificated path {
+  fill: var(--secondary_dark);
+}
+
+._citoyen_header.dark ._citoyen_header_logo svg path {
+  fill: var(--secondary_text_dark);
+}
+
+._citoyen_header.dark .item_notif,
+._citoyen_header.dark ._citoyen_header_logo .ui.dropdown .menu::after {
+  background-color: var(--background_dark);
+}
+
+._citoyen_header.dark .item_notif h4 {
+  color: var(--secondary_dark);
+}
+
+._citoyen_header.dark .item_notif:hover{
+  background-color : var(--second_dark) !important;
+}
+
+._citoyen_header.dark .notif_item {
+  border-bottom: 1px solid var(--secondary_text_dark);
+}
+
+._citoyen_header.dark .item_notif .row p {
+  color: var(--secondary_text_dark);
+  font-weight: 600;
+}
+
+._citoyen_header.dark .item_notif p {
+  color: var(--primary_text_dark);
+}
+
+._citoyen_header ._rtl .item_notif .row p,
+._citoyen_header ._rtl .item_notif p{
+  font-weight: 600;
+}
+
+._citoyen_header.dark ._citoyen_header_logo .ui.dropdown .menu {
+  border: 1px solid var(--second_dark);
 }

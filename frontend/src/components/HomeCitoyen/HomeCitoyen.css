@@ -17,7 +17,6 @@
   font-family: "Cairo", sans-serif;
 }
 
-
 .gis.rtl ._container_declaration {
   margin-right: 16rem !important;
   margin-left: 28rem !important;
@@ -31,7 +30,7 @@ main.dark ._container_declaration p {
   color: var(--primary_text_dark);
 }
 
-main.dark .segment.loading::before {
+main.dark ._container_declaration.segment.loading::before {
   background: transparent !important;
 }
 
@@ -58,7 +57,7 @@ main.dark .segment.loading::before {
 
 .gis.rtl ._contentt {
   padding-right: 5px;
-  padding-left : 0;
+  padding-left: 0;
 }
 
 ._contenttt {
@@ -102,10 +101,14 @@ main.dark .segment.loading::before {
   ._container_declaration {
     margin-right: 5rem !important;
   }
+  .gis.rtl ._container_declaration {
+    margin-left: 5rem !important;
+  }
 }
 
 @media (max-width: 929px) {
-  ._container_declaration {
+  ._container_declaration,
+  .gis.rtl ._container_declaration {
     margin-right: 5rem !important;
     margin-left: 5rem !important;
   }

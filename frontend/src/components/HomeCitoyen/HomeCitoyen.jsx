@@ -25,16 +25,12 @@ const HomeCitoyen = (props) => {
   const [notifData, setNotifData] = useState("");
   window.onscroll = debounce(() => {
     if (isLoading || !next) return;
-    console.log(document.documentElement.scrollHeight);
-    console.log(document.documentElement.clientHeight);
-    console.log(document.documentElement.scrollTop)
     if (
       document.documentElement.scrollHeight -
         document.documentElement.clientHeight <=
       document.documentElement.scrollTop + 1
     ) {
       loadUsers();
-      console.log("dela3");
     }
   }, 100);
   const loadUsers = () => {
@@ -68,7 +64,6 @@ const HomeCitoyen = (props) => {
           setNext(res.data.next);
         }
         setLoading(false);
-        console.log(Data);
       })
       .catch((err) => {
         console.log(err);
@@ -99,35 +94,35 @@ const HomeCitoyen = (props) => {
     var ret = { status: "", color: "" };
     switch (st) {
       case "not_validated":
-        ret["status"] = "Not Validated";
+        ret["status"] = language.isFrench ? "Pas validée" : "تصريح جديد";
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
-        ret["status"] = "Lack of infos";
+        ret["status"] = language.isFrench ? "Manque d'informations" : "معلومات غير كافية";
         ret["color"] = "orange";
         return ret;
       case "validated":
-        ret["status"] = "Validated";
+        ret["status"] = language.isFrench ? "Validée" : "تم التحقق من صحتها";
         ret["color"] = "green";
         return ret;
       case "refused":
-        ret["status"] = "Refused";
+        ret["status"] = language.isFrench ? "Refusée" : "مرفوضة";
         ret["color"] = "red";
         return ret;
       case "under_treatment":
-        ret["status"] = "In progress";
+        ret["status"] = language.isFrench ? "In progress" : "في تقدم";
         ret["color"] = "yellow";
         return ret;
       case "treated":
-        ret["status"] = "Treated";
+        ret["status"] = language.isFrench ? "Treated" : "معالجة";
         ret["color"] = "pink";
         return ret;
       case "archived":
-        ret["status"] = "Archived";
+        ret["status"] = language.isFrench ? "Archived" : "مؤرشفة";
         ret["color"] = "black";
         return ret;
       case "draft":
-        ret["status"] = "Draft";
+        ret["status"] = language.isFrench ? "Draft" : "مسودة";
         ret["color"] = "gray";
         return ret;
       default:
@@ -224,7 +219,7 @@ const HomeCitoyen = (props) => {
                     {element.created_on && element.created_on.slice(0, 10)}
                   </p>
                   <p className="_contenttt">
-                    {language.isFrench ? "Adress" : "العنوان"} :{" "}
+                    {language.isFrench ? "Adresse" : "العنوان"} :{" "}
                     {element.address}
                   </p>
                   <p className="_contenttt">
