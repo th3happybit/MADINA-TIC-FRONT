@@ -6,7 +6,6 @@ import "./CitoyenPasswordForm.css";
 import { languages } from "../../language.js";
 
 const PasswordForm = (props) => {
-  const { isFrench } = props;
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
     isPassword: true,
@@ -194,7 +193,9 @@ const PasswordForm = (props) => {
               id="currentPassword"
               value={currentPassword.value}
               type={currentPassword.isPassword ? "password" : "text"}
-              label={isFrench ? "Mot de passe actuel" : "كلمة المرور الحالي"}
+              label={
+                props.isFrench ? "Mot de passe actuel" : "كلمة المرور الحالي"
+              }
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -212,7 +213,9 @@ const PasswordForm = (props) => {
               id="newPassword"
               value={newPassword.value}
               type={newPassword.isPassword ? "password" : "text"}
-              label={isFrench ? "Mot de passe nouveau" : "كلمة السر الجديدة"}
+              label={
+                props.isFrench ? "Mot de passe nouveau" : "كلمة السر الجديدة"
+              }
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -231,7 +234,9 @@ const PasswordForm = (props) => {
               value={confirmPassword.value}
               type={confirmPassword.isPassword ? "password" : "text"}
               label={
-                isFrench ? "Confirmez le mot de passe" : "تأكيد كلمة المرور"
+                props.isFrench
+                  ? "Confirmez le mot de passe"
+                  : "تأكيد كلمة المرور"
               }
               onChange={handleInputChangeValue}
               className="required"
@@ -250,7 +255,9 @@ const PasswordForm = (props) => {
               disabled={isLoading}
               onClick={handleedit}
             >
+
               {isFrench ? "Cancel" : "إلغاء"}
+
             </Button>
 
             <Button
@@ -259,7 +266,9 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
+
               {isFrench ? "Confirmer" :"حفظ"}
+
             </Button>
           </div>
         ) : (
@@ -270,7 +279,9 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
+
               {isFrench ? "Éditer" : "تعديل"}
+
             </Button>
           </div>
         )}
@@ -279,7 +290,7 @@ const PasswordForm = (props) => {
         <Message
           success
           content={
-            isFrench
+            props.isFrench
               ? "Votre demande de mise à jour des informations a été envoyée avec succès"
               : "تم إرسال طلب تحديث معلوماتك بنجاح"
           }
