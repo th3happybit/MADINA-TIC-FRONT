@@ -1,7 +1,7 @@
 import React from "react";
 
 import "./AnnonceHome.css";
-import { Segment, Divider, Pagination, Image } from "semantic-ui-react";
+import { Segment, Divider, Pagination } from "semantic-ui-react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -72,22 +72,13 @@ const AnnonceHome = (props) => {
   };
 
   useEffect(() => {
-    const headers = props.anonyme
-      ? {
-          "content-type": "application/json",
-        }
-      : {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
-        };
-
     const date = new Date();
     let now =
       date.getFullYear() +
       "-" +
       String(date.getMonth() + 1) +
       "-" +
-      date.getDate() +
+      date.getDay() +
       " " +
       date.getHours() +
       ":" +
@@ -96,14 +87,17 @@ const AnnonceHome = (props) => {
       date.getSeconds();
     setLoading(true);
     axios
-      .get("https://www.madina-tic.ml/api/announce_nested/", {
+      .get("https://www.madina-tic.ml/api/announces/", {
         params: {
           status: "published",
           page: page,
           start_at_less: now,
           end_at_greater: now,
         },
-        headers: headers,
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("token")}`,
+        },
       })
       .then((res) => {
         setData(res.data.results);
@@ -120,66 +114,61 @@ const AnnonceHome = (props) => {
   }, [page]);
 
   return (
-    <Segment
-      className={`_annonce_tab shadow ${props.isDark ? "dark" : ""} ${
-        props.isFrench ? "" : "rtl"
-      }`}
-      loading={Loading}
-    >
+    <Segment className="_annonce_tab shadow" loading={Loading}>
       <h3 className="text-default">
-        {props.isFrench ? "Annonces actives" : "الإعلانات النشطة"}
+        {props.isFrench ? "Annonces actives" : "إعلانات نشطة"}
       </h3>
 
       <div className="_tab_content">
         <div className="_announces">
           {Data.map((annonce, index) => {
             return (
-              <div key={index} className="_annonce">
+              <div
+                key={index}
+                className="_annonce"
+                style={{
+                  textAlign: props.isFrench ? "left" : "right",
+                  direction: props.isFrench ? "rtl" : "ltr",
+                }}
+              >
                 <h4 className="">{annonce.title}</h4>
                 <span
                   style={{
+                    flexDirection: props.isFrench ? "row" : "row-reverse",
                     direction: props.isFrench ? "ltr" : "rtl",
                   }}
                 >
-                  <p className="_title">
-                    {props.isFrench ? "Service :" : "المصلحة :"}{" "}
-                  </p>
-                  &nbsp;
-                  <p>
-                    {annonce.service.first_name +
-                      " " +
-                      annonce.service.last_name}
-                  </p>
-                </span>
-                <span>
-                  <p className="_title">{props.isFrench ? "De :" : "من :"} </p>
+                  <p className="_title">{props.isFrench ? "De :" : ": مذ"} </p>
                   &nbsp;
                   <p>{TimeExtract(annonce.start_at)}</p>
                 </span>
-                <span>
-                  <p className="_title">{props.isFrench ? "À :" : "إلى :"} </p>
+                <span
+                  style={{
+                    flexDirection: props.isFrench ? "row" : "row-reverse",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  <p className="_title">{props.isFrench ? "À :" : ": إلى"} </p>
                   &nbsp;
                   <p>{TimeExtract(annonce.end_at)}</p>
                 </span>
-                <p className="_title">
-                  {props.isFrench ? "Détails :" : "تفاصيل :"}
+                <p
+                  className="_title"
+                  style={{
+                    textAlign: props.isFrench ? "left" : "right",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  {props.isFrench ? "Détails :" : ": تفاصيل"}
                 </p>
-                <p>{annonce.desc}</p>
-                {annonce.image && (
-                  <Image
-                    src={annonce.image}
-                    style={{
-                      height: "130px",
-                      width: "130px",
-                      marginTop: "10px",
-                      "border-radius": "3px",
-                    }}
-                    onClick={() => {
-                      window.open(annonce.image);
-                    }}
-                    className="pointer"
-                  />
-                )}
+                <p
+                  style={{
+                    textAlign: props.isFrench ? "left" : "right",
+                    direction: props.isFrench ? "ltr" : "rtl",
+                  }}
+                >
+                  {annonce.desc}
+                </p>
                 {index + 1 < Data.length && <Divider />}
               </div>
             );
