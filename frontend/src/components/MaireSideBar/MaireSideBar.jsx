@@ -13,7 +13,7 @@ const MaireSideBar = (props) => {
   return (
     <div className="_sidebar_maire">
       <div className="row">
-        <Link to="/maire" style={{ width: "100%" }}>
+        <Link to="/maire/dashboard" style={{ width: "100%" }}>
           <div className="part_top pointer">
             <Logo className="logo_h" />
             <p className="extra-text text-active">MADINA TIC</p>

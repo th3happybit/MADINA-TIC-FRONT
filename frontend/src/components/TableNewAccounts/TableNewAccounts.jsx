@@ -37,8 +37,8 @@ const TableNewAccounts = (props) => {
                       url: props.next,
                       method: "get",
                     })
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err.response));
+                    .then((res) => {})
+                    .catch((err) => {});
                 }}
               >
                 Fullname

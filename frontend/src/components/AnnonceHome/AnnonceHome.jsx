@@ -115,7 +115,6 @@ const AnnonceHome = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [page]);
 

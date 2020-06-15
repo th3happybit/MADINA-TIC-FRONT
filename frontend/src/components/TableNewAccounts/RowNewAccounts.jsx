@@ -49,7 +49,7 @@ export default function RowNewAccounts(props) {
           setLoading(false);
           setOpen(false);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     } else if (type === 1) {
       axios
         .create({
@@ -71,9 +71,8 @@ export default function RowNewAccounts(props) {
           props.refresh();
           setLoading(false);
           setOpen(false);
-          console.log(res);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     }
   };
 

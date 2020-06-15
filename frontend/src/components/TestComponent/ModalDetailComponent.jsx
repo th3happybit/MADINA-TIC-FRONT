@@ -100,7 +100,6 @@ const ModalDetailComponent = (props) => {
         } else refresh();
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const updateAnnStatus = (ann) => {
@@ -186,7 +185,6 @@ const ModalDetailComponent = (props) => {
           }
         })
         .catch((err) => {
-          console.log(err.response);
         });
     }
     if (isRapport) {

@@ -255,7 +255,9 @@ const PasswordForm = (props) => {
               disabled={isLoading}
               onClick={handleedit}
             >
-              {props.isFrench ? "Cancel" : "إلغاء"}
+
+              {isFrench ? "Cancel" : "إلغاء"}
+
             </Button>
 
             <Button
@@ -264,7 +266,9 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-              {props.isFrench ? "Confirmer" : "حفظ"}
+
+              {isFrench ? "Confirmer" :"حفظ"}
+
             </Button>
           </div>
         ) : (
@@ -275,7 +279,9 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-              {props.isFrench ? "Éditer" : "تعديل"}
+
+              {isFrench ? "Éditer" : "تعديل"}
+
             </Button>
           </div>
         )}

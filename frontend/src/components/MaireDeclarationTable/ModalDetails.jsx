@@ -33,7 +33,7 @@ const ModalD = (props) => {
       .then((res) => {
         setChilds(res.data.results);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {});
   }, []);
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);

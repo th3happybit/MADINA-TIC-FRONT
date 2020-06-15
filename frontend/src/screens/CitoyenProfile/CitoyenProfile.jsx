@@ -56,11 +56,9 @@ const CitoyenProfile = (props) => {
         setInfos(res.data);
         setImage(res.data.image);
         setIsLoading(false);
-        console.log(res);
       })
       .catch((err) => {});
   };
-  console.log({ props: props });
   return (
     <>
       {isLogin ? (

@@ -26,7 +26,7 @@ export default function Childs(props) {
       instance
         .patch(`declarations/${props.elm.did}/`, body)
         .then((res) => {})
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     } else {
       let body = {
         parent_declaration: null,
@@ -36,7 +36,7 @@ export default function Childs(props) {
       instance
         .patch(`declarations/${props.elm.did}/`, body)
         .then((res) => {})
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     }
   }, [isChecked]);
   return (

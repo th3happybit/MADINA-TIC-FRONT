@@ -73,7 +73,6 @@ const UpdateDeclaration = (props) => {
     Geocode.fromLatLng("48.8583701", "2.2922926").then(
       (response) => {
         const address = response.results[0].formatted_address;
-        console.log(address);
       },
       (error) => {
         console.error(error);
@@ -123,7 +122,6 @@ const UpdateDeclaration = (props) => {
     sendP.map((image) => {
       if (!image.src) {
         upload = true;
-        console.log(image);
         formData.append("src", image);
         formData.append("filetype", "image");
         formData.append("declaration", props.props.location.state.data.did);
@@ -145,7 +143,6 @@ const UpdateDeclaration = (props) => {
           data: formData,
         })
         .then((res) => {
-          console.log(res);
           if (delP.length > 0) deleteFiles();
           else {
             setIsLoading(false);
@@ -153,7 +150,6 @@ const UpdateDeclaration = (props) => {
           }
         })
         .catch((err) => {
-          console.log(err);
         });
     } else if (delP.length > 0) {
       deleteFiles();
@@ -176,7 +172,6 @@ const UpdateDeclaration = (props) => {
           setSucces(true);
         })
         .catch((err) => {
-          console.log(err);
         });
     });
   };
@@ -229,10 +224,9 @@ const UpdateDeclaration = (props) => {
               setLoadingPage(false);
             })
             .catch((err) => {
-              console.log(err.response);
             });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
   }, [selectedType]);
   useEffect(() => {
     axios
@@ -254,7 +248,6 @@ const UpdateDeclaration = (props) => {
         setPictures(res.data.attachments);
       })
       .catch((err) => {
-        console.log(err.response);
       });
   }, []);
   const handleChange = (e, { name, value }) => {

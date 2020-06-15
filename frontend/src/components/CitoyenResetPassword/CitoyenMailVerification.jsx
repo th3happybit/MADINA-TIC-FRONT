@@ -41,7 +41,6 @@ const CitoyenMailVerification = () => {
         .catch((err) => {
           setIsLoading(false);
           setError(true);
-          console.log(err.response);
         });
     }
   };

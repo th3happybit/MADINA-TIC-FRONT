@@ -42,7 +42,6 @@ const UpdateReport = (props) => {
   let history = useHistory();
 
   useEffect(() => {
-    // console.log(props.props)
     if (props.props.props.location.state) {
       setLoading(true);
       axios
@@ -72,7 +71,6 @@ const UpdateReport = (props) => {
             setDeclaration(res.data);
           })
           .catch((err) => {
-            console.log(err);
           });
       if (props.props.props.location.state.rid) {
         axios
@@ -261,7 +259,6 @@ const UpdateReport = (props) => {
         })
         .catch((err) => {
           setReqErr(true);
-          console.log(err);
         });
     }
   };

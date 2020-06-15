@@ -16,11 +16,9 @@ const AnnonceStats = (props) => {
     instance
       .get("announces-statistics/")
       .then((res) => {
-        console.log({ res });
         setData(res.data);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
 

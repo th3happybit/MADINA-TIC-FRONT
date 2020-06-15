@@ -40,7 +40,6 @@ const ModalD = (props) => {
           if (index === children.length - 1) props.refresh();
         })
         .catch((err) => {
-          console.log(err);
         });
     });
   };
@@ -68,7 +67,6 @@ const ModalD = (props) => {
         else refresh();
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -112,7 +110,7 @@ const ModalD = (props) => {
       .then((res) => {
         setChildren(res.data.results);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {});
   }, [props.attachements.length]);
 
   const {

@@ -32,7 +32,6 @@ const DashboardMaire = () => {
     instance
       .get("users-statistics/")
       .then((res) => {
-        console.log(res.data);
         let data = res.data;
         setActiveUsers(data.active_users);
         setAllUsers(data.all_users);
@@ -42,7 +41,6 @@ const DashboardMaire = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err.response);
       });
   }, []);
   return (

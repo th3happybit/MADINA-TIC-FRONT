@@ -109,7 +109,6 @@ const ComplementReport = (props) => {
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
           });
       }
       if (props.props.props.location.state.did)
@@ -129,7 +128,6 @@ const ComplementReport = (props) => {
             setDeclaration(res.data);
           })
           .catch((err) => {
-            console.log(err);
           });
     } else {
       setNulldata(true);

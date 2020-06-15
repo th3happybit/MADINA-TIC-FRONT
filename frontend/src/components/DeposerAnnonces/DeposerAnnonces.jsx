@@ -35,7 +35,6 @@ export default function DeposerAnnonces(props) {
   }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
-    console.log({ time });
     let ret =
       dt.getFullYear() +
       "-" +
@@ -101,7 +100,6 @@ export default function DeposerAnnonces(props) {
   const AddAnnonce = () => {
     setIsLoading(true);
     const formData = new FormData();
-    console.log(TimeMake(startDate));
     formData.append("title", title);
     formData.append("start_at", TimeMake(startDate));
     formData.append("end_at", TimeMake(endDate));
