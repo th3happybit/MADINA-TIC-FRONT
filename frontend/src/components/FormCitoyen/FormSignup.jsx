@@ -184,7 +184,7 @@ const FormRegister = () => {
           <Form.Input
             value={first_name}
             id="first_name"
-            placeholder="First Name"
+            placeholder="Prénom"
             type="text"
             size="large"
             className={
@@ -211,7 +211,7 @@ const FormRegister = () => {
           <Form.Input
             value={last_name}
             id="last_name"
-            placeholder="Last Name"
+            placeholder="Nom"
             type="text"
             size="large"
             className={
@@ -275,7 +275,7 @@ const FormRegister = () => {
         <Form.Input
           value={birthday}
           id="birthday"
-          placeholder="Birthday"
+          placeholder="Anniversaire"
           type="date"
           size="large"
           className={
@@ -291,7 +291,7 @@ const FormRegister = () => {
             {birthday.length === 0 && birthdayMessage}
             {birthday.length > 0 &&
               !checkDate(birthday) &&
-              "You are not a major person to have an account."}
+              " Vous n'êtes pas une personne majeure pour avoir un compte."}
           </p>
         )}
       </div>
@@ -304,7 +304,7 @@ const FormRegister = () => {
         <Form.Input
           value={phone}
           id="phone"
-          placeholder="Phone Number"
+          placeholder="Numéro de téléphone"
           type="text"
           size="large"
           className={
@@ -319,7 +319,7 @@ const FormRegister = () => {
             <Icon name="info circle" />
             {checkPhoneNumber(phone)
               ? phoneMessage
-              : "Please enter a valid phone number"}
+              : "s'il vous plaît entrer un numéro de téléphone valide"}
           </p>
         )}
       </div>
@@ -332,7 +332,7 @@ const FormRegister = () => {
         <Form.Input
           value={nationalId}
           id="nationalid"
-          placeholder="National id"
+          placeholder="Carte d'identité"
           type="text"
           size="large"
           className="_margin_vertical_sm small"
@@ -348,7 +348,7 @@ const FormRegister = () => {
         <Form.Input
           value={addrress}
           id="address"
-          placeholder="Address"
+          placeholder="Adresse"
           type="text"
           size="large"
           className={
@@ -363,7 +363,7 @@ const FormRegister = () => {
             <Icon name="info circle" />
             {addrress.length > 4
               ? addressMessage
-              : "Please enter a valid address"}
+              : "s'il-vous-plaît entrez une adresse valide"}
           </p>
         )}
       </div>
@@ -376,7 +376,7 @@ const FormRegister = () => {
         <Form.Input
           value={password}
           id="password"
-          placeholder="Password"
+          placeholder="Mot de passe"
           type="password"
           size="large"
           className={
@@ -403,7 +403,7 @@ const FormRegister = () => {
           onChange={handleChangeInput}
           value={confirmPassword}
           id="confirm_password"
-          placeholder="Confirm Password"
+          placeholder="Confirmez le mot de passe"
           type="password"
           size="large"
           className={
@@ -419,14 +419,17 @@ const FormRegister = () => {
           </p>
         )}
       </div>
-      <Message success content="check your email for validating your account" />
+      <Message
+        success
+        content="vérifiez votre email pour valider votre compte"
+      />
       <Button
         className="button_primary _margin_vertical_md pointer"
         type="submit"
         onClick={handleSumbit}
         loading={isLoading}
       >
-        Signup
+        S'inscrire
       </Button>
     </Form>
   );

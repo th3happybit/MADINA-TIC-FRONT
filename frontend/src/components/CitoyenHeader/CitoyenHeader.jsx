@@ -206,10 +206,10 @@ export default function CitoyenHeader(props) {
                 }}
                 className="pointer "
               >
-                Login
+                S'identifier
               </a>
               <Button href="/signup" as="a" className="login_cit ">
-                Create an account
+                Créer un compte
               </Button>
             </div>
           )}

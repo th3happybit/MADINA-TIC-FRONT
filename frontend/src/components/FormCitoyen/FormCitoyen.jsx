@@ -23,21 +23,21 @@ const FormCitoyen = (props) => {
           <p className="title text-active bold ">MADINA TIC</p>
           {islogin ? (
             <div className="d-flex _margin_vertical_md small text-gray-light">
-              <p>Please enter your email</p>
-              <p>and password to login</p>
+              <p>Veuillez saisir votre email</p>
+              <p>et mot de passe pour se connecter</p>
             </div>
           ) : (
             <div className="d-flex _margin_vertical_md small text-gray-light">
-              <p>Welcome to our platform</p>
+              <p>Bienvenue sur notre plateforme</p>
             </div>
           )}
           {islogin ? <FormLogin /> : <FormSignup />}
           {islogin && (
             <p className="text-gray-dark semi-bold small">
-              forget your password?{" "}
+              Mot de passe oublié?{" "}
               <a href="/mailVerification" className="text-gray-dark">
                 {" "}
-                <spaan className="underline pointer">Click here</spaan>
+                <spaan className="underline pointer">Cliquez ici</spaan>
               </a>
             </p>
           )}
@@ -46,7 +46,7 @@ const FormCitoyen = (props) => {
             horizontal
             className="text-gray-dark semi-bold extra-small _margin_vertical_lg"
           >
-            {islogin ? "You are new here?" : "Already have an account"}
+            {islogin ? "Vous êtes nouveau ici?" : "Vous avez déjà un compte"}
           </Divider>
           <div className="d-flex ">
             <Button className="button_secondary" type="submit">
@@ -54,7 +54,7 @@ const FormCitoyen = (props) => {
                 href={!islogin ? "/login" : "/signup"}
                 className="text-white medium-text"
               >
-                {!islogin ? "Login" : "Signup"}
+                {!islogin ? "S'identifier" : "S'inscrire"}
               </a>
             </Button>
           </div>
