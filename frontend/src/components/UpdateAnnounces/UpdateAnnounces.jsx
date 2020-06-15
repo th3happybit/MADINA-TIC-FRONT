@@ -44,7 +44,6 @@ const ComplementAnnounces = (props) => {
   }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
-    console.log({ time });
     let ret =
       dt.getFullYear() +
       "-" +
@@ -181,7 +180,6 @@ const ComplementAnnounces = (props) => {
           setImage(res.data.image);
         })
         .catch((err) => {
-          console.log(err.response);
         });
     } else setnullAid(true);
   }, []);

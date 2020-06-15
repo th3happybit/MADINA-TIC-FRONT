@@ -22,7 +22,6 @@ const DeclarationStats = (props) => {
       .get("declarations-statistics/")
 
       .then((res) => {
-        console.log(res.data);
         let data = res.data;
         switch (clicked) {
           case "critical":
@@ -43,7 +42,6 @@ const DeclarationStats = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err.response);
       });
   }, [clicked]);
 

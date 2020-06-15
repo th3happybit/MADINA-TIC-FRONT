@@ -22,12 +22,6 @@ import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 
 const CitoyenHome = (props) => {
   const { language, annonce, isDark } = props;
-  //!TODO FOR MONCEF
-  //? bah tjib isDark ...
-  // console.log(props.isDark);
-  //? bah tmodifi isDark
-  //console.log(props.change_mode());
-  //? ida kan isDark true ywali false w l3ks
 
   const [visible, setVisible] = useState(false);
   const [fullname, setFullname] = useState("");
@@ -67,7 +61,6 @@ const CitoyenHome = (props) => {
   }, []);
 
   const [isLogin, setIsLogin] = useState("null");
-  console.log({ image });
   return (
     <>
       {isLogin ? (
@@ -153,9 +146,6 @@ const CitoyenHome = (props) => {
     </>
   );
 };
-
-//? hadou lzm dirhom bah typage ykn s7i7
-//? bal3arbya ida isDArk maknch bool marahch yji
 CitoyenHome.propTypes = {
   isDark: PropTypes.bool.isRequired,
   change_mode: PropTypes.func.isRequired,
@@ -163,7 +153,6 @@ CitoyenHome.propTypes = {
   change_language: PropTypes.func.isRequired,
 };
 
-//? w hedi bah state te3 reducer li reh f redux diro props l hed component
 const mapStateToProps = (state) => ({
   isDark: state.mode.isDark,
   language: state.language,

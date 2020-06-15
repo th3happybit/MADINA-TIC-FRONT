@@ -100,7 +100,6 @@ export default function CitoyenHeader(props) {
           setData(res.data.results);
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
@@ -124,7 +123,6 @@ export default function CitoyenHeader(props) {
         return history.push("/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   useEffect(() => {
@@ -162,11 +160,9 @@ export default function CitoyenHeader(props) {
           },
         })
         .then((res) => {
-          console.log(res);
           setIsNotifated(false);
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
@@ -179,10 +175,12 @@ export default function CitoyenHeader(props) {
           </div>
         )}
         <div className="_citoyen_header_logo">
-          <div className="_madinatic_logo">
-            {isDark ? <Logo_dark /> : <Logo />}
-            <p className="large-title text-active ">MADINA-TIC</p>
-          </div>
+          <Link to ={login ? "/home" : "/"}>
+            <div className="_madinatic_logo">
+              {isDark ? <Logo_dark /> : <Logo />}
+              <p className="large-title text-active ">MADINA-TIC</p>
+            </div>
+          </Link>
           <div className="form_search_header_citoyen">
             {login && (
               <Search

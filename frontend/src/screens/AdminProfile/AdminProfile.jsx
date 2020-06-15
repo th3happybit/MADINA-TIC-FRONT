@@ -41,7 +41,7 @@ const AdminProfile = (props) => {
         setData(res.data);
         setIsLoading(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   };
   useEffect(() => {
     GetDataProfile();

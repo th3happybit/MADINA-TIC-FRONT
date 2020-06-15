@@ -71,11 +71,9 @@ const FormLogin = () => {
             }
           })
           .catch((err) => {
-            console.log(err.response);
           });
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
         setIsErr(true);
       });

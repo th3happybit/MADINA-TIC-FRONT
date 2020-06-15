@@ -28,7 +28,6 @@ const SidebarCitoyenMobile = (props) => {
         return history.push("/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   return (
