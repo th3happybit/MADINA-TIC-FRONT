@@ -194,8 +194,7 @@ const PasswordForm = (props) => {
               id="currentPassword"
               value={currentPassword.value}
               type={currentPassword.isPassword ? "password" : "text"}
-              label="Current Password"
-              placeholder="Current Password"
+              label="Mot de passe actuel"
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -213,8 +212,7 @@ const PasswordForm = (props) => {
               id="newPassword"
               value={newPassword.value}
               type={newPassword.isPassword ? "password" : "text"}
-              label="New Password"
-              placeholder="New Password"
+              label="nouveau mot de passe"
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -232,8 +230,7 @@ const PasswordForm = (props) => {
               id="confirmPassword"
               value={confirmPassword.value}
               type={confirmPassword.isPassword ? "password" : "text"}
-              label="Confirm Password"
-              placeholder="Confirm Password"
+              label="Confirmez le mot de passe"
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -251,7 +248,7 @@ const PasswordForm = (props) => {
               disabled={isLoading}
               onClick={handleedit}
             >
-              Cancel
+              Annuler
             </Button>
 
             <Button
@@ -260,7 +257,7 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-              Save
+              Sauvegarder
             </Button>
           </div>
         ) : (
@@ -271,7 +268,7 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-              Edit
+              éditer
             </Button>
           </div>
         )}
@@ -279,7 +276,7 @@ const PasswordForm = (props) => {
         <Message error content={errMessage} />
         <Message
           success
-          content="Your infos update request has been sent successfully"
+          content="Votre demande de mise à jour des informations a été envoyée avec succès"
         />
       </Form>
     </div>

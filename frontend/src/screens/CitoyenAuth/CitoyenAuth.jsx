@@ -42,10 +42,10 @@ const CitoyenAuth = (props) => {
                 <GridColumn width={10} className="_citoyen_login_hero_section">
                   <Image src={Logo} className="_logo_hero_section" />
                   <div className="slogan blue">
-                    <p className="text-white bold">A Simple Service</p>
+                    <p className="text-white bold">Un Service Simple</p>
                   </div>
                   <div className="slogan orange top">
-                    <p className=" text-white ">For Better Society</p>
+                    <p className=" text-white ">Pour Une Société Meilleure</p>
                   </div>
                 </GridColumn>
                 <GridColumn className="p-0 bg-default h-full" width={6}>
@@ -64,10 +64,12 @@ const CitoyenAuth = (props) => {
             style={{ height: "100%" }}
           >
             <div className="slogan blue">
-              <p className="title text-white ">A Simple Service</p>
+              <p className="title text-white ">Un Service Simple</p>
             </div>
             <div className="slogan orange">
-              <p className="title text-white bold">For Better Society</p>
+              <p className="title text-white bold">
+                Pour Une Société Meilleure
+              </p>
             </div>
             <div className="citoyen_mobile_container">
               <div className="row">

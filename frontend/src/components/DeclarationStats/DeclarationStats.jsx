@@ -111,7 +111,7 @@ const DeclarationStats = (props) => {
 
   return (
     <div className="users_stats">
-      <h1>Declarations Stats</h1>
+      <h1>Statistiques des déclarations</h1>
       <div id="chart">
         {data && (
           <>

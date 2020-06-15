@@ -331,7 +331,7 @@ const Card = (props) => {
           setimageP(res.data.image);
           setCardLoading(false);
           setupdated((prevState) => !prevState);
-          updateImage(res.data.image)
+          updateImage(res.data.image);
           props.refresh(token);
         })
         .catch((err) => {
@@ -357,7 +357,7 @@ const Card = (props) => {
             </div>
             <div className={upload ? "save_img" : "save_img hide"}>
               <Button className="button_primary" onClick={uploadImageHandler}>
-                Upload
+                Télécharger
               </Button>
             </div>
             <div
@@ -368,7 +368,7 @@ const Card = (props) => {
                 onClick={handleEdit}
                 disabled={isLoading}
               >
-                Cancel
+                Annuler
               </Button>
               <Button
                 className="primary"
@@ -376,7 +376,7 @@ const Card = (props) => {
                 loading={isLoading}
                 type="submit"
               >
-                Done
+                Terminé
               </Button>
             </div>
             <div
@@ -420,7 +420,7 @@ const Card = (props) => {
                     type="text"
                     value={first_name}
                     onChange={handleChangeInput}
-                    placeholder="First Name..."
+                    placeholder="Prénom..."
                   />
                   <Input
                     id="last_name"
@@ -428,12 +428,12 @@ const Card = (props) => {
                     type="text"
                     value={last_name}
                     onChange={handleChangeInput}
-                    placeholder="Family Name..."
+                    placeholder="Nom..."
                   />
                 </div>
               )}
             </div>
-            <Divider horizontal>Account Informations</Divider>
+            <Divider horizontal>Informations sur le compte</Divider>
             {!isEdit && (
               <>
                 <div className="row">
@@ -446,7 +446,8 @@ const Card = (props) => {
                   {!service && (
                     <div className="col">
                       <span className="small">
-                        <Icon name="birthday" className="icon_card" /> Birthday
+                        <Icon name="birthday" className="icon_card" />{" "}
+                        Anniversaire
                       </span>
                       <p className=" small">{cit_infos.date_of_birth}</p>
                     </div>
@@ -454,7 +455,7 @@ const Card = (props) => {
                   <div className="col">
                     <span className=" small">
                       <Icon name="map marker alternate" className="icon_card" />{" "}
-                      Address
+                      Adresse
                     </span>
                     <p className="small">{cit_infos.address}</p>
                   </div>
@@ -465,45 +466,19 @@ const Card = (props) => {
                         flipped={"horizontally"}
                         className="icon_card"
                       />{" "}
-                      Phone Number
+                      Numéro de téléphone
                     </span>
                     <p className="small">{cit_infos.phone}</p>
                   </div>
                   {!service && (
                     <div className="col">
                       <span className="small">
-                        <Icon name="id card" className="icon_card" /> National
-                        ID
+                        <Icon name="id card" className="icon_card" /> Carte
+                        d'identité ID
                       </span>
                       <p className="small">{cit_infos.national_id}</p>
                     </div>
                   )}
-                </div>
-                <div className="social-media">
-                  <Icon
-                    name="facebook f"
-                    size="big"
-                    style={{
-                      color: "#385898",
-                    }}
-                    className="_margin_horizontal_sm"
-                  />
-                  <Icon
-                    name="google plus g"
-                    size="big"
-                    style={{
-                      color: "#DD4B39",
-                    }}
-                    className="_margin_horizontal_sm"
-                  />
-                  <Icon
-                    name="twitter"
-                    size="big"
-                    style={{
-                      color: "#1da1f2",
-                    }}
-                    className="_margin_horizontal_sm"
-                  />
                 </div>
               </>
             )}
@@ -511,14 +486,14 @@ const Card = (props) => {
               <div className="row mobile_menu">
                 <Menu pointing secondary>
                   <Menu.Item
-                    name="Update Infos"
+                    name="Mettre à jour les informations"
                     data-name="info"
                     active={activeItem === "info"}
                     onClick={handleItemClick}
                     className="pointer"
                   />
                   <Menu.Item
-                    name="Update Password"
+                    name="Mettre à jour le mot de passe"
                     data-name="password"
                     className="pointer"
                     active={activeItem === "password"}
@@ -543,7 +518,7 @@ const Card = (props) => {
                           id="birthday"
                           value={birthday}
                           onChange={handleChangeInput}
-                          placeholder="Birthday ..."
+                          placeholder="Anniversaire ..."
                         />
                       )}
                       <Input
@@ -552,7 +527,7 @@ const Card = (props) => {
                         id="address"
                         value={address}
                         onChange={handleChangeInput}
-                        placeholder="Address ..."
+                        placeholder="Adresse ..."
                       />
                       <Input
                         className="mobile-input"
@@ -560,7 +535,7 @@ const Card = (props) => {
                         id="phone"
                         value={phone}
                         onChange={handleChangeInput}
-                        placeholder="Phone Number ..."
+                        placeholder="Numéro de téléphone ..."
                       />
                       {!service && (
                         <Input
@@ -569,16 +544,16 @@ const Card = (props) => {
                           id="national_id"
                           value={national_id}
                           onChange={handleChangeInput}
-                          placeholder="National ID ..."
+                          placeholder="carte d'identité ..."
                         />
                       )}
                       <Message
                         error
-                        content="Please make sur to enter a valid data"
+                        content="Veuillez faire sur pour saisir des données valides"
                       />
                       <Message
                         success
-                        content="Your infos update request has been sent successfully"
+                        content="Votre demande de mise à jour des informations a été envoyée avec succès"
                       />
                     </Form>
                   </div>
@@ -595,7 +570,7 @@ const Card = (props) => {
                             currentPassword.isPassword ? "password" : "text"
                           }
                           onChange={handleInputChangeValue}
-                          placeholder="Current password"
+                          placeholder="Mot de passe actuel"
                         />
                         <i
                           className="eye icon pointer"
@@ -610,7 +585,7 @@ const Card = (props) => {
                           value={newPassword.value}
                           type={newPassword.isPassword ? "password" : "text"}
                           onChange={handleInputChangeValue}
-                          placeholder="New password"
+                          placeholder="Nouveau mot de passe"
                         />
                         <i
                           className="eye icon pointer"
@@ -627,7 +602,7 @@ const Card = (props) => {
                             confirmPassword.isPassword ? "password" : "text"
                           }
                           onChange={handleInputChangeValue}
-                          placeholder="Confirm password"
+                          placeholder="Confirmez le mot de passe"
                         />
                         <i
                           className="eye icon pointer"
@@ -638,7 +613,7 @@ const Card = (props) => {
                       <Message error content={errMessage} />
                       <Message
                         success
-                        content="Your infos update request has been sent successfully"
+                        content="Votre demande de mise à jour des informations a été envoyée avec succès"
                       />
                     </div>
                   </Form>

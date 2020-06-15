@@ -21,22 +21,6 @@ const ServiceSideBar = (props) => {
         </Link>
         <Menu text vertical>
           <div className="d-flex">
-            <Dashboard
-              className={
-                props.active === "dashboard"
-                  ? "_sidebar_icons active"
-                  : "_sidebar_icons"
-              }
-            />
-            <Menu.Item
-              as={Link}
-              to="/service"
-              name="Dashboard"
-              className={props.active === "dashboard" ? "active" : ""}
-            />
-          </div>
-
-          <div className="d-flex">
             <Declarations
               className={
                 props.active === "declarations"
