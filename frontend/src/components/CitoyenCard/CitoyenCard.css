@@ -214,3 +214,15 @@
 .row.mobile_menu {
   padding-top: 1rem !important;
 }
+@media (max-width: 999px) {
+  .card-citoyen > .row {
+    padding: 0 !important;
+  }
+  .card-citoyen > .row .small {
+    font-size: 12px !important;
+  }
+  .row.mobile_menu > .menu {
+    display: flex;
+    flex-direction: column;
+  }
+}

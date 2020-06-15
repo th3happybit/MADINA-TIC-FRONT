@@ -63,7 +63,7 @@ const DeclarationStats = (props) => {
           chart: {
             width: 380,
           },
-          labels: ["Validated", "Refused", "Under Treatement", "Treated"],
+          labels: ["Validé", "Refusé", "Sous traitement", "Traité"],
           responsive: [
             {
               breakpoint: 699,
@@ -112,7 +112,7 @@ const DeclarationStats = (props) => {
 
   return (
     <div className="users_stats">
-      <h1>Declarations Stats</h1>
+      <h1>Statistiques des déclarations</h1>
       <div id="chart">
         {data && (
           <>
@@ -121,7 +121,7 @@ const DeclarationStats = (props) => {
             data.under_treatment === 0 &&
             data.treated === 0 ? (
               <div className="no_action">
-                <p>Sorry no declarations for this priority</p>
+                <p>Désolé aucune déclaration pour cette priorité</p>
               </div>
             ) : (
               <Chart
@@ -142,13 +142,9 @@ const DeclarationStats = (props) => {
             }}
             onClick={handleClicked}
           >
-            Critical
+            Critique
           </Button>
-          <Button
-            name="normal"
-            color="green"
-            onClick={handleClicked}
-          >
+          <Button name="normal" color="green" onClick={handleClicked}>
             Normal
           </Button>
           <Button
@@ -158,7 +154,7 @@ const DeclarationStats = (props) => {
             }}
             onClick={handleClicked}
           >
-            Low
+            Faible
           </Button>
           <Button
             name="important"

@@ -141,7 +141,10 @@ function App() {
               exact
               path="/citoyen/profile"
               component={() => (
-                <CitoyenHome active="" childComponent={<CitoyenProfile />} />
+                <CitoyenHome
+                  active="profile"
+                  childComponent={<CitoyenProfile />}
+                />
               )}
             />
             <Route
@@ -396,11 +399,18 @@ function App() {
               path="/signup"
               component={() => <CitoyenAuth islogin={false} />}
             />
-            <Route exact path="/" component={() => <Home content="home" active="accueil"/>} />
+            <Route
+              exact
+              path="/"
+              component={() => <Home content="home" active="accueil" />}
+            />
             <Route
               exact
               path="/declaration"
-              component={() => <Home content="declaration" active="déclarations"/>} />
+              component={() => (
+                <Home content="declaration" active="déclarations" />
+              )}
+            />
             <Route
               exact
               path="/admin/declarations/types"

@@ -343,6 +343,7 @@ const Card = (props) => {
       });
   };
   console.log(image);
+
   return (
     <>
       <Segment

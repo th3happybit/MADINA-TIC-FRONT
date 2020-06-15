@@ -152,6 +152,9 @@
   .container_add_dec {
     width: 50%;
   }
+  ._add_dec {
+    padding: 2rem 0 !important;
+  }
 }
 @media (max-width: 929px) {
   .container_add_dec {
