@@ -48,7 +48,7 @@ const HomeCitoyen = (props) => {
       .get(
         Data.length > 0
           ? next
-          : "http://www.madina-tic.ml/api/declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
+          : "https://madina-tic.ml/api/home-declarations/status=validated&status=treated&status=under_treatment&ordering=-created_on",
         {
           headers: headers,
         }
@@ -98,7 +98,9 @@ const HomeCitoyen = (props) => {
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
-        ret["status"] = language.isFrench ? "Manque d'informations" : "معلومات غير كافية";
+        ret["status"] = language.isFrench
+          ? "Manque d'informations"
+          : "معلومات غير كافية";
         ret["color"] = "orange";
         return ret;
       case "validated":
