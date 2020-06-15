@@ -10,7 +10,7 @@ export default function Childs(props) {
   };
   useEffect(() => {
     let instance = axios.create({
-      baseURL: "http://157.230.19.233/api/",
+      baseURL: "https://www.madina-tic.ml/api/",
       responseType: "json",
       headers: {
         "content-type": "application/json",
@@ -20,18 +20,22 @@ export default function Childs(props) {
     if (isChecked) {
       let body = {
         parent_declaration: parent,
+        status: props.elm.status,
+        service : props.elm.service,
       };
       instance
         .patch(`declarations/${props.elm.did}/`, body)
-        .then((res) => console.log(res))
+        .then((res) => {})
         .catch((err) => console.log(err.response));
     } else {
       let body = {
         parent_declaration: null,
+        status: props.elm.status,
+        service : props.elm.service,
       };
       instance
         .patch(`declarations/${props.elm.did}/`, body)
-        .then((res) => console.log(res))
+        .then((res) => {})
         .catch((err) => console.log(err.response));
     }
   }, [isChecked]);

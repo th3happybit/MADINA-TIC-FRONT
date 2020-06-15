@@ -19,7 +19,7 @@ const SidebarHeader = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/logout/",
+        url: "https://www.madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {

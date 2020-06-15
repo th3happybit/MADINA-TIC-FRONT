@@ -7,6 +7,18 @@
   padding: 1.5rem;
 }
 
+._add_dec .delete_icon {
+  position: absolute;
+  right: 2px;
+  top: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: white;
+}
+
 .container_add_dec.service {
   padding-top: 6rem;
 }

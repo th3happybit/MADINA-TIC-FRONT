@@ -28,7 +28,7 @@ const ModalD = (props) => {
         <>
           <Button.Group onClick={handleopen} className="infos_button">
             <Popup
-              content="More Infos"
+              content="Plus D'infos"
               trigger={
                 <Button
                   icon
@@ -43,7 +43,7 @@ const ModalD = (props) => {
             onClick={handleopen}
             color="blue"
             className="shadow btn_account_detail _primary _hide_on_desktop"
-            content="More details"
+            content="Plus de details"
           />
         </>
       }
@@ -56,12 +56,12 @@ const ModalD = (props) => {
           </div>
           <div className="_content_modal">
             <div>
-              <p>Title :</p>
-              <p>Starts At :</p>
-              <p>Ends at :</p>
+              <p>Titre :</p>
+              <p>Commence à :</p>
+              <p>Fin à :</p>
               <p>Service :</p>
               <p>Status :</p>
-              <p>description :</p>
+              <p>Description :</p>
             </div>
             <div className="_infos_section">
               <p>{data.title}</p>

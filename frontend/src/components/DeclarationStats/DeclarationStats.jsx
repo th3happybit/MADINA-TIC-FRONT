@@ -12,7 +12,7 @@ const DeclarationStats = (props) => {
   useEffect(() => {
     let instance = axios.create({
       responseType: "json",
-      baseURL: "http://157.230.19.233/api/",
+      baseURL: "https://www.madina-tic.ml/api/",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("maire_token")}`,
@@ -63,7 +63,7 @@ const DeclarationStats = (props) => {
           chart: {
             width: 380,
           },
-          labels: ["Validated", "Refused", "Under Treatement", "Treated"],
+          labels: ["Validé", "Refusé", "Sous traitement", "Traité"],
           responsive: [
             {
               breakpoint: 699,
@@ -112,7 +112,7 @@ const DeclarationStats = (props) => {
 
   return (
     <div className="users_stats">
-      <h1>Declarations Stats</h1>
+      <h1>Statistiques des déclarations</h1>
       <div id="chart">
         {data && (
           <>
@@ -121,7 +121,7 @@ const DeclarationStats = (props) => {
             data.under_treatment === 0 &&
             data.treated === 0 ? (
               <div className="no_action">
-                <p>Sorry no declarations for this priority</p>
+                <p>Désolé aucune déclaration pour cette priorité</p>
               </div>
             ) : (
               <Chart
@@ -138,34 +138,28 @@ const DeclarationStats = (props) => {
           <Button
             name="critical"
             style={{
-              background: "var(--primary)",
+              background: "red",
             }}
             onClick={handleClicked}
           >
-            Critical
+            Critique
           </Button>
-          <Button
-            name="normal"
-            style={{
-              background: "var(--green)",
-            }}
-            onClick={handleClicked}
-          >
+          <Button name="normal" color="green" onClick={handleClicked}>
             Normal
           </Button>
           <Button
             name="low"
             style={{
-              background: "var(--secondary)",
+              background: "var(--primary)",
             }}
             onClick={handleClicked}
           >
-            Low
+            Faible
           </Button>
           <Button
             name="important"
             style={{
-              background: "var(--red)",
+              background: "#fbbd08",
             }}
             onClick={handleClicked}
           >

@@ -14,11 +14,97 @@ import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
-//sfc shortcut
+import Pusher from "pusher-js";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
+import moment from "moment";
+
 const HeaderService = (props) => {
   const { isUploaded } = useContext(UserContext);
+  const { imageP } = props;
   const [image, setImage] = useState(null);
   const [fullname, setFullname] = useState(null);
+  const [isNotifated, setIsNotifated] = useState(false);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
+      cluster: "eu",
+      authEndpoint: "https://www.madina-tic.ml/api/pusher/auth",
+    });
+    var channel = pusher.subscribe("Declaration");
+    var rapport_channel = pusher.subscribe("Report");
+    var annonceChannel = pusher.subscribe("Announce");
+
+    annonceChannel.bind("Complement", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    rapport_channel.bind("Creation", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    rapport_channel.bind("Rejection", function ({ message }) {
+      setIsNotifated(true);
+
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    rapport_channel.bind("Complement", function ({ message }) {
+      setIsNotifated(true);
+
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+
+    channel.bind("Update", function ({ message }) {
+      setIsNotifated(true);
+
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+  }, []);
+
   useEffect(() => {
     axios
       .create({
@@ -30,15 +116,40 @@ const HeaderService = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
+        url: "https://www.madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
+        let instance = axios.create({
+          baseURL: "http://madina-tic.ml/api/",
+          responseType: "json",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("service_token")}`,
+          },
+        });
+        instance
+          .get(`notifications/?service=${res.data.uid}&ordering=-created_on`)
+          .then((res) => {
+            setData(res.data.results);
+            if (res.data.notif_seen) {
+              setIsNotifated(true);
+            } else {
+              setIsNotifated(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
       })
       .catch((err) => console.log(err));
   }, [isUploaded]);
+
+  useEffect(() => {
+    if (imageP) setImage(imageP);
+  }, [imageP]);
   const trigger = <Image src={image} size="small" className="pointer" />;
 
   const history = useHistory();
@@ -53,7 +164,7 @@ const HeaderService = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/logout/",
+        url: "https://www.madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {
@@ -63,6 +174,33 @@ const HeaderService = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const handleChangeNotif = () => {
+    if (isNotifated) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/user/",
+          method: "patch",
+          data: {
+            notif_seen: true,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setIsNotifated(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (
@@ -76,11 +214,50 @@ const HeaderService = (props) => {
               className="_add_link"
               disabled={props.active !== "annonce"}
             >
-              Add Annonce
+              Ajouter Annonce
             </Button>
+
             <div className="profile_img">
-              {" "}
-              <Notification className="_margin_horizontal_md pointer" />
+              <SemanticToastContainer className="container_toastr_service" />{" "}
+              <Dropdown
+                trigger={
+                  <Notification
+                    className={
+                      isNotifated
+                        ? "_margin_horizontal_md pointer notificated"
+                        : "_margin_horizontal_md pointer"
+                    }
+                    onClick={handleChangeNotif}
+                  />
+                }
+                pointing="top right"
+                icon={null}
+              >
+                <Dropdown.Menu
+                  style={{
+                    width: "180px",
+                  }}
+                  className={props.isFrench ? "_ltr dd" : "_rtl dd"}
+                >
+                  {data.length > 0 &&
+                    data.map((elm, index) => (
+                      <Dropdown.Item key={index} className="item_notif">
+                        <div className="notif_item">
+                          <div className="row">
+                            <p>{moment(elm.created_on).fromNow()}</p>
+                            <h4>{elm.title}</h4>
+                          </div>
+                          <p>{elm.body}</p>
+                        </div>
+                      </Dropdown.Item>
+                    ))}
+                  {data.length === 0 && (
+                    <Dropdown.Item className="item_notif">
+                      <p>Pas de notifications disponible</p>
+                    </Dropdown.Item>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
               <Dropdown
                 trigger={trigger}
                 pointing="top right"
@@ -89,13 +266,13 @@ const HeaderService = (props) => {
               >
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    text="Account"
+                    text="Compte"
                     icon="user"
                     as={Link}
                     to="/service/profile"
                   />
                   <Dropdown.Item
-                    text="Sign Out"
+                    text="Déconnection"
                     icon="sign out"
                     onClick={handleLogout}
                   />

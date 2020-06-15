@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Message } from "semantic-ui-react";
+import {
+  Form,
+  Input,
+  Button,
+  Message,
+  Dropdown,
+  Flag,
+} from "semantic-ui-react";
 
 import axios from "axios";
 
+import "./CitoyenInfosForm.css";
 import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
 const InfosForm = (props) => {
-  const { cit_infos, loading } = props;
-  console.log({ cit_infos });
+  const { cit_infos, loading, isFrench } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(null);
   const [isEditing, setEditing] = useState(true);
@@ -20,8 +34,10 @@ const InfosForm = (props) => {
   const [email, setEmail] = useState("");
   const [national_id, setnational_id] = useState("");
   const [errorMessage, seterrorMessage] = useState(null);
+  const [language, setLanguage] = useState(props.isFrench);
 
   useEffect(() => {
+    //change_language(languages.french);
     setfirst_name(cit_infos.first_name);
     setlast_name(cit_infos.last_name);
     setbirthday(cit_infos.date_of_birth);
@@ -84,18 +100,23 @@ const InfosForm = (props) => {
   };
   const UpdateInfosCitoyen = () => {
     setIsLoading(true);
+    if (!isFrench) {
+      props.change_language(languages.french);
+    } else {
+      props.change_language(languages.arabe);
+    }
     axios
       .create({
         headers: {
-          put: {
+          patch: {
             "Content-Type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
         },
       })
       .request({
-        url: "http://157.230.19.233/api/user/",
-        method: "put",
+        url: "https://www.madina-tic.ml/api/user/",
+        method: "patch",
         data: {
           email: email,
           first_name: first_name,
@@ -104,6 +125,7 @@ const InfosForm = (props) => {
           date_of_birth: birthday,
           address: address,
           national_id: national_id,
+          is_french: language,
         },
       })
       .then((res) => {
@@ -142,82 +164,115 @@ const InfosForm = (props) => {
     >
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>First Name</label>
+          <label>{isFrench ? "Prénom" : "اللقب"}</label>
           <Input
             fluid
-            placeholder={"First Name..."}
             id="first_name"
             value={first_name}
             onChange={handleChangeInput}
           />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Last Name</label>
+          <label>{isFrench ? "Nom" : "الاسم"}</label>
           <Input
             fluid
             id="last_name"
             value={last_name}
             onChange={handleChangeInput}
-            placeholder={"Last Name..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Email</label>
-          <Input
-            fluid
-            id="email"
-            value={email}
-            onChange={handleChangeInput}
-            placeholder={"Email ..."}
-          />
+          <label>{isFrench ? "Email" : "البريد الإلكتروني"}</label>
+          <Input fluid id="email" value={email} placeholder={"Email ..."} />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Birthday</label>
+          <label> {!isFrench ? "عيد الميلاد" : "Anniversaire"}</label>
           <Input
             fluid
             id="birthday"
             type="date"
             value={birthday}
             onChange={handleChangeInput}
-            placeholder={"Birthday..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Phone Number</label>
-          <Input
-            fluid
-            id="phone"
-            value={phone}
-            onChange={handleChangeInput}
-            placeholder={"Phone number ..."}
-          />
+          <label>{isFrench ? "Numéro de téléphone" : "رقم الهاتف"}</label>
+          <Input fluid id="phone" value={phone} onChange={handleChangeInput} />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Address</label>
+          <label>{isFrench ? "Address" : "عنوان"}</label>
           <Input
             fluid
             id="address"
             value={address}
             onChange={handleChangeInput}
-            placeholder={"Address ..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>National ID</label>
+          <label>
+            {" "}
+            {props.isFrench ? "carte d'identité" : "الهوية الوطنية"}
+          </label>
           <Input
             fluid
             id="national_id"
             value={national_id}
             onChange={handleChangeInput}
-            placeholder={"National ID ..."}
           />
         </Form.Field>
+        <Dropdown
+          disabled={isEditing}
+          trigger={
+            <Form.Input
+              value={
+                !language
+                  ? !props.isFrench
+                    ? "عربية"
+                    : "Arabe"
+                  : !props.isFrench
+                  ? "فرنسية"
+                  : "Français"
+              }
+              label={isFrench ? "langue" : "لغة"}
+            />
+          }
+          icon={null}
+        >
+          <Dropdown.Menu
+            style={{
+              width: "180px",
+            }}
+            className={props.isFrench ? "_language_field _ltr" : "_language_field _rtl"}
+          >
+            <Dropdown.Item
+              onClick={() => {
+                setLanguage(false);
+              }}
+              style={{"border-bottom" : "1px solid var(--secondary_text_dark)"}}
+            >
+              <div className="_language">
+                <Flag name="dz" />
+                <p>{props.isFrench ? "Arabe" : "عربية"}</p>
+              </div>
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={() => {
+                setLanguage(true);
+              }}
+            >
+              <div className="_language">
+                <Flag name="fr" />
+                <p>{props.isFrench ? "Français" : "فرنسية"}</p>
+              </div>
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </Form.Group>
       {!isEditing && (
         <div className="_margin_vertical_md subs">
@@ -226,7 +281,7 @@ const InfosForm = (props) => {
             disabled={isLoading}
             onClick={handelEditClick}
           >
-            Cancel
+            {isFrench ? "Annuler" : "إلغاء"}
           </Button>
           <Button
             type="submit"
@@ -234,24 +289,42 @@ const InfosForm = (props) => {
             loading={isLoading}
             className="button_primary"
           >
-            Save
+            {isFrench ? "Confirmer" : "حفظ"}
           </Button>
         </div>
       )}
       {isEditing && (
         <div className="subs">
           <Button onClick={handelEditClick} className="button_primary">
-            Edit
+            {isFrench ? "Éditer" : "تعديل"}
           </Button>
         </div>
       )}
       <Message error content={errorMessage} />
       <Message
         success
-        content="Your infos update request has been sent successfully"
+        content={
+          isFrench
+            ? "Votre demande de mise à jour des informations a été envoyée avec succès"
+            : "تم إرسال طلب تحديث معلوماتك بنجاح"
+        }
       />
     </Form>
   );
 };
 
-export default InfosForm;
+InfosForm.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  InfosForm
+);

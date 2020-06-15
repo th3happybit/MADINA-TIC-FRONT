@@ -3,6 +3,30 @@
   padding: 0 !important;
 }
 
+._main_declaration_right.dark {
+  background-color: var(--second_dark) !important;
+}
+
+._main_declaration_right.dark .title_segment p {
+  color: var(--primary_text_dark) !important;
+}
+
+._main_declaration .ui.segment:last-child {
+  margin-bottom: initial;
+}
+
+._main_declaration_right.dark .filter_declaration .item {
+  color: var(--primary_text_dark);
+  font-weight: 600;
+  text-align: right;
+  background-color: var(--background_dark);
+}
+
+._main_declaration.dark .filter_declaration .menu {
+  background-color: var(--background_dark);
+  border: 1px solid var(--background_dark);
+}
+
 ._main_declaration_right {
   margin-top: 1.4rem !important;
   width: 80% !important;
@@ -15,15 +39,82 @@
   background-color: white !important;
 }
 
+._main_declaration.rtl ._main_declaration_right {
+  margin-right: 18rem !important;
+  margin-left: auto !important;
+}
+
 ._main_declaration .row {
   display: flex;
   justify-content: space-between;
+}
+._main_declaration .row.reverse {
+  flex-direction: row-reverse;
+}
+._main_declaration .row.reverse .input input {
+  text-align: right;
+  direction: ltr;
+}
+
+._main_declaration.dark .row .input input {
+  background: var(--background_dark);
+  color: var(--primary_text_dark);
+}
+
+._main_declaration.dark .row .input input::placeholder,
+._main_declaration.dark .row .input .icon {
+  color: var(--secondary_text_dark);
+}
+
+._main_declaration_right.dark .row .input input:focus {
+  border-color: var(--background_dark);
+}
+
+._main_declaration_right.dark ._active {
+  border-radius: 0 !important;
+  color: var(--primary_dark) !important;
+  border-bottom: solid 1px !important;
+}
+
+._main_declaration_right.dark .row.filters .button {
+  color: var(--secondary_text_dark);
 }
 
 ._main_declaration .row.filters {
   display: flex;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+._main_declaration ._data_section.rtl {
+  direction: rtl;
+}
+
+._main_declaration
+  ._data_section.rtl
+  .ui.table
+  thead
+  tr:first-child
+  > th:last-child {
+  border-radius: 0.28571429rem 0 0;
+}
+._main_declaration
+  ._data_section.rtl
+  .ui.table
+  thead
+  tr:first-child
+  > th:first-child {
+  border-radius: 0 0.28571429rem 0 0;
+}
+
+.table.rtl td,
+.table.rtl tr {
+  direction: rtl;
+  text-align: right;
+}
+
+.table.rtl #manage_cell:last-child {
+  padding-right: 0 !important;
 }
 
 ._main_declaration .segment {
@@ -77,12 +168,30 @@
   border-bottom: 2px solid rgba(34, 36, 38, 0.15) !important;
 }
 
+._data_section.dark .ui.secondary.pointing.menu .item {
+  color: var(--primary_text_dark) !important;
+}
+
+._data_section.dark .ui.secondary.pointing.menu .active.item {
+  color: var(--primary_dark) !important;
+  border-color: var(--primary_dark) !important;
+}
+
+._main_declaration ._data_section.rtl .citoyen_declar_pagin {
+  right: 2%;
+}
+
 ._main_declaration .ui.loading.segment:before {
   background: rgba(247, 249, 251, 0.9);
 }
 
+._main_declaration.dark .ui.loading.segment:before {
+  background: var(--loading_dark);
+}
+
 .show_mobile {
   display: none !important;
+  margin-bottom: 20px;
 }
 
 ._main_declaration > .search input {
@@ -155,6 +264,7 @@ td:hover > .full_text {
     padding: 1.5rem !important;
   }
 
+  ._main_declaration.rtl ._main_declaration_right,
   ._main_declaration_right {
     margin-top: 1rem !important;
     margin-bottom: 2rem !important;
@@ -172,7 +282,6 @@ td:hover > .full_text {
   }
 
   ._main_declaration .row {
-    /* flex-direction: column; */
     margin-bottom: 20px;
   }
 
@@ -205,6 +314,11 @@ td:hover > .full_text {
     margin-top: 10px !important;
   }
 
+  ._main_declaration_right .filter_declaration.ui.labeled.icon.button {
+    padding-right: 0 !important;
+    padding-left: 2.6em !important;
+  }
+
   ._main_declaration_right .filter_declaration > i {
     color: white !important;
     background-color: var(--primary) !important;
@@ -214,6 +328,10 @@ td:hover > .full_text {
   .show_mobile {
     display: flex !important;
     justify-content: space-between !important;
+  }
+
+  ._main_declaration.rtl .show_mobile {
+    flex-direction: row-reverse;
   }
 
   .zero-data {
@@ -240,6 +358,9 @@ td:hover > .full_text {
       bottom: 0rem !important;
       left: 0 !important;
     }
+    .table.rtl #manage_cell:first-child {
+      padding-right: 12px !important;
+    }
   }
 
   @media (max-width: 472px) {
@@ -254,6 +375,11 @@ td:hover > .full_text {
     ._main_declaration .row {
       flex-direction: column;
       margin-bottom: 0px;
+    }
+    ._main_declaration .row.reverse {
+      flex-direction: column;
+      margin-bottom: 0px;
+      direction: rtl;
     }
 
     ._main_declaration_right .search .input {

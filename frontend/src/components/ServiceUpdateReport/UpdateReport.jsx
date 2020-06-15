@@ -42,10 +42,11 @@ const UpdateReport = (props) => {
   let history = useHistory();
 
   useEffect(() => {
-    if (props.props.location.state) {
+    // console.log(props.props)
+    if (props.props.props.location.state) {
       setLoading(true);
       axios
-        .get("http://157.230.19.233/api/user", {
+        .get("https://www.madina-tic.ml/api/user", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -54,11 +55,11 @@ const UpdateReport = (props) => {
         .then((res) => {
           setService(res.data.uid);
         });
-      if (props.props.location.state.did)
+      if (props.props.props.location.state.did)
         axios
           .get(
-            "http://157.230.19.233/api/declarations/" +
-              props.props.location.state.did +
+            "https://www.madina-tic.ml/api/declarations/" +
+              props.props.props.location.state.did +
               "/",
             {
               headers: {
@@ -73,10 +74,10 @@ const UpdateReport = (props) => {
           .catch((err) => {
             console.log(err);
           });
-      if (props.props.location.state.rid) {
+      if (props.props.props.location.state.rid) {
         axios
           .get(
-            `http://157.230.19.233/api/reports/${props.props.location.state.rid}`,
+            `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -91,9 +92,9 @@ const UpdateReport = (props) => {
           })
           .catch((err) => {});
         axios
-          .get("http://157.230.19.233/api/documents", {
+          .get("https://www.madina-tic.ml/api/documents", {
             params: {
-              report__rid: props.props.location.state.rid,
+              report__rid: props.props.props.location.state.rid,
             },
             headers: {
               "content-type": "application/json",
@@ -213,7 +214,7 @@ const UpdateReport = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/documents/",
+          url: "https://www.madina-tic.ml/api/documents/",
           method: "post",
           data: formData,
         })
@@ -248,7 +249,7 @@ const UpdateReport = (props) => {
           },
         })
         .request({
-          url: `http://157.230.19.233/api/documents/${filesD[i]}/`,
+          url: `https://www.madina-tic.ml/api/documents/${filesD[i]}/`,
           method: "DELETE",
         })
         .then((res) => {
@@ -277,7 +278,7 @@ const UpdateReport = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/reports/${report.rid}/`,
+        url: `https://www.madina-tic.ml/api/reports/${report.rid}/`,
         method: "put",
         data: {
           title,
@@ -311,9 +312,8 @@ const UpdateReport = (props) => {
   return (
     <div className="_rapport_form">
       <Segment className="_add_form" loading={Loading}>
-        {props.props.location.state &&
-        props.props.location.state.rid &&
-        props.props.location.state.did ? (
+        {props.props.props.location.state &&
+        props.props.props.location.state.did ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">
               Update Report
@@ -366,7 +366,9 @@ const UpdateReport = (props) => {
                         <p className="text-default">
                           {file.name
                             ? file.name
-                            : file.src.slice(11, file.src.length - 12).replace(/_/g," ")}
+                            : file.src
+                                .slice(11, file.src.length - 12)
+                                .replace(/_/g, " ")}
                         </p>
                         <Icon
                           onClick={handleDelete}

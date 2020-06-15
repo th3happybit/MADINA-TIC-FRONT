@@ -141,69 +141,53 @@ const InfosForm = (props) => {
     >
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>First Name</label>
+          <label>Prénom</label>
           <Input
             fluid
-            placeholder={"First Name..."}
             id="first_name"
             value={first_name}
             onChange={handleChangeInput}
           />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Last Name</label>
+          <label>Nom de famille</label>
           <Input
             fluid
             id="last_name"
             value={last_name}
             onChange={handleChangeInput}
-            placeholder={"Last Name..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
           <label>Email</label>
-          <Input
-            fluid
-            id="email"
-            value={email}
-            onChange={handleChangeInput}
-            placeholder={"Email ..."}
-          />
+          <Input fluid id="email" value={email} onChange={handleChangeInput} />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Address</label>
+          <label>Adresse</label>
           <Input
             fluid
             id="address"
             value={address}
             onChange={handleChangeInput}
-            placeholder={"Address ..."}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>Phone Number</label>
-          <Input
-            fluid
-            id="phone"
-            value={phone}
-            onChange={handleChangeInput}
-            placeholder={"Phone number ..."}
-          />
+          <label>Numéro de téléphone</label>
+          <Input fluid id="phone" value={phone} onChange={handleChangeInput} />
         </Form.Field>
         {!service && (
           <Form.Field required={!isEditing} disabled={isEditing}>
-            <label>Birthday</label>
+            <label>Anniversaire</label>
             <Input
               fluid
               id="birthday"
               type="date"
               value={birthday}
               onChange={handleChangeInput}
-              placeholder={"Birthday..."}
             />
           </Form.Field>
         )}
@@ -211,13 +195,12 @@ const InfosForm = (props) => {
       {!service && (
         <Form.Group>
           <Form.Field disabled={isEditing}>
-            <label>National ID</label>
+            <label>carte d'identité</label>
             <Input
               fluid
               id="national_id"
               value={national_id}
               onChange={handleChangeInput}
-              placeholder={"National ID ..."}
             />
           </Form.Field>
         </Form.Group>
@@ -229,7 +212,7 @@ const InfosForm = (props) => {
             disabled={isLoading}
             onClick={handelEditClick}
           >
-            Cancel
+            Annuler
           </Button>
           <Button
             type="submit"
@@ -237,21 +220,21 @@ const InfosForm = (props) => {
             loading={isLoading}
             className="button_primary"
           >
-            Save
+            Sauvegarder
           </Button>
         </div>
       )}
       {isEditing && (
         <div className="subs">
           <Button onClick={handelEditClick} className="button_primary">
-            Edit
+            Éditer
           </Button>
         </div>
       )}
       <Message error content={errorMessage} />
       <Message
         success
-        content="Your infos update request has been sent successfully"
+        content="Votre demande de mise à jour des informations a été envoyée avec succès"
       />
     </Form>
   );

@@ -7,7 +7,7 @@ const AnnonceStats = (props) => {
   useEffect(() => {
     let instance = axios.create({
       responseType: "json",
-      baseURL: "http://157.230.19.233/api/",
+      baseURL: "https://www.madina-tic.ml/api/",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("maire_token")}`,
@@ -33,10 +33,10 @@ const AnnonceStats = (props) => {
             type: "pie",
           },
           labels: [
-            "Published Annonce",
-            "Removed Annonce",
-            "Expired Annonce",
-            "Active Annonce",
+            "Annonces publiées",
+            "Annonces supprimées",
+            "Annonces exprirées",
+            "Annonce actives",
           ],
           responsive: [
             {
@@ -80,7 +80,7 @@ const AnnonceStats = (props) => {
     : {};
   return (
     <div className="users_stats">
-      <h1>Announcements Stats</h1>
+      <h1>Statistique des annonces</h1>
       <div id="chart">
         {data && (
           <Chart

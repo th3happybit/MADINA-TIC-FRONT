@@ -27,8 +27,14 @@ const ModalComplement = (props) => {
   };
 
   const handlecomplement = () => {
-    if (motif && motif !== "") props.complement(props.data, motif);
-    else setError(true);
+    if (motif && motif !== "") {
+      props.complement(props.data.maire, props.data.did, motif);
+      if (props.data.children) {
+        props.data.children.map((elm) =>
+          props.complement(props.data.maire, elm.did, motif)
+        );
+      }
+    } else setError(true);
   };
 
   const handleclose = () => {
@@ -46,7 +52,9 @@ const ModalComplement = (props) => {
             onClick={handleopen}
             animated
             color="orange"
-            className={modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"}
+            className={
+              modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"
+            }
           >
             <Button.Content visible content="Complement" />
             <Button.Content hidden>

@@ -20,7 +20,7 @@ import { withRouter } from "react-router-dom";
 import { add_parent } from "../../actions/regroupAction.js";
 
 const MaireDeclarations = (props) => {
-  const [activeFilter, setactiveFilter] = useState("New Declarations");
+  const [activeFilter, setactiveFilter] = useState("Nouvelles déclarations");
   const [Loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [Data, setData] = useState([]);
@@ -44,25 +44,28 @@ const MaireDeclarations = (props) => {
   const fetchRegroupement = () => {
     props.childs.map((elm) => {
       let instance = axios.create({
-        baseURL: "http://157.230.19.233/api/",
+        baseURL: "https://www.madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
         },
       });
+      console.log(elm);
       let body = {
-        parent_declaration: props.parent,
+        parent_declaration: props.parent.did,
+        status: elm.status,
+        service: elm.service,
       };
       instance
-        .patch(`declarations/${elm}/`, body)
-        .then((res) => console.log(res))
+        .patch(`declarations/${elm.did}/`, body)
+        .then((res) => {
+          setRefresh((prevState) => !prevState);
+          props.add_parent(null);
+        })
         .catch((err) => console.log(err.response));
     });
-    setRefresh((prevState) => !prevState);
-    props.add_parent(null);
   };
-
   const handlesortRandom = () => {
     setsortDate(null);
     setsortMobile("Random");
@@ -117,42 +120,39 @@ const MaireDeclarations = (props) => {
       else pa["ordering"] = "-created_on";
     }
     switch (activeFilter) {
-      case "New Declarations":
+      case "Nouvelles déclarations":
         pa["status"] = "not_validated";
         break;
-      case "Lack of infos":
+      case "Manque d'informations":
         pa["status"] = "lack_of_info";
         break;
-      case "Validated":
+      case "Validée":
         pa["status"] = "validated";
         break;
-      case "Refused":
+      case "Refusé":
         pa["status"] = "refused";
         break;
-      case "In progress":
+      case "En cours":
         pa["status"] = "under_treatment";
         break;
-      case "Treated":
+      case "Traité":
         pa["status"] = "treated";
         break;
-      case "Archived":
+      case "Archivé":
         pa["status"] = "archived";
         break;
       default:
         break;
     }
-
+    pa["has_parent"] = false;
     axios
-      .get(
-        "http://157.230.19.233/api/declaration_nested/?parent_declaration__isnull=True",
-        {
-          params: pa,
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem("maire_token")}`,
-          },
-        }
-      )
+      .get("https://www.madina-tic.ml/api/declaration_nested/", {
+        params: pa,
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
+      })
       .then((res) => {
         setData(res.data.results);
         getTypes();
@@ -174,7 +174,7 @@ const MaireDeclarations = (props) => {
   const getTypes = () => {
     setLoading(true);
     axios
-      .get("http://157.230.19.233/api/declarations_types/", {
+      .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
@@ -197,7 +197,7 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations/" + did + "/", {
+      .request("https://www.madina-tic.ml/api/declarations/" + did + "/", {
         method: "patch",
         data: data,
       })
@@ -221,7 +221,7 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations_rejection/", {
+      .request("https://www.madina-tic.ml/api/declarations_rejection/", {
         method: "post",
         data: data,
       })
@@ -245,10 +245,13 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("http://157.230.19.233/api/declarations_complement_demand/", {
-        method: "post",
-        data: data,
-      })
+      .request(
+        "https://www.madina-tic.ml/api/declarations_complement_demand/",
+        {
+          method: "post",
+          data: data,
+        }
+      )
       .then((res) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
@@ -259,46 +262,36 @@ const MaireDeclarations = (props) => {
         console.log(err);
       });
   };
-  const rejectDeclaration = (decData, reason) => {
-    decData["reason"] = reason;
+  const rejectDeclaration = (maire, id, reason) => {
     const rejectionData = {
-      maire: decData.maire,
-      declaration: decData.did,
+      maire: maire,
+      declaration: id,
       reason: reason,
     };
     addRejection(rejectionData);
   };
-  const demandComplement = (decData, reason) => {
-    decData["reason"] = reason;
+  const demandComplement = (maire, id, reason) => {
     const complementData = {
-      maire: decData.maire,
-      declaration: decData.did,
+      maire: maire,
+      declaration: id,
       reason: reason,
     };
     addComplement(complementData);
   };
-  const archiveDeclaration = (decData) => {
+  const archiveDeclaration = (id) => {
     const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
       status: "archived",
     };
-    updateDecStatus(data, decData.did);
+    updateDecStatus(data, id);
   };
-  const validateDeclaration = (decData) => {
+  const validateDeclaration = (decData, id) => {
     const data = {
-      title: decData.title,
-      desc: decData.desc,
-      citizen: decData.citizen,
-      dtype: decData.dtype,
       status: "validated",
       service: decData.service,
       validated_at: decData.validated_at,
       priority: decData.priority,
     };
-    updateDecStatus(data, decData.did);
+    updateDecStatus(data, id);
   };
   const changePage = (e, pageInfo) => {
     setPage(pageInfo.activePage);
@@ -391,7 +384,7 @@ const MaireDeclarations = (props) => {
                   ? true
                   : false,
             }}
-            placeholder="Search for declarations ..."
+            placeholder="Recherche des declarations ..."
           />
           <div
             style={{
@@ -400,31 +393,32 @@ const MaireDeclarations = (props) => {
               alignItems: "center",
             }}
           >
-            <Button
-              style={{
-                margin: "0 1rem",
-                background: "var(--secondary)",
-                color: "white",
-              }}
-              onClick={() => {
-                handleRegroup();
-                if (!props.parent && !props.childs.length > 0 && !isRegroup) {
-                  setOpen(true);
-                }
-                if (props.parent && props.childs.length > 0) {
-                  setIsRegroup(false);
-                  console.log({ parent: props.parent, childs: props.childs });
-                }
-                if (props.parent && props.childs.length === 0) {
-                  setOpenErr(true);
-                }
-                if (props.parent && props.childs.length > 0) {
-                  fetchRegroupement();
-                }
-              }}
-            >
-              {isRegroup ? "Confirmer" : "Regrouper"}
-            </Button>
+            {activeFilter === "Validée" && (
+              <Button
+                style={{
+                  margin: "0 1rem",
+                  background: "var(--secondary)",
+                  color: "white",
+                }}
+                onClick={() => {
+                  handleRegroup();
+                  if (!props.parent && !props.childs.length > 0 && !isRegroup) {
+                    setOpen(true);
+                  }
+                  if (props.parent && props.childs.length > 0) {
+                    setIsRegroup(false);
+                  }
+                  if (props.parent && props.childs.length === 0) {
+                    setOpenErr(true);
+                  }
+                  if (props.parent && props.childs.length > 0) {
+                    fetchRegroupement();
+                  }
+                }}
+              >
+                {isRegroup ? "Confirmer" : "Regrouper"}
+              </Button>
+            )}
             <Dropdown
               className="icon filter_declaration _mobile"
               icon="angle down"
@@ -452,37 +446,37 @@ const MaireDeclarations = (props) => {
             >
               <Dropdown.Menu>
                 <Dropdown.Item
-                  text="New Declarations"
+                  text="Nouvelles déclarations"
                   onClick={handle_filter}
                   label={{ circular: true, color: "blue", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Validated"
+                  text="Validée"
                   onClick={handle_filter}
                   label={{ circular: true, color: "green", empty: true }}
                 />
                 <Dropdown.Item
-                  text="In progress"
+                  text="En cours"
                   onClick={handle_filter}
                   label={{ circular: true, color: "yellow", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Treated"
+                  text="Traité"
                   onClick={handle_filter}
                   label={{ circular: true, color: "green", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Refused"
+                  text="Refusé"
                   onClick={handle_filter}
                   label={{ circular: true, color: "red", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Archived"
+                  text="Archivé"
                   onClick={handle_filter}
                   label={{ circular: true, color: "black", empty: true }}
                 />
                 <Dropdown.Item
-                  text="Lack of infos"
+                  text="Manque d'informations"
                   onClick={handle_filter}
                   label={{ circular: true, color: "orange", empty: true }}
                 />
@@ -524,7 +518,7 @@ const MaireDeclarations = (props) => {
             )
           : perm && (
               <p class="zero-data">
-                Sorry No declarations to display in this section
+                Désolé Aucune déclaration à afficher dans cette section{" "}
               </p>
             )}
       </Segment>

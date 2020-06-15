@@ -3,8 +3,10 @@ import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import ValidatePassword from "../../methods/ValidateDataUpdatePass.js";
 import "./CitoyenPasswordForm.css";
+import { languages } from "../../language.js";
 
-const PasswordForm = () => {
+const PasswordForm = (props) => {
+  const { isFrench } = props;
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
     isPassword: true,
@@ -149,7 +151,7 @@ const PasswordForm = () => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/password/change/",
+        url: "https://www.madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,
@@ -192,8 +194,7 @@ const PasswordForm = () => {
               id="currentPassword"
               value={currentPassword.value}
               type={currentPassword.isPassword ? "password" : "text"}
-              label="Current Password"
-              placeholder="Current Password"
+              label={isFrench ? "Mot de passe actuel" : "كلمة المرور الحالي"}
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -211,8 +212,7 @@ const PasswordForm = () => {
               id="newPassword"
               value={newPassword.value}
               type={newPassword.isPassword ? "password" : "text"}
-              label="New Password"
-              placeholder="New Password"
+              label={isFrench ? "Mot de passe nouveau" : "كلمة السر الجديدة"}
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -230,8 +230,9 @@ const PasswordForm = () => {
               id="confirmPassword"
               value={confirmPassword.value}
               type={confirmPassword.isPassword ? "password" : "text"}
-              label="Confirm Password"
-              placeholder="Confirm Password"
+              label={
+                isFrench ? "Confirmez le mot de passe" : "تأكيد كلمة المرور"
+              }
               onChange={handleInputChangeValue}
               className="required"
             />
@@ -249,7 +250,7 @@ const PasswordForm = () => {
               disabled={isLoading}
               onClick={handleedit}
             >
-              Cancel
+              {languages.isFrench ? "Cancel" : "إلغاء"}
             </Button>
 
             <Button
@@ -258,7 +259,7 @@ const PasswordForm = () => {
               loading={isLoading}
               className="button_primary"
             >
-              Save
+              {languages.isFrench ? "Confirmer" :"حفظ"}
             </Button>
           </div>
         ) : (
@@ -269,7 +270,7 @@ const PasswordForm = () => {
               loading={isLoading}
               className="button_primary"
             >
-              Edit
+              {languages.isFrench ? "Éditer" : "تعديل"}
             </Button>
           </div>
         )}
@@ -277,7 +278,11 @@ const PasswordForm = () => {
         <Message error content={errMessage} />
         <Message
           success
-          content="Your infos update request has been sent successfully"
+          content={
+            isFrench
+              ? "Votre demande de mise à jour des informations a été envoyée avec succès"
+              : "تم إرسال طلب تحديث معلوماتك بنجاح"
+          }
         />
       </Form>
     </div>

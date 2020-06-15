@@ -84,13 +84,13 @@ const Modalredirect = (props) => {
             className="_primary"
             onClick={OnConfirm}
           >
-            <Button.Content visible content="Confirm" />
+            <Button.Content visible content="Confirmer" />
             <Button.Content hidden>
               <Icon name="checkmark" />
             </Button.Content>
           </Button>
           <Button animated onClick={handleclose} color="orange">
-            <Button.Content visible content="Cancel" />
+            <Button.Content visible content="Annuler" />
             <Button.Content hidden>
               <Icon name="delete" />
             </Button.Content>

@@ -26,6 +26,7 @@ const ModalDetailComponent = (props) => {
   const [declaration, setDeclaration] = useState("");
   const [files, setFiles] = useState([]);
   const [motif, setMorif] = useState(null);
+  const [children, setChildren] = useState([]);
 
   const handleopen = () => {
     setOpen(true);
@@ -49,7 +50,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/reports_complement_demand/",
+        url: "https://www.madina-tic.ml/api/reports_complement_demand/",
         data: demand,
         method: "post",
       })
@@ -57,7 +58,7 @@ const ModalDetailComponent = (props) => {
         refresh();
       });
   };
-  const updateDecStatus = (dec) => {
+  const updateDecStatus = (dec, id) => {
     axios
       .create({
         headers: {
@@ -68,13 +69,11 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/declarations/${declaration.did}/`,
+        url: `https://www.madina-tic.ml/api/declarations/${id}/`,
         method: "patch",
         data: dec,
       })
-      .then((res) => {
-        refresh();
-      })
+      .then((res) => {})
       .catch((err) => {});
   };
   const updateRepStatus = (rep, dec) => {
@@ -88,13 +87,17 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/reports/${data.rid}/`,
+        url: `https://www.madina-tic.ml/api/reports/${data.rid}/`,
         method: "patch",
         data: rep,
       })
       .then((res) => {
-        if (dec) updateDecStatus(dec);
-        else refresh();
+        if (dec) {
+          updateDecStatus(dec, data.declaration);
+          if (children.length > 0)
+            children.map((elm) => updateDecStatus(dec, elm.did));
+          refresh();
+        } else refresh();
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +114,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `http://157.230.19.233/api/announces/${data.aid}/`,
+        url: `https://www.madina-tic.ml/api/announces/${data.aid}/`,
         method: "patch",
         data: ann,
       })
@@ -128,7 +131,7 @@ const ModalDetailComponent = (props) => {
       "-" +
       helper(date.getMonth() + 1) +
       "-" +
-      helper(date.getDay()) +
+      helper(date.getDate()) +
       "T" +
       time +
       "+01:00";
@@ -141,10 +144,6 @@ const ModalDetailComponent = (props) => {
       validated_at: now,
     };
     const dec = {
-      citizen: declaration.citizen,
-      dtype: declaration.dtype,
-      desc: declaration.desc,
-      title: declaration.title,
       status: "treated",
     };
     updateRepStatus(report, dec);
@@ -159,30 +158,6 @@ const ModalDetailComponent = (props) => {
     };
     updateRepStatus(report);
   };
-  const RejectReport = (reason) => {
-    const rejection = {
-      reason: reason,
-      report: data.rid,
-      maire: uid,
-    };
-    axios
-      .create({
-        headers: {
-          post: {
-            "Content-type": "application/json",
-            Authorization: `Token ${localStorage.getItem(token)}`,
-          },
-        },
-      })
-      .request({
-        url: "http://157.230.19.233/api/reports_rejection/",
-        data: rejection,
-        method: "post",
-      })
-      .then((res) => {
-        refresh();
-      });
-  };
   const ArchiveAnnonce = () => {
     const annonce = {
       title: data.title,
@@ -193,20 +168,10 @@ const ModalDetailComponent = (props) => {
     };
     updateAnnStatus(annonce);
   };
-  const WorkNotFinished = () => {
-    const report = {
-      declaration: data.declaration,
-      title: data.title,
-      desc: data.desc,
-      service: data.service,
-      status: "work_not_finished",
-    };
-    updateRepStatus(report);
-  };
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
       let instance = axios.create({
-        baseURL: "http://157.230.19.233/api/",
+        baseURL: "https://www.madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "Content-Type": "application/json",
@@ -225,7 +190,7 @@ const ModalDetailComponent = (props) => {
         });
     }
     if (isRapport) {
-      let url = `http://157.230.19.233/api/declarations/${data.declaration}`;
+      let url = `https://www.madina-tic.ml/api/declarations/${data.declaration}`;
       axios
         .create({
           headers: {
@@ -242,8 +207,20 @@ const ModalDetailComponent = (props) => {
         .then((res) => {
           setDeclaration(res.data);
         })
-        .catch((err) => {
-          console.log(err.reponse);
+        .catch((err) => {});
+
+      axios
+        .get(`https://www.madina-tic.ml/api/declarations/`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem(token)}`,
+          },
+          params: {
+            parent_declaration: data.declaration,
+          },
+        })
+        .then((res) => {
+          setChildren(res.data.results);
         });
     }
     //? SECOND REQUEST FOR FILES
@@ -258,7 +235,7 @@ const ModalDetailComponent = (props) => {
           },
         })
         .request({
-          url: `http://157.230.19.233/api/documents/?report__rid=${data.rid}`,
+          url: `https://www.madina-tic.ml/api/documents/?report__rid=${data.rid}`,
           method: "get",
         })
         .then((res) => {
@@ -272,9 +249,7 @@ const ModalDetailComponent = (props) => {
             setFiles(tempArr);
           }
         })
-        .catch((err) => {
-          console.log({ DocErr: err.reponse });
-        });
+        .catch((err) => {});
   }, [data]);
   return (
     <Modal
@@ -286,7 +261,7 @@ const ModalDetailComponent = (props) => {
         <>
           <Button.Group onClick={handleopen} className="infos_button">
             <Popup
-              content="More Infos"
+              content="Plus d'informations"
               trigger={
                 <Button
                   icon
@@ -301,7 +276,7 @@ const ModalDetailComponent = (props) => {
             onClick={handleopen}
             color="blue"
             className="shadow btn_account_detail pointer _primary _hide_on_desktop"
-            content="More details"
+            content="Plus de détails"
           />
         </>
       }
@@ -315,9 +290,7 @@ const ModalDetailComponent = (props) => {
           <div className="_content_modal ">
             <div>
               {isRapport && <p>Title Declaration</p>}
-              {motif && activeFilter === "archived" && (
-                <p>motif of rejection</p>
-              )}
+              {motif && activeFilter === "archived" && <p>motif of rejet</p>}
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
@@ -373,7 +346,7 @@ const ModalDetailComponent = (props) => {
                           }}
                           onClick={() => {
                             window.open(
-                              "http://157.230.19.233/" + String(file.src)
+                              "https://www.madina-tic.ml/" + String(file.src)
                             );
                           }}
                         >
@@ -397,7 +370,7 @@ const ModalDetailComponent = (props) => {
               <ConfirmModal
                 modal
                 button={{ color: "blue", text: "Validate", icon: "checkmark" }}
-                text="Confirm approving this report and mark the declaration as completed ?"
+                text="Confirmer l'approbation de ce rapport et marquer la déclaration comme terminée?"
                 title="Confirm Approval"
                 OnConfirm={confirmReport}
               />
@@ -408,27 +381,9 @@ const ModalDetailComponent = (props) => {
                   text: "Complement",
                   icon: "sync alternate",
                 }}
-                text="Confirm demanding complement ?"
+                text="Confirmer le complément exigeant?"
                 title="Complement Demand"
                 OnConfirm={ComplementDemand}
-              />
-              <ConfirmModal
-                modal
-                button={{
-                  color: "orange",
-                  text: "Not finished",
-                  icon: "exclamation triangle",
-                }}
-                text="Confirm mark it as Work not finished ?"
-                title="Work not finished"
-                OnConfirm={WorkNotFinished}
-              />
-              <RejectComplement
-                modal
-                button={{ color: "red", text: "Reject", icon: "times" }}
-                text="Confirm rejecting report ?"
-                title="Reject Report"
-                OnConfirm={RejectReport}
               />
             </>
           )}
@@ -437,7 +392,7 @@ const ModalDetailComponent = (props) => {
               modal
               disabled={archive ? false : true}
               button={{ color: "black", text: "Archive", icon: "archive" }}
-              text="Confirm sending this report to archive ?"
+              text="Confirmer l'envoi de ce rapport aux archives?"
               title="Confirm Archive"
               OnConfirm={ArchiveAnnonce}
             />
@@ -449,7 +404,7 @@ const ModalDetailComponent = (props) => {
               <ConfirmModal
                 modal
                 button={{ color: "black", text: "Archive", icon: "archive" }}
-                text="Confirm sending this report to archive ?"
+                text="Confirmer l'envoi de ce rapport aux archives?"
                 title="Confirm Archive"
                 OnConfirm={ArchiveReport}
               />

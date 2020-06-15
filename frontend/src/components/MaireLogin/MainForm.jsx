@@ -40,14 +40,14 @@ const MainForm = () => {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/login/",
+        url: "https://www.madina-tic.ml/api/login/",
         method: "post",
         data: { email, password },
       })
       .then((res) => {
         setISLoading(false);
         localStorage.setItem("maire_token", res.data.key);
-        return history.push("/maire/declaration");
+        return history.push("/maire/dashboard");
       })
       .catch(() => {
         setISLoading(false);

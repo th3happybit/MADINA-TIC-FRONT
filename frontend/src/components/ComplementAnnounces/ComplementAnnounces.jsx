@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form, Button, Message, Segment } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  Message,
+  Segment,
+  Label,
+  Icon,
+  Image,
+} from "semantic-ui-react";
 import DatePicker from "react-datepicker";
 
 import "./ComplementAnnounces.css";
@@ -13,35 +21,118 @@ const ComplementAnnounces = (props) => {
   const [description, setDesctiption] = useState("");
   const [descriptionErr, setDescriptionErr] = useState(false);
   const [startDate, setStartDate] = useState("");
+  const [changedStart, setchangedStart] = useState(false);
   const [startDateErr, setStartDateErr] = useState(false);
+  const [startFrontErr, setStartFrontErr] = useState(false);
   const [endDate, setEndDate] = useState("");
+  const [changedEnd, setchangedEnd] = useState(false);
   const [endDateErr, setEndDateErr] = useState(false);
+  const [endFrontErr, setEndFrontErr] = useState(false);
+  const [datesErr, setDatesErr] = useState(false);
+  const [image, setImage] = useState(null);
+  const [postImg, setPostImg] = useState(null);
+  const [deleted, setDelete] = useState(false);
+  const [imageErr, setimageErr] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [reason, setReason] = useState("");
   const [aid, setAid] = useState(null);
   const [nullAid, setNullAid] = useState(false);
+  const [reason, setReason] = useState("");
 
+  function helper(str) {
+    return str < 10 ? "0" + str : str;
+  }
+  function houresMake(str) {
+    let houre = parseInt(str.slice(0, 2));
+    return houre + str.slice(2, str.lenght);
+  }
+  function TimeMake(dt) {
+    const time = dt.toLocaleTimeString();
+    console.log({ time });
+    let ret =
+      dt.getFullYear() +
+      "-" +
+      helper(dt.getMonth() + 1) +
+      "-" +
+      helper(dt.getDate()) +
+      "T";
+    if (time.split(" ").length > 1) ret += houresMake(time) + "01:00";
+    else ret += time.split(" ")[0] + "+01:00";
+    return ret;
+  }
+  const handledeleteImg = () => {
+    setimageErr(false);
+    setDelete(true);
+    setPostImg(null);
+    setImage(null);
+  };
+  const handleAddimage = (e) => {
+    let file = e.target.files[0];
+    if (
+      file &&
+      file.size > 0 &&
+      (file.type === "image/png" ||
+        file.type === "image/jpg" ||
+        file.type === "image/jpeg")
+    ) {
+      const objectUrl = URL.createObjectURL(file);
+      setImage(objectUrl);
+      setPostImg(file);
+    } else setimageErr(true);
+  };
+  const handle_Validation = () => {
+    let err = false;
+    if (!startDate) {
+      setStartDateErr(true);
+      err = true;
+    }
+    if (startDate < new Date()) {
+      err = true;
+      setStartFrontErr(true);
+    }
+    if (!endDate) {
+      err = true;
+      setEndDateErr(true);
+    }
+    if (endDate <= new Date()) {
+      err = true;
+      setEndFrontErr(true);
+    }
+    if (endDate < startDate) {
+      err = true;
+      setDatesErr(true);
+    }
+    if (title.length === 0) {
+      setTitleErr(true);
+      err = true;
+    }
+    if (description.length < 10) {
+      setDescriptionErr(true);
+    }
+    if (!err) handleComplement();
+  };
   const handleComplement = () => {
     setIsLoading(true);
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("start_at", changedStart ? TimeMake(startDate) : startDate);
+    formData.append("end_at", changedEnd ? TimeMake(endDate) : endDate);
+    formData.append("status", "not_validated");
+    formData.append("desc", description);
+    if (postImg) formData.append("image", postImg);
+    else if (deleted) formData.append("image", null);
     axios
       .create({
         headers: {
           patch: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
           },
         },
       })
       .request({
-        url: `http://157.230.19.233/api/announces/${aid}/`,
+        url: `https://www.madina-tic.ml/api/announces/${aid}/`,
         method: "patch",
-        data: {
-          title: title,
-          start_at: startDate,
-          end_at: endDate,
-          desc: description,
-          status: "not_validated",
-        },
+        data: formData,
       })
       .then((res) => {
         setSucces(true);
@@ -72,11 +163,11 @@ const ComplementAnnounces = (props) => {
   };
 
   useEffect(() => {
-    if (props.props.location.state) {
-      setAid(props.props.location.state.rid);
+    if (props.props.props.location.state) {
+      setAid(props.props.props.location.state.rid);
       axios
         .get(
-          `http://157.230.19.233/api/announces/${props.props.location.state.rid}/`,
+          `https://www.madina-tic.ml/api/announces/${props.props.props.location.state.rid}/`,
           {
             headers: {
               "content-type": "application/json",
@@ -89,13 +180,14 @@ const ComplementAnnounces = (props) => {
           setDesctiption(res.data.desc);
           setStartDate(res.data.start_at);
           setEndDate(res.data.end_at);
+          setImage(res.data.image);
         })
         .catch((err) => {
           console.log(err.response);
         });
       axios
         .get(
-          `http://157.230.19.233/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.location.state.rid}`,
+          `https://www.madina-tic.ml/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.props.location.state.rid}`,
           {
             headers: {
               "content-type": "application/json",
@@ -136,7 +228,7 @@ const ComplementAnnounces = (props) => {
             <h3 className="large-title text-default bold _margin_vertical_md">
               Complement Announce
             </h3>
-            <Form success={succes}>
+            <Form success={succes} error={imageErr}>
               <Message info header="The motif of the demand" content={reason} />
               <Form.Input
                 type="text"
@@ -145,6 +237,12 @@ const ComplementAnnounces = (props) => {
                 onChange={handleChange}
                 name="title"
                 className={titleErr ? "add_dec_err" : ""}
+                error={
+                  titleErr && {
+                    content: "Title can't be empty",
+                    class: "ui basic red pointing label fluid",
+                  }
+                }
               />
 
               <div className="date_annonce">
@@ -154,16 +252,46 @@ const ComplementAnnounces = (props) => {
                     id="begin"
                     selected={Date.parse(startDate)}
                     onChange={(date) => {
-                      if (startDateErr) setStartDateErr(false);
+                      setStartDateErr(false);
+                      setStartFrontErr(false);
+                      setDatesErr(false);
+                      setchangedStart(true);
                       setStartDate(date);
                     }}
-                    className={startDateErr ? "date_picker_err" : ""}
+                    className={
+                      startDateErr || startFrontErr || datesErr
+                        ? "date_picker_err"
+                        : ""
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     timeCaption="time"
                     dateFormat="MMMM d, yyyy h:mm aa"
                   />
+                  {startDateErr ? (
+                    startDateErr && (
+                      <Label
+                        className="ui pointing basic red"
+                        content="Start date is required"
+                      />
+                    )
+                  ) : (
+                    <>
+                      {startFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="Start date must be after current date"
+                        />
+                      )}
+                      {datesErr && !startFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="Start date must be before end date"
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="one_input">
                   <label htmlFor="end">Ends at</label>
@@ -171,16 +299,46 @@ const ComplementAnnounces = (props) => {
                     id="end"
                     selected={Date.parse(endDate)}
                     onChange={(date) => {
-                      if (endDateErr) setEndDateErr(false);
+                      setEndDateErr(false);
+                      setEndFrontErr(false);
+                      setDatesErr(false);
+                      setchangedEnd(true);
                       setEndDate(date);
                     }}
-                    className={endDateErr ? "date_picker_err" : ""}
+                    className={
+                      endDateErr || endFrontErr || datesErr
+                        ? "date_picker_err"
+                        : ""
+                    }
                     showTimeSelect
                     timeFormat="HH:mm"
                     timeIntervals={15}
                     timeCaption="time"
                     dateFormat="MMMM d, yyyy h:mm aa"
                   />
+                  {endDateErr ? (
+                    endDateErr && (
+                      <Label
+                        className="ui pointing basic red"
+                        content="End date is required"
+                      />
+                    )
+                  ) : (
+                    <>
+                      {endFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="End date must be after current date"
+                        />
+                      )}
+                      {datesErr && !endFrontErr && (
+                        <Label
+                          className="ui pointing basic red"
+                          content="End date must be after start date"
+                        />
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -191,7 +349,54 @@ const ComplementAnnounces = (props) => {
                 value={description}
                 className={descriptionErr ? "add_dec_err" : ""}
                 onChange={handleChange}
+                error={
+                  descriptionErr && {
+                    content:
+                      "Description can't be empty or shorter than 10 caracters",
+                    class: "ui basic red pointing label",
+                  }
+                }
               />
+              <p className="label_add_dec bold">Ajouter une photo</p>
+              <div className="_profile_img_edit add_dec pointer">
+                <label
+                  htmlFor="myInput"
+                  className="pointer"
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                  }}
+                >
+                  Ajouter
+                </label>
+              </div>
+              <input
+                id="myInput"
+                style={{ display: "none" }}
+                type="file"
+                accept="image/*"
+                className="pointer"
+                onChange={handleAddimage}
+              />
+              {image && (
+                <div
+                  style={{
+                    position: "relative",
+                    width: "140px",
+                  }}
+                >
+                  <Image
+                    src={image}
+                    style={{ width: "130px", height: "130px" }}
+                  />
+                  <Icon
+                    className="delete_icon"
+                    color="black"
+                    name="delete"
+                    onClick={handledeleteImg}
+                  />
+                </div>
+              )}
               <Form.Group
                 style={{
                   display: "flex",
@@ -202,15 +407,18 @@ const ComplementAnnounces = (props) => {
                 <Button
                   loading={isLoading}
                   className="button_primary _margin_horizontal_sm"
-                  onClick={handleComplement}
+                  onClick={handle_Validation}
                 >
                   Confirm Complement
                 </Button>
               </Form.Group>
-              <Message
-                success
-                content="Your complement has been send succesfully"
-              />
+              {imageErr && (
+                <Message
+                  error
+                  content="S'il vous plait, Assurez que votre image est valide"
+                />
+              )}
+              <Message success content="Infos sauvegardées avec succès" />
             </Form>
           </>
         ) : (

@@ -7,7 +7,15 @@ import "./AddDeclaration.css";
 import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "./Location.jsx";
 
-export default function AddDeclaration(props) {
+//? redux stuff
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_mode } from "../../actions/darkAction";
+import { change_language } from "../../actions/languageAction";
+import { languages } from "../../language";
+
+const AddDeclaration = (props) => {
+  const { languages, isDark } = props;
   const [succes, setSucces] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const [title, setTitle] = useState("");
@@ -40,7 +48,7 @@ export default function AddDeclaration(props) {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/declarations_types/",
+        url: "https://www.madina-tic.ml/api/declarations_types/",
         method: "get",
       })
       .then((res) => {
@@ -69,7 +77,7 @@ export default function AddDeclaration(props) {
   useEffect(() => {
     if (uid && !isSave) {
       setIsLoading(true);
-      let url = `http://157.230.19.233/api/declarations/`;
+      let url = `https://www.madina-tic.ml/api/declarations/`;
       axios
         .create({
           headers: {
@@ -124,7 +132,7 @@ export default function AddDeclaration(props) {
   useEffect(() => {
     if (uid && isSave) {
       setSaveLoading(true);
-      let url = `http://157.230.19.233/api/declarations/`;
+      let url = `https://www.madina-tic.ml/api/declarations/`;
       axios
         .create({
           headers: {
@@ -199,7 +207,7 @@ export default function AddDeclaration(props) {
         },
       })
       .request({
-        url: "http://157.230.19.233/api/documents/",
+        url: "https://www.madina-tic.ml/api/documents/",
         method: "post",
         data: formData,
       })
@@ -214,12 +222,11 @@ export default function AddDeclaration(props) {
       });
   };
   const handleAdd = () => {
-    console.log("ee");
     if (adr.length === 0 && adrGeo.length === 0) {
       setAdrErr(true);
       setSucces(false);
     } else if (!uid) {
-      let url = `http://157.230.19.233/api/user/`;
+      let url = `https://www.madina-tic.ml/api/user/`;
       axios
         .create({
           headers: {
@@ -313,15 +320,19 @@ export default function AddDeclaration(props) {
     }
   };
   return (
-    <div className="container_add_dec">
-      <div className="_add_dec">
+    <div
+      className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
+    >
+      <div className={`_add_dec ${isDark ? "dark" : ""}`}>
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Add Declaration
+          {languages.isFrench ? "Ajouter une déclaration" : "إضافة تصريح"}
         </h3>
         <Form success={succes} error={fileErr}>
           <Form.Input
             type="text"
-            label="Title"
+            label={languages.isFrench ? "Titre" : "عنوان"}
             value={title}
             onChange={handleChange}
             name="title"
@@ -329,7 +340,7 @@ export default function AddDeclaration(props) {
           />
           <Form.Select
             fluid
-            label="Type"
+            label={languages.isFrench ? "Type" : "نوع"}
             options={options}
             name="type"
             value={type}
@@ -345,7 +356,7 @@ export default function AddDeclaration(props) {
             <Form.Input
               disabled={isGeo}
               type="text"
-              label="Address"
+              label={languages.isFrench ? "Adresse" : "عنوان"}
               value={adr}
               className={adrErr ? "add_dec_err" : ""}
               onChange={handleChange}
@@ -356,27 +367,32 @@ export default function AddDeclaration(props) {
           </div>
           <Form.Group inline>
             <Form.Radio
-              label="Geo-localise"
+              label={
+                languages.isFrench ? "Géo-localisation" : "الإحداثيات الجغرافية"
+              }
               value="sm"
               checked={isGeo}
               onClick={handleGeo}
             />
             <Form.Radio
-              label="Manual address"
+              label={languages.isFrench ? "Adresse manuelle" : "عنوان يدوي"}
               value="md"
               checked={!isGeo}
               onClick={handleGeo}
             />
           </Form.Group>
           <Form.TextArea
-            label="Description"
+            label={languages.isFrench ? "Description" : "التفاصيل"}
             name="description"
             placeholder="..."
             value={description}
             className={descriptionErr ? "add_dec_err" : ""}
             onChange={handleChange}
           />
-          <p className="label_add_dec bold">Add Photos (Optional)</p>
+          <p className="label_add_dec bold">
+            {languages.isFrench ? "Ajouter photos" : "تحميل الصور"} (
+            {languages.isFrench ? "optionnel" : "اختياري"})
+          </p>
 
           <div className="_profile_img_edit add_dec pointer">
             <label
@@ -387,7 +403,7 @@ export default function AddDeclaration(props) {
                 width: "100%",
               }}
             >
-              Upload
+              {languages.isFrench ? "Ajouter" : "أضف"}
             </label>
             <input
               id="myInput"
@@ -398,7 +414,14 @@ export default function AddDeclaration(props) {
               onChange={onSelectFile}
             />
           </div>
-          <Message error list={["Please enter an image file"]} />
+          <Message
+            error
+            list={[
+              languages.isFrench
+                ? "Veuillez saisir un fichier image"
+                : "يرجى إدخال ملف صورة",
+            ]}
+          />
           <div className="prev_images_dec">
             {picturesPreview.map((elm, index) => {
               return (
@@ -430,26 +453,45 @@ export default function AddDeclaration(props) {
               onClick={handleAdd}
               className="button_primary _margin_horizontal_sm"
             >
-              Confirm
+              {languages.isFrench ? "Confirmer" : "التأكيد"}
             </Button>
             <Button
               loading={saveLoading}
               className="button_secondary _margin_horizontal_sm"
               onClick={handleSave}
             >
-              Save
+              {languages.isFrench ? "Enregistrer" : "حفظ"}
             </Button>
           </Form.Group>
           <Message
             success
             content={
               isSave
-                ? "Your decalration has been saved"
-                : "Your decalration has been added"
+                ? languages.isFrench
+                  ? "enregistré avec succès"
+                  : "حفظ بنجاح"
+                : languages.isFrench
+                ? "ajouté avec succès"
+                : "اضيف بنجاح"
             }
           />
         </Form>
       </div>
     </div>
   );
-}
+};
+AddDeclaration.propTypes = {
+  isDark: PropTypes.bool.isRequired,
+  change_mode: PropTypes.func.isRequired,
+  languagse: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDark: state.mode.isDark,
+  languages: state.language,
+});
+
+export default connect(mapStateToProps, { change_mode, change_language })(
+  AddDeclaration
+);
