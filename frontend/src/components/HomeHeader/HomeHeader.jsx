@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { List, Dropdown, Flag } from "semantic-ui-react";
+import { List, Dropdown, Flag, Radio } from "semantic-ui-react";
 import { lang } from "moment";
 
 import { ReactComponent as Logo } from "../../assets/images/logo_vectorized.svg";
@@ -181,6 +181,14 @@ const HomeHeader = (props) => {
                 </Link>
               );
             })}
+            <span onClick={() => props.change_language(languages.arabe)}>
+              <Radio checked={!language.isFrench} />
+              <p className="text-default">{language.isFrench ? "Arabe" : "العربية"}</p>
+            </span>
+            <span onClick={() => props.change_language(languages.french)}>
+              <Radio checked={language.isFrench} />
+          <p className="text-default">{language.isFrench ? "Français" : "الفرنسية"}</p>
+            </span>
           </List>
         </div>
       </nav>

@@ -50,7 +50,6 @@ const DeclarationStats = (props) => {
   const handleClicked = (e, { name }) => {
     setClicked(name);
   };
-  console.log({ data });
   const settings = data
     ? {
         series: [

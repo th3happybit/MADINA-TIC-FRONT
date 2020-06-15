@@ -36,23 +36,26 @@ const HomeCitoyen = (props) => {
   const loadUsers = () => {
     setLoading(true);
 
-    const headers = !props.anonyme
+    const header = !props.anonyme
       ? {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+          url:
+            "https://madina-tic.ml/api/home-declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
         }
       : {
-          "content-type": "application/json",
+          headers: {
+            "content-type": "application/json",
+          },
+          url:
+            "https://madina-tic.ml/api/declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
         };
     axios
-      .get(
-        Data.length > 0
-          ? next
-          : "https://madina-tic.ml/api/home-declarations/status=validated&status=treated&status=under_treatment&ordering=-created_on",
-        {
-          headers: headers,
-        }
-      )
+      .get(Data.length > 0 ? next : header.url, {
+        headers: header.headers,
+      })
       .then((res) => {
         if (Data.length === 0) {
           setData(res.data.results);
@@ -78,7 +81,7 @@ const HomeCitoyen = (props) => {
   const getTypes = () => {
     if (!props.anonyme)
       axios
-        .get("http://www.madina-tic.ml/api/declarations_types/", {
+        .get("https://www.madina-tic.ml/api/declarations_types/", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,

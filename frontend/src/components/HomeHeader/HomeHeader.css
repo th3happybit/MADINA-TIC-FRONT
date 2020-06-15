@@ -30,6 +30,28 @@
   margin : 0 0 0 0.5em;
 }
 
+._home_header ._sidebar_list span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+._home_header ._sidebar_list span p {
+  margin-left: 10px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+._home_header.rtl ._sidebar_list span {
+  flex-direction: row-reverse;
+}
+
+._home_header.rtl ._sidebar_list span p {
+  margin-right: 10px;
+  font-family: "Cairo", sans-serif;
+}
+
 ._home_header div.item {
   padding : 10px 0.785714rem !important;
 }
