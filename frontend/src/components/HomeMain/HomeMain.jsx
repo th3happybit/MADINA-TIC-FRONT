@@ -4,6 +4,8 @@ import { Image, Label } from "semantic-ui-react";
 import "./HomeMain.css";
 import iphone from "../../assets/images/iPhone_screenshot.png";
 import iphone2 from "../../assets/images/home_screenshot.png";
+import iphone2Ar from "../../assets/images/iphoneAr.png";
+import iphoneAr from "../../assets/images/iphone2Ar.png";
 import galaxy from "../../assets/images/android_screenshot.png";
 import badge from "../../assets/images/google_play_badge.png";
 import { ReactComponent as Checkmark } from "../../assets/icons/check_circle.svg";
@@ -20,6 +22,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
+import { languages } from "../../language";
 // ..
 const HomeMain = (props) => {
   const { language } = props;
@@ -159,7 +162,7 @@ const HomeMain = (props) => {
             </Link>
           </div>
           <div className="_image_area">
-            <Image src={iphone2} className="_screenshot" />
+            <Image src={language.isFrench ? iphone2 : iphone2Ar} className="_screenshot" />
           </div>
         </div>
       </section>
@@ -202,7 +205,7 @@ const HomeMain = (props) => {
         <h1>{language.isFrench ? "fonctionnalités" : "المزايا و الخصائص"}</h1>
         <div className="_functions_body">
           <div className="_image_area">
-            <Image src={iphone} className="_screenshot" />
+            <Image src={language.isFrench ? iphone : iphoneAr} className="_screenshot" />
           </div>
           <div className="_items">
             {items.map((element) => {

@@ -120,7 +120,7 @@ const ComplementDeclaration = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/documents/",
+          url: "https://www.madina-tic.ml/api/documents/",
           method: "post",
           data: formData,
         })
@@ -144,7 +144,7 @@ const ComplementDeclaration = (props) => {
   const deleteFiles = () => {
     delP.map((elm) => {
       axios
-        .delete(`http://157.230.19.233/api/documents/${elm}`, {
+        .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
           headers: {
             "Content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
