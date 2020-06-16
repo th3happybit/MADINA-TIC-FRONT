@@ -1,5 +1,7 @@
-import React from "react";
-import { Image, Label } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import { Image, Label, Form } from "semantic-ui-react";
+
+import validateEmail from "../../methods/ValidationEmail.js";
 
 import "./HomeMain.css";
 import iphone from "../../assets/images/iPhone_screenshot.png";
@@ -17,19 +19,128 @@ import { ReactComponent as Done } from "../../assets/icons/Home/done.svg";
 import { ReactComponent as Location } from "../../assets/icons/Home/location.svg";
 import { ReactComponent as Camera } from "../../assets/icons/Home/add_image.svg";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
-import { languages } from "../../language";
+import { lang } from "moment";
+import { SemanticToastContainer, toast } from "react-semantic-toasts";
 // ..
 const HomeMain = (props) => {
   const { language } = props;
   const [users, setUsers] = useState(null);
   const [decl, setDecl] = useState(null);
   const [treatedDec, settreatedDec] = useState(null);
+  const [Firstname, setFirstName] = useState("");
+  const [fnameErr, setFnameErr] = useState(false);
+  const [Lastname, setLastName] = useState("");
+  const [lnameErr, setLnameErr] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailErr, setemailErr] = useState(false);
+  const [subject, setSubject] = useState("");
+  const [subjectErr, setSubjectErr] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageErr, setMessageErr] = useState(false);
+
+  const handle_change = (e, { value }) => {
+    switch (e.currentTarget.attributes.id.value) {
+      case "email":
+        setemailErr(false);
+        setEmail(value);
+        break;
+      case "subject":
+        setSubjectErr(false);
+        setSubject(value);
+        break;
+      case "message":
+        setMessageErr(false);
+        setMessage(value);
+        break;
+      case "fname":
+        setFnameErr(false);
+        setFirstName(value);
+        break;
+      case "lname":
+        setLnameErr(false);
+        setLastName(value);
+        break;
+      default:
+        break;
+    }
+  };
+
   AOS.init();
+  const validation = () => {
+    let err = false;
+    setemailErr(false);
+    setFnameErr(false);
+    setLnameErr(false);
+    setMessageErr(false);
+    setSubjectErr(false);
+    if (email.length < 1) {
+      setemailErr(true);
+      err = true;
+    }
+    if (Firstname.length < 5) {
+      setFnameErr(true);
+      err = true;
+    }
+    if (Lastname.length < 5) {
+      setLnameErr(true);
+      err = true;
+    }
+    if (subject.length < 5) {
+      setSubjectErr(true);
+      err = true;
+    }
+    if (message.length < 10) {
+      setMessageErr(true);
+      err = true;
+    }
+    if (!err) sendFeedback()
+  };
+  const sendFeedback = () => {
+    axios
+      .create({
+        headers: {
+          post: {
+            "Content-Type": "application/json",
+          },
+        },
+      })
+      .request({
+        url: "https://www.madina-tic.ml/api/create-feedbacks/",
+        method: "post",
+        data: {
+          sender_first_name: Firstname,
+          sender_last_name: Lastname,
+          sender_email: email,
+          subject: subject,
+          message: message,
+        },
+      })
+      .then((res) => {
+        toast({
+          type: "success",
+          title: language.isFrench ? "Message envoyé !" : "تم الإرسال !",
+          description: language.isFrench
+            ? "Merci sur votre commentaire !"
+            : "شكرا لك على إرسال هذه الرسالة !",
+          animation: language.isFrench ? "fade right" : "fade left",
+          time: 3000,
+        });
+      })
+      .catch((err) => {
+        toast({
+          type: "error",
+          title: language.isFrench ? "Message non envoyé" : "فشل الإرسال",
+          description: language.isFrench
+            ? "Un erreur s'est produit"
+            : "حدث خطأ ما",
+          animation: language.isFrench ? "fade right" : "fade left",
+          time: 3000,
+        });
+      });
+  };
 
   function sum(tuple, feat) {
     var ret = 0;
@@ -71,12 +182,12 @@ const HomeMain = (props) => {
       .then((res) => {
         setUsers(res.data.all_users);
       });
-  });
+  }, []);
 
   const items = [
     {
       comp: LaptopPhone,
-      head: language.isFrench ? "Accessible partout" : "استخدام",
+      head: language.isFrench ? "Accessible partout" : "استخدام سهل",
       text: language.isFrench
         ? "Depuis votre PC, smartphone ou tablette."
         : "من حاسوبك، هاتفك الذكي أو جهازك اللوحي",
@@ -132,13 +243,24 @@ const HomeMain = (props) => {
       : "يتم إشعاركم بعد التأكد من إتمام العمل",
   ];
   const footerItems = [
-    { text: language.isFrench ? "ACCUEIl" : "الصفحة الرئيسية", link: "#" },
-    { text: language.isFrench ? "Déclarations" : "التصريحات", link: "/declarations" },
-    { text: language.isFrench ? "Contact" : "تواصل معنا", link: "#" },
+    { text: language.isFrench ? "ACCUEIl" : "الصفحة الرئيسية", link: "/" },
+    {
+      text: language.isFrench ? "Déclarations" : "التصريحات",
+      link: "/declaration",
+    },
+    {
+      text: language.isFrench ? "Sinscrire" : "أنشئ حسابا",
+      link: "/signup",
+    },
+    {
+      text: language.isFrench ? "se connecter" : "تسجيل الدخول",
+      link: "/login",
+    },
   ];
 
   return (
     <div className={`_home_main ${language.isFrench ? "" : "rtl"}`}>
+      <SemanticToastContainer className="_container_notif" />
       <section id="home" className="_intro">
         <div className="content">
           <div className="_text_area">
@@ -162,7 +284,10 @@ const HomeMain = (props) => {
             </Link>
           </div>
           <div className="_image_area">
-            <Image src={language.isFrench ? iphone2 : iphone2Ar} className="_screenshot" />
+            <Image
+              src={language.isFrench ? iphone2 : iphone2Ar}
+              className="_screenshot"
+            />
           </div>
         </div>
       </section>
@@ -205,7 +330,10 @@ const HomeMain = (props) => {
         <h1>{language.isFrench ? "fonctionnalités" : "المزايا و الخصائص"}</h1>
         <div className="_functions_body">
           <div className="_image_area">
-            <Image src={language.isFrench ? iphone : iphoneAr} className="_screenshot" />
+            <Image
+              src={language.isFrench ? iphone : iphoneAr}
+              className="_screenshot"
+            />
           </div>
           <div className="_items">
             {items.map((element) => {
@@ -262,21 +390,82 @@ const HomeMain = (props) => {
         <Image data-aos="zoom-in" data-aos-duration="1000" src={badge} />
       </section>
       <footer className="footer_area">
-        <h1>{language.isFrench ? "MADINA-TIC" : "مدينة تيك"}</h1>
-        <div className="_menu">
-          {footerItems.map((element) => {
-            return (
-              <Link to={element.link}>
-                <p>{element.text}</p>
-              </Link>
-            );
-          })}
+        <div className="_top">
+          <div className="_links">
+            <h1>{language.isFrench ? "MADINA-TIC" : "مدينة تيك"}</h1>
+            <div className="_menu">
+              {footerItems.map((element) => {
+                return (
+                  <Link to={element.link}>
+                    <p>{element.text}</p>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          <div className="_contact">
+            <h1>{language.isFrench ? "Contact" : "تواصل معنا"}</h1>
+            <Form
+              widths={"equal"}
+              error={
+                messageErr || subjectErr || fnameErr || lnameErr || emailErr
+              }
+            >
+              <Form.Group>
+                <Form.Input
+                  onChange={handle_change}
+                  id="fname"
+                  placeholder={language.isFrench ? "Prénom ..." : "الإسم ..."}
+                  error={fnameErr}
+                />
+                <Form.Input
+                  onChange={handle_change}
+                  id="lname"
+                  placeholder={language.isFrench ? "Nom ..." : "اللقب ..."}
+                  error={lnameErr}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Input
+                  onChange={handle_change}
+                  id="email"
+                  placeholder={
+                    language.isFrench ? "Email ..." : "البريد الإلكتروني ..."
+                  }
+                  error={emailErr}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Input
+                  onChange={handle_change}
+                  id="subject"
+                  placeholder={language.isFrench ? "Sujet ..." : "الموضوع ..."}
+                  error={subjectErr}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.TextArea
+                  onChange={handle_change}
+                  id="message"
+                  placeholder={
+                    language.isFrench ? "Message ..." : "الرسالة ..."
+                  }
+                  error={messageErr}
+                />
+              </Form.Group>
+              <div className="_send_button pointer slide" onClick={validation}>
+                {language.isFrench ? "Envoyer" : "أرسل"}
+              </div>
+            </Form>
+          </div>
         </div>
-        {language.isFrench ? (
-          <h3>&copy; 2020 MADINA-TIC, Tous les droits réservés</h3>
-        ) : (
-          <h3>&copy; 2020 مدينة تيك، كل الحقوق محفوظة</h3>
-        )}
+        <div className="_bottom">
+          {language.isFrench ? (
+            <h3>&copy; 2020 MADINA-TIC, Tous les droits réservés</h3>
+          ) : (
+            <h3>&copy; 2020 مدينة تيك، كل الحقوق محفوظة</h3>
+          )}
+        </div>
       </footer>
     </div>
   );
