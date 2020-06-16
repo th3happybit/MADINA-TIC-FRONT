@@ -3,6 +3,10 @@
   left: -250px;
 }
 
+._sidebar.citoyen ._sidebar_list {
+  height: 450px !important;
+}
+
 ._citoyen_header.dark .toggle_citoyen line {
   stroke: var(--secondary_text_dark);
 }
@@ -12,7 +16,7 @@
   color: var(--primary_text_dark);
 }
 
-._sidebar.citoyen.dark.dark .item a {
+._sidebar.citoyen.dark .item a {
   color: var(--primary_text_dark) !important;
 }
 
@@ -54,4 +58,20 @@
 ._sidebar.citoyen.rtl p {
   font-family: "Cairo", sans-serif;
   font-weight: 600;
+}
+
+._sidebar_list ._dark_trigger {
+  width: 100%;
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between;
+  text-transform: uppercase;
+  align-items: center;
+}
+
+._sidebar_list.rtl ._dark_trigger {
+  flex-direction: row-reverse;
 }

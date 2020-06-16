@@ -356,7 +356,7 @@ const MaireAnnonce = (props) => {
         ) : (
           perm && (
             <p class="zero-data">
-              Sorry No Announcements to display in this section
+              Désolé, aucun informations à afficher ici
             </p>
           )
         )}

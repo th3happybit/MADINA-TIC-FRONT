@@ -133,7 +133,7 @@ const PasswordForm = (props) => {
 
     if (errors.length > 0) {
       seterror(true);
-      seterrMessage(errors[0].error);
+      seterrMessage(isFrench ? errors[0].error : errors[0].errorAr);
       setIsLoading(false);
       reset();
     } else {

@@ -85,7 +85,6 @@ const ServiceDeclaration = (props) => {
           }
           if (res.data.count === 0) {
             setPerm(true);
-            //   setAllow(true);
             setsearchLoading(false);
           }
           setLoading(false);
@@ -136,7 +135,7 @@ const ServiceDeclaration = (props) => {
     <div className="_service_declarations">
       <div className="_main_header">
         <div className="title_segment">
-          <p className="extra-text text-default">Declarations</p>
+          <p className="extra-text text-default">Déclarations</p>
         </div>
       </div>
       <Segment
@@ -215,7 +214,7 @@ const ServiceDeclaration = (props) => {
         ) : (
           perm && (
             <p class="zero-data">
-              Sorry No declarations to display in this section
+              Désolé, aucun informations à afficher ici
             </p>
           )
         )}

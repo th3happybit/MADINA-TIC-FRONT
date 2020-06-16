@@ -119,7 +119,7 @@ export default function RowNewAccounts(props) {
             className="button_primary btn_account_detail pointer"
             onClick={() => setOpen(true)}
           >
-            Compte Details
+            Détails
           </Button>
         </Table.Cell>
       </Table.Row>
@@ -128,17 +128,17 @@ export default function RowNewAccounts(props) {
           <Modal.Content className="detail_content">
             {" "}
             <div className="_header_modal extra-text text-default">
-              <p>Account Details</p>
+              <p>Informations du compte</p>
             </div>
             <div className="_content_modal">
               <div>
                 {first_name && <p>Nom</p>}
                 {last_name && <p>Prénom</p>}
                 <p>Email</p>
-                <p>Numero telephone</p>
+                <p>Numéro de téléphone</p>
                 <p>Adresse</p>
                 <p>Rôle</p>
-                <p>Date inscription</p>
+                <p>Date d'inscription</p>
               </div>
               <div
                 style={{

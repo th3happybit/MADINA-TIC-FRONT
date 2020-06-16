@@ -27,8 +27,7 @@ const SidebarCitoyenMobile = (props) => {
         localStorage.clear();
         return history.push("/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   return (
     <div
@@ -99,6 +98,10 @@ const SidebarCitoyenMobile = (props) => {
           >
             {props.isFrench ? "Compte" : "الحساب"}
           </Link>
+        </List.Item>
+        <List.Item className="_dark_trigger">
+          <p>{props.isFrench ? "Mode Sombre" : "الوضع المظلم"}</p>
+          <Radio toggle checked={props.isDark} onClick={props.change_mode} />
         </List.Item>
       </List>
       <div className="_logout_header _margin_vertical_sm">

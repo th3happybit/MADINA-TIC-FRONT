@@ -39,8 +39,7 @@ const ModalD = (props) => {
         .then((res) => {
           if (index === children.length - 1) props.refresh();
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     });
   };
 
@@ -66,8 +65,7 @@ const ModalD = (props) => {
         if (children.length > 0) TreatChildren();
         else refresh();
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
 
   const handleopen = () => {
@@ -136,7 +134,7 @@ const ModalD = (props) => {
         <>
           <Button.Group onClick={handleopen} className="infos_button">
             <Popup
-              content="More Infos"
+              content="Plus d'infos"
               trigger={
                 <Button
                   icon
@@ -151,7 +149,7 @@ const ModalD = (props) => {
             onClick={handleopen}
             color="blue"
             className="shadow mobile_button _primary _hide_on_desktop"
-            content="More details"
+            content="Plus d'infos"
           />
         </>
       }
@@ -160,17 +158,17 @@ const ModalD = (props) => {
         <Modal.Content className="detail_content">
           {" "}
           <div className="_header_modal extra-text text-default">
-            <p>Declaration Details</p>
+            <p>Détails du déclaration</p>
           </div>
           <div className="_content_modal">
             <div>
-              <p>Title</p>
-              <p>Address</p>
-              <p>Added at</p>
-              <p>Validated at</p>
+              <p>Titre</p>
+              <p>Addresse</p>
+              <p>Ajoutée le</p>
+              <p>Validée le</p>
               <p>Status</p>
-              <p>Pritority</p>
-              <p>Description</p>
+              <p>Priorité</p>
+              <p>Déscription</p>
               {attachements.length > 0 && <p className="_image">Images</p>}
             </div>
             <div className="_infos_section">
@@ -215,16 +213,16 @@ const ModalD = (props) => {
             </div>
           </div>
         </Modal.Content>
-        {status === "Validated" && (
+        {status === "Validée" && (
           <Modal.Content
             style={{ "margin-top": "20px" }}
             className="content_modal_btns"
           >
             <ConfirmModal
               modal
-              button={{ color: "blue", text: "Validate", icon: "checkmark" }}
-              title="Confirm Action"
-              text="Confirm changing declaration status to In Progress ? "
+              button={{ color: "blue", text: "Valider", icon: "checkmark" }}
+              title="Confirmer l'action"
+              text="Voulez vous marquer cette déclartion tant que 'En cours' ?"
               OnConfirm={TreatDeclaration}
             />{" "}
           </Modal.Content>

@@ -18,18 +18,15 @@ const validateNationalID = (nid) => {
 
 const checkDate = (date) => {
   let dt = new Date();
-  if (dt.getFullYear() - date.slice(0, 4) > 18)
-    return true;
+  if (dt.getFullYear() - date.slice(0, 4) > 18) return true;
   else if (dt.getFullYear() - date.slice(0, 4) === 18)
-    if (dt.getMonth() - date.slice(6, 8) > 0)
-      return true
-    else if (dt.getMonth() - date.slice(6, 8) === 0)
-      if (dt.getDay() - date.slice(8, 10) > 0)
-        return true
+    if (dt.getMonth()+1 - date.slice(5, 7) > 0) return true;
+    else if (dt.getMonth()+1 - date.slice(5, 7) === 0)
+      if (dt.getDate() - date.slice(8, 10) >= 0) return true;
       else return false;
-    else return false
+    else return false;
   else return false;
-}
+};
 
 const ValidateDataUpdateProfile = (data) => {
   const {
@@ -40,6 +37,7 @@ const ValidateDataUpdateProfile = (data) => {
     address,
     phone,
     national_id,
+    service,
   } = data;
 
   let errors = [];
@@ -48,35 +46,47 @@ const ValidateDataUpdateProfile = (data) => {
     address.length > 0 &&
     first_name.length > 0 &&
     email.length > 0 &&
-    birthday.length > 0 &&
     phone.length > 0 &&
     last_name.length > 0
   ) {
     if (first_name.length > 30) {
       errors.push({
         id: "first_name",
-        error: "First Name is too long",
+        error: "Le prénom et trop long",
+        errorAr: "الإسم طويل جدا",
       });
     }
 
-    if (!checkDate(birthday))
-      errors.push({
-        id : "birthday",
-        error : "You must be above 18"
-      })
+    if (!service) {
+      if (birthday.length === 0) {
+        errors.push({
+          id: "Required fields",
+          error: "Assurez de remplir les champs nécessaires s'il vous plaît",
+          errorAr: "تحقق من ملئ جميع المعلومات اللازمة من فضلك",
+        });
+      }
+      if (!checkDate(birthday))
+        errors.push({
+          id: "birthday",
+          error: "Ton age doit être plus de 18 ans",
+          errorAr: "يجب أن يكون عمرك أكبر من 18 سنة",
+        });
+    }
 
-    if (last_name.length > 150) {
+    if (last_name.length > 50) {
       errors.push({
         id: "last_name",
-        error: "Last Name is too long",
+        error: "Le nom et trop long",
+        errorAr: "اللقب طويل جدا",
       });
     }
 
-    if (email.length > 5) {
+    if (email.length > 7) {
       if (!validateEmail(email)) {
         errors.push({
           id: "email",
-          error: "Please, Enter a valid email address",
+          error: "Entrez une addresse email valide s'il vous plaît",
+          errorAr: "تحقق من صحة البريد الإلكتروني",
         });
       }
     }
@@ -85,7 +95,8 @@ const ValidateDataUpdateProfile = (data) => {
       if (!checkPhoneNumber(phone)) {
         errors.push({
           id: "phone",
-          error: "Please, enter a valid phone number",
+          error: "Entrez un numéro de téléphone valide s'il vous plaît",
+          errorAr: "تحقق من صحة رقم الهاتف",
         });
       }
     }
@@ -93,7 +104,8 @@ const ValidateDataUpdateProfile = (data) => {
     if (address.length > 80) {
       errors.push({
         id: "address",
-        error: "Address is too long",
+        error: "L'addresse est trop longue",
+        errorAr: "العنوان طويل جدا",
       });
     }
 
@@ -101,14 +113,16 @@ const ValidateDataUpdateProfile = (data) => {
       if (!validateNationalID(national_id) || national_id.length > 10) {
         errors.push({
           id: "national_id",
-          error: "Please, enter a valid national id",
+          error: "Entrez un numéro national valide",
+          errorAr: "تحقق من صحة رقم التعريف الوطني",
         });
       }
     }
   } else {
     errors.push({
       id: "Required fields",
-      error: "Make sure to fill all the required fields",
+      error: "Assurez de remplir les champs nécessaires s'il vous plaît",
+      errorAr: "تحقق من ملئ جميع المعلومات اللازمة من فضلك",
     });
   }
 

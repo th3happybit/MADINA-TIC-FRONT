@@ -34,29 +34,29 @@ const MaireDeclarationTable = (props) => {
   function getMonth(month) {
     switch (month) {
       case "01":
-        return "January";
+        return "Janvier";
       case "02":
-        return "February";
+        return "Février";
       case "03":
-        return "March";
+        return "Mars";
       case "04":
-        return "April";
+        return "Avril";
       case "05":
-        return "May";
+        return "Mai";
       case "06":
-        return "June";
+        return "Juin";
       case "07":
-        return "July";
+        return "Juillet";
       case "08":
-        return "August";
+        return "Août";
       case "09":
-        return "September";
+        return "Septembre";
       case "10":
-        return "October";
+        return "Octobre";
       case "11":
-        return "November";
+        return "Novembre";
       case "12":
-        return "December";
+        return "Decembre";
       default:
         break;
     }
@@ -65,31 +65,31 @@ const MaireDeclarationTable = (props) => {
     var ret = { status: "", color: "" };
     switch (st) {
       case "not_validated":
-        ret["status"] = "Not Validated";
+        ret["status"] = "Non validée";
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
-        ret["status"] = "Lack of infos";
+        ret["status"] = "Manque d'informations";
         ret["color"] = "orange";
         return ret;
       case "validated":
-        ret["status"] = "Validated";
+        ret["status"] = "Validée";
         ret["color"] = "green";
         return ret;
       case "refused":
-        ret["status"] = "Refused";
+        ret["status"] = "Refusée";
         ret["color"] = "red";
         return ret;
       case "under_treatment":
-        ret["status"] = "In progress";
+        ret["status"] = "En cours";
         ret["color"] = "yellow";
         return ret;
       case "treated":
-        ret["status"] = "Treated";
+        ret["status"] = "Traitée";
         ret["color"] = "green";
         return ret;
       case "archived":
-        ret["status"] = "Archived";
+        ret["status"] = "Archivée";
         ret["color"] = "black";
         return ret;
       default:
@@ -104,9 +104,9 @@ const MaireDeclarationTable = (props) => {
         <Table.HeaderCell content="Nom citoyen" width={2} />
         <Table.HeaderCell width={2} content="Titre"></Table.HeaderCell>
         <Table.HeaderCell content="Adresse" width={3} className="_hide" />
-        <Table.HeaderCell content="Soumis le" width={2}>
+        <Table.HeaderCell width={2}>
           <p onClick={props.handlesortDate} className="sort_field pointer">
-            Ajouté le
+            Ajoutée le
             {props.sortdate ? (
               <Icon name={props.sortdate === "asc" ? "sort up" : "sort down"} />
             ) : (

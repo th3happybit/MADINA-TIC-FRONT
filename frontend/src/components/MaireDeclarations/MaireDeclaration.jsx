@@ -29,7 +29,7 @@ const MaireDeclarations = (props) => {
   const [term, setTerm] = useState(null);
   const [searchLoading, setsearchLoading] = useState(false);
   const [sortDate, setsortDate] = useState(null);
-  const [sortMobile, setsortMobile] = useState("Random");
+  const [sortMobile, setsortMobile] = useState("Aléatoire");
   const [types, settypes] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [open, setOpen] = useState(false);
@@ -67,17 +67,17 @@ const MaireDeclarations = (props) => {
   };
   const handlesortRandom = () => {
     setsortDate(null);
-    setsortMobile("Random");
+    setsortMobile("Aléatoire");
     setPage(1);
   };
   const handlesortOldFirst = () => {
     setsortDate("asc");
-    setsortMobile("Old first");
+    setsortMobile("Date (desc)");
     setPage(1);
   };
   const handlesortNewFirst = () => {
     setsortDate("desc");
-    setsortMobile("Newer first");
+    setsortMobile("Date (asc)");
     setPage(1);
   };
   const handle_sort_date = () => {
