@@ -68,8 +68,7 @@ const HomeCitoyen = (props) => {
         }
         setLoading(false);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
     getTypes();
     setFilter(filter);
   };
@@ -95,7 +94,7 @@ const HomeCitoyen = (props) => {
     var ret = { status: "", color: "" };
     switch (st) {
       case "not_validated":
-        ret["status"] = language.isFrench ? "Pas validée" : "تصريح جديد";
+        ret["status"] = language.isFrench ? "Non validée" : "تصريح جديد";
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
@@ -113,19 +112,19 @@ const HomeCitoyen = (props) => {
         ret["color"] = "red";
         return ret;
       case "under_treatment":
-        ret["status"] = language.isFrench ? "In progress" : "في تقدم";
+        ret["status"] = language.isFrench ? "En cours" : "في تقدم";
         ret["color"] = "yellow";
         return ret;
       case "treated":
-        ret["status"] = language.isFrench ? "Treated" : "معالجة";
+        ret["status"] = language.isFrench ? "Traité" : "معالجة";
         ret["color"] = "pink";
         return ret;
       case "archived":
-        ret["status"] = language.isFrench ? "Archived" : "مؤرشفة";
+        ret["status"] = language.isFrench ? "Archivé" : "مؤرشفة";
         ret["color"] = "black";
         return ret;
       case "draft":
-        ret["status"] = language.isFrench ? "Draft" : "مسودة";
+        ret["status"] = language.isFrench ? "Brouillon" : "مسودة";
         ret["color"] = "gray";
         return ret;
       default:
