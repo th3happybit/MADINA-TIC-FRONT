@@ -184,13 +184,13 @@ const AdminEditProfile = (props) => {
         <Menu pointing secondary>
           <Menu.Item
             data-name="info"
-            name="Update Infos"
+            name="Mettre à jour les informations"
             active={activeItem === "info"}
             onClick={handleItemClick}
           />
           <Menu.Item
             data-name="password"
-            name="Update Password"
+            name="Mettre à jour le mot de passe"
             active={activeItem === "password"}
             onClick={handleItemClick}
           />
@@ -223,20 +223,20 @@ const AdminEditProfile = (props) => {
           {isShow && (
             <div className="_button_edit_profile">
               <Button className="button_secondary " onClick={handleEditShowing}>
-                Cancel
+                Annuler
               </Button>
               <Button
                 loading={isLoading}
                 className="button_primary"
                 onClick={handleUpdate}
               >
-                Save
+                Confirmer
               </Button>
             </div>
           )}
           {!isShow && (
             <div className="_button_edit_profile" onClick={handleEditShowing}>
-              <Button className="button_primary ">Edit</Button>
+              <Button className="button_primary ">Editer</Button>
             </div>
           )}
         </div>

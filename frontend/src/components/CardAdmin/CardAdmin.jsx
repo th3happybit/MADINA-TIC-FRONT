@@ -209,19 +209,19 @@ const CardAdmin = (props) => {
           </div>
           <div className={upload ? "save_img" : "save_img hide"}>
             <Button className="button_primary" onClick={uploadImageHandler}>
-              Upload
+              Télecharger
             </Button>
           </div>
           <div className={isEdit ? "_buttons_mobile " : "_buttons_mobile hide"}>
             <Button className="secondary" onClick={handleEdit}>
-              Cancel
+              Annuler
             </Button>
             <Button
               loading={isLoading}
               className="primary"
               onClick={handleUpdate}
             >
-              Done
+              Confirmer
             </Button>
           </div>
           <div
@@ -265,14 +265,14 @@ const CardAdmin = (props) => {
                   id="first_name"
                   value={first_name}
                   onChange={handleInputChange}
-                  placeholder="first name"
+                  placeholder="Nom"
                 />
                 <Input
                   className="_profile_input_admin_mobile"
                   type="text"
                   value={last_name}
                   id="last_name"
-                  placeholder="last name"
+                  placeholder="Prenom"
                   onChange={handleInputChange}
                 />
               </>
@@ -294,7 +294,8 @@ const CardAdmin = (props) => {
                   <div className="col">
                     <span className="small">
                       {" "}
-                      <Icon name="birthday" className="icon_card" /> Birthday
+                      <Icon name="birthday" className="icon_card" />{" "}
+                      Anniversaire
                     </span>
                     <p className=" small">
                       {data_user ? data_user.date_of_birth : ""}
@@ -306,7 +307,7 @@ const CardAdmin = (props) => {
                     <span className=" small">
                       {" "}
                       <Icon name="location arrow" className="icon_card" />{" "}
-                      Address
+                      Adresse
                     </span>
                     <p className="small">{data_user.address}</p>
                   </div>
@@ -315,7 +316,7 @@ const CardAdmin = (props) => {
                   <div className="col">
                     <span className="small">
                       {" "}
-                      <Icon name="phone" className="icon_card" /> Phone
+                      <Icon name="phone" className="icon_card" /> Numero
                     </span>
                     <p className="small">{data_user.phone}</p>
                   </div>
