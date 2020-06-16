@@ -1,16 +1,14 @@
 ._container_declaration_info {
-  height: 100% !important;
-  min-height: 550px !important;
-  margin-left: 16rem !important;
-  margin-right: 3rem !important;
-  top: 5rem !important;
-  padding: 70px !important;
+  margin-left: auto !important;
+  margin-top: 1rem !important;
+  margin-right: auto !important;
+  padding: 1rem !important;
 }
 ._container_declaration_info.dark {
   background-color: var(--second_dark) !important;
 }
 
-._container_declaration_info.dark.loading::before{
+._container_declaration_info.dark.loading::before {
   background-color: var(--loading_dark) !important;
 }
 
@@ -90,6 +88,7 @@
   padding: 15px 0 !important;
   font-size: large;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 100%;
 }
@@ -122,11 +121,6 @@
     margin-right: 10px;
     margin-bottom: 20px;
   }
-
-  .ui.small.image img {
-    width: 110px;
-    height: 110px;
-  }
 }
 
 @media (max-width: 930px) {
@@ -135,20 +129,22 @@
     flex-direction: column !important;
     width: 100% !important;
   }
-  
+  ._row2 .image {
+    width: 160px !important;
+    height: 140px !important;
+    margin: 0 !important;
+  }
   ._container_declaration_info.rtl {
     margin-right: 3rem !important;
   }
 
-  .ui.small.image {
+  ._container_declaration_info .ui.small.image {
     justify-content: flex-start !important;
   }
-
-  .ui.small.image img {
-    width: 100px;
-    height: 100px;
+  .action_button.delete_button {
+    width: 60% !important;
+    margin: 0 !important;
   }
-
   ._row1 {
     width: 100% !important;
   }

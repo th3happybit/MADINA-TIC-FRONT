@@ -10,6 +10,7 @@ import iphone2Ar from "../../assets/images/iphoneAr.png";
 import iphoneAr from "../../assets/images/iphone2Ar.png";
 import galaxy from "../../assets/images/android_screenshot.png";
 import badge from "../../assets/images/google_play_badge.png";
+import HeroImg from "../../assets/images/hero_img.png";
 import { ReactComponent as Checkmark } from "../../assets/icons/check_circle.svg";
 import { ReactComponent as Users } from "../../assets/icons/group.svg";
 import { ReactComponent as Announce } from "../../assets/icons/annonce_icon.svg";
@@ -96,7 +97,7 @@ const HomeMain = (props) => {
       setMessageErr(true);
       err = true;
     }
-    if (!err) sendFeedback()
+    if (!err) sendFeedback();
   };
   const sendFeedback = () => {
     axios
