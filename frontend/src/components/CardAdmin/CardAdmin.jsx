@@ -321,7 +321,12 @@ const CardAdmin = (props) => {
                   </div>
                 )}
               </div>
-              <div className="social_media_profile">
+              <div
+                className="social_media_profile"
+                style={{
+                  visibility: "hidden",
+                }}
+              >
                 <Icon
                   name="facebook f"
                   size="big"
