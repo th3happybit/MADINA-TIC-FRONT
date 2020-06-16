@@ -6,6 +6,7 @@ import "./CitoyenPasswordForm.css";
 import { languages } from "../../language.js";
 
 const PasswordForm = (props) => {
+  const { isFrench } = props;
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
     isPassword: true,
@@ -255,9 +256,7 @@ const PasswordForm = (props) => {
               disabled={isLoading}
               onClick={handleedit}
             >
-
               {isFrench ? "Cancel" : "إلغاء"}
-
             </Button>
 
             <Button
@@ -266,9 +265,7 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-
-              {isFrench ? "Confirmer" :"حفظ"}
-
+              {isFrench ? "Confirmer" : "حفظ"}
             </Button>
           </div>
         ) : (
@@ -279,9 +276,7 @@ const PasswordForm = (props) => {
               loading={isLoading}
               className="button_primary"
             >
-
               {isFrench ? "Éditer" : "تعديل"}
-
             </Button>
           </div>
         )}

@@ -41,7 +41,7 @@ const TableNewAccounts = (props) => {
                     .catch((err) => {});
                 }}
               >
-                Fullname
+                Nom complet
               </Table.HeaderCell>
               <Table.HeaderCell
                 width={3}
@@ -53,7 +53,7 @@ const TableNewAccounts = (props) => {
                 width={3}
                 className="medium-text text-default not-bold element_hide_mobile address"
               >
-                Address
+                Adresse
               </Table.HeaderCell>
               <Table.HeaderCell
                 width={3}
@@ -65,7 +65,7 @@ const TableNewAccounts = (props) => {
                 width={3}
                 className="medium-text text-default not-bold"
               >
-                Manage
+                Gérer
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>
