@@ -99,8 +99,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setData(res.data.results);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
   };
   const { login, isDark } = props;
@@ -122,8 +121,7 @@ export default function CitoyenHeader(props) {
         localStorage.removeItem("token");
         return history.push("/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     setIsNotifated(props.seen);
@@ -162,8 +160,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setIsNotifated(false);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
   };
   return (
@@ -175,7 +172,7 @@ export default function CitoyenHeader(props) {
           </div>
         )}
         <div className="_citoyen_header_logo">
-          <Link to ={login ? "/home" : "/"}>
+          <Link to={login ? "/home" : "/"}>
             <div className="_madinatic_logo">
               {isDark ? <Logo_dark /> : <Logo />}
               <p className="large-title text-active ">MADINA-TIC</p>
@@ -194,7 +191,7 @@ export default function CitoyenHeader(props) {
             )}
           </div>
           {!login && (
-            <div className="not_login_nav">
+            <div className={`not_login_nav ${props.isFrench ? "" : "ar"}`}>
               <a
                 href="/login"
                 style={{
@@ -202,12 +199,16 @@ export default function CitoyenHeader(props) {
                   color: "#f66a29",
                   fontWeight: "600",
                 }}
-                className="pointer "
+                className="pointer"
               >
-                S'identifier
+                {props.isFrench ? "S'identifier" : "تسجيل الدخول"}
               </a>
-              <Button href="/signup" as="a" className="login_cit ">
-                Créer un compte
+              <Button
+                href="/signup"
+                as="a"
+                className={`login_cit ${props.isFrench ? "" : "ar"}`}
+              >
+                {props.isFrench ? "Créer un compte" : "أنشئ حسابا"}
               </Button>
             </div>
           )}
