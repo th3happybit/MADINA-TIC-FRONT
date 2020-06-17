@@ -41,10 +41,12 @@ const SidebarCitoyenMobile = (props) => {
             }`
       }
     >
-      <div className="profile_citoyen_mobile_x">
-        <Image src={image} />
-        <p>{fullname}</p>
-      </div>
+      <Link to="/citoyen/profile">
+        <div className="profile_citoyen_mobile_x">
+          <Image src={image} />
+          <p style={{color : !isDark ? "black" : "var(--primary_text_dark)"}}>{fullname}</p>
+        </div>
+      </Link>
       <List className={`_sidebar_list ${props.isFrench ? "" : "rtl"}`}>
         <List.Item>
           <Link

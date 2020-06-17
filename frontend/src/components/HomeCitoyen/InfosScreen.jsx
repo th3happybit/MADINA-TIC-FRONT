@@ -108,7 +108,7 @@ const InfoScreen = (props) => {
     ret["color"] = "yellow";
     return ret;
    case "treated":
-    ret["status"] = "Treatée";
+    ret["status"] = "Traitée";
     ret["color"] = "pink";
     return ret;
    case "archived":
@@ -126,7 +126,7 @@ const InfoScreen = (props) => {
 
  return (
   <Segment loading={Loading} 
-  className={`bg-white _container_declaration_info ${
+  className={`bg-white _container_declaration screen ${
     props.isDark ? "dark" : ""
     } ${props.language.isFrench ? "" : "rtl"}`}>
    {id ? (

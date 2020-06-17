@@ -320,8 +320,6 @@ const HomeMain = (props) => {
           </div>
           <div className="_stat_field">
             <Checkmark height="56" />
-            {console.log(treatedDec)}
-            {console.log(decl)}
             {isData && (
               <p>{`${treatedDec} ${
                 language.isFrench ? "Déclarations traitées" : "تصريح معالج"

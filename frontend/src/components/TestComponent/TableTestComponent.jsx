@@ -95,7 +95,6 @@ const TableTestComponent = (props) => {
     return str < 10 ? "0" + str : str;
   }
   function isActive(end_at) {
-    console.log(end_at)
     const date = new Date();
     const time = date.toLocaleTimeString();
     if (

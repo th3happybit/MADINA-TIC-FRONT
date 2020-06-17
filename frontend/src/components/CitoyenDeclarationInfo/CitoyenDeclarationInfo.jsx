@@ -247,8 +247,7 @@ const CitoyenDeclarationInfo = (props) => {
 
           <div className="_button1">
             {Data.status &&
-              (getStatus(Data.status).status === "Not Validated" ||
-                getStatus(Data.status).status === "Draft") && (
+              (Data.status === "not_validated" || Data.status === "draft") && (
                 <Link
                   to={{
                     pathname: "/update/declaration",
@@ -264,9 +263,14 @@ const CitoyenDeclarationInfo = (props) => {
                       <Icon name="pencil alternate" />
                     </Button.Content>
                   </Button>
+                  <Button
+                    className="action_button_mobile"
+                    icon={{ name: "pencil alternate" }}
+                    color="black"
+                  />
                 </Link>
               )}
-            {Data.status && getStatus(Data.status).status === "Refused" && (
+            {Data.status && Data.status === "refused" && (
               <Button animated color="yellow" className="action_button">
                 <Button.Content
                   visible
@@ -277,7 +281,7 @@ const CitoyenDeclarationInfo = (props) => {
                 </Button.Content>
               </Button>
             )}
-            {Data.status && getStatus(Data.status).status === "Lack of infos" && (
+            {Data.status && Data.status === "lack_of_info" && (
               <Link
                 to={{
                   pathname: "/complement/declaration",
@@ -293,9 +297,14 @@ const CitoyenDeclarationInfo = (props) => {
                     <Icon name="add" />
                   </Button.Content>
                 </Button>
+                <Button
+                  className="action_button_mobile"
+                  icon={{ name: "add" }}
+                  color="green"
+                />
               </Link>
             )}
-            {Data.status && getStatus(Data.status).status === "Draft" && (
+            {Data.status && Data.status === "draft" && (
               <>
                 <Button
                   animated
@@ -311,9 +320,15 @@ const CitoyenDeclarationInfo = (props) => {
                     <Icon name="paper plane alternate" />
                   </Button.Content>
                 </Button>
+                <Button
+                  className="action_button_mobile"
+                  icon={{ name: "paper plane alternate" }}
+                  color="yellow"
+                  onClick={() => UpdateState("not_validated")}
+                />
               </>
             )}
-            {Data.status && getStatus(Data.status).status === "Treated" && (
+            {Data.status && Data.status === "treated" && (
               <>
                 <Button
                   animated
@@ -328,6 +343,12 @@ const CitoyenDeclarationInfo = (props) => {
                   <Button.Content hidden icon>
                     <Icon name="archive" />
                   </Button.Content>
+                  <Button
+                    className="action_button_mobile"
+                    icon={{ name: "archive" }}
+                    color="black"
+                    onClick={() => UpdateState("archived")}
+                  />
                 </Button>
               </>
             )}
@@ -347,6 +368,13 @@ const CitoyenDeclarationInfo = (props) => {
                 <Icon name="times" />{" "}
               </Button.Content>
             </Button>
+
+            <Button
+              className="action_button_mobile"
+              icon={{ name: "times" }}
+              color="red"
+              onClick={deleteDecla}
+            />
           </div>
         </>
       ) : (
