@@ -29,7 +29,8 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.88.2",
     "slick-carousel": "^1.8.1",
-    "superagent": "^5.2.2"
+    "superagent": "^5.2.2",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -76,6 +76,7 @@ const Profile = (props) => {
             style={{
               display: "flex",
               justifyContent: "center",
+              "min-height" : "700px"
             }}
           >
             <Grid className="_profile">

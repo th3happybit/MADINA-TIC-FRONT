@@ -204,7 +204,7 @@ const Card = (props) => {
     formData.append("last_name", last_name);
     formData.append("email", email);
     formData.append("address", address);
-    formData.append("date_of_birth", birthday);
+    if (!service) formData.append("date_of_birth", birthday);
     formData.append("national_id", national_id);
     formData.append("phone", phone);
 
@@ -212,15 +212,26 @@ const Card = (props) => {
     if (success) setSuccess(null);
 
     if (activeItem === "info") {
-      var errorsPr = ValidateDataUpdateProfile({
-        first_name,
-        last_name,
-        email,
-        birthday,
-        address,
-        phone,
-        national_id,
-      });
+      var errorsPr = !service
+        ? ValidateDataUpdateProfile({
+            first_name,
+            last_name,
+            email,
+            birthday,
+            address,
+            phone,
+            national_id,
+          })
+        : ValidateDataUpdateProfile({
+            first_name,
+            last_name,
+            email,
+            birthday,
+            address,
+            phone,
+            national_id,
+            service,
+          });
 
       if (errorsPr.length > 0) {
         seterror(true);
@@ -342,7 +353,11 @@ const Card = (props) => {
 
   return (
     <>
-      <Segment loading={loading ? true : cardLoading} className="_card shadow">
+      <Segment
+        loading={loading ? true : cardLoading}
+        className="_card shadow"
+        style={{ height: "100%" }}
+      >
         {cit_infos && (
           <>
             <div
@@ -433,7 +448,7 @@ const Card = (props) => {
                 </div>
               )}
             </div>
-            <Divider horizontal>Informations sur le compte</Divider>
+            <Divider horizontal>Informations du compte</Divider>
             {!isEdit && (
               <>
                 <div className="row">
@@ -549,7 +564,7 @@ const Card = (props) => {
                       )}
                       <Message
                         error
-                        content="Veuillez faire sur pour saisir des données valides"
+                        content="Assurez de saisir des données valides s'il vous plaît"
                       />
                       <Message
                         success

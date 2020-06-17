@@ -17,9 +17,10 @@
   margin-top: auto;
   margin-bottom: auto;
 }
-.divider {
-  padding-top: 20px;
+._card .divider {
+  padding-top: 0px;
   width: 80%;
+  height: 0 !important;
 }
 
 ._card > ._profile_picture > .profile > .image {

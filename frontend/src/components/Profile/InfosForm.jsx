@@ -65,15 +65,25 @@ const InfosForm = (props) => {
     if (success) setSuccess(null);
     if (errorMessage) seterrorMessage(null);
 
-    const errors = ValidationDataUpdateProfile({
-      first_name,
-      last_name,
-      email,
-      birthday,
-      address,
-      phone,
-      national_id,
-    });
+    const errors = !service
+      ? ValidationDataUpdateProfile({
+          first_name,
+          last_name,
+          email,
+          birthday,
+          address,
+          phone,
+          national_id,
+        })
+      : ValidationDataUpdateProfile({
+          first_name,
+          last_name,
+          email,
+          address,
+          phone,
+          national_id,
+          service,
+        });
     if (errors.length > 0) {
       seterror(true);
       seterrorMessage(errors[0].error);
@@ -82,6 +92,24 @@ const InfosForm = (props) => {
     }
   };
   const UpdateInfosCitoyen = () => {
+    const data = service
+      ? {
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+          phone: phone,
+          address: address,
+          national_id: national_id,
+        }
+      : {
+          email: email,
+          first_name: first_name,
+          last_name: last_name,
+          phone: phone,
+          address: address,
+          national_id: national_id,
+          date_of_birth : birthday
+        };
     setIsLoading(true);
     axios
       .create({
@@ -95,15 +123,7 @@ const InfosForm = (props) => {
       .request({
         url: "https://www.madina-tic.ml/api/user/",
         method: "patch",
-        data: {
-          email: email,
-          first_name: first_name,
-          last_name: last_name,
-          phone: phone,
-          date_of_birth: birthday,
-          address: address,
-          national_id: national_id,
-        },
+        data: data,
       })
       .then((res) => {
         setSuccess(true);

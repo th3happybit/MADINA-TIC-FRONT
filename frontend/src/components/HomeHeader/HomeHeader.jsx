@@ -32,7 +32,6 @@ const HomeHeader = (props) => {
       link: "/declaration",
       text: language.isFrench ? "déclarations" : "التصريحات",
     },
-    { link: "#", text: language.isFrench ? "contact" : "تواصل معنا" },
     { link: "/signup", text: language.isFrench ? "s'inscrire" : "أنشئ حسابا" },
     {
       link: "/login",
@@ -183,11 +182,15 @@ const HomeHeader = (props) => {
             })}
             <span onClick={() => props.change_language(languages.arabe)}>
               <Radio checked={!language.isFrench} />
-              <p className="text-default">{language.isFrench ? "Arabe" : "العربية"}</p>
+              <p className="text-default">
+                {language.isFrench ? "Arabe" : "العربية"}
+              </p>
             </span>
             <span onClick={() => props.change_language(languages.french)}>
               <Radio checked={language.isFrench} />
-          <p className="text-default">{language.isFrench ? "Français" : "الفرنسية"}</p>
+              <p className="text-default">
+                {language.isFrench ? "Français" : "الفرنسية"}
+              </p>
             </span>
           </List>
         </div>

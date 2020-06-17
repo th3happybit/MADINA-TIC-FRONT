@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import "./AnnonceHome.css";
 import { Segment, Divider, Pagination, Image } from "semantic-ui-react";
-import { useEffect } from "react";
 import axios from "axios";
-import { useState } from "react";
 
 const AnnonceHome = (props) => {
   const [Data, setData] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(1);
+  const [allow, setAllow] = useState(false);
 
   function getMonth(month) {
     switch (month) {
@@ -95,6 +94,7 @@ const AnnonceHome = (props) => {
       ":" +
       date.getSeconds();
     setLoading(true);
+    setAllow(false);
     axios
       .get("https://www.madina-tic.ml/api/announce_nested/", {
         params: {
@@ -107,6 +107,7 @@ const AnnonceHome = (props) => {
       })
       .then((res) => {
         setData(res.data.results);
+        setAllow(true);
         setLoading(false);
         if (res.data.count % 10 === 0) {
           setCount(parseInt(res.data.count / 10));
@@ -114,8 +115,7 @@ const AnnonceHome = (props) => {
           setCount(parseInt(res.data.count / 10) + 1);
         }
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, [page]);
 
   return (
@@ -129,75 +129,87 @@ const AnnonceHome = (props) => {
         {props.isFrench ? "Annonces actives" : "الإعلانات النشطة"}
       </h3>
 
-      <div className="_tab_content">
-        <div className="_announces">
-          {Data.map((annonce, index) => {
-            return (
-              <div key={index} className="_annonce">
-                <h4 className="">{annonce.title}</h4>
-                <span
-                  style={{
-                    direction: props.isFrench ? "ltr" : "rtl",
-                  }}
-                >
-                  <p className="_title">
-                    {props.isFrench ? "Service :" : "المصلحة :"}{" "}
-                  </p>
-                  &nbsp;
-                  <p>
-                    {annonce.service.first_name +
-                      " " +
-                      annonce.service.last_name}
-                  </p>
-                </span>
-                <span>
-                  <p className="_title">{props.isFrench ? "De :" : "من :"} </p>
-                  &nbsp;
-                  <p>{TimeExtract(annonce.start_at)}</p>
-                </span>
-                <span>
-                  <p className="_title">{props.isFrench ? "À :" : "إلى :"} </p>
-                  &nbsp;
-                  <p>{TimeExtract(annonce.end_at)}</p>
-                </span>
-                <p className="_title">
-                  {props.isFrench ? "Détails :" : "تفاصيل :"}
-                </p>
-                <p>{annonce.desc}</p>
-                {annonce.image && (
-                  <Image
-                    src={annonce.image}
+      {false ? (
+        <div className="_tab_content">
+          <div className="_announces">
+            {Data.map((annonce, index) => {
+              return (
+                <div key={index} className="_annonce">
+                  <h4 className="">{annonce.title}</h4>
+                  <span
                     style={{
-                      height: "130px",
-                      width: "130px",
-                      marginTop: "10px",
-                      "border-radius": "3px",
+                      direction: props.isFrench ? "ltr" : "rtl",
                     }}
-                    onClick={() => {
-                      window.open(annonce.image);
-                    }}
-                    className="pointer"
-                  />
-                )}
-                {index + 1 < Data.length && <Divider />}
-              </div>
-            );
-          })}
+                  >
+                    <p className="_title">
+                      {props.isFrench ? "Service :" : "المصلحة :"}{" "}
+                    </p>
+                    &nbsp;
+                    <p>
+                      {annonce.service.first_name +
+                        " " +
+                        annonce.service.last_name}
+                    </p>
+                  </span>
+                  <span>
+                    <p className="_title">
+                      {props.isFrench ? "De :" : "من :"}{" "}
+                    </p>
+                    &nbsp;
+                    <p>{TimeExtract(annonce.start_at)}</p>
+                  </span>
+                  <span>
+                    <p className="_title">
+                      {props.isFrench ? "À :" : "إلى :"}{" "}
+                    </p>
+                    &nbsp;
+                    <p>{TimeExtract(annonce.end_at)}</p>
+                  </span>
+                  <p className="_title">
+                    {props.isFrench ? "Détails :" : "تفاصيل :"}
+                  </p>
+                  <p>{annonce.desc}</p>
+                  {annonce.image && (
+                    <Image
+                      src={annonce.image}
+                      style={{
+                        height: "130px",
+                        width: "130px",
+                        marginTop: "10px",
+                        "border-radius": "3px",
+                      }}
+                      onClick={() => {
+                        window.open(annonce.image);
+                      }}
+                      className="pointer"
+                    />
+                  )}
+                  {index + 1 < Data.length && <Divider />}
+                </div>
+              );
+            })}
+          </div>
+          {count > 1 && (
+            <Pagination
+              className="_annonce_pagination"
+              defaultActivePage={1}
+              activePage={page}
+              firstItem={null}
+              lastItem={null}
+              pointing
+              secondary
+              totalPages={count}
+              onPageChange={changePage}
+            />
+          )}
         </div>
-        {count > 1 && (
-          <Pagination
-            className="_annonce_pagination"
-            defaultActivePage={1}
-            activePage={page}
-            firstItem={null}
-            lastItem={null}
-            pointing
-            secondary
-            totalPages={count}
-            onPageChange={changePage}
-          />
-        )}
-      </div>
+      ) : (
+        allow && (
+          <h2>
+            {props.isFrench ? "Aucun Annonce pour le moment" : "لا توجد إعلانات نشطة حاليا"}
+          </h2>
+        )
+      )}
     </Segment>
   );
 };

@@ -14,13 +14,13 @@
 }
 
 ._intro {
-  padding-top: 80px;
+  padding-top: 100px;
   padding-right: 100px;
   padding-left: 100px;
   padding-bottom: 50px;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: var(--primary);
 }
 
@@ -415,7 +415,7 @@
 }
 
 ._home_main ._container_notif div.header,
-._home_main ._container_notif p{
+._home_main ._container_notif p {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
@@ -428,7 +428,7 @@
   margin-left: 10px;
 }
 
-._home_main ._container_notif .ui.message{
+._home_main ._container_notif .ui.message {
   margin-right: 10px;
 }
 
@@ -437,9 +437,9 @@
   left: 0.5em;
 }
 
-._home_main.rtl ._container_notif .ui.icon.message > .icon:not(.close){
+._home_main.rtl ._container_notif .ui.icon.message > .icon:not(.close) {
   margin-left: 0.6em;
-  margin-right: .1em;
+  margin-right: 0.1em;
 }
 
 ._home_main ._container_notif .ui.icon.message > .icon:not(.close) {

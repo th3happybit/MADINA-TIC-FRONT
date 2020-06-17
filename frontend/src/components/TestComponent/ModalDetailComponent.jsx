@@ -287,12 +287,12 @@ const ModalDetailComponent = (props) => {
           </div>
           <div className="_content_modal ">
             <div>
-              {isRapport && <p>Title Declaration</p>}
-              {motif && activeFilter === "archived" && <p>motif of rejet</p>}
+              {isRapport && <p>Titre du déclaration</p>}
+              {motif && activeFilter === "archived" && <p>Motif du rejet</p>}
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
-              {files.length > 0 && <p>Files</p>}
+              {files.length > 0 && <p>{files.length > 1 ? "Fichiers" : "Fichier"}</p>}
             </div>
             <div
               style={{
@@ -369,7 +369,7 @@ const ModalDetailComponent = (props) => {
                 modal
                 button={{ color: "blue", text: "Validate", icon: "checkmark" }}
                 text="Confirmer l'approbation de ce rapport et marquer la déclaration comme terminée?"
-                title="Confirm Approval"
+                title="Confirmer Validation"
                 OnConfirm={confirmReport}
               />
               <RejectComplement
@@ -380,7 +380,7 @@ const ModalDetailComponent = (props) => {
                   icon: "sync alternate",
                 }}
                 text="Confirmer le complément exigeant?"
-                title="Complement Demand"
+                title="Demande de complement"
                 OnConfirm={ComplementDemand}
               />
             </>
@@ -389,9 +389,9 @@ const ModalDetailComponent = (props) => {
             <ConfirmModal
               modal
               disabled={archive ? false : true}
-              button={{ color: "black", text: "Archive", icon: "archive" }}
+              button={{ color: "black", text: "Archiver", icon: "archive" }}
               text="Confirmer l'envoi de ce rapport aux archives?"
-              title="Confirm Archive"
+              title="Confirmer Archive"
               OnConfirm={ArchiveAnnonce}
             />
           )}
@@ -401,9 +401,9 @@ const ModalDetailComponent = (props) => {
             role === "service" && (
               <ConfirmModal
                 modal
-                button={{ color: "black", text: "Archive", icon: "archive" }}
+                button={{ color: "black", text: "Archiver", icon: "archive" }}
                 text="Confirmer l'envoi de ce rapport aux archives?"
-                title="Confirm Archive"
+                title="Confirmer Archive"
                 OnConfirm={ArchiveReport}
               />
             )}
