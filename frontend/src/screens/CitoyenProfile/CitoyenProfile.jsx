@@ -138,6 +138,7 @@ const CitoyenProfile = (props) => {
               updateImage={updateImage}
               image={image}
               refresh={GetCitoyenInfos}
+              change_language={props.change_language}
             />
           </Container>
         </>

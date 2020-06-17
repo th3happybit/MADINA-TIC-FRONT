@@ -26,8 +26,7 @@ const SidebarHeader = (props) => {
         localStorage.removeItem("maire_token");
         return history.push("/maire/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   const { visible } = props;
   return (
@@ -67,7 +66,7 @@ const SidebarHeader = (props) => {
                 : "medium-text text-default"
             }
           >
-            Declarations
+            Déclarations
           </Link>
         </List.Item>
         <List.Item>
@@ -79,7 +78,7 @@ const SidebarHeader = (props) => {
                 : "medium-text text-default"
             }
           >
-            Reports
+            Rapports
           </Link>
         </List.Item>
         <List.Item>
@@ -91,7 +90,7 @@ const SidebarHeader = (props) => {
                 : "medium-text text-default"
             }
           >
-            Annoucements
+            Annoncements
           </Link>
         </List.Item>
         <List.Item>

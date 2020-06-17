@@ -142,7 +142,7 @@ const DeclarationStats = (props) => {
             Critique
           </Button>
           <Button name="normal" color="green" onClick={handleClicked}>
-            Normal
+            Normale
           </Button>
           <Button
             name="low"
@@ -160,7 +160,7 @@ const DeclarationStats = (props) => {
             }}
             onClick={handleClicked}
           >
-            Important
+            Importante
           </Button>
         </div>
       </div>

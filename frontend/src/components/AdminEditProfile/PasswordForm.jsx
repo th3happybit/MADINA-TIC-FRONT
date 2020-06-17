@@ -21,8 +21,8 @@ const PasswordForm = (props) => {
             id="password"
             type="password"
             value={password}
-            label="Current Password"
-            placeholder="Current Password"
+            label="Mot de passe actuel"
+            placeholder="Mot de passe actuel"
             onChange={handleInputChange}
           />
         </div>
@@ -34,8 +34,8 @@ const PasswordForm = (props) => {
             id="new_password"
             type="password"
             value={newPassword}
-            label="New Password"
-            placeholder="New Password"
+            label="nouveau mot de passe"
+            placeholder="nouveau mot de passe"
             onChange={handleInputChange}
           />
         </div>
@@ -47,8 +47,8 @@ const PasswordForm = (props) => {
             type="password"
             id="confirm_password"
             value={confirmPassword}
-            label="Confirm Password"
-            placeholder="Confirm Password"
+            label="Confirmez le mot de passe"
+            placeholder="Confirmez le mot de passe"
             onChange={handleInputChange}
           />
         </div>

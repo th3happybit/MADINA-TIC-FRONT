@@ -26,29 +26,29 @@ const ServiceDesclarationTable = (props) => {
   function getMonth(month) {
     switch (month) {
       case "01":
-        return "January";
+        return "Janvier";
       case "02":
-        return "February";
+        return "Février";
       case "03":
-        return "March";
+        return "Mars";
       case "04":
-        return "April";
+        return "Avril";
       case "05":
-        return "May";
+        return "Mai";
       case "06":
-        return "June";
+        return "Juin";
       case "07":
-        return "July";
+        return "Juillet";
       case "08":
-        return "August";
+        return "Août";
       case "09":
-        return "September";
+        return "Septembre";
       case "10":
-        return "October";
+        return "Octobre";
       case "11":
-        return "November";
+        return "Novembre";
       case "12":
-        return "December";
+        return "Decembre";
       default:
         break;
     }
@@ -58,16 +58,16 @@ const ServiceDesclarationTable = (props) => {
     var ret = { status: "" };
     switch (st) {
       case "validated":
-        ret["status"] = "Validated";
+        ret["status"] = "Validée";
         return ret;
       case "under_treatment":
-        ret["status"] = "In progress";
+        ret["status"] = "En cours";
         return ret;
       case "treated":
-        ret["status"] = "Treated";
+        ret["status"] = "Traitée";
         return ret;
       case "archived":
-        ret["status"] = "Archived";
+        ret["status"] = "Archivée";
         return ret;
       default:
         break;
@@ -78,12 +78,12 @@ const ServiceDesclarationTable = (props) => {
     switch (p) {
       case 1:
         return {
-          priority: "Critical",
+          priority: "Critique",
           color: "red",
         };
       case 4:
         return {
-          priority: "Low",
+          priority: "Faible",
           color: "blue",
         };
       case 3:
@@ -93,7 +93,7 @@ const ServiceDesclarationTable = (props) => {
         };
       case 2:
         return {
-          priority: "Important",
+          priority: "Importante",
           color: "yellow",
         };
       default:

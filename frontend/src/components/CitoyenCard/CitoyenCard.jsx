@@ -9,6 +9,8 @@ import {
   Message,
   Form,
   Segment,
+  Dropdown,
+  Flag,
 } from "semantic-ui-react";
 import axios from "axios";
 
@@ -19,7 +21,6 @@ import "./CitoyenCard.css";
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 import { languages } from "../../language";
-import { lang } from "moment";
 
 const Card = (props) => {
   const { cit_infos, loading, isFrench, isDark } = props;
@@ -42,6 +43,7 @@ const Card = (props) => {
   const [imageP, setimageP] = useState("");
   const [imagesub, setimagesub] = useState(false);
   const [national_id, setnational_id] = useState("");
+  const [Language, setLanguage] = useState(isFrench);
   const [currentPassword, setCurrentPassword] = useState({
     value: "",
     isPassword: true,
@@ -212,6 +214,12 @@ const Card = (props) => {
     formData.append("date_of_birth", birthday);
     formData.append("national_id", national_id);
     formData.append("phone", phone);
+    formData.append("is_french", Language);
+    if (Language) {
+      props.change_language(languages.french);
+    } else {
+      props.change_language(languages.arabe);
+    }
 
     if (error) seterror(null);
     if (success) setSuccess(null);
@@ -229,7 +237,7 @@ const Card = (props) => {
 
       if (errorsPr.length > 0) {
         seterror(true);
-        seterrMessage(errorsPr[0].value);
+        seterrMessage(isFrench ? errorsPr[0].error : errorsPr[0].errorAr);
       } else {
         setIsLoading(true);
         axios
@@ -267,7 +275,7 @@ const Card = (props) => {
 
       if (errorsPa.length > 0) {
         seterror(true);
-        seterrMessage(errorsPa[0].error);
+        seterrMessage(isFrench ? errorsPa[0].error : errorsPa[0].errorAr);
       } else {
         UpdatePasswordCitoyen();
       }
@@ -425,7 +433,7 @@ const Card = (props) => {
                     type="text"
                     value={first_name}
                     onChange={handleChangeInput}
-                    placeholder={languages.isFrench ? "Prénom" : "الإسم"}
+                    placeholder={isFrench ? "Prénom" : "الإسم"}
                   />
                   <Input
                     id="last_name"
@@ -433,7 +441,7 @@ const Card = (props) => {
                     type="text"
                     value={last_name}
                     onChange={handleChangeInput}
-                    placeholder={languages.isFrench ? "Nom" : "اللقب"}
+                    placeholder={isFrench ? "Nom" : "اللقب"}
                   />
                 </div>
               )}
@@ -484,7 +492,7 @@ const Card = (props) => {
                     <p className="small">{cit_infos.national_id}</p>
                   </div>
                 </div>
-                <div className="social-media">
+                <div className="social-media" style={{visibility : "hidden"}}>
                   <Icon
                     name="facebook f"
                     size="big"
@@ -548,7 +556,7 @@ const Card = (props) => {
                         value={email}
                         onChange={handleChangeInput}
                         placeholder={
-                          languages.isFrench
+                          isFrench
                             ? "Email ..."
                             : "البريد الإلكتروني ..."
                         }
@@ -560,7 +568,7 @@ const Card = (props) => {
                         value={birthday}
                         onChange={handleChangeInput}
                         placeholder={
-                          languages.isFrench
+                          isFrench
                             ? "Date de naissance ..."
                             : "تاريخ الميلاد ..."
                         }
@@ -572,7 +580,7 @@ const Card = (props) => {
                         value={address}
                         onChange={handleChangeInput}
                         placeholder={
-                          languages.isFrench ? "Addresse ..." : "العنوان ..."
+                          isFrench ? "Addresse ..." : "العنوان ..."
                         }
                       />
                       <Input
@@ -582,7 +590,7 @@ const Card = (props) => {
                         value={phone}
                         onChange={handleChangeInput}
                         placeholder={
-                          languages.isFrench
+                          isFrench
                             ? "Numéro de téléphone ..."
                             : "رقم الهاتف ..."
                         }
@@ -594,15 +602,72 @@ const Card = (props) => {
                         value={national_id}
                         onChange={handleChangeInput}
                         placeholder={
-                          languages.isFrench
+                          isFrench
                             ? "Numéro national ..."
                             : "الهوية الوطنية ..."
                         }
                       />
+                      <Dropdown
+                        className="_language_field_mobile"
+                        trigger={
+                          <Input
+                            className="mobile-input"
+                            type="text"
+                            id="language"
+                            value={
+                              isFrench
+                                ? Language
+                                  ? "Français"
+                                  : "Arabe"
+                                : Language
+                                ? "الفرنسية"
+                                : "العربية"
+                            }
+                            onChange={handleChangeInput}
+                          />
+                        }
+                        icon={null}
+                      >
+                        <Dropdown.Menu
+                          style={{
+                            width: "180px",
+                          }}
+                          className={
+                            props.isFrench
+                              ? "_language_field _ltr"
+                              : "_language_field _rtl"
+                          }
+                        >
+                          <Dropdown.Item
+                            onClick={() => {
+                              setLanguage(false);
+                            }}
+                            style={{
+                              "border-bottom":
+                                "1px solid var(--secondary_text_dark)",
+                            }}
+                          >
+                            <div className="_language">
+                              <Flag name="dz" />
+                              <p>{isFrench ? "Arabe" : "عربية"}</p>
+                            </div>
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            onClick={() => {
+                              setLanguage(true);
+                            }}
+                          >
+                            <div className="_language">
+                              <Flag name="fr" />
+                              <p>{isFrench ? "Français" : "فرنسية"}</p>
+                            </div>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                       <Message
                         error
                         content={
-                          languages.isFrench
+                          isFrench
                             ? "Assurez la validitée de vos données s'il vous plaît"
                             : "من فضلك، تحقق من صحة معلوماتك"
                         }
@@ -610,7 +675,7 @@ const Card = (props) => {
                       <Message
                         success
                         content={
-                          languages.isFrench
+                          isFrench
                             ? "Vos changement ont été sauvegardées avec succés"
                             : "تم حفظ معلوماتك بنجاح"
                         }
@@ -619,9 +684,13 @@ const Card = (props) => {
                   </div>
                 )}
                 {activeItem === "password" && (
-                  <Form success={success} error={error}>
+                  <Form
+                    success={success}
+                    error={error}
+                    style={{ width: "100%" }}
+                  >
                     <div className="col_mobile">
-                      <div className="input_p">
+                      <div className="input_p" style={{ width: "90%" }}>
                         <Input
                           id="currentPassword"
                           className="mobile-input"
@@ -631,7 +700,7 @@ const Card = (props) => {
                           }
                           onChange={handleInputChangeValue}
                           placeholder={
-                            languages.isFrench
+                            isFrench
                               ? "Current password"
                               : "كلمة السر الحالية"
                           }
@@ -642,7 +711,7 @@ const Card = (props) => {
                           onClick={handleShowPsw}
                         />
                       </div>
-                      <div className="input_p">
+                      <div className="input_p" style={{ width: "90%" }}>
                         <Input
                           id="newPassword"
                           className="mobile-input"
@@ -650,7 +719,7 @@ const Card = (props) => {
                           type={newPassword.isPassword ? "password" : "text"}
                           onChange={handleInputChangeValue}
                           placeholder={
-                            languages.isFrench
+                            isFrench
                               ? "New password"
                               : "كلمة السر الجديد"
                           }
@@ -661,7 +730,7 @@ const Card = (props) => {
                           onClick={handleShowPsw}
                         />
                       </div>
-                      <div className="input_p">
+                      <div className="input_p" style={{ width: "90%" }}>
                         <Input
                           id="confirmPassword"
                           className="mobile-input"
@@ -671,7 +740,7 @@ const Card = (props) => {
                           }
                           onChange={handleInputChangeValue}
                           placeholder={
-                            languages.isFrench
+                            isFrench
                               ? "Confirm password"
                               : "تأكيد كلمة السر"
                           }
@@ -685,7 +754,11 @@ const Card = (props) => {
                       <Message error content={errMessage} />
                       <Message
                         success
-                        content="Your infos update request has been sent successfully"
+                        content={
+                          isFrench
+                            ? "Votre demande de mise à jour des informations a été envoyée avec succès"
+                            : "تم إرسال طلب تحديث معلوماتك بنجاح"
+                        }
                       />
                     </div>
                   </Form>

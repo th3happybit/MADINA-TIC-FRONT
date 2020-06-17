@@ -17,26 +17,30 @@ const ValidateDataUpdatePass = (data) => {
         if(!validatePassword(new_pass.value)){
             errors.push({
                 id : "passoword",
-                error : "Password must be at least 8 charcaters and contain at least one uppercase.",
+                error : "Le mot de passe doit être au minimum 8 charactère et contient au moins 1 lettre majuscule",
+                errorAr : "كلمة السر يجب أن لا تقل عن 8 أحرف و تحتوي على الأقل حرفا لاتيني كبير"
             });
         }
         if (new_pass.value !== confirm_pass.value){
             errors.push({
                 id : "password",
-                error : "Passwords are not identical.",
+                error : "Les mots de passe ne sont pas identiques",
+                errorAr : "كلمات السر الجديدة غير متطابقة"
             });
         }
              if (new_pass.value.length > 128){
             errors.push({
                 id : "password",
-                error : "Password is too long.",
+                error : "Le mot de passe es trop long",
+                errorAr : "كلمة السر طويلة جدا"
             });
         }
     }
     else {
         errors.push({
             id : "Password",
-            error : "Nothing to submit.",
+            error : "Assurez de remplir tous les champs s'il vous plaît.",
+            errorAr : "تحقق من ملئ جميع البيانات المطلوبة من فضلك"
         })
     }
 

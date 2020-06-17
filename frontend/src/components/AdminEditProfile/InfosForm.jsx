@@ -23,8 +23,8 @@ const InfosForm = (props) => {
               disabled={!isShow}
               id="first_name"
               control={Input}
-              label="First name"
-              placeholder="First name"
+              label="Prénom"
+              placeholder="Prénom"
               value={first_name}
               onChange={handleInputChange}
             />
@@ -35,8 +35,8 @@ const InfosForm = (props) => {
               value={last_name}
               id="last_name"
               control={Input}
-              label="Last name"
-              placeholder="Last name"
+              label="Nom"
+              placeholder="Nom"
             />
           </Form.Group>
           <Form.Group widths="equal">
@@ -55,8 +55,8 @@ const InfosForm = (props) => {
               value={birthday}
               id="birthday"
               control={Input}
-              label="Birthday"
-              placeholder="Birthday"
+              label="Anniversaire"
+              placeholder="Anniversaire"
             />
           </Form.Group>
           <Form.Group widths="equal">
@@ -66,8 +66,8 @@ const InfosForm = (props) => {
               value={address}
               id="address"
               control={Input}
-              label="Address"
-              placeholder="Address"
+              label="Adresse"
+              placeholder="Adresse"
             />
             <Form.Field
               onChange={handleInputChange}
@@ -75,26 +75,11 @@ const InfosForm = (props) => {
               value={phone}
               id="phone"
               control={Input}
-              label="Phone Number"
-              placeholder="Phone Number"
+              label="Numéro de téléphone"
+              placeholder="Numéro de téléphone"
             />
           </Form.Group>
-          <Form.Group widths="equal">
-            <Form.Field
-              disabled={!isShow}
-              id="form-input-control-fcb"
-              control={Input}
-              label="Facebok link"
-              placeholder="Facebok link"
-            />
-            <Form.Field
-              disabled={!isShow}
-              id="form-input-control-google"
-              control={Input}
-              label="Google link"
-              placeholder="Google link"
-            />
-          </Form.Group>
+
           <Message
             error
             content={
@@ -105,8 +90,8 @@ const InfosForm = (props) => {
               email.length > 0 &&
               birthday.length > 0 &&
               phone.length > 0
-                ? "Please make sur that all the data is valid"
-                : "All the inputs are required to update the profile"
+                ? "Veuillez vous assurer que toutes les données sont valides"
+                : "Toutes les entrées sont nécessaires pour mettre à jour le profil"
             }
           />
         </Form>

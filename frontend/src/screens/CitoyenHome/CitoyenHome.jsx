@@ -60,7 +60,7 @@ const CitoyenHome = (props) => {
     }
   }, []);
 
-  const [isLogin, setIsLogin] = useState("null");
+  const [isLogin, setIsLogin] = useState(null);
   return (
     <>
       {isLogin ? (
@@ -102,6 +102,7 @@ const CitoyenHome = (props) => {
             active={props.active}
             click={handleHide}
             isDark={isDark}
+            change_mode={props.change_mode}
             login
           />
           {annonce && (

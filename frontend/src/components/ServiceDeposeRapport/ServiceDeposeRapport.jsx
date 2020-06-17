@@ -197,47 +197,45 @@ const DeposeRapport = (props) => {
     <div className="_rapport_form">
       <Segment className="_add_form" loading={Loading}>
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Add Report
+          Attacher Rapport
         </h3>
         <Form
           error={fileErr || reqError || duplicateErr || maxErr}
           success={successData && successFile}
         >
           {declaration && (
-            <p className="text-default">Declaration : {declaration.title}</p>
+            <p className="text-default">Déclaration : {declaration.title}</p>
           )}
           <Form.Field
             type="text"
             control={Input}
-            label="Title"
-            placeholder="Enter title here..."
+            label="Titre"
+            placeholder="Titre ici ..."
             value={title}
             onChange={handleTitle}
             name="title"
             error={
               titleErr && {
-                content:
-                  "This field can't be empty or shorter than 5 characters",
+                content: "Le titre est obligatoire",
                 class: "ui basic red label pointing",
               }
             }
           />
           <Form.TextArea
-            label="Description"
+            label="Déscription"
             name="description"
             placeholder="..."
             value={description}
             onChange={handleDesc}
             error={
               descErr && {
-                content:
-                  "This field can't be empty or shorter than 10 characters",
+                content: "La description doit être au minimum 10 charactères",
                 class: "ui basic red label pointing",
               }
             }
           />
           <div className="_upload_section">
-            <p className="text-default">Add Files ( Optional )</p>
+            <p className="text-default">Ajouter fichiers ( Optionel )</p>
             {files &&
               files.map((file, index) => {
                 return (
@@ -260,7 +258,7 @@ const DeposeRapport = (props) => {
               color="blue"
               className="_primary"
             >
-              <Button.Content visible content="Upload" />
+              <Button.Content visible content="Télécharger" />
               <Button.Content hidden>
                 <Icon name="upload" />
               </Button.Content>
@@ -274,15 +272,20 @@ const DeposeRapport = (props) => {
               onChange={handleUpload}
             />
             {fileErr && (
-              <Message error content={"Please upload a valid PDF file."} />
+              <Message
+                error
+                content={
+                  "Assurez que vous avez télécharger un fichier pds s'il vous plaît"
+                }
+              />
             )}
             <Modal open={successFile && successData} className="_success_modal">
-              <Modal.Header>Success Message</Modal.Header>
+              <Modal.Header>Message de succès</Modal.Header>
               <Modal.Content>
                 <p className="text-default">
                   {" "}
-                  Your changes has been sent successfully. Press the button and
-                  you will be redirected back to declarations page.
+                  Vos changement ont été sauvegarder. Cliquez sur le boutton
+                  pour aller vers la pages des rapports.
                 </p>
               </Modal.Content>
               <Modal.Actions>
@@ -302,7 +305,7 @@ const DeposeRapport = (props) => {
                 className="pointer"
                 onClick={removeMessage}
                 error
-                content={"Something went wrong while sending request !"}
+                content={"Un erreur s'est produit lors de l'envoi des données"}
               />
             </Transition>
             <Transition visible={maxErr} animation="scale" duration={200}>
@@ -310,7 +313,7 @@ const DeposeRapport = (props) => {
                 className="pointer"
                 onClick={removeMessage}
                 error
-                content={"Maximum is 3 files !"}
+                content={"Le maximum est 3 fichiers !"}
               />
             </Transition>
             <Transition visible={duplicateErr} animation="scale" duration={200}>
@@ -318,7 +321,7 @@ const DeposeRapport = (props) => {
                 className="pointer"
                 onClick={removeMessage}
                 error
-                content={"A report is already attached to this declaration !"}
+                content={"Un rapport est déja attaché à cette déclaration"}
               />
             </Transition>
           </div>
