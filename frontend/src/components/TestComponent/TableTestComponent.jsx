@@ -95,6 +95,7 @@ const TableTestComponent = (props) => {
     return str < 10 ? "0" + str : str;
   }
   function isActive(end_at) {
+    console.log(end_at)
     const date = new Date();
     const time = date.toLocaleTimeString();
     if (
@@ -102,7 +103,7 @@ const TableTestComponent = (props) => {
         "-" +
         helper(date.getMonth() + 1) +
         "-" +
-        helper(date.getDay()) +
+        helper(date.getDate()) +
         "T" +
         time <
       end_at.substr(0, 19)

@@ -124,23 +124,14 @@ const ModalDetailComponent = (props) => {
   };
   const confirmReport = () => {
     const date = new Date();
-    const time = date.toLocaleTimeString();
-    const now =
-      date.getFullYear() +
-      "-" +
-      helper(date.getMonth() + 1) +
-      "-" +
-      helper(date.getDate()) +
-      "T" +
-      time +
-      "+01:00";
+    
     const report = {
       declaration: data.declaration,
       title: data.title,
       desc: data.desc,
       service: data.service,
       status: "validated",
-      validated_at: now,
+      validated_at: date,
     };
     const dec = {
       status: "treated",
@@ -161,8 +152,8 @@ const ModalDetailComponent = (props) => {
     const annonce = {
       title: data.title,
       desc: data.desc,
-      start_at: "2021-06-04T15:05:00",
-      end_at: "2021-06-05T15:05:00",
+      start_at: data.start_at,
+      end_at: data.end_at,
       status: "archived",
     };
     updateAnnStatus(annonce);

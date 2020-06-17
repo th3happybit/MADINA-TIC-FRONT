@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { List, Dropdown, Flag, Radio } from "semantic-ui-react";
-import { lang } from "moment";
 
 import { ReactComponent as Logo } from "../../assets/images/logo_vectorized.svg";
 import { ReactComponent as LogoI } from "../../assets/images/logo_inverted.svg";
