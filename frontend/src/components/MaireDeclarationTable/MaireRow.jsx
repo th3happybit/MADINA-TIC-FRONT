@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Modal, Checkbox, Button } from "semantic-ui-react";
 import ModalDetails from "./ModalDetails.jsx";
 
@@ -11,6 +11,9 @@ import { add_parent, add_childs } from "../../actions/regroupAction.js";
 
 import { withRouter } from "react-router-dom";
 const MaireRow = (props) => {
+  useEffect(() => {
+    props.add_parent(null)
+  }, []);
   const {
     services,
     getMonth,
@@ -98,11 +101,11 @@ const MaireRow = (props) => {
         {address.length < 40 ? (
           <p>{address}</p>
         ) : (
-          <>
-            <p>{address.slice(0, 35) + " ..."}</p>
-            <span className="full_text">{address}</span>
-          </>
-        )}
+            <>
+              <p>{address.slice(0, 35) + " ..."}</p>
+              <span className="full_text">{address}</span>
+            </>
+          )}
       </Table.Cell>
       <Table.Cell>
         {created_on.slice(8, 10) +
@@ -127,18 +130,18 @@ const MaireRow = (props) => {
             attachements: filterAttachments(attachments),
             created_on: created_on
               ? created_on.slice(8, 10) +
-                " - " +
-                getMonth(created_on.slice(5, 7)) +
-                " - " +
-                created_on.slice(0, 4)
+              " - " +
+              getMonth(created_on.slice(5, 7)) +
+              " - " +
+              created_on.slice(0, 4)
               : "/",
             priority: priority,
             validated_at: validated_at
               ? validated_at.slice(8, 10) +
-                " - " +
-                getMonth(validated_at.slice(5, 7)) +
-                " - " +
-                validated_at.slice(0, 4)
+              " - " +
+              getMonth(validated_at.slice(5, 7)) +
+              " - " +
+              validated_at.slice(0, 4)
               : "/",
             services: services,
             status: getStatus(status).status,
