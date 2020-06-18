@@ -36,8 +36,7 @@ export default function CitoyenHeader(props) {
     var channel = pusher.subscribe("Declaration");
     var annonceChannel = pusher.subscribe("Announce");
     annonceChannel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -47,10 +46,10 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     channel.bind("Rejection", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -60,10 +59,10 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     channel.bind("Complement", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -73,10 +72,10 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -86,6 +85,7 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
   }, []);
   useEffect(() => {

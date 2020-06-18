@@ -35,8 +35,7 @@ const HeaderService = (props) => {
     var annonceChannel = pusher.subscribe("Announce");
 
     annonceChannel.bind("Complement", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -46,10 +45,10 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     rapport_channel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -59,10 +58,10 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     rapport_channel.bind("Rejection", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -72,10 +71,10 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     rapport_channel.bind("Complement", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -85,11 +84,11 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
 
     channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -99,6 +98,7 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
   }, []);
 

@@ -32,8 +32,7 @@ const HeaderAdmin = (props) => {
     var rapport_channel = pusher.subscribe("Report");
     var annonceChannel = pusher.subscribe("Announce");
     rapport_channel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -43,10 +42,10 @@ const HeaderAdmin = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     annonceChannel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -56,10 +55,10 @@ const HeaderAdmin = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
     channel.bind("Creation", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
+      toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -69,6 +68,7 @@ const HeaderAdmin = (props) => {
           setIsNotifated(false);
         },
       });
+      return setIsNotifated(true);
     });
   }, []);
 
