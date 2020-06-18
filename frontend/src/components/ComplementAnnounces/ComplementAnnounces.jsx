@@ -122,7 +122,7 @@ const ComplementAnnounces = (props) => {
     formData.append("status", "not_validated");
     formData.append("desc", description);
     if (postImg) formData.append("image", postImg);
-    else if (deleted) formData.append("image", null);
+    else if (deleted) formData.append("image", "");
     axios
       .create({
         headers: {

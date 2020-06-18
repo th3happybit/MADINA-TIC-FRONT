@@ -43,7 +43,7 @@ const HomeCitoyen = (props) => {
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
           url:
-            "https://madina-tic.ml/api/home-declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
+            "https://madina-tic.ml/api/home-declarations/?ordering=-created_on",
         }
       : {
           headers: {

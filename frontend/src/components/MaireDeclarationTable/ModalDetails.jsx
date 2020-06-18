@@ -154,7 +154,9 @@ const ModalD = (props) => {
                 data.status !== "Refusée" && (
                   <p>{data.priority ? getPriority(data.priority) : null}</p>
                 )}
-              <p>{data.description}</p>
+              <p style={{ maxWidth: "80%", textAlign: "justify" }}>
+                {data.description}
+              </p>
               {data.attachements
                 ? data.attachements.length > 0 && (
                     <div className="_images_slides">

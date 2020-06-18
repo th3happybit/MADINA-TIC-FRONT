@@ -54,7 +54,7 @@ const InfoScreen = (props) => {
       .get("https://www.madina-tic.ml/api/declarations_types/", {
         headers: {
           "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
+          Authorization: `Token ${localStorage.getItem(token)}`,
         },
       })
       .then((res) => {

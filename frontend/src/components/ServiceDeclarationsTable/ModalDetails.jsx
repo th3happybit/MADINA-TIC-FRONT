@@ -178,7 +178,9 @@ const ModalD = (props) => {
               <p>{validated_at ? validated_at : "/"}</p>
               <p>{status}</p>
               <p>{priority}</p>
-              <p>{description}</p>
+              <p style={{ maxWidth: "300px", textAlign: "justify" }}>
+                {description}
+              </p>
               {attachements.length > 0 && (
                 <div className="_images_slides">
                   {attachements.length > 1 && (

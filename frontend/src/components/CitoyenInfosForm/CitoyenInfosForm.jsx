@@ -100,7 +100,7 @@ const InfosForm = (props) => {
   };
   const UpdateInfosCitoyen = () => {
     setIsLoading(true);
-    if (!isFrench) {
+    if (language) {
       props.change_language(languages.french);
     } else {
       props.change_language(languages.arabe);

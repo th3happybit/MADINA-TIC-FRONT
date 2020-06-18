@@ -622,8 +622,15 @@
     .footer_area h3 {
       font-size: 16px;
     }
+    .footer_area ._top ._links{
+      text-align: left;
+    }
+    ._home_main.rtl .footer_area ._top ._links {
+      text-align: right;
+    }
     .footer_area ._menu {
       width: 350px;
+      flex-direction: column !important;
     }
   }
 

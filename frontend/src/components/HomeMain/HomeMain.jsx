@@ -120,6 +120,11 @@ const HomeMain = (props) => {
         },
       })
       .then((res) => {
+        setLastName("");
+        setFnameErr("");
+        setSubject("");
+        setMessage("");
+        setEmail("");
         toast({
           type: "success",
           title: language.isFrench ? "Message envoyé !" : "تم الإرسال !",
