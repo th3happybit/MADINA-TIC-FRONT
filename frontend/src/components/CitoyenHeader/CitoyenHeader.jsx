@@ -36,37 +36,47 @@ export default function CitoyenHeader(props) {
     var channel = pusher.subscribe("Declaration");
     var annonceChannel = pusher.subscribe("Announce");
     annonceChannel.bind("Creation", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
         time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
       });
-      setIsNotifated(true);
     });
     channel.bind("Rejection", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
         time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
       });
-      setIsNotifated(true);
     });
     channel.bind("Complement", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
         time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
       });
-      setIsNotifated(true);
     });
     channel.bind("Update", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,

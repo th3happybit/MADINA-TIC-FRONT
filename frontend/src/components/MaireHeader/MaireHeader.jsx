@@ -33,7 +33,7 @@ const HeaderAdmin = (props) => {
     var annonceChannel = pusher.subscribe("Announce");
     rapport_channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -46,7 +46,7 @@ const HeaderAdmin = (props) => {
     });
     annonceChannel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -59,7 +59,7 @@ const HeaderAdmin = (props) => {
     });
     channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
