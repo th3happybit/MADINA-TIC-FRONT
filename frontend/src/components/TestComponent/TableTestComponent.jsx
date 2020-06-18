@@ -102,7 +102,7 @@ const TableTestComponent = (props) => {
         "-" +
         helper(date.getMonth() + 1) +
         "-" +
-        helper(date.getDay()) +
+        helper(date.getDate()) +
         "T" +
         time <
       end_at.substr(0, 19)

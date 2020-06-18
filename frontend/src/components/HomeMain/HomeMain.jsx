@@ -23,13 +23,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import AOS from "aos";
 import "aos/dist/aos.css"; // You can also use <link> for styles
-import { lang } from "moment";
 import { SemanticToastContainer, toast } from "react-semantic-toasts";
 // ..
 const HomeMain = (props) => {
   const { language } = props;
   const [users, setUsers] = useState(null);
   const [decl, setDecl] = useState(null);
+  const [isData, setisData] = useState(false);
   const [treatedDec, settreatedDec] = useState(null);
   const [Firstname, setFirstName] = useState("");
   const [fnameErr, setFnameErr] = useState(false);
@@ -120,6 +120,11 @@ const HomeMain = (props) => {
         },
       })
       .then((res) => {
+        setLastName("");
+        setFnameErr("");
+        setSubject("");
+        setMessage("");
+        setEmail("");
         toast({
           type: "success",
           title: language.isFrench ? "Message envoyé !" : "تم الإرسال !",
@@ -161,6 +166,7 @@ const HomeMain = (props) => {
         },
       })
       .then((res) => {
+        setisData(true);
         setDecl(
           sum(res.data.critical, prio) +
             sum(res.data.important, prio) +
@@ -305,7 +311,7 @@ const HomeMain = (props) => {
         >
           <div className="_stat_field">
             <Users height="56" />
-            {users && (
+            {isData && (
               <p>{`${users} ${
                 language.isFrench ? "utilisateurs" : "مستخدم"
               }`}</p>
@@ -313,13 +319,13 @@ const HomeMain = (props) => {
           </div>
           <div className="_stat_field">
             <Announce height="56" />
-            {decl && (
+            {isData && (
               <p>{`${decl} ${language.isFrench ? "Déclarations" : "تصريح"}`}</p>
             )}
           </div>
           <div className="_stat_field">
-            <Checkmark />
-            {treatedDec && (
+            <Checkmark height="56" />
+            {isData && (
               <p>{`${treatedDec} ${
                 language.isFrench ? "Déclarations traitées" : "تصريح معالج"
               }`}</p>

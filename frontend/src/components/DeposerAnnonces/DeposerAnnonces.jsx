@@ -225,7 +225,7 @@ export default function DeposerAnnonces(props) {
                 startErr && (
                   <Label
                     className="ui pointing basic red"
-                    content="Vérifiez la validité du cette date"
+                    content="Vérifiez la validité de cette date"
                   />
                 )
               ) : (
@@ -300,7 +300,7 @@ export default function DeposerAnnonces(props) {
             error={
               descriptionErr && {
                 content:
-                  "Description can't be empty or shorter than 10 caracters",
+                  "La déscription doit être au minimum 10 charactères",
                 class: "ui basic red label pointing fluid",
               }
             }

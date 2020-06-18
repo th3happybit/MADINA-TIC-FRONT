@@ -28,11 +28,14 @@ const CitoyenHome = (props) => {
   const [image, setImage] = useState(null);
   const [id, setId] = useState(null);
   const [seen, setSeen] = useState(false);
+  const [allow, setAllow] = useState(false);
+  const [isLogin, setIsLogin] = useState(null);
 
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
   useEffect(() => {
+    setAllow(false);
     if (localStorage.getItem("token")) {
       setIsLogin(true);
       axios
@@ -56,11 +59,10 @@ const CitoyenHome = (props) => {
         })
         .catch((err) => {});
     } else {
+      setAllow(true);
       setIsLogin(false);
     }
   }, []);
-
-  const [isLogin, setIsLogin] = useState(null);
   return (
     <>
       {isLogin ? (
@@ -114,35 +116,39 @@ const CitoyenHome = (props) => {
           )}
         </>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100vw",
-            height: "100vh",
-          }}
-        >
-          {" "}
-          <Message negative>
-            <Message.Header>
-              {true
-                ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
-                : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
-            </Message.Header>
-            <p
-              className="text-default title _margin_vertical_sm pointer "
-              style={{
-                ccolor: "#912d2b",
-              }}
-            >
-              {true
-                ? "Accéder à la page de connexion"
-                : "انتقل إلى صفحة تسجيل الدخول"}
-              ?<a href="/login">{true ? "cliquez ici" : "انقر هنا"}</a>
-            </p>
-          </Message>
-        </div>
+        allow && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100vw",
+              height: "100vh",
+            }}
+          >
+            {" "}
+            <Message negative>
+              <Message.Header>
+                {language.isFrench
+                  ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
+                  : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
+              </Message.Header>
+              <p
+                className="text-default title _margin_vertical_sm pointer "
+                style={{
+                  ccolor: "#912d2b",
+                }}
+              >
+                {language.isFrench
+                  ? "Accéder à la page de connexion"
+                  : "انتقل إلى صفحة تسجيل الدخول"}
+                <a href="/login">
+                  &nbsp;{language.isFrench ? "ici" : "من هنا "}
+                </a>
+              </p>
+            </Message>
+          </div>
+        )
       )}
     </>
   );

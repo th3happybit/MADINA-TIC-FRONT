@@ -39,7 +39,7 @@ const MaireRow = (props) => {
   } = props.element;
   const handleClick = () => {
     setIsChecked((prevState) => !prevState);
-    const data = {did, status, service}
+    const data = { did, status, service };
     if (!parent) {
       props.add_parent(data);
       setOpenParent(true);
@@ -67,7 +67,8 @@ const MaireRow = (props) => {
             }}
             className="text-default"
           >
-            You have choosed the parent ,now choose the childs
+            Vous avez choisi la déclaration principale ,maintenant choisis les
+            sous déclarations
           </p>
         </Modal.Content>
         <Modal.Actions>

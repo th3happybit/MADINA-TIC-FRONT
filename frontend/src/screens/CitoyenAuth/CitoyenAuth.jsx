@@ -14,6 +14,10 @@ import FormCitoyen from "../../components/FormCitoyen/FormCitoyen.jsx";
 //? import header
 import CitoyenHeader from "../../components/CitoyenHeader/CitoyenHeader.jsx";
 
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { change_language } from "../../actions/languageAction";
+
 const CitoyenAuth = (props) => {
   const history = useHistory();
 
@@ -29,27 +33,40 @@ const CitoyenAuth = (props) => {
   const { islogin } = props; //* if screen is for Login or Signup
   return (
     <>
-      <CitoyenHeader login={false} />
+      <CitoyenHeader login={false} isFrench={props.language.isFrench}/>
       {isLoading ? (
         <div
           style={{
             paddingTop: "66px",
           }}
         >
-          <Container fluid className="_citoyen_login">
+          <Container
+            fluid
+            className={
+              props.language.isFrench ? "_citoyen_login" : "_citoyen_login rtl"
+            }
+          >
             <Grid style={{ height: "100%" }}>
               <GridRow style={{ paddingBottom: 0 }}>
                 <GridColumn width={10} className="_citoyen_login_hero_section">
                   <Image src={Logo} className="_logo_hero_section" />
                   <div className="slogan blue">
-                    <p className="text-white bold">Un Service Simple</p>
+                    <p className="text-white bold">
+                      {props.language.isFrench
+                        ? "Un Service Simple"
+                        : "خدمة بسيطة"}
+                    </p>
                   </div>
                   <div className="slogan orange top">
-                    <p className=" text-white ">Pour Une Société Meilleure</p>
+                    <p className=" text-white ">
+                      {props.language.isFrench
+                        ? "Pour Une Société Meilleure"
+                        : "من أجل مجتمع أفضل"}
+                    </p>
                   </div>
                 </GridColumn>
                 <GridColumn className="p-0 bg-default h-full" width={6}>
-                  <FormCitoyen islogin={islogin} />
+                  <FormCitoyen islogin={islogin} isFrench={props.language.isFrench}/>
                 </GridColumn>
               </GridRow>
             </Grid>
@@ -64,11 +81,15 @@ const CitoyenAuth = (props) => {
             style={{ height: "100%" }}
           >
             <div className="slogan blue">
-              <p className="title text-white ">Un Service Simple</p>
+              <p className="title text-white ">
+                {props.language.isFrench ? "Un Service Simple" : "خدمة بسيطة"}
+              </p>
             </div>
             <div className="slogan orange">
               <p className="title text-white bold">
-                Pour Une Société Meilleure
+                {props.language.isFrench
+                  ? "Pour Une Société Meilleure"
+                  : "من أجل مجتمع أفضل"}
               </p>
             </div>
             <div className="citoyen_mobile_container">
@@ -82,4 +103,13 @@ const CitoyenAuth = (props) => {
     </>
   );
 };
-export default CitoyenAuth;
+CitoyenAuth.propTypes = {
+  language: PropTypes.object.isRequired,
+  change_language: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  language: state.language,
+});
+
+export default connect(mapStateToProps, { change_language })(CitoyenAuth);

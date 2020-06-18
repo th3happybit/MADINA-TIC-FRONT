@@ -388,7 +388,7 @@ const ComplementReport = (props) => {
                         <p className="text-default">
                           {file.name
                             ? file.name
-                            : file.src.slice(11, file.src.length - 12)}
+                            : file.src.slice(11, file.src.length)}
                         </p>
                         <Icon
                           onClick={handleDelete}

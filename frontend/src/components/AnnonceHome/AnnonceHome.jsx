@@ -129,7 +129,7 @@ const AnnonceHome = (props) => {
         {props.isFrench ? "Annonces actives" : "الإعلانات النشطة"}
       </h3>
 
-      {false ? (
+      {Data.length > 0 ? (
         <div className="_tab_content">
           <div className="_announces">
             {Data.map((annonce, index) => {
@@ -206,7 +206,9 @@ const AnnonceHome = (props) => {
       ) : (
         allow && (
           <h2>
-            {props.isFrench ? "Aucun Annonce pour le moment" : "لا توجد إعلانات نشطة حاليا"}
+            {props.isFrench
+              ? "Aucun Annonce pour le moment"
+              : "لا توجد إعلانات نشطة حاليا"}
           </h2>
         )
       )}

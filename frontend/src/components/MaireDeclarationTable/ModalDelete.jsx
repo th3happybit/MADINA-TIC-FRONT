@@ -57,10 +57,17 @@ const ModalComplement = (props) => {
                 modal ? "shadow _hidden_on_mobile" : "shadow _hide_on_mobile"
               }
             >
-              {!icon && <Button.Content visible content="Rejet" />}
+              {!icon && (
+                <>
+                  <Button.Content visible content="Rejet" />{" "}
+                  <Button.Content hidden>
+                    <Icon name="times" />{" "}
+                  </Button.Content>
+                </>
+              )}
               {icon && (
                 <Button.Content hidden>
-                  <Icon name="delete" />
+                  <Icon name="times" />
                 </Button.Content>
               )}
             </Button>

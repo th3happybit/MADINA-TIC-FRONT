@@ -8,6 +8,7 @@ import axios from "axios";
 import "./ServiceHeader.css";
 
 //? import icons and images
+import Avatar from "../../assets/images/avatar.png";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
@@ -36,7 +37,7 @@ const HeaderService = (props) => {
 
     annonceChannel.bind("Complement", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -49,7 +50,7 @@ const HeaderService = (props) => {
     });
     rapport_channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -62,8 +63,7 @@ const HeaderService = (props) => {
     });
     rapport_channel.bind("Rejection", function ({ message }) {
       setIsNotifated(true);
-
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -76,8 +76,7 @@ const HeaderService = (props) => {
     });
     rapport_channel.bind("Complement", function ({ message }) {
       setIsNotifated(true);
-
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -89,20 +88,7 @@ const HeaderService = (props) => {
       });
     });
 
-    channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
 
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-    });
   }, []);
 
   useEffect(() => {
@@ -138,18 +124,19 @@ const HeaderService = (props) => {
               setIsNotifated(false);
             }
           })
-          .catch((err) => {
-          });
+          .catch((err) => { });
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
 
   useEffect(() => {
     if (imageP) setImage(imageP);
   }, [imageP]);
-  const trigger = <Image src={image} size="small" className="pointer" />;
+  const trigger = (
+    <Image src={image ? image : Avatar} size="small" className="pointer" />
+  );
 
   const history = useHistory();
 
@@ -170,8 +157,7 @@ const HeaderService = (props) => {
         localStorage.removeItem("service_token");
         return history.push("/service/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => { });
   };
   const handleChangeNotif = () => {
     if (isNotifated) {
@@ -194,8 +180,7 @@ const HeaderService = (props) => {
         .then((res) => {
           setIsNotifated(false);
         })
-        .catch((err) => {
-        });
+        .catch((err) => { });
     }
   };
 

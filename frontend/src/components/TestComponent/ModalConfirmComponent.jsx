@@ -29,9 +29,9 @@ const Modalredirect = (props) => {
               className={
                 modal
                   ? button.color === "blue"
-                    ? "_primary _hidden_on_mobile"
-                    : "_hidden_on_mobile"
-                  : "_hide_on_mobile"
+                    ? "_primary _hidden_on_mobile shadow"
+                    : "_hidden_on_mobile shadow"
+                  : "_hide_on_mobile shadow"
               }
             >
               <Button.Content visible content={button.text} />

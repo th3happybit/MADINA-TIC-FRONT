@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Form, Button, Message, Icon } from "semantic-ui-react";
 import axios from "axios";
 
-const FormRegister = () => {
+const FormRegister = (props) => {
+  const { isFrench } = props;
   //? for loading while post request
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -171,7 +172,11 @@ const FormRegister = () => {
   return (
     <Form
       success={success}
-      className="_citoyen_login_form signup _margin_vertical_sm"
+      className={
+        isFrench
+          ? "_citoyen_login_form signup _margin_vertical_sm"
+          : "_citoyen_login_form rtl signup _margin_vertical_sm"
+      }
     >
       <Form.Group>
         <div
@@ -184,7 +189,7 @@ const FormRegister = () => {
           <Form.Input
             value={first_name}
             id="first_name"
-            placeholder="Prénom"
+            placeholder={isFrench ? "Prénom" : "الإسم"}
             type="text"
             size="large"
             className={
@@ -211,7 +216,7 @@ const FormRegister = () => {
           <Form.Input
             value={last_name}
             id="last_name"
-            placeholder="Nom"
+            placeholder={isFrench ? "Nom" : "اللقب"}
             type="text"
             size="large"
             className={
@@ -245,7 +250,7 @@ const FormRegister = () => {
           <Form.Input
             value={email}
             id="email"
-            placeholder="Email"
+            placeholder={isFrench ? "Email" : "البريد الإلكتروني"}
             type="text"
             size="large"
             className={
@@ -275,7 +280,7 @@ const FormRegister = () => {
         <Form.Input
           value={birthday}
           id="birthday"
-          placeholder="Anniversaire"
+          placeholder={isFrench ? "Date de naissance" : "تاريخ الميلاد"}
           type="date"
           size="large"
           className={
@@ -286,12 +291,14 @@ const FormRegister = () => {
           onChange={handleChangeInput}
         />
         {dateError && (
-          <p className="error_inputs_msg">
+          <p className={"error_inputs_msg"}>
             <Icon name="info circle" />
             {birthday.length === 0 && birthdayMessage}
             {birthday.length > 0 &&
               !checkDate(birthday) &&
-              " Vous n'êtes pas une personne majeure pour avoir un compte."}
+              (isFrench
+                ? "Vous n'êtes pas une personne majeure pour avoir un compte."
+                : "التسجيل للذين لا تقل أعمارهم عن 18 سنة فقط.")}
           </p>
         )}
       </div>
@@ -304,7 +311,7 @@ const FormRegister = () => {
         <Form.Input
           value={phone}
           id="phone"
-          placeholder="Numéro de téléphone"
+          placeholder={isFrench ? "Numéro de téléphone" : "رقم الهاتف"}
           type="text"
           size="large"
           className={
@@ -319,7 +326,9 @@ const FormRegister = () => {
             <Icon name="info circle" />
             {checkPhoneNumber(phone)
               ? phoneMessage
-              : "s'il vous plaît entrer un numéro de téléphone valide"}
+              : isFrench
+              ? "s'il vous plaît entrer un numéro de téléphone valide"
+              : "تحقق من صحة رقم الهاتف"}
           </p>
         )}
       </div>
@@ -332,7 +341,7 @@ const FormRegister = () => {
         <Form.Input
           value={nationalId}
           id="nationalid"
-          placeholder="Carte d'identité"
+          placeholder={isFrench ? "Numéro nationale" : "رقم التعريف الوطني"}
           type="text"
           size="large"
           className="_margin_vertical_sm small"
@@ -348,7 +357,7 @@ const FormRegister = () => {
         <Form.Input
           value={addrress}
           id="address"
-          placeholder="Adresse"
+          placeholder={isFrench ? "Adresse" : "العنوان"}
           type="text"
           size="large"
           className={
@@ -363,7 +372,9 @@ const FormRegister = () => {
             <Icon name="info circle" />
             {addrress.length > 4
               ? addressMessage
-              : "s'il-vous-plaît entrez une adresse valide"}
+              : isFrench
+              ? "s'il-vous-plaît entrez une adresse valide"
+              : "تحقق من صحة العنوان"}
           </p>
         )}
       </div>
@@ -376,7 +387,7 @@ const FormRegister = () => {
         <Form.Input
           value={password}
           id="password"
-          placeholder="Mot de passe"
+          placeholder={isFrench ? "Mot de passe" : "كلمة السر"}
           type="password"
           size="large"
           className={
@@ -403,7 +414,9 @@ const FormRegister = () => {
           onChange={handleChangeInput}
           value={confirmPassword}
           id="confirm_password"
-          placeholder="Confirmez le mot de passe"
+          placeholder={
+            isFrench ? "Confirmez le mot de passe" : "تأكيد كلمة السر"
+          }
           type="password"
           size="large"
           className={
@@ -421,7 +434,11 @@ const FormRegister = () => {
       </div>
       <Message
         success
-        content="vérifiez votre email pour valider votre compte"
+        content={
+          isFrench
+            ? "Vérifiez votre email pour valider votre compte"
+            : "تحقق من بريدك الإلكتروني لتفعيل حسابك"
+        }
       />
       <Button
         className="button_primary _margin_vertical_md pointer"
@@ -429,7 +446,7 @@ const FormRegister = () => {
         onClick={handleSumbit}
         loading={isLoading}
       >
-        S'inscrire
+        {isFrench ? "S'inscrire" : "أنشئ حسابا"}
       </Button>
     </Form>
   );

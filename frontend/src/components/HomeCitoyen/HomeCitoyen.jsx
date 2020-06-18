@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Segment, Image, Popup, Button, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Pusher from "pusher-js";
 import "./HomeCitoyen.css";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import Status from "../CitoyenDeclarationInfo/StatusLabel.jsx";
 import debounce from "lodash.debounce";
 
+import ImageStandard from "../../assets/images/image.png";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -43,7 +43,7 @@ const HomeCitoyen = (props) => {
             Authorization: `Token ${localStorage.getItem("token")}`,
           },
           url:
-            "https://madina-tic.ml/api/home-declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
+            "https://madina-tic.ml/api/home-declarations/?ordering=-created_on",
         }
       : {
           headers: {
@@ -160,28 +160,40 @@ const HomeCitoyen = (props) => {
               <>
                 <div className="_row_mobile">
                   <div class="ui small image">
-                    {element.attachments &&
+                    {element.attachments ? (
                       element.attachments.map((element, index) => {
                         return (
                           element.filetype === "image" && (
                             <Image
                               onClick={() => {
-                                window.open(element.src);
+                                if (element.filetype === "image")
+                                  window.open(
+                                    !props.anonyme
+                                      ? "http://www.madina-tic.ml" + element.src
+                                      : element.src
+                                  );
                               }}
-                              src={element.src}
+                              src={
+                                !props.anonyme
+                                  ? "http://www.madina-tic.ml" + element.src
+                                  : element.src
+                              }
                               key={index}
                               rounded
                               className="pointer _pic"
                             />
                           )
                         );
-                      })}
+                      })
+                    ) : (
+                      <Image src={ImageStandard} />
+                    )}
                   </div>
                 </div>
 
                 <div className="roww">
                   <div
-                    class="ui small image"
+                    class="ui small image infos_screen"
                     style={{
                       visibility: element.attachments ? "visible" : "hidden",
                     }}
@@ -191,9 +203,18 @@ const HomeCitoyen = (props) => {
                       src={
                         element.attachments
                           ? element.attachments[0]
-                            ? element.attachments[0].src
-                            : ""
-                          : ""
+                            ? !props.anonyme
+                              ? "http://www.madina-tic.ml" +
+                                element.attachments[0].src
+                              : element.attachments[0].src
+                            : ImageStandard
+                          : ImageStandard
+                      }
+                      onClick={() =>
+                        window.open(
+                          "http://www.madina-tic.ml" +
+                            element.attachments[0].src
+                        )
                       }
                     />
                   </div>
@@ -212,7 +233,10 @@ const HomeCitoyen = (props) => {
                   {!props.anonyme && (
                     <div className="_contentt">
                       <p className="text-gray-light _contentt">
-                        - {editType(element.dtype)} problem -
+                        {language.isFrench
+                          ? `
+                        - ${editType(element.dtype)} problem -`
+                          : `- مشكل ${editType(element.dtype)} -`}
                       </p>
                     </div>
                   )}

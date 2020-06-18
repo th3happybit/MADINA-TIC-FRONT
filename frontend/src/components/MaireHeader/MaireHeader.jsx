@@ -8,6 +8,7 @@ import axios from "axios";
 import "./MaireHeader.css";
 
 //? import icons and images
+import Avatar from "../../assets/images/avatar.png";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
@@ -34,12 +35,12 @@ const HeaderAdmin = (props) => {
     var annonceChannel = pusher.subscribe("Announce");
     rapport_channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -47,12 +48,12 @@ const HeaderAdmin = (props) => {
     });
     annonceChannel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -60,12 +61,12 @@ const HeaderAdmin = (props) => {
     });
     channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -73,12 +74,12 @@ const HeaderAdmin = (props) => {
     });
     channel.bind("Update", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -126,10 +127,9 @@ const HeaderAdmin = (props) => {
           .then((res) => {
             setData(res.data.results);
           })
-          .catch((err) => {
-          });
+          .catch((err) => { });
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
   const handleChangeNotif = () => {
     if (isNotifated) {
@@ -157,7 +157,9 @@ const HeaderAdmin = (props) => {
         });
     }
   };
-  const trigger = <Image src={image} size="small" className="pointer" />;
+  const trigger = (
+    <Image src={image ? image : Avatar} size="small" className="pointer" />
+  );
 
   const history = useHistory();
 
@@ -178,8 +180,7 @@ const HeaderAdmin = (props) => {
         localStorage.removeItem("maire_token");
         return history.push("/maire/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => { });
   };
 
   return (

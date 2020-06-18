@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { change_mode } from "../../actions/darkAction";
 import { change_language } from "../../actions/languageAction";
-import { languages } from "../../language";
 
 const AddDeclaration = (props) => {
   const { languages, isDark } = props;

@@ -266,6 +266,12 @@
   font-weight: 500;
   color: #95989a;
 }
+
+.login_cit.ar,
+.not_login_nav.ar {
+  font-family: "Cairo", sans-serif;
+}
+
 .notificated > path:nth-of-type(1) {
   fill: var(--secondary) !important;
 }
@@ -293,8 +299,8 @@
   color: var(--secondary_dark);
 }
 
-._citoyen_header.dark .item_notif:hover{
-  background-color : var(--second_dark) !important;
+._citoyen_header.dark .item_notif:hover {
+  background-color: var(--second_dark) !important;
 }
 
 ._citoyen_header.dark .notif_item {
@@ -311,7 +317,7 @@
 }
 
 ._citoyen_header ._rtl .item_notif .row p,
-._citoyen_header ._rtl .item_notif p{
+._citoyen_header ._rtl .item_notif p {
   font-weight: 600;
 }
 

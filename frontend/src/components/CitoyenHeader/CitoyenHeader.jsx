@@ -8,6 +8,7 @@ import {
   Icon,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import Avatar from "../../assets/images/avatar.png";
 import { ReactComponent as Logo } from "../../assets/images/logo_vectorized.svg";
 import { ReactComponent as Logo_dark } from "../../assets/images/logo_inverted.svg";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
@@ -36,37 +37,8 @@ export default function CitoyenHeader(props) {
     var channel = pusher.subscribe("Declaration");
     var annonceChannel = pusher.subscribe("Announce");
     annonceChannel.bind("Creation", function ({ message }) {
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-      });
       setIsNotifated(true);
-    });
-    channel.bind("Rejection", function ({ message }) {
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-      });
-      setIsNotifated(true);
-    });
-    channel.bind("Complement", function ({ message }) {
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-      });
-      setIsNotifated(true);
-    });
-    channel.bind("Update", function ({ message }) {
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -76,6 +48,49 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
+    });
+    channel.bind("Rejection", function ({ message }) {
+      setIsNotifated(true);
+      return toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    channel.bind("Complement", function ({ message }) {
+      setIsNotifated(true);
+      return toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 5000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    channel.bind("Update", function ({ message }) {
+      if (message.status === "draft" || message.status === "archived" || message.status === "not_validated") {
+        return true
+      } else {
+        setIsNotifated(true);
+        return toast({
+          type: "info",
+          icon: "info",
+          title: message.title,
+          description: message.body,
+          time: 5000,
+          onDismiss: () => {
+            setIsNotifated(false);
+          },
+        });
+      }
     });
   }, []);
   useEffect(() => {
@@ -99,8 +114,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setData(res.data.results);
         })
-        .catch((err) => {
-        });
+        .catch((err) => { });
     }
   };
   const { login, isDark } = props;
@@ -122,8 +136,7 @@ export default function CitoyenHeader(props) {
         localStorage.removeItem("token");
         return history.push("/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => { });
   };
   useEffect(() => {
     setIsNotifated(props.seen);
@@ -135,7 +148,7 @@ export default function CitoyenHeader(props) {
       }}
       onClick={() => setOpen((prevState) => !prevState)}
     >
-      <Image src={image} size="small" className="pointer" />
+      <Image src={image ? image : Avatar} size="small" className="pointer" />
       <p className="medium-text text-default _margin_horizontal_xs">
         {fullname}
       </p>
@@ -162,8 +175,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setIsNotifated(false);
         })
-        .catch((err) => {
-        });
+        .catch((err) => { });
     }
   };
   return (
@@ -175,7 +187,7 @@ export default function CitoyenHeader(props) {
           </div>
         )}
         <div className="_citoyen_header_logo">
-          <Link to ={login ? "/home" : "/"}>
+          <Link to={login ? "/home" : "/"}>
             <div className="_madinatic_logo">
               {isDark ? <Logo_dark /> : <Logo />}
               <p className="large-title text-active ">MADINA-TIC</p>
@@ -194,7 +206,7 @@ export default function CitoyenHeader(props) {
             )}
           </div>
           {!login && (
-            <div className="not_login_nav">
+            <div className={`not_login_nav ${props.isFrench ? "" : "ar"}`}>
               <a
                 href="/login"
                 style={{
@@ -202,12 +214,16 @@ export default function CitoyenHeader(props) {
                   color: "#f66a29",
                   fontWeight: "600",
                 }}
-                className="pointer "
+                className="pointer"
               >
-                S'identifier
+                {props.isFrench ? "S'identifier" : "تسجيل الدخول"}
               </a>
-              <Button href="/signup" as="a" className="login_cit ">
-                Créer un compte
+              <Button
+                href="/signup"
+                as="a"
+                className={`login_cit ${props.isFrench ? "" : "ar"}`}
+              >
+                {props.isFrench ? "Créer un compte" : "أنشئ حسابا"}
               </Button>
             </div>
           )}
