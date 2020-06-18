@@ -8,6 +8,7 @@ import {
   Icon,
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import Avatar from "../../assets/images/avatar.png";
 import { ReactComponent as Logo } from "../../assets/images/logo_vectorized.svg";
 import { ReactComponent as Logo_dark } from "../../assets/images/logo_inverted.svg";
 import { ReactComponent as Notification } from "../../assets/images/notification.svg";
@@ -147,7 +148,7 @@ export default function CitoyenHeader(props) {
       }}
       onClick={() => setOpen((prevState) => !prevState)}
     >
-      <Image src={image} size="small" className="pointer" />
+      <Image src={image ? image : Avatar} size="small" className="pointer" />
       <p className="medium-text text-default _margin_horizontal_xs">
         {fullname}
       </p>
