@@ -36,7 +36,7 @@ const HeaderService = (props) => {
 
     annonceChannel.bind("Complement", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -49,7 +49,7 @@ const HeaderService = (props) => {
     });
     rapport_channel.bind("Creation", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -62,8 +62,7 @@ const HeaderService = (props) => {
     });
     rapport_channel.bind("Rejection", function ({ message }) {
       setIsNotifated(true);
-
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -76,8 +75,7 @@ const HeaderService = (props) => {
     });
     rapport_channel.bind("Complement", function ({ message }) {
       setIsNotifated(true);
-
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -91,8 +89,7 @@ const HeaderService = (props) => {
 
     channel.bind("Update", function ({ message }) {
       setIsNotifated(true);
-
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
