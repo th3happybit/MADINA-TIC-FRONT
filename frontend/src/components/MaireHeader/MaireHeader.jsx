@@ -127,9 +127,9 @@ const HeaderAdmin = (props) => {
           .then((res) => {
             setData(res.data.results);
           })
-          .catch((err) => {});
+          .catch((err) => { });
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
   const handleChangeNotif = () => {
     if (isNotifated) {
@@ -180,7 +180,7 @@ const HeaderAdmin = (props) => {
         localStorage.removeItem("maire_token");
         return history.push("/maire/login");
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
 
   return (

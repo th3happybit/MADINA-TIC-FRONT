@@ -88,19 +88,7 @@ const HeaderService = (props) => {
       });
     });
 
-    channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-    });
+
   }, []);
 
   useEffect(() => {
@@ -136,11 +124,11 @@ const HeaderService = (props) => {
               setIsNotifated(false);
             }
           })
-          .catch((err) => {});
+          .catch((err) => { });
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
 
   useEffect(() => {
@@ -169,7 +157,7 @@ const HeaderService = (props) => {
         localStorage.removeItem("service_token");
         return history.push("/service/login");
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   const handleChangeNotif = () => {
     if (isNotifated) {
@@ -192,7 +180,7 @@ const HeaderService = (props) => {
         .then((res) => {
           setIsNotifated(false);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
 
