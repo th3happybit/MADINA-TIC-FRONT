@@ -128,7 +128,11 @@ const ModalD = (props) => {
               <p>{data.created_on ? "Ajoutéz le" : null}</p>
               <p>{data.validated_at ? "Validée le" : null}</p>
               <p>{data.status ? "Status" : null}</p>
-              <p>{data.priority ? "Priorité" : null}</p>
+              {data.status !== "Non validée" &&
+                data.status !== "Manque d'informations" &&
+                data.status !== "Refusée" && (
+                  <p>{data.priority ? "Priorité" : null}</p>
+                )}
               <p>{data.description ? "Déscription" : null}</p>
               {data.attachements
                 ? data.attachements.length > 0 && (
@@ -145,7 +149,11 @@ const ModalD = (props) => {
               <p>{data.created_on ? data.created_on : null}</p>
               <p>{data.validated_at ? data.validated_at : null}</p>
               <p>{data.status ? data.status : null}</p>
-              <p>{data.priority ? getPriority(data.priority) : null}</p>
+              {data.status !== "Non validée" &&
+                data.status !== "Manque d'informations" &&
+                data.status !== "Refusée" && (
+                  <p>{data.priority ? getPriority(data.priority) : null}</p>
+                )}
               <p>{data.description}</p>
               {data.attachements
                 ? data.attachements.length > 0 && (

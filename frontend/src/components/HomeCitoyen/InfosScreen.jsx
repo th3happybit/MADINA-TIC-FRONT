@@ -87,37 +87,17 @@ const InfoScreen = (props) => {
  function getStatus(st) {
   var ret = { status: "", color: "" };
   switch (st) {
-   case "not_validated":
-    ret["status"] = "Non validée";
-    ret["color"] = "blue";
-    return ret;
-   case "lack_of_info":
-    ret["status"] = "Manque d'informations";
-    ret["color"] = "orange";
-    return ret;
    case "validated":
-    ret["status"] = "Validée";
+    ret["status"] = props.language.isFrench ? "Validée" : "تم التحقق منها";
     ret["color"] = "green";
     return ret;
-   case "refused":
-    ret["status"] = "Refusée";
-    ret["color"] = "red";
-    return ret;
    case "under_treatment":
-    ret["status"] = "En cours";
-    ret["color"] = "yellow";
+    ret["status"] = props.language.isFrench ? "En cours" : "في تقدم";
+    ret["color"] = props.language.isFrench ? "yellow" : "";
     return ret;
    case "treated":
-    ret["status"] = "Traitée";
+    ret["status"] = props.language.isFrench ? "Traitée" : "معالجة";
     ret["color"] = "pink";
-    return ret;
-   case "archived":
-    ret["status"] = "Archivée";
-    ret["color"] = "black";
-    return ret;
-   case "draft":
-    ret["status"] = "Brouillons";
-    ret["color"] = "gray";
     return ret;
    default:
     break;

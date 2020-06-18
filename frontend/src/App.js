@@ -55,6 +55,7 @@ import Profile from "./components/Profile/Profile.jsx";
 import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
 import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
 import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
+import Infos from "./components/ServiceMaireDeclarationInfos/DeclarationInfo.jsx";
 
 function App() {
   return (
@@ -87,6 +88,17 @@ function App() {
                 <Maire
                   active="declarations"
                   childComponent={MaireDeclarations}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/maire/declaration/infos"
+              component={(prop) => (
+                <Maire
+                  props={prop}
+                  active="declarations"
+                  childComponent={Infos}
                 />
               )}
             />
@@ -224,6 +236,17 @@ function App() {
                 <Service
                   active="declarations"
                   childComponent={ServiceDeclaration}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/service/declaration/infos"
+              component={(prop) => (
+                <Service
+                  props={prop}
+                  active="declarations"
+                  childComponent={Infos}
                 />
               )}
             />

@@ -362,8 +362,7 @@ const UpdateReport = (props) => {
                           {file.name
                             ? file.name
                             : file.src
-                                .slice(11, file.src.length - 12)
-                                .replace(/_/g, " ")}
+                                .slice(11, file.src.length)}
                         </p>
                         <Icon
                           onClick={handleDelete}

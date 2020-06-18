@@ -4,6 +4,7 @@ import { Modal, Button, Icon, Popup } from "semantic-ui-react";
 
 import ConfirmModal from "./ModalConfirmComponent.jsx";
 import RejectComplement from "./ModalRejectComplement.jsx";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const ModalDetailComponent = (props) => {
   const {
@@ -19,7 +20,6 @@ const ModalDetailComponent = (props) => {
     TimeExtract,
     getMonth,
     refresh,
-    helper,
     archive,
   } = props;
   const [open, setOpen] = useState(false);
@@ -99,8 +99,7 @@ const ModalDetailComponent = (props) => {
           refresh();
         } else refresh();
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   const updateAnnStatus = (ann) => {
     axios
@@ -124,7 +123,6 @@ const ModalDetailComponent = (props) => {
   };
   const confirmReport = () => {
     const date = new Date();
-    
     const report = {
       declaration: data.declaration,
       title: data.title,
@@ -175,8 +173,7 @@ const ModalDetailComponent = (props) => {
             setMorif(res.data.results[0].reason);
           }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     }
     if (isRapport) {
       let url = `https://www.madina-tic.ml/api/declarations/${data.declaration}`;
@@ -283,14 +280,28 @@ const ModalDetailComponent = (props) => {
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
-              {files.length > 0 && <p>{files.length > 1 ? "Fichiers" : "Fichier"}</p>}
+              {files.length > 0 && (
+                <p>{files.length > 1 ? "Fichiers" : "Fichier"}</p>
+              )}
             </div>
             <div
               style={{
                 padding: "0 2rem",
               }}
             >
-              {isRapport && <p>{declaration.title}</p>}
+              {isRapport && (
+                <Link
+                  to={{
+                    pathname:
+                      role === "maire"
+                        ? "/maire/declaration/infos"
+                        : "/service/declaration/infos",
+                    state: { id: declaration.did, token: token },
+                  }}
+                >
+                  <p className="text-active">{declaration.title}</p>
+                </Link>
+              )}
               {motif && activeFilter === "archived" && <p>{motif}</p>}
               {detail.map((elm) => (
                 <p className={elm.value === "desc" ? "_limit_size" : null}>
@@ -339,9 +350,7 @@ const ModalDetailComponent = (props) => {
                             );
                           }}
                         >
-                          {file.src
-                            .slice(11, file.src.length - 12)
-                            .replace(/_/g, " ")}
+                          {file.src.slice(11, file.src.length)}
                         </p>
                       </span>
                     </div>

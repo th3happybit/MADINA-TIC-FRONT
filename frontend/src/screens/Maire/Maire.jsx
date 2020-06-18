@@ -67,7 +67,7 @@ const Maire = (props) => {
           />
           <>
             {props.childComponent ? (
-              <props.childComponent maire={maire} updateImageP={changeImage} />
+              <props.childComponent maire={maire} updateImageP={changeImage} dec_data={props}/>
             ) : (
               <div
                 style={{
