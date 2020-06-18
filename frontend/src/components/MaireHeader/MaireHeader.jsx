@@ -33,38 +33,39 @@ const HeaderAdmin = (props) => {
     var rapport_channel = pusher.subscribe("Report");
     var annonceChannel = pusher.subscribe("Announce");
     rapport_channel.bind("Creation", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     annonceChannel.bind("Creation", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     channel.bind("Creation", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -72,17 +73,16 @@ const HeaderAdmin = (props) => {
     });
     channel.bind("Update", function ({ message }) {
       setIsNotifated(true);
-      toast({
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 500000,
+        time: 5000,
         onDismiss: () => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
   }, []);
 
@@ -129,7 +129,7 @@ const HeaderAdmin = (props) => {
           .catch((err) => {
           });
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
   const handleChangeNotif = () => {
     if (isNotifated) {

@@ -35,7 +35,8 @@ const HeaderService = (props) => {
     var annonceChannel = pusher.subscribe("Announce");
 
     annonceChannel.bind("Complement", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -45,10 +46,10 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     rapport_channel.bind("Creation", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -58,10 +59,10 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     rapport_channel.bind("Rejection", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -71,10 +72,10 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     rapport_channel.bind("Complement", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -84,11 +85,11 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
 
     channel.bind("Update", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -98,7 +99,6 @@ const HeaderService = (props) => {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
   }, []);
 
@@ -140,7 +140,7 @@ const HeaderService = (props) => {
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
 
   useEffect(() => {

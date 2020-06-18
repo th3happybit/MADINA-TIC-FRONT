@@ -36,7 +36,8 @@ export default function CitoyenHeader(props) {
     var channel = pusher.subscribe("Declaration");
     var annonceChannel = pusher.subscribe("Announce");
     annonceChannel.bind("Creation", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -46,10 +47,10 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     channel.bind("Rejection", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -59,10 +60,10 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     channel.bind("Complement", function ({ message }) {
-      toast({
+      setIsNotifated(true);
+      return toast({
         type: "info",
         icon: "info",
         title: message.title,
@@ -72,20 +73,23 @@ export default function CitoyenHeader(props) {
           setIsNotifated(false);
         },
       });
-      return setIsNotifated(true);
     });
     channel.bind("Update", function ({ message }) {
-      toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-      return setIsNotifated(true);
+      if (message.status === "draft" || message.status === "archived" || message.status === "not_validated") {
+        return true
+      } else {
+        setIsNotifated(true);
+        return toast({
+          type: "info",
+          icon: "info",
+          title: message.title,
+          description: message.body,
+          time: 5000,
+          onDismiss: () => {
+            setIsNotifated(false);
+          },
+        });
+      }
     });
   }, []);
   useEffect(() => {
@@ -109,7 +113,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setData(res.data.results);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   const { login, isDark } = props;
@@ -131,7 +135,7 @@ export default function CitoyenHeader(props) {
         localStorage.removeItem("token");
         return history.push("/login");
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   useEffect(() => {
     setIsNotifated(props.seen);
@@ -170,7 +174,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setIsNotifated(false);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   return (
