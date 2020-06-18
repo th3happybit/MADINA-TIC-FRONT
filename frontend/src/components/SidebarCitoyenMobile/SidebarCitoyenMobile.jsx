@@ -4,6 +4,7 @@ import { List, Image, Radio } from "semantic-ui-react";
 import { useHistory } from "react-router";
 import axios from "axios";
 import "./SidebarCitoyenMobile.css";
+import Avatar from "../../assets/images/avatar.png";
 
 const SidebarCitoyenMobile = (props) => {
   const { fullname, image, isDark } = props;
@@ -43,8 +44,10 @@ const SidebarCitoyenMobile = (props) => {
     >
       <Link to="/citoyen/profile">
         <div className="profile_citoyen_mobile_x">
-          <Image src={image} />
-          <p style={{color : !isDark ? "black" : "var(--primary_text_dark)"}}>{fullname}</p>
+          <Image src={image ? image : Avatar} />
+          <p style={{ color: !isDark ? "black" : "var(--primary_text_dark)" }}>
+            {fullname}
+          </p>
         </div>
       </Link>
       <List className={`_sidebar_list ${props.isFrench ? "" : "rtl"}`}>

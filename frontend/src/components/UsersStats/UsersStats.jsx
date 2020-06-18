@@ -41,7 +41,7 @@ const UsersStats = (props) => {
 
   return (
     <div className="users_stats">
-      <h1>Statistique des utilisateurs</h1>
+      <h1>Statistiques des utilisateurs</h1>
       <div id="chart">
         <Chart
           options={settings.options}

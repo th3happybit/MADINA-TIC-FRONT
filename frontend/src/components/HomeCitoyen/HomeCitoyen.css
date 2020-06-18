@@ -12,6 +12,11 @@
   direction: rtl;
 }
 
+.ui.image.infos_screen, .image_dcr {
+  height: 140px !important;
+  width : 140px !important;
+}
+
 ._container_declaration.screen {
   margin-top: 0 !important;
   margin-left: 18rem !important;
