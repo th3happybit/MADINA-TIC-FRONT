@@ -18,7 +18,6 @@ const Profile = (props) => {
   const updateImage = (img) => {
     setImage(img);
     updateImageP(img);
-    // console.log("profile", img)
   };
   const { service, updateImageP } = props;
 
@@ -77,6 +76,7 @@ const Profile = (props) => {
             style={{
               display: "flex",
               justifyContent: "center",
+              "min-height" : "700px"
             }}
           >
             <Grid className="_profile">
@@ -97,13 +97,13 @@ const Profile = (props) => {
                     <Menu pointing secondary>
                       <Menu.Item
                         data-name="info"
-                        name="Update Infos"
+                        name="Mettre à jour les informations"
                         active={activeItem === "info"}
                         onClick={handleItemClick}
                       />
                       <Menu.Item
                         data-name="password"
-                        name="Update Password"
+                        name="Mettre à jour le mot de passe"
                         active={activeItem === "password"}
                         onClick={handleItemClick}
                       />
@@ -151,7 +151,7 @@ const Profile = (props) => {
           {" "}
           <Message negative>
             <Message.Header>
-              We're sorry you are not logged in :(
+              Nous sommes désolés que vous ne soyez pas connecté :(
             </Message.Header>
             <p
               className="text-default title _margin_vertical_sm pointer "
@@ -159,8 +159,8 @@ const Profile = (props) => {
                 ccolor: "#912d2b",
               }}
             >
-              Go to login page?<a href="/login">click here</a>
-              You don't have account?<a href="/signup">click here</a>
+              Aller à la page de connexion?<a href="/login">cliquez ici</a>
+              Vous n'avez pas de compte?<a href="/signup">cliquez ici</a>
             </p>
           </Message>
         </div>

@@ -12,10 +12,6 @@ const FormLogin = () => {
       <div className="_login_admin_section">
         <div className="d-flex">
           <MainForm />
-          <p className="text-gray-dark semi-bold small">
-            having a trouble?{" "}
-            <spaan className="underline pointer">Click here</spaan>
-          </p>
         </div>
       </div>
     </div>

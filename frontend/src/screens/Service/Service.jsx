@@ -14,8 +14,6 @@ const Service = (props) => {
   const [image, setImage] = useState("");
   const [id, setId] = useState(null);
 
-  const { service } = props;
-
   useEffect(() => {
     if (localStorage.getItem("service_token"))
       axios
@@ -80,6 +78,7 @@ const Service = (props) => {
                 props={props}
                 service
                 updateImageP={changeImage}
+                dec_data={props}
               />
             ) : (
               <div

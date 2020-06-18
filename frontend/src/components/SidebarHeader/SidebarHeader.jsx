@@ -29,7 +29,6 @@ const SidebarHeader = (props) => {
         return history.push("/admin/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const { visible } = props;

@@ -23,7 +23,7 @@ import { change_language } from "../../actions/languageAction";
 import { languages } from "../../language";
 
 const CitoyenDeclarations = (props) => {
-  const [activeFilter, setactiveFilter] = useState("Nouvelles déclarations");
+  const [activeFilter, setactiveFilter] = useState(props.language.isFrench ? "Nouvelles déclarations" : "تصريحات جديدة");
   const [Loading, setLoading] = useState(true);
   const [Data, setData] = useState(null);
   const [page, setPage] = useState(1);
@@ -32,13 +32,15 @@ const CitoyenDeclarations = (props) => {
   const [searchLoading, setSearchLoading] = useState(false);
   const [sortType, setsortType] = useState(null);
   const [sortDate, setsortDate] = useState(null);
-  const [sortMobile, setsortMobile] = useState("Aléatoire");
+  const [sortMobile, setsortMobile] = useState(
+    props.language.isFrench ? "Aléatoire" : "عشوائي"
+  );
   const [userid, setuserid] = useState(null);
   const [types, settypes] = useState([]);
   const [perm, setperm] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
-  const {isDark} = props;
+  const { isDark } = props;
 
   const handlemobileTypeSortAZ = () => {
     setsortDate(null);
@@ -54,7 +56,7 @@ const CitoyenDeclarations = (props) => {
     setsortDate("desc");
     props.language.isFrench
       ? setsortMobile("Par date (Asc)")
-      : setsortMobile("الأقدم");
+      : setsortMobile("الأحدث");
   };
   const handlemobileOldFirst = () => {
     setsortType(null);
@@ -62,7 +64,7 @@ const CitoyenDeclarations = (props) => {
     setsortDate("asc");
     props.language.isFrench
       ? setsortMobile("Par date (Desc)")
-      : setsortMobile("الأحدث");
+      : setsortMobile("الأقدم");
   };
   const handleRandomSort = () => {
     setsortType(null);
@@ -123,7 +125,6 @@ const CitoyenDeclarations = (props) => {
         getdecTypes();
       })
       .catch((err) => {
-        // console.log(err.response);
       });
   };
   const getdecTypes = () => {
@@ -138,7 +139,6 @@ const CitoyenDeclarations = (props) => {
         settypes(res.data);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const getDeclarations = () => {
@@ -155,28 +155,52 @@ const CitoyenDeclarations = (props) => {
       pa["ordering"] = "dtype";
     }
     switch (activeFilter) {
-      case "Nouvelles déclarations" || "تصريحات جديدة":
+      case "Nouvelles déclarations":
         pa["status"] = "not_validated";
         break;
-      case "Manque d'informations" || "معلومات غير كافية":
+      case "تصريحات جديدة":
+        pa["status"] = "not_validated";
+        break;
+      case "Manque d'informations":
         pa["status"] = "lack_of_info";
         break;
-      case "Validées" || "تم التحقق من صحتها":
+      case "معلومات غير كافية":
+        pa["status"] = "lack_of_info";
+        break;
+      case "Validées":
         pa["status"] = "validated";
         break;
-      case "Refusées" || "مرفوضة":
+      case "تم التحقق من صحتها":
+        pa["status"] = "validated";
+        break;
+      case "Refusées":
         pa["status"] = "refused";
         break;
-      case "En cours" || "في تقدم":
+      case "مرفوضة":
+        pa["status"] = "refused";
+        break;
+      case "En cours":
         pa["status"] = "under_treatment";
         break;
-      case "Traitées" || "معالجة":
+      case "في تقدم":
+        pa["status"] = "under_treatment";
+        break;
+      case "Traitées":
         pa["status"] = "treated";
         break;
-      case "Archivées" || "مؤرشفة":
+      case "معالجة":
+        pa["status"] = "treated";
+        break;
+      case "Archivées":
         pa["status"] = "archived";
         break;
-      case "Brouillons" || "مسودات":
+      case "مؤرشفة":
+        pa["status"] = "archived";
+        break;
+      case "Brouillons":
+        pa["status"] = "draft";
+        break;
+      case "مسودات":
         pa["status"] = "draft";
         break;
       default:
@@ -239,7 +263,9 @@ const CitoyenDeclarations = (props) => {
 
   return (
     <div
-      className={`_main_declaration ${props.language.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}
+      className={`_main_declaration ${props.language.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
     >
       <Segment
         className={`_main_declaration_right shadow ${isDark ? "dark" : ""}`}
@@ -455,20 +481,24 @@ const CitoyenDeclarations = (props) => {
               </Dropdown>
             </div>
             {Data.length > 0 ? (
-              <div className={`_data_section ${props.language.isFrench ? null : "rtl"} ${isDark ? "dark" : null}`}>
-                  <DecTable
-                    data={Data}
-                    filter={activeFilter}
-                    refresh={getDeclarations}
-                    handlesortDate={handle_sort_date}
-                    handlesortType={handle_sort_type}
-                    sorttype={sortType}
-                    sortdate={sortDate}
-                    types={types}
-                    isDark={props.isDark}
-                    handledelete={deleteDeclaration}
-                    language={props.language}
-                  />
+              <div
+                className={`_data_section ${
+                  props.language.isFrench ? null : "rtl"
+                } ${isDark ? "dark" : null}`}
+              >
+                <DecTable
+                  data={Data}
+                  filter={activeFilter}
+                  refresh={getDeclarations}
+                  handlesortDate={handle_sort_date}
+                  handlesortType={handle_sort_type}
+                  sorttype={sortType}
+                  sortdate={sortDate}
+                  types={types}
+                  isDark={props.isDark}
+                  handledelete={deleteDeclaration}
+                  language={props.language}
+                />
                 {pages > 1 && (
                   <Pagination
                     className="citoyen_declar_pagin"

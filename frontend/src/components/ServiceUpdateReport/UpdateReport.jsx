@@ -42,7 +42,6 @@ const UpdateReport = (props) => {
   let history = useHistory();
 
   useEffect(() => {
-    // console.log(props.props)
     if (props.props.props.location.state) {
       setLoading(true);
       axios
@@ -71,9 +70,7 @@ const UpdateReport = (props) => {
           .then((res) => {
             setDeclaration(res.data);
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((err) => {});
       if (props.props.props.location.state.rid) {
         axios
           .get(
@@ -261,7 +258,6 @@ const UpdateReport = (props) => {
         })
         .catch((err) => {
           setReqErr(true);
-          console.log(err);
         });
     }
   };
@@ -316,7 +312,7 @@ const UpdateReport = (props) => {
         props.props.props.location.state.did ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">
-              Update Report
+              Mettre à jour rapport
             </h3>
             <Form
               error={fileErr || reqError || duplicateErr || maxErr}
@@ -324,7 +320,7 @@ const UpdateReport = (props) => {
             >
               {declaration && (
                 <p className="text-default">
-                  Declaration : {declaration.title}
+                  Déclaration : {declaration.title}
                 </p>
               )}
               <Form.Field
@@ -337,8 +333,7 @@ const UpdateReport = (props) => {
                 name="title"
                 error={
                   titleErr && {
-                    content:
-                      "This field can't be empty or shorter than 5 characters",
+                    content: "Le titre doit être au minimum 5 charactères",
                     class: "ui basic red label pointing",
                   }
                 }
@@ -352,13 +347,13 @@ const UpdateReport = (props) => {
                 error={
                   descErr && {
                     content:
-                      "This field can't be empty or shorter than 10 characters",
+                      "La description doit être au minimum 10 charactères",
                     class: "ui basic red label pointing",
                   }
                 }
               />
               <div className="_upload_section">
-                <p className="text-default">Add Files ( Optional )</p>
+                <p className="text-default">Ajouter fichiers ( Optionnel )</p>
                 {files &&
                   files.map((file, index) => {
                     return (
@@ -367,8 +362,7 @@ const UpdateReport = (props) => {
                           {file.name
                             ? file.name
                             : file.src
-                                .slice(11, file.src.length - 12)
-                                .replace(/_/g, " ")}
+                                .slice(11, file.src.length)}
                         </p>
                         <Icon
                           onClick={handleDelete}
@@ -387,7 +381,7 @@ const UpdateReport = (props) => {
                   color="blue"
                   className="_primary"
                 >
-                  <Button.Content visible content="Upload" />
+                  <Button.Content visible content="Télécharger" />
                   <Button.Content hidden>
                     <Icon name="upload" />
                   </Button.Content>
@@ -401,18 +395,23 @@ const UpdateReport = (props) => {
                   onChange={handleUpload}
                 />
                 {fileErr && (
-                  <Message error content={"Please upload a valid PDF file."} />
+                  <Message
+                    error
+                    content={
+                      "Assurez que vous avez télécharger un fichier pds s'il vous plaît"
+                    }
+                  />
                 )}
                 <Modal
                   open={successFile && successData && successDel}
                   className="_success_modal"
                 >
-                  <Modal.Header>Success Message</Modal.Header>
+                  <Modal.Header>Message de succès</Modal.Header>
                   <Modal.Content>
                     <p className="text-default">
                       {" "}
-                      Your changes has been sent successfully. Press the button
-                      and you will be redirected back to reports page.
+                      Vos changement ont été sauvegarder. Cliquez sur le boutton
+                      pour aller vers la pages des rapports.
                     </p>
                   </Modal.Content>
                   <Modal.Actions>
@@ -423,7 +422,7 @@ const UpdateReport = (props) => {
                         history.push("/service/rapports");
                       }}
                     >
-                      Got it !
+                      D'accord !
                     </Button>
                   </Modal.Actions>
                 </Modal>
@@ -432,7 +431,9 @@ const UpdateReport = (props) => {
                     className="pointer"
                     onClick={removeMessage}
                     error
-                    content={"Something went wrong while sending request !"}
+                    content={
+                      "Un erreur s'est produit lors de l'envoi des données"
+                    }
                   />
                 </Transition>
                 <Transition visible={maxErr} animation="scale" duration={200}>
@@ -440,7 +441,7 @@ const UpdateReport = (props) => {
                     className="pointer"
                     onClick={removeMessage}
                     error
-                    content={"Maximum is 3 files !"}
+                    content={"Le maximum est 3 fichiers !"}
                   />
                 </Transition>
                 <Transition
@@ -452,9 +453,7 @@ const UpdateReport = (props) => {
                     className="pointer"
                     onClick={removeMessage}
                     error
-                    content={
-                      "A report is already attached to this declaration !"
-                    }
+                    content={"Un rapport est déja attaché à cette déclaration"}
                   />
                 </Transition>
               </div>
@@ -484,7 +483,7 @@ const UpdateReport = (props) => {
               width: "600px",
             }}
           >
-            Something went wrong :( ...
+            Un erreur s'est produit :( ...
           </h1>
         )}
       </Segment>

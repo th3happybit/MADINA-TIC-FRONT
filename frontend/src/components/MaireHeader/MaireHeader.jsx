@@ -15,6 +15,7 @@ import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 import { Link } from "react-router-dom";
 import Pusher from "pusher-js";
 import { SemanticToastContainer, toast } from "react-semantic-toasts";
+
 import moment from "moment";
 const HeaderAdmin = (props) => {
   const { isUploaded } = useContext(UserContext);
@@ -37,7 +38,7 @@ const HeaderAdmin = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 5000,
+        time: 500000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -50,7 +51,7 @@ const HeaderAdmin = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 5000,
+        time: 500000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -63,7 +64,20 @@ const HeaderAdmin = (props) => {
         icon: "info",
         title: message.title,
         description: message.body,
-        time: 5000,
+        time: 500000,
+        onDismiss: () => {
+          setIsNotifated(false);
+        },
+      });
+    });
+    channel.bind("Update", function ({ message }) {
+      setIsNotifated(true);
+      toast({
+        type: "info",
+        icon: "info",
+        title: message.title,
+        description: message.body,
+        time: 500000,
         onDismiss: () => {
           setIsNotifated(false);
         },
@@ -92,8 +106,13 @@ const HeaderAdmin = (props) => {
       })
       .then((res) => {
         setImage(res.data.image);
-        setIsNotifated(!res.data.notif_seen);
+        setIsNotifated(res.data.notif_seen);
         setFullname(res.data.first_name + " " + res.data.last_name);
+        if (res.data.notif_seen) {
+          setIsNotifated(false);
+        } else {
+          setIsNotifated(true);
+        }
         let instance = axios.create({
           baseURL: "http://madina-tic.ml/api/",
           responseType: "json",
@@ -108,11 +127,36 @@ const HeaderAdmin = (props) => {
             setData(res.data.results);
           })
           .catch((err) => {
-            console.log(err);
           });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [isUploaded]);
+  const handleChangeNotif = () => {
+    if (isNotifated) {
+      axios
+        .create({
+          headers: {
+            patch: {
+              "Content-Type": "application/json",
+              Authorization: `Token ${localStorage.getItem("maire_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/user/",
+          method: "patch",
+          data: {
+            notif_seen: true,
+          },
+        })
+        .then((res) => {
+          setIsNotifated(false);
+        })
+        .catch((err) => {
+          setIsNotifated(false);
+        });
+    }
+  };
   const trigger = <Image src={image} size="small" className="pointer" />;
 
   const history = useHistory();
@@ -135,36 +179,9 @@ const HeaderAdmin = (props) => {
         return history.push("/maire/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
-  const handleChangeNotif = () => {
-    if (isNotifated) {
-      axios
-        .create({
-          headers: {
-            patch: {
-              "Content-Type": "application/json",
-              Authorization: `Token ${localStorage.getItem("service_token")}`,
-            },
-          },
-        })
-        .request({
-          url: "https://www.madina-tic.ml/api/user/",
-          method: "patch",
-          data: {
-            notif_seen: true,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setIsNotifated(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  };
+
   return (
     <>
       <header className="_header_maire">
@@ -191,7 +208,7 @@ const HeaderAdmin = (props) => {
                   style={{
                     width: "180px",
                   }}
-                  className={props.isFrench ? " dd" : "dd"}
+                  className={props.isFrench ? " dd" : " dd"}
                 >
                   {data.length > 0 &&
                     data.map((elm, index) => (
@@ -220,13 +237,13 @@ const HeaderAdmin = (props) => {
               >
                 <Dropdown.Menu>
                   <Dropdown.Item
-                    text="Account"
+                    text="Compte"
                     icon="user"
                     as={Link}
                     to="/maire/profile"
                   />
                   <Dropdown.Item
-                    text="Sign Out"
+                    text="Déconnexion"
                     icon="sign out"
                     onClick={handleLogout}
                   />

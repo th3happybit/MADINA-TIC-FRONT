@@ -170,7 +170,6 @@ const TestComponent = (props) => {
         setUID(res.data.uid);
       })
       .catch((err) => {
-        console.log(err.response);
       });
   };
   const getData = () => {
@@ -185,8 +184,8 @@ const TestComponent = (props) => {
     setLoading(true);
     let lastUrl =
       permission === "self"
-        ? `${url}?search=${term}&status=${activeFilter}&ordering=${ord}&${role}=${uid}`
-        : `${url}?search=${term}&status=${activeFilter}&ordering=${ord}`;
+        ? `${url}?search=${term}&status=${activeFilter}&ordering=${ord}&${role}=${uid}&page=${page}`
+        : `${url}?search=${term}&status=${activeFilter}&ordering=${ord}&page=${page}`;
 
     axios
       .create({
@@ -198,7 +197,6 @@ const TestComponent = (props) => {
         },
         params: {
           search: term,
-          page: page,
         },
       })
       .request({
@@ -217,7 +215,6 @@ const TestComponent = (props) => {
         setsearchLoading(false);
       })
       .catch((err) => {
-        console.log({ err: err.response });
       });
   };
   useEffect(() => {
@@ -227,7 +224,7 @@ const TestComponent = (props) => {
       if (permission === "self") {
         getUserId();
       } else {
-        // getData();
+        getData();
       }
     }
     if (role === "maire") {
@@ -236,7 +233,7 @@ const TestComponent = (props) => {
     return () => {
       setData([]);
     };
-  }, [term, activeFilter, sortDate, role, permission, uid, orderfield]);
+  }, [term, activeFilter, sortDate, role, permission, uid, orderfield, page]);
 
   return (
     <div className="service_rapports _service_declarations">

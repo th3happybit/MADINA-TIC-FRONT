@@ -49,7 +49,7 @@ export default function RowNewAccounts(props) {
           setLoading(false);
           setOpen(false);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     } else if (type === 1) {
       axios
         .create({
@@ -71,9 +71,8 @@ export default function RowNewAccounts(props) {
           props.refresh();
           setLoading(false);
           setOpen(false);
-          console.log(res);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     }
   };
 
@@ -120,7 +119,7 @@ export default function RowNewAccounts(props) {
             className="button_primary btn_account_detail pointer"
             onClick={() => setOpen(true)}
           >
-            Account Details
+            Détails
           </Button>
         </Table.Cell>
       </Table.Row>
@@ -129,19 +128,23 @@ export default function RowNewAccounts(props) {
           <Modal.Content className="detail_content">
             {" "}
             <div className="_header_modal extra-text text-default">
-              <p>Account Details</p>
+              <p>Informations du compte</p>
             </div>
             <div className="_content_modal">
               <div>
-                {first_name && <p>First Name</p>}
-                {last_name && <p>Last Name</p>}
+                {first_name && <p>Nom</p>}
+                {last_name && <p>Prénom</p>}
                 <p>Email</p>
-                <p>Phone</p>
-                <p>Adress</p>
-                <p>Role</p>
-                <p>Inscription date</p>
+                <p>Numéro de téléphone</p>
+                <p>Adresse</p>
+                <p>Rôle</p>
+                <p>Date d'inscription</p>
               </div>
-              <div>
+              <div
+                style={{
+                  margin: "0 2rem",
+                }}
+              >
                 {first_name && <p>{first_name}</p>}
                 {last_name && <p>{last_name}</p>}
                 <p>{email}</p>
@@ -162,14 +165,14 @@ export default function RowNewAccounts(props) {
               data_reject={0}
               loading={isLoading}
             >
-              Approve
+              Approver
             </Button>
             <Button
               onClick={handleApprove}
               className="button_secondary"
               data_reject={1}
             >
-              Reject
+              Rejeter
             </Button>
           </Modal.Content>
         </Modal.Content>

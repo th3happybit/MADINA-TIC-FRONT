@@ -52,38 +52,38 @@ const ModalD = (props) => {
         <Modal.Content className="detail_content">
           {" "}
           <div className="_header_modal extra-text text-default">
-            <p>Account Details</p>
+            <p>Informations du compte</p>
           </div>
           <div className="_content_modal">
-            <div>
-              <p>First Name</p>
-              <p>Last Name</p>
+            <div style={{marginRight : "20px"}}>
+              <p>Prénom</p>
+              <p>Nom</p>
               <p>Email</p>
-              <p>Phone</p>
-              <p>Adress</p>
-              <p>Role</p>
-              <p>Inscription date</p>
+              <p>Numéro de téléphone</p>
+              <p>Adresse</p>
+              <p>Rôle</p>
+              <p>Date d'inscription</p>
               <p>Status</p>
             </div>
             <div>
               <p>{first_name ? first_name : " / "}</p>
-              <p>{last_name ? first_name : " / "}</p>
+              <p>{last_name ? last_name : " / "}</p>
               <p>{email ? email : " / "}</p>
               <p>{phone ? phone : " / "}</p>
               <p>{address ? address : " / "}</p>
               <p>{role ? role : " / "}</p>
               <p>{date_inscription ? date_inscription : " / "}</p>
-              <p>{is_active ? "Activated" : "Desactivated"}</p>
+              <p>{is_active ? "Actif" : "Désactivé"}</p>
             </div>
           </div>
         </Modal.Content>
         {!is_active && (
           <Modal.Content className="content_modal_btns marginTop" d_uid={uid}>
             <Button className="button_primary" onClick={handelApp}>
-              Activate
+              Activer
             </Button>
             <Button className="button_secondary" onClick={handleclose}>
-              Reject
+              Rejeter
             </Button>
           </Modal.Content>
         )}

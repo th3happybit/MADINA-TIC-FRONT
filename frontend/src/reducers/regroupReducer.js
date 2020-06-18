@@ -15,8 +15,6 @@ export default function (state = INITIAL_STATE, action) {
     case ADD_CHILDS:
       let arrayTemp = [];
       let exist = false;
-
-      console.log({ hey: state.childs.filter((elm) => elm.payload) });
       let newArray = state.childs;
       if (action.payload) {
         state.childs.map((elm) => {
@@ -25,14 +23,12 @@ export default function (state = INITIAL_STATE, action) {
           }
         });
         if (!exist) {
-          console.log("makach");
           newArray.push(action.payload);
           return {
             ...state,
             childs: newArray,
           };
         } else {
-          console.log("kayan");
           for (let i = 0; i < state.childs.length; i++) {
             const did = state.childs[i];
             if (did !== action.payload) {

@@ -41,7 +41,6 @@ const CitoyenMailVerification = () => {
         .catch((err) => {
           setIsLoading(false);
           setError(true);
-          console.log(err.response);
         });
     }
   };
@@ -57,14 +56,24 @@ const CitoyenMailVerification = () => {
         <div className="d-flex shadow _card_mail_verification">
           <Logo className="_logo" />
           <p className="title text-active bold ">MADINA TIC</p>
-          <p className="text-active _titre">Reset your Password</p>
+          <p className="text-active _titre">Réinitialisez votre mot de passe</p>
           <div className="_sous_titre">
-            <p className="text-gray-dark semi-bold small">
-              enter your Email adress and we will
+            <p
+              className="text-gray-dark semi-bold small"
+              style={{
+                textAlign: "center",
+              }}
+            >
+              entrez votre adresse e-mail et nous
             </p>
-            <p className="text-gray-dark semi-bold small">
+            <p
+              style={{
+                textAlign: "center",
+              }}
+              className="text-gray-dark semi-bold small"
+            >
               {" "}
-              send you a reset password link
+              vous envoyer un lien de réinitialisation de mot de passe
             </p>
           </div>
           <Form
@@ -81,14 +90,17 @@ const CitoyenMailVerification = () => {
               className="_margin_vertical_sm small"
             />{" "}
             <Message success content={messageSuccess} />
-            <Message error content="please unter a valid email address" />
+            <Message
+              error
+              content="veuillez indiquer une adresse e-mail valide"
+            />
             <Button
               loading={isLoading}
               className="_button_confirm button_primary _margin_vertical_md "
               type="submit"
               onClick={handleClick}
             >
-              Confirm
+              Confirmer
             </Button>
           </Form>
         </div>

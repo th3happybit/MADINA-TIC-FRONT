@@ -3,8 +3,9 @@ import { Form, Button, Message } from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
 
-const FormLogin = () => {
+const FormLogin = (props) => {
   const history = useHistory();
+  const { isFrench } = props;
 
   //? for loading while post request
   const [isLoading, setIsLoading] = useState(false);
@@ -70,23 +71,27 @@ const FormLogin = () => {
               setIsLoading(false);
             }
           })
-          .catch((err) => {
-            console.log(err.response);
-          });
+          .catch((err) => {});
       })
       .catch((err) => {
-        console.log(err);
         setIsLoading(false);
         setIsErr(true);
       });
   };
   return (
-    <Form error={isErr} className="_citoyen_login_form _margin_vertical_md">
+    <Form
+      error={isErr}
+      className={
+        isFrench
+          ? "_citoyen_login_form _margin_vertical_md"
+          : "_citoyen_login_form rtl _margin_vertical_md"
+      }
+    >
       <Form.Input
         onChange={handleChangeInput}
         value={email}
         id="email"
-        placeholder="Email"
+        placeholder={isFrench ? "Email" : "البريد الإلكتروني"}
         type="text"
         size="large"
         className="_margin_vertical_sm small"
@@ -95,7 +100,7 @@ const FormLogin = () => {
         onChange={handleChangeInput}
         value={password}
         id="password"
-        placeholder="Password"
+        placeholder={isFrench ? "Mot de passe" : "كلمة السر"}
         type="password"
         size="large"
         className="_margin_vertical_sm small"
@@ -105,15 +110,23 @@ const FormLogin = () => {
           error
           content={
             password.length === 0 && email.length === 0
-              ? "Please enter your email and password to login"
-              : "Invalid email or password"
+              ? isFrench
+                ? "Veuillez saisir votre e-mail et votre mot de passe pour vous connecter"
+                : "تحقق من إدخالك للبريد الإلكتروني و كلمة السر لتسجيل الدخول"
+              : isFrench
+              ? "email ou mot de passe invalide"
+              : "تحقق من صحة المعلومات"
           }
         />
       )}
       {nonApp && (
         <Message
           error
-          content="Your account is not validated yet by the admin"
+          content={
+            isFrench
+              ? "Votre compte n'est pas encore validé par l'administrateur"
+              : "لم يتم قبول حسابك من طرف الإدارة بعد"
+          }
         />
       )}
       <Button
@@ -122,7 +135,7 @@ const FormLogin = () => {
         type="submit"
         onClick={LoginCitoyen}
       >
-        Login
+        {isFrench ? "S'identifier" : "تسجيل الدخول"}
       </Button>
     </Form>
   );

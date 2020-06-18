@@ -21,14 +21,14 @@ const MenuProfileMobile = (props) => {
     <div className="row mobile_menu">
       <Menu pointing secondary>
         <Menu.Item
-          name="Update Infos"
+          name="Mettre à jour les informations"
           data-name="info"
           active={activeItem === "info"}
           onClick={handleItemClick}
           className="pointer"
         />
         <Menu.Item
-          name="Update Password"
+          name="Mettre à jour le mot de passe"
           data-name="password"
           className="pointer"
           active={activeItem === "password"}
@@ -52,13 +52,13 @@ const MenuProfileMobile = (props) => {
               id="birthday"
               value={birthday}
               onChange={handleInputChange}
-              placeholder="birthday"
+              placeholder="Anniversaire"
             />
             <Input
               className="_profile_input_admin_mobile"
               type="text"
               id="address"
-              placeholder="address"
+              placeholder="Adresse"
               value={address}
               onChange={handleInputChange}
             />
@@ -67,7 +67,7 @@ const MenuProfileMobile = (props) => {
               type="text"
               value={phone}
               id="phone"
-              placeholder="phone"
+              placeholder="Numero telephone"
               onChange={handleInputChange}
             />
             <Input
@@ -87,7 +87,7 @@ const MenuProfileMobile = (props) => {
           </div>
           <Message
             error
-            content="All the inputs are required to update the profile"
+            content="Toutes les entrées sont nécessaires pour mettre à jour le profil"
           />{" "}
         </Form>
       )}
@@ -100,12 +100,12 @@ const MenuProfileMobile = (props) => {
               id="password"
               onChange={handleInputChange}
               value={password}
-              placeholder="Current password"
+              placeholder="Mot de passe actuel"
             />
             <Input
               className="_profile_input_admin_mobile"
               type="password"
-              placeholder="New password"
+              placeholder="Nouveau mot de passe"
               id="new_password"
               onChange={handleInputChange}
               value={newPassword}
@@ -116,7 +116,7 @@ const MenuProfileMobile = (props) => {
               id="confirm_password"
               onChange={handleInputChange}
               value={confirmPassword}
-              placeholder="Confirm password"
+              placeholder="Confirmez le mot de passe"
             />
           </div>
           <Message error content={messageErr} />{" "}

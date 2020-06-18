@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { change_mode } from "../../actions/darkAction";
 import { change_language } from "../../actions/languageAction";
-import { languages } from "../../language";
 
 const AddDeclaration = (props) => {
   const { languages, isDark } = props;
@@ -63,7 +62,7 @@ const AddDeclaration = (props) => {
         });
         setOptions(arr);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, []);
   const handleCoords = (e) => {
     setAdrGeo("[" + String(e.longitude) + "," + String(e.latitude) + "]");
@@ -212,12 +211,10 @@ const AddDeclaration = (props) => {
         data: formData,
       })
       .then((res) => {
-        console.log(res);
         setIsLoading(false);
         setSucces(true);
       })
-      .catch((err) => {
-        console.log(err.response);
+      .catch((err) => {;
         setIsLoading(false);
       });
   };
@@ -245,7 +242,7 @@ const AddDeclaration = (props) => {
           options.map((elm) => elm.value === type && setDtid(elm.dtid));
           setUid(uid);
         })
-        .catch((err) => console.log(err.response));
+        .catch((err) => {});
     } else {
       setUid(uid);
     }

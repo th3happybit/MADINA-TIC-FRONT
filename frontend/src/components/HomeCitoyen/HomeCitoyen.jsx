@@ -27,8 +27,8 @@ const HomeCitoyen = (props) => {
     if (isLoading || !next) return;
     if (
       document.documentElement.scrollHeight -
-        document.documentElement.clientHeight ===
-      document.documentElement.scrollTop
+        document.documentElement.clientHeight <=
+      document.documentElement.scrollTop + 1
     ) {
       loadUsers();
     }
@@ -36,23 +36,26 @@ const HomeCitoyen = (props) => {
   const loadUsers = () => {
     setLoading(true);
 
-    const headers = !props.anonyme
+    const header = !props.anonyme
       ? {
-          "content-type": "application/json",
-          Authorization: `Token ${localStorage.getItem("token")}`,
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Token ${localStorage.getItem("token")}`,
+          },
+          url:
+            "https://madina-tic.ml/api/home-declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
         }
       : {
-          "content-type": "application/json",
+          headers: {
+            "content-type": "application/json",
+          },
+          url:
+            "https://madina-tic.ml/api/declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
         };
     axios
-      .get(
-        Data.length > 0
-          ? next
-          : "http://www.madina-tic.ml/api/declarations/?status=validated&status=treated&status=under_treatment&ordering=-created_on",
-        {
-          headers: headers,
-        }
-      )
+      .get(Data.length > 0 ? next : header.url, {
+        headers: header.headers,
+      })
       .then((res) => {
         if (Data.length === 0) {
           setData(res.data.results);
@@ -64,11 +67,8 @@ const HomeCitoyen = (props) => {
           setNext(res.data.next);
         }
         setLoading(false);
-        console.log(Data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
     getTypes();
     setFilter(filter);
   };
@@ -79,7 +79,7 @@ const HomeCitoyen = (props) => {
   const getTypes = () => {
     if (!props.anonyme)
       axios
-        .get("http://www.madina-tic.ml/api/declarations_types/", {
+        .get("https://www.madina-tic.ml/api/declarations_types/", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
@@ -87,7 +87,6 @@ const HomeCitoyen = (props) => {
         })
         .then((res) => {
           setTypes(res.data);
-          // console.log(res)
         });
   };
 
@@ -95,35 +94,37 @@ const HomeCitoyen = (props) => {
     var ret = { status: "", color: "" };
     switch (st) {
       case "not_validated":
-        ret["status"] = "Not Validated";
+        ret["status"] = language.isFrench ? "Non validée" : "تصريح جديد";
         ret["color"] = "blue";
         return ret;
       case "lack_of_info":
-        ret["status"] = "Lack of infos";
+        ret["status"] = language.isFrench
+          ? "Manque d'informations"
+          : "معلومات غير كافية";
         ret["color"] = "orange";
         return ret;
       case "validated":
-        ret["status"] = "Validated";
+        ret["status"] = language.isFrench ? "Validée" : "تم التحقق من صحتها";
         ret["color"] = "green";
         return ret;
       case "refused":
-        ret["status"] = "Refused";
+        ret["status"] = language.isFrench ? "Refusée" : "مرفوضة";
         ret["color"] = "red";
         return ret;
       case "under_treatment":
-        ret["status"] = "In progress";
+        ret["status"] = language.isFrench ? "En cours" : "في تقدم";
         ret["color"] = "yellow";
         return ret;
       case "treated":
-        ret["status"] = "Treated";
+        ret["status"] = language.isFrench ? "Traité" : "معالجة";
         ret["color"] = "pink";
         return ret;
       case "archived":
-        ret["status"] = "Archived";
+        ret["status"] = language.isFrench ? "Archivé" : "مؤرشفة";
         ret["color"] = "black";
         return ret;
       case "draft":
-        ret["status"] = "Draft";
+        ret["status"] = language.isFrench ? "Brouillon" : "مسودة";
         ret["color"] = "gray";
         return ret;
       default:
@@ -220,7 +221,7 @@ const HomeCitoyen = (props) => {
                     {element.created_on && element.created_on.slice(0, 10)}
                   </p>
                   <p className="_contenttt">
-                    {language.isFrench ? "Adress" : "العنوان"} :{" "}
+                    {language.isFrench ? "Adresse" : "العنوان"} :{" "}
                     {element.address}
                   </p>
                   <p className="_contenttt">

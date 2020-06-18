@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Message, Dropdown } from "semantic-ui-react";
+import {
+  Form,
+  Input,
+  Button,
+  Message,
+  Dropdown,
+  Flag,
+} from "semantic-ui-react";
 
 import axios from "axios";
 
+import "./CitoyenInfosForm.css";
 import ValidationDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 
 //? redux stuff
@@ -85,7 +93,7 @@ const InfosForm = (props) => {
     });
     if (errors.length > 0) {
       seterror(true);
-      seterrorMessage(errors[0].error);
+      seterrorMessage(language.isFrench ? errors[0].error : errors[0].errorAr);
     } else {
       UpdateInfosCitoyen();
     }
@@ -156,44 +164,58 @@ const InfosForm = (props) => {
     >
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>{isFrench ? "Prénom" : "اللقب"}</label>
+          <label>{isFrench ? "Prénom" : "الإسم"}</label>
           <Input
             fluid
             id="first_name"
             value={first_name}
             onChange={handleChangeInput}
+            placeholder={isFrench ? "Prénom" : "الإسم"}
           />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label>{isFrench ? "Nom" : "الاسم"}</label>
+          <label>{isFrench ? "Nom" : "اللقب"}</label>
           <Input
             fluid
             id="last_name"
             value={last_name}
             onChange={handleChangeInput}
+            placeholder={isFrench ? "Nom" : "اللقب"}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
           <label>{isFrench ? "Email" : "البريد الإلكتروني"}</label>
-          <Input fluid id="email" value={email} placeholder={"Email ..."} />
+          <Input
+            fluid
+            id="email"
+            value={email}
+            placeholder={isFrench ? "Email" : "البريد الإلكتروني"}
+          />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
-          <label> {!isFrench ? "عيد الميلاد" : "Anniversaire"}</label>
+          <label> {!isFrench ? "عيد الميلاد" : "Date de naissance"}</label>
           <Input
             fluid
             id="birthday"
             type="date"
             value={birthday}
             onChange={handleChangeInput}
+            placeholder={!isFrench ? "عيد الميلاد" : "Date de naissance"}
           />
         </Form.Field>
       </Form.Group>
       <Form.Group widths="equal">
         <Form.Field required={!isEditing} disabled={isEditing}>
           <label>{isFrench ? "Numéro de téléphone" : "رقم الهاتف"}</label>
-          <Input fluid id="phone" value={phone} onChange={handleChangeInput} />
+          <Input
+            fluid
+            id="phone"
+            value={phone}
+            onChange={handleChangeInput}
+            placeholder={isFrench ? "Numéro de téléphone" : "رقم الهاتف"}
+          />
         </Form.Field>
         <Form.Field required={!isEditing} disabled={isEditing}>
           <label>{isFrench ? "Address" : "عنوان"}</label>
@@ -202,6 +224,7 @@ const InfosForm = (props) => {
             id="address"
             value={address}
             onChange={handleChangeInput}
+            placeholder={isFrench ? "Address" : "عنوان"}
           />
         </Form.Field>
       </Form.Group>
@@ -216,6 +239,7 @@ const InfosForm = (props) => {
             id="national_id"
             value={national_id}
             onChange={handleChangeInput}
+            placeholder={props.isFrench ? "carte d'identité" : "الهوية الوطنية"}
           />
         </Form.Field>
         <Dropdown
@@ -225,11 +249,11 @@ const InfosForm = (props) => {
               value={
                 !language
                   ? !props.isFrench
-                    ? "عربي"
+                    ? "عربية"
                     : "Arabe"
                   : !props.isFrench
-                  ? "فرنسي"
-                  : "Francais"
+                  ? "فرنسية"
+                  : "Français"
               }
               label={isFrench ? "langue" : "لغة"}
             />
@@ -240,20 +264,33 @@ const InfosForm = (props) => {
             style={{
               width: "180px",
             }}
-            className={props.isFrench ? "_ltr" : "_rtl"}
+            className={
+              props.isFrench ? "_language_field _ltr" : "_language_field _rtl"
+            }
           >
             <Dropdown.Item
               onClick={() => {
                 setLanguage(false);
               }}
-              text={props.isFrench ? "Arabe" : "عربي"}
-            />
+              style={{
+                "border-bottom": "1px solid var(--secondary_text_dark)",
+              }}
+            >
+              <div className="_language">
+                <Flag name="dz" />
+                <p>{props.isFrench ? "Arabe" : "عربية"}</p>
+              </div>
+            </Dropdown.Item>
             <Dropdown.Item
               onClick={() => {
                 setLanguage(true);
               }}
-              text={props.isFrench ? "Francais" : "فرنسي"}
-            />
+            >
+              <div className="_language">
+                <Flag name="fr" />
+                <p>{props.isFrench ? "Français" : "فرنسية"}</p>
+              </div>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Form.Group>

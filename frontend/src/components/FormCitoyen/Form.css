@@ -11,6 +11,10 @@
   width: 350px !important;
 }
 
+._citoyen_login_form.rtl input {
+  text-align: right;
+}
+
 ._citoyen_login_form .field .input input {
   border: 1px solid #dadce0;
   border-radius: 4px;
@@ -49,6 +53,17 @@
   white-space: nowrap;
   color: var(--red);
 }
+._citoyen_login_form.rtl .error_inputs_msg {
+  font-family: "Cairo", sans-serif;
+  text-align: right;
+  right: 0;
+}
+
+._citoyen_login_form.rtl .error_inputs_msg i{
+  margin-left: .25rem;
+  margin-right: 0;
+}
+
 ._logo {
   width: 94px;
   height: 90px;

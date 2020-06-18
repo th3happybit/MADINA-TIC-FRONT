@@ -17,37 +17,37 @@ const MaireAnnonce = (props) => {
   const [searchLoading, setsearchLoading] = useState(false);
   const [sortEndAt, setSortEndAt] = useState(null);
   const [sortStartAt, setSortStartAt] = useState(null);
-  const [sortMobile, setsortMobile] = useState("Random");
+  const [sortMobile, setsortMobile] = useState("Aléatoire");
   const [allow, setAllow] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
   const handle_RandomSort = () => {
-    setsortMobile("Random");
+    setsortMobile("Aléatoire");
     setSortEndAt(null);
     setSortStartAt(null);
     setPage(1);
   };
   const handle_StartAtFirst = () => {
     setSortStartAt("asc");
-    setsortMobile("Start at (Asc)");
+    setsortMobile("Debut à (Asc)");
     setSortEndAt(null);
     setPage(1);
   };
   const handle_StartAtLast = () => {
     setSortStartAt("desc");
-    setsortMobile("Start at (Desc)");
+    setsortMobile("Debut à (Desc)");
     setSortEndAt(null);
     setPage(1);
   };
   const handle_EndAtFirst = () => {
     setSortEndAt("asc");
-    setsortMobile("End at (Asc)");
+    setsortMobile("Fin à (Asc)");
     setSortStartAt(null);
     setPage(1);
   };
   const handle_EndAtLast = () => {
     setSortEndAt("desc");
-    setsortMobile("End at (Desc)");
+    setsortMobile("Fin à (Desc)");
     setSortStartAt(null);
     setPage(1);
   };
@@ -143,7 +143,6 @@ const MaireAnnonce = (props) => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const updateAnnStatus = (data, aid) => {
@@ -167,7 +166,6 @@ const MaireAnnonce = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const addComplement = (data) => {
@@ -191,7 +189,6 @@ const MaireAnnonce = (props) => {
       .catch((err) => {
         setRefresh((prevState) => !prevState);
         setPage(1);
-        console.log(err);
       });
   };
   const rejectAnnonce = (annData) => {
@@ -242,7 +239,7 @@ const MaireAnnonce = (props) => {
     <div className="_maire_annonces">
       <div className="_main_header">
         <div className="title_segment">
-          <p className="extra-text text-default">Announcements</p>
+          <p className="extra-text text-default">Annonces</p>
         </div>
       </div>
       <Segment
@@ -263,7 +260,7 @@ const MaireAnnonce = (props) => {
                   ? true
                   : false,
             }}
-            placeholder="Search for announces ..."
+            placeholder="Recherche des announces ..."
           />
           <Dropdown
             className="icon filter_annonce _mobile"
@@ -274,15 +271,15 @@ const MaireAnnonce = (props) => {
             labeled
           >
             <Dropdown.Menu>
-              <Dropdown.Item text="Random" onClick={handle_RandomSort} />
+              <Dropdown.Item text="Aléatoire" onClick={handle_RandomSort} />
               <Dropdown.Item text="Ends at (Asc)" onClick={handle_EndAtFirst} />
               <Dropdown.Item text="Ends at (Desc)" onClick={handle_EndAtLast} />
               <Dropdown.Item
-                text="Start at (Asc)"
+                text="Debut à (Asc)"
                 onClick={handle_StartAtFirst}
               />
               <Dropdown.Item
-                text="Start at (Desc)"
+                text="Debut à (Desc)"
                 onClick={handle_StartAtLast}
               />
             </Dropdown.Menu>
@@ -359,7 +356,7 @@ const MaireAnnonce = (props) => {
         ) : (
           perm && (
             <p class="zero-data">
-              Sorry No Announcements to display in this section
+              Désolé, aucun informations à afficher ici
             </p>
           )
         )}

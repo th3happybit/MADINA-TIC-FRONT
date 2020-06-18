@@ -47,7 +47,7 @@ const MainForm = () => {
       .then((res) => {
         setISLoading(false);
         localStorage.setItem("maire_token", res.data.key);
-        return history.push("/maire/declaration");
+        return history.push("/maire/dashboard");
       })
       .catch(() => {
         setISLoading(false);

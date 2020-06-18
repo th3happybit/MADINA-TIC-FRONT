@@ -24,8 +24,16 @@
 
 ._add_dec.dark h3,
 ._add_dec.dark .form label,
-._add_dec.dark p {
+._add_dec.dark p,
+._add_dec.dark .form .menu.transition .item,
+._add_dec.dark .form .field .ui.selection.dropdown,
+._add_dec.dark .form .field .ui.selection.dropdown div {
   color: var(--primary_text_dark) !important;
+}
+
+
+._add_dec.dark .form .menu.transition .item {
+  border-color: #343435;
 }
 
 ._add_dec.dark .form input,
@@ -40,6 +48,10 @@
 ._add_dec.dark .form textarea:focus,
 ._add_dec.dark .form input:focus {
   border-color: var(--primary_dark) !important;
+}
+
+._add_dec.dark .form .menu.transition {
+  background-color:  var(--background_dark);
 }
 
 ._add_dec.dark ._profile_img_edit.add_dec,
@@ -151,6 +163,9 @@
 @media (max-width: 999px) {
   .container_add_dec {
     width: 50%;
+  }
+  ._add_dec {
+    padding: 2rem 0 !important;
   }
 }
 @media (max-width: 929px) {

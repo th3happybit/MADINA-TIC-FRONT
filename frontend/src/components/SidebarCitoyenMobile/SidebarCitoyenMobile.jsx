@@ -27,22 +27,26 @@ const SidebarCitoyenMobile = (props) => {
         localStorage.clear();
         return history.push("/login");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   return (
     <div
       className={
         props.visible
-          ? `_sidebar citoyen active ${isDark ? "dark" : ""}`
-          : `_sidebar citoyen ${isDark ? "dark" : ""}`
+          ? `_sidebar citoyen active ${isDark ? "dark" : ""} ${
+              props.isFrench ? "" : "rtl"
+            }`
+          : `_sidebar citoyen ${isDark ? "dark" : ""} ${
+              props.isFrench ? "" : "rtl"
+            }`
       }
     >
-      <div className="profile_citoyen_mobile_x">
-        <Image src={image} />
-        <p>{fullname}</p>
-      </div>
+      <Link to="/citoyen/profile">
+        <div className="profile_citoyen_mobile_x">
+          <Image src={image} />
+          <p style={{color : !isDark ? "black" : "var(--primary_text_dark)"}}>{fullname}</p>
+        </div>
+      </Link>
       <List className={`_sidebar_list ${props.isFrench ? "" : "rtl"}`}>
         <List.Item>
           <Link
@@ -87,15 +91,19 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
         <List.Item>
           <Link
-            to="/admin/notifications"
+            to="/citoyen/profile"
             className={
-              props.active === "notifications"
+              props.active === "profile"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
-            {props.isFrench ? "Notifications" : "الإشعارات"}
+            {props.isFrench ? "Compte" : "الحساب"}
           </Link>
+        </List.Item>
+        <List.Item className="_dark_trigger">
+          <p>{props.isFrench ? "Mode Sombre" : "الوضع المظلم"}</p>
+          <Radio toggle checked={props.isDark} onClick={props.change_mode} />
         </List.Item>
       </List>
       <div className="_logout_header _margin_vertical_sm">

@@ -8,7 +8,6 @@ import axios from "axios";
 import "./HeaderAdmin.css";
 
 //? import icons and images
-import { ReactComponent as Notification } from "../../assets/images/notification.svg";
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
 import { ReactComponent as Toggle } from "../../assets/images/toggle.svg";
 
@@ -34,7 +33,7 @@ const HeaderAdmin = (props) => {
       .then((res) => {
         setImage(res.data.image);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [isUploaded]);
   const trigger = <Image src={image} size="small" className="pointer" />;
   const { active } = props;
@@ -59,9 +58,7 @@ const HeaderAdmin = (props) => {
         localStorage.clear();
         return history.push("/admin/login");
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (
@@ -82,7 +79,6 @@ const HeaderAdmin = (props) => {
                   </Button>
                 </a>
               </div>
-              <Notification className="_margin_horizontal_md pointer" />
               <Dropdown
                 trigger={trigger}
                 pointing="top right"

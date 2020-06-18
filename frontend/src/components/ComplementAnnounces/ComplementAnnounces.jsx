@@ -41,18 +41,26 @@ const ComplementAnnounces = (props) => {
   function helper(str) {
     return str < 10 ? "0" + str : str;
   }
+  function houresMake(str, time) {
+    let houre = parseInt(str.slice(0, 2));
+    if (time === "PM") houre += 12;
+    return houre === 24
+      ? "00" + str.slice(2, str.length)
+      : houre + str.slice(2, str.length);
+  }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
-    return (
+    let ret =
       dt.getFullYear() +
       "-" +
       helper(dt.getMonth() + 1) +
       "-" +
       helper(dt.getDate()) +
-      "T" +
-      time +
-      "+01:00"
-    );
+      "T";
+    if (time.split(" ").length > 1)
+      ret += houresMake(time, time.split(" ")[1]) + "+01:00";
+    else ret += time.split(" ")[0] + "+01:00";
+    return ret;
   }
   const handledeleteImg = () => {
     setimageErr(false);
@@ -177,9 +185,7 @@ const ComplementAnnounces = (props) => {
           setEndDate(res.data.end_at);
           setImage(res.data.image);
         })
-        .catch((err) => {
-          console.log(err.response);
-        });
+        .catch((err) => {});
       axios
         .get(
           `https://www.madina-tic.ml/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.props.location.state.rid}`,
@@ -193,9 +199,7 @@ const ComplementAnnounces = (props) => {
         .then((res) => {
           setReason(res.data.results[0].reason);
         })
-        .catch((err) => {
-          console.log(err.response);
-        });
+        .catch((err) => {});
     } else setNullAid(true);
   }, []);
 
@@ -221,7 +225,7 @@ const ComplementAnnounces = (props) => {
         {!nullAid ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">
-              Complement Announce
+              Complementer Annonce
             </h3>
             <Form success={succes} error={imageErr}>
               <Message info header="The motif of the demand" content={reason} />
@@ -234,7 +238,7 @@ const ComplementAnnounces = (props) => {
                 className={titleErr ? "add_dec_err" : ""}
                 error={
                   titleErr && {
-                    content: "Title can't be empty",
+                    content: "Le titre est obligatoire",
                     class: "ui basic red pointing label fluid",
                   }
                 }
@@ -242,7 +246,7 @@ const ComplementAnnounces = (props) => {
 
               <div className="date_annonce">
                 <div className="one_input">
-                  <label htmlFor="begin">Starts at</label>
+                  <label htmlFor="begin">Date début</label>
                   <DatePicker
                     id="begin"
                     selected={Date.parse(startDate)}
@@ -268,7 +272,7 @@ const ComplementAnnounces = (props) => {
                     startDateErr && (
                       <Label
                         className="ui pointing basic red"
-                        content="Start date is required"
+                        content="Vérifiez la validité du cette date"
                       />
                     )
                   ) : (
@@ -276,20 +280,20 @@ const ComplementAnnounces = (props) => {
                       {startFrontErr && (
                         <Label
                           className="ui pointing basic red"
-                          content="Start date must be after current date"
+                          content="Date début doit être aprés maintenant"
                         />
                       )}
                       {datesErr && !startFrontErr && (
                         <Label
                           className="ui pointing basic red"
-                          content="Start date must be before end date"
+                          content="Date début doit être avant la date du fin"
                         />
                       )}
                     </>
                   )}
                 </div>
                 <div className="one_input">
-                  <label htmlFor="end">Ends at</label>
+                  <label htmlFor="end">Date fin</label>
                   <DatePicker
                     id="end"
                     selected={Date.parse(endDate)}
@@ -315,7 +319,7 @@ const ComplementAnnounces = (props) => {
                     endDateErr && (
                       <Label
                         className="ui pointing basic red"
-                        content="End date is required"
+                        content="Vérifiez la validité du cette date"
                       />
                     )
                   ) : (
@@ -323,13 +327,13 @@ const ComplementAnnounces = (props) => {
                       {endFrontErr && (
                         <Label
                           className="ui pointing basic red"
-                          content="End date must be after current date"
+                          content="Date fin doit être aprés maintenant"
                         />
                       )}
                       {datesErr && !endFrontErr && (
                         <Label
                           className="ui pointing basic red"
-                          content="End date must be after start date"
+                          content="Date fin doit être aprés la date de début"
                         />
                       )}
                     </>
@@ -347,7 +351,7 @@ const ComplementAnnounces = (props) => {
                 error={
                   descriptionErr && {
                     content:
-                      "Description can't be empty or shorter than 10 caracters",
+                      "La description doit être au minimum 10 charactères",
                     class: "ui basic red pointing label",
                   }
                 }
@@ -404,7 +408,7 @@ const ComplementAnnounces = (props) => {
                   className="button_primary _margin_horizontal_sm"
                   onClick={handle_Validation}
                 >
-                  Confirm Complement
+                  Confirmer complement
                 </Button>
               </Form.Group>
               {imageErr && (
@@ -425,7 +429,7 @@ const ComplementAnnounces = (props) => {
               width: "600px",
             }}
           >
-            Something went wrong :( ...
+            Un erreur s'est produit :( ...
           </h1>
         )}
       </Segment>

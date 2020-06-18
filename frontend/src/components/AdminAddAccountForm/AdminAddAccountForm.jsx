@@ -109,7 +109,7 @@ const AdminAddAccountForm = () => {
   };
   return (
     <div className="profile_seg ">
-      <p className="extra-text text-active bold">Add Account</p>
+      <p className="extra-text text-active bold">Ajouter un compte</p>
       <Segment className="border-none shadow">
         <div className="seg_no_border">
           <div className="add_account_container">
@@ -127,7 +127,7 @@ const AdminAddAccountForm = () => {
                 />
               </div>
               <div className="input_with_label">
-                <label htmlFor="phone">Phone Number</label>
+                <label htmlFor="phone">Numero telephone</label>
                 <Form.Input
                   error={phoneError}
                   size="big"
@@ -139,7 +139,7 @@ const AdminAddAccountForm = () => {
                 />
               </div>
               <div className="input_with_label">
-                <label htmlFor="address">Address</label>
+                <label htmlFor="address">Adresse</label>
                 <Form.Input
                   error={addressError}
                   placeholder="Address"
@@ -151,7 +151,7 @@ const AdminAddAccountForm = () => {
                 />
               </div>
               <div className="input_with_label">
-                <label htmlFor="first_name">First name</label>
+                <label htmlFor="first_name">Nom</label>
                 <Form.Input
                   placeholder="First name"
                   size="big"
@@ -162,7 +162,7 @@ const AdminAddAccountForm = () => {
                 />
               </div>
               <div className="input_with_label">
-                <label htmlFor="last_name">Last name</label>
+                <label htmlFor="last_name">Prenom</label>
                 <Form.Input
                   placeholder="Last name"
                   size="big"
@@ -173,7 +173,7 @@ const AdminAddAccountForm = () => {
                 />
               </div>
               <div className="_succes_add">
-                <Message success content="Congrats ,account added" />
+                <Message success content="Compte ajouté avec succée" />
               </div>
             </Form>
           </div>
@@ -185,7 +185,7 @@ const AdminAddAccountForm = () => {
             }}
           >
             <div className="input_with_label role _padding_vertical_lg">
-              <p>Assign Role</p>
+              <p>Donner un Rôle</p>
               <Form error={roleError !== null}>
                 <Form.Group inline className="select_box text-default">
                   <Form.Radio
@@ -223,7 +223,7 @@ const AdminAddAccountForm = () => {
             className="button_primary"
             onClick={handleCreateAccount}
           >
-            Add
+            Confirmer
           </Button>
         </div>
       </Segment>

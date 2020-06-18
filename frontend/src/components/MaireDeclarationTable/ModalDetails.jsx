@@ -33,7 +33,7 @@ const ModalD = (props) => {
       .then((res) => {
         setChilds(res.data.results);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {});
   }, []);
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
@@ -60,13 +60,13 @@ const ModalD = (props) => {
   function getPriority(p) {
     switch (p) {
       case 1:
-        return "Critical";
+        return "Critique";
       case 4:
-        return "Low";
+        return "Faible";
       case 3:
-        return "Normal";
+        return "Normale";
       case 2:
-        return "Important";
+        return "Importante";
       default:
         break;
     }
@@ -93,7 +93,7 @@ const ModalD = (props) => {
         <>
           <Button.Group onClick={handleopen} className="infos_button">
             <Popup
-              content="More Infos"
+              content="Plus d'infos"
               trigger={
                 <Button
                   icon
@@ -108,7 +108,7 @@ const ModalD = (props) => {
             onClick={handleopen}
             color="blue"
             className="shadow btn_account_detail pointer _primary _hide_on_desktop"
-            content="More details"
+            content="Plus d'infos"
           />
         </>
       }
@@ -121,33 +121,39 @@ const ModalD = (props) => {
           </div>
           <div className="_content_modal">
             <div>
-              <p>{data.fullname ? "Citizen Name" : null}</p>
-              <p>{data.title ? "Title" : null}</p>
+              <p>{data.fullname ? "Nom & prénom" : null}</p>
+              <p>{data.title ? "Titre" : null}</p>
               <p>{data.type ? "Type" : null}</p>
-              <p>{data.address ? "Address" : null}</p>
-              <p>{data.created_on ? "Added at" : null}</p>
-              <p>{data.validated_at ? "Validated_at" : null}</p>
+              <p>{data.address ? "Addresse" : null}</p>
+              <p>{data.created_on ? "Ajoutéz le" : null}</p>
+              <p>{data.validated_at ? "Validée le" : null}</p>
               <p>{data.status ? "Status" : null}</p>
-              <p>{data.priority ? "Priority" : null}</p>
-              <p>{data.description ? "Description" : null}</p>
+              {data.status !== "Non validée" &&
+                data.status !== "Manque d'informations" &&
+                data.status !== "Refusée" && (
+                  <p>{data.priority ? "Priorité" : null}</p>
+                )}
+              <p>{data.description ? "Déscription" : null}</p>
               {data.attachements
                 ? data.attachements.length > 0 && (
                     <p className="_image">Images</p>
                   )
                 : null}
-              {childs.length > 0 && <p className="chlp">"Childs"</p>}
+              {childs.length > 0 && <p className="chlp">"Sous Déclarations"</p>}
             </div>
             <div className="_infos_section">
               <p>{data.fullname ? data.fullname : null}</p>
-
               <p>{data.title ? data.title : null}</p>
-
               <p>{data.type ? data.type : null}</p>
               <p>{data.address ? data.address : null}</p>
               <p>{data.created_on ? data.created_on : null}</p>
               <p>{data.validated_at ? data.validated_at : null}</p>
               <p>{data.status ? data.status : null}</p>
-              <p>{data.priority ? getPriority(data.priority) : null}</p>
+              {data.status !== "Non validée" &&
+                data.status !== "Manque d'informations" &&
+                data.status !== "Refusée" && (
+                  <p>{data.priority ? getPriority(data.priority) : null}</p>
+                )}
               <p>{data.description}</p>
               {data.attachements
                 ? data.attachements.length > 0 && (
@@ -216,7 +222,7 @@ const ModalD = (props) => {
         </Modal.Content>{" "}
         {Maire && (
           <>
-            {data.status === "Not Validated" && (
+            {data.status === "Non validée" && (
               <Modal.Content className="content_modal_btns marginTop">
                 <RedirectModel
                   modal
@@ -266,7 +272,7 @@ const ModalD = (props) => {
                 />
               </Modal.Content>
             )}
-            {data.status === "Treated" && (
+            {data.status === "Traitée" && (
               <Modal.Content className="content_modal_btns marginTop">
                 <ArchiveModal
                   modal

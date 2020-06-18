@@ -29,19 +29,26 @@ export default function DeposerAnnonces(props) {
   function helper(str) {
     return str < 10 ? "0" + str : str;
   }
+  function houresMake(str, time) {
+    let houre = parseInt(str.slice(0, 2));
+    if (time === "PM") houre += 12;
+    return houre === 24
+      ? "00" + str.slice(2, str.length)
+      : houre + str.slice(2, str.length);
+  }
   function TimeMake(dt) {
     const time = dt.toLocaleTimeString();
-    console.log({ time });
-    return (
+    let ret =
       dt.getFullYear() +
       "-" +
       helper(dt.getMonth() + 1) +
       "-" +
       helper(dt.getDate()) +
-      "T" +
-      time.split(" ")[0] +
-      "+01:00"
-    );
+      "T";
+    if (time.split(" ").length > 1)
+      ret += houresMake(time, time.split(" ")[1]) + "+01:00";
+    else ret += time.split(" ")[0] + "+01:00";
+    return ret;
   }
 
   const handledeleteImg = () => {
@@ -97,7 +104,6 @@ export default function DeposerAnnonces(props) {
   const AddAnnonce = () => {
     setIsLoading(true);
     const formData = new FormData();
-    console.log(TimeMake(startDate));
     formData.append("title", title);
     formData.append("start_at", TimeMake(startDate));
     formData.append("end_at", TimeMake(endDate));
@@ -177,7 +183,7 @@ export default function DeposerAnnonces(props) {
     <div className="container_add_dec service">
       <div className="_add_dec">
         <h3 className="large-title text-default bold _margin_vertical_md">
-          Add Annonce
+          Ajouter Annonce
         </h3>
         <Form success={succes}>
           <Form.Input
@@ -188,7 +194,7 @@ export default function DeposerAnnonces(props) {
             name="title"
             error={
               titleErr && {
-                content: "Title can't be empty",
+                content: "Le titre est obligatoire",
                 class: "ui basic red label pointing fluid",
               }
             }
@@ -196,7 +202,7 @@ export default function DeposerAnnonces(props) {
           />
           <div className="date_annonce">
             <div className="one_input">
-              <label htmlFor="begin">Start At</label>
+              <label htmlFor="begin">Date début</label>
               <DatePicker
                 id="begin"
                 selected={startDate}
@@ -219,7 +225,7 @@ export default function DeposerAnnonces(props) {
                 startErr && (
                   <Label
                     className="ui pointing basic red"
-                    content="Start date is required"
+                    content="Vérifiez la validité du cette date"
                   />
                 )
               ) : (
@@ -227,13 +233,13 @@ export default function DeposerAnnonces(props) {
                   {startFrontErr && (
                     <Label
                       className="ui pointing basic red"
-                      content="Start date must be after current date"
+                      content="Date début doit être aprés maintenant"
                     />
                   )}
                   {datesErr && !startFrontErr && (
                     <Label
                       className="ui pointing basic red"
-                      content="Start date must be before end date"
+                      content="Date début doit être avant la date du fin"
                     />
                   )}
                 </>
@@ -263,7 +269,7 @@ export default function DeposerAnnonces(props) {
                 endErr && (
                   <Label
                     className="ui pointing basic red"
-                    content="End date is required"
+                    content="Vérifiez la validité du cette date"
                   />
                 )
               ) : (
@@ -271,13 +277,13 @@ export default function DeposerAnnonces(props) {
                   {endFrontErr && (
                     <Label
                       className="ui pointing basic red"
-                      content="End date must be after current date"
+                      content="Date fin doit être aprés maintenant"
                     />
                   )}
                   {datesErr && !endFrontErr && (
                     <Label
                       className="ui pointing basic red"
-                      content="End date must be after start date"
+                      content="Date fin doit être aprés la date de début"
                     />
                   )}
                 </>
@@ -352,10 +358,7 @@ export default function DeposerAnnonces(props) {
               Confirm
             </Button>
           </Form.Group>
-          <Message
-            success
-            content="Your annoncement has been send succesfully"
-          />
+          <Message success content="Infos sauvegardées avec succès" />
         </Form>
       </div>
     </div>

@@ -29,7 +29,7 @@ const Maire = (props) => {
           },
         })
         .request({
-          url: "http://157.230.19.233/api/user/",
+          url: "https://www.madina-tic.ml/api/user/",
           method: "get",
         })
         .then((res) => {
@@ -67,7 +67,7 @@ const Maire = (props) => {
           />
           <>
             {props.childComponent ? (
-              <props.childComponent maire={maire} updateImageP={changeImage} />
+              <props.childComponent maire={maire} updateImageP={changeImage} dec_data={props}/>
             ) : (
               <div
                 style={{

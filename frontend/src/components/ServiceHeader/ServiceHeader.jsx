@@ -136,12 +136,11 @@ const HeaderService = (props) => {
             }
           })
           .catch((err) => {
-            console.log(err);
           });
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [isUploaded]);
 
   useEffect(() => {
@@ -169,7 +168,6 @@ const HeaderService = (props) => {
         return history.push("/service/login");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
   const handleChangeNotif = () => {
@@ -191,11 +189,9 @@ const HeaderService = (props) => {
           },
         })
         .then((res) => {
-          console.log(res);
           setIsNotifated(false);
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };

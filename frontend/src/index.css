@@ -87,7 +87,6 @@ a {
 }
 .extra-text {
   font-size: 26px !important;
-  font-family: "Raleway", sans-serif;
 }
 .large-title {
   font-size: 24px !important;
@@ -247,6 +246,13 @@ a {
   direction: rtl;
   text-align: right;
 }
+.rtl,
+.rtl .button,
+.rtl input,
+.rtl input::placeholder {
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+}
 ._citoyen_header_logo .ui-alerts.container_toastr.top-right {
   position: absolute !important;
   right: 1% !important;
@@ -269,4 +275,18 @@ a {
   .ui.icon.message
   > .icon:not(.close) {
   font-size: 2rem !important;
+}
+.ui.loading.segment.dark {
+  background: black;
+  opacity: 0.2;
+}
+._annonce_tab.ui.segment {
+  overflow-y: scroll !important;
+  -ms-overflow-style: none !important;
+}
+._annonce_tab.ui.segment::-webkit-scrollbar {
+  display: none !important;
+}
+._citoyen_header .gis.ui.segment {
+  padding: 1em 0 !important;
 }

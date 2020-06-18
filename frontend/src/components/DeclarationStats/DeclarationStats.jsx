@@ -22,7 +22,6 @@ const DeclarationStats = (props) => {
       .get("declarations-statistics/")
 
       .then((res) => {
-        console.log(res.data);
         let data = res.data;
         switch (clicked) {
           case "critical":
@@ -43,7 +42,6 @@ const DeclarationStats = (props) => {
         }
       })
       .catch((err) => {
-        console.log(err.response);
       });
   }, [clicked]);
 
@@ -111,7 +109,7 @@ const DeclarationStats = (props) => {
 
   return (
     <div className="users_stats">
-      <h1>Declarations Stats</h1>
+      <h1>Statistiques des déclarations</h1>
       <div id="chart">
         {data && (
           <>
@@ -144,7 +142,7 @@ const DeclarationStats = (props) => {
             Critique
           </Button>
           <Button name="normal" color="green" onClick={handleClicked}>
-            Normal
+            Normale
           </Button>
           <Button
             name="low"
@@ -162,7 +160,7 @@ const DeclarationStats = (props) => {
             }}
             onClick={handleClicked}
           >
-            Important
+            Importante
           </Button>
         </div>
       </div>

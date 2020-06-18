@@ -22,23 +22,20 @@ import Annonce from "../../components/AnnonceHome/AnnonceHome.jsx";
 
 const CitoyenHome = (props) => {
   const { language, annonce, isDark } = props;
-  //!TODO FOR MONCEF
-  //? bah tjib isDark ...
-  // console.log(props.isDark);
-  //? bah tmodifi isDark
-  //console.log(props.change_mode());
-  //? ida kan isDark true ywali false w l3ks
 
   const [visible, setVisible] = useState(false);
   const [fullname, setFullname] = useState("");
   const [image, setImage] = useState(null);
   const [id, setId] = useState(null);
   const [seen, setSeen] = useState(false);
+  const [allow, setAllow] = useState(false);
+  const [isLogin, setIsLogin] = useState(null);
 
   const handleHide = () => {
     setVisible((prevState) => !prevState);
   };
   useEffect(() => {
+    setAllow(false);
     if (localStorage.getItem("token")) {
       setIsLogin(true);
       axios
@@ -62,12 +59,10 @@ const CitoyenHome = (props) => {
         })
         .catch((err) => {});
     } else {
+      setAllow(true);
       setIsLogin(false);
     }
   }, []);
-
-  const [isLogin, setIsLogin] = useState("null");
-  console.log({ image });
   return (
     <>
       {isLogin ? (
@@ -109,6 +104,7 @@ const CitoyenHome = (props) => {
             active={props.active}
             click={handleHide}
             isDark={isDark}
+            change_mode={props.change_mode}
             login
           />
           {annonce && (
@@ -120,42 +116,43 @@ const CitoyenHome = (props) => {
           )}
         </>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100vw",
-            height: "100vh",
-          }}
-        >
-          {" "}
-          <Message negative>
-            <Message.Header>
-              {true
-                ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
-                : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
-            </Message.Header>
-            <p
-              className="text-default title _margin_vertical_sm pointer "
-              style={{
-                ccolor: "#912d2b",
-              }}
-            >
-              {true
-                ? "Accéder à la page de connexion"
-                : "انتقل إلى صفحة تسجيل الدخول"}
-              ?<a href="/login">{true ? "cliquez ici" : "انقر هنا"}</a>
-            </p>
-          </Message>
-        </div>
+        allow && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100vw",
+              height: "100vh",
+            }}
+          >
+            {" "}
+            <Message negative>
+              <Message.Header>
+                {language.isFrench
+                  ? "Nous sommes désolés que vous ne puissiez pas accéder à cette page"
+                  : "عذرًا ، لا يمكنك الوصول إلى هذه الصفحة"}
+              </Message.Header>
+              <p
+                className="text-default title _margin_vertical_sm pointer "
+                style={{
+                  ccolor: "#912d2b",
+                }}
+              >
+                {language.isFrench
+                  ? "Accéder à la page de connexion"
+                  : "انتقل إلى صفحة تسجيل الدخول"}
+                <a href="/login">
+                  &nbsp;{language.isFrench ? "ici" : "من هنا "}
+                </a>
+              </p>
+            </Message>
+          </div>
+        )
       )}
     </>
   );
 };
-
-//? hadou lzm dirhom bah typage ykn s7i7
-//? bal3arbya ida isDArk maknch bool marahch yji
 CitoyenHome.propTypes = {
   isDark: PropTypes.bool.isRequired,
   change_mode: PropTypes.func.isRequired,
@@ -163,7 +160,6 @@ CitoyenHome.propTypes = {
   change_language: PropTypes.func.isRequired,
 };
 
-//? w hedi bah state te3 reducer li reh f redux diro props l hed component
 const mapStateToProps = (state) => ({
   isDark: state.mode.isDark,
   language: state.language,

@@ -34,20 +34,14 @@ const UsersStats = (props) => {
         enabled: false,
       },
       xaxis: {
-        categories: [
-          "All users",
-          "Active users",
-          "Citizen",
-          "approved",
-          "non approved",
-        ],
+        categories: ["Tous", "Actifs", "Citoyens", "Approuvé", "Non approuvé"],
       },
     },
   };
 
   return (
     <div className="users_stats">
-      <h1>Users Stats</h1>
+      <h1>Statistique des utilisateurs</h1>
       <div id="chart">
         <Chart
           options={settings.options}

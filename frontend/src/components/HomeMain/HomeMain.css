@@ -14,13 +14,13 @@
 }
 
 ._intro {
-  padding-top: 80px;
+  padding-top: 100px;
   padding-right: 100px;
   padding-left: 100px;
   padding-bottom: 50px;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: var(--primary);
 }
 
@@ -55,7 +55,8 @@
 ._home_main.rtl ._functions .text_area h2,
 ._home_main.rtl ._functions .text_area p,
 ._home_main.rtl ._instructions ._line p,
-._home_main.rtl .footer_area ._menu p {
+._home_main.rtl .footer_area ._menu p,
+._home_main.rtl .footer_area ._send_button {
   font-family: "Cairo", sans-serif;
 }
 
@@ -66,7 +67,8 @@
   font-family: "Poppins", sans-serif;
 }
 
-._home_main.rtl .slogan {
+._home_main.rtl .slogan,
+._home_main.rtl ._container_notif div.header {
   font-family: "Cairo", sans-serif;
 }
 
@@ -95,8 +97,8 @@
 }
 
 .slide:hover {
-  box-shadow: inset 0 100px 0 0 white;
-  color: var(--primary);
+  box-shadow: inset 0 100px 0 0 white !important;
+  color: var(--primary) !important;
 }
 
 ._intro ._text_area button:hover {
@@ -305,10 +307,9 @@
 }
 
 .footer_area {
-  height: 260px;
+  min-height: 260px;
   display: flex;
   flex-direction: column;
-  padding: 50px 0;
   justify-content: space-between;
   align-items: center;
   background: var(--primary);
@@ -316,15 +317,35 @@
 
 .footer_area ._menu {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   text-transform: uppercase;
-  width: 500px;
 }
+
+.footer_area ._top {
+  display: flex;
+  width: 60%;
+  padding: 50px 0;
+  justify-content: space-between;
+}
+.footer_area ._bottom {
+  height: 70px !important;
+  padding: 20px;
+  justify-content: center;
+  background-color: var(--primary_darker) !important;
+  width: 100%;
+  height: 30px;
+  position: relative;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
+
 .footer_area h1 {
   color: white;
   font-weight: 600;
   font-family: "Raleway", sans-serif;
+  margin-bottom: 10px;
 }
 .footer_area h3 {
   color: white;
@@ -337,6 +358,92 @@
   font-size: 16px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
+}
+
+.footer_area ._menu p {
+  margin-bottom: 25px;
+}
+._home_main .footer_area .input input,
+._home_main .footer_area input::placeholder,
+._home_main .footer_area textarea {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+._home_main.rtl .footer_area input,
+._home_main.rtl .footer_area input::placeholder,
+._home_main.rtl .footer_area textarea {
+  text-align: right;
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+}
+
+._home_main.rtl .footer_area input::placeholder {
+  font-weight: 600;
+}
+
+._home_main.rtl .footer_area textarea {
+  font-weight: 600;
+}
+
+._home_main .footer_area ._send_button {
+  color: white;
+  font-family: "Poppins", sans-serif;
+  border: 2px solid white;
+  width: 120px;
+  font-weight: 500;
+  line-height: 33px;
+  text-align: center;
+  border-radius: 5px;
+  text-transform: uppercase;
+  box-shadow: inset 0 0 0 0 white;
+  -webkit-transition: ease-out 0.8s;
+  -moz-transition: ease-out 0.8s;
+  transition: ease-out 0.8s;
+}
+
+._home_main ._container_notif {
+  position: fixed !important;
+  right: 20px !important;
+  top: 100px !important;
+  z-index: 99;
+}
+
+._home_main.rtl ._container_notif {
+  left: 20px !important;
+  right: auto !important;
+}
+
+._home_main ._container_notif div.header,
+._home_main ._container_notif p {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+
+._home_main.rtl ._container_notif p {
+  font-family: "Cairo", sans-serif;
+}
+
+._home_main.rtl ._container_notif .ui.message {
+  margin-left: 10px;
+}
+
+._home_main ._container_notif .ui.message {
+  margin-right: 10px;
+}
+
+._home_main.rtl ._container_notif .ui.icon.message > .icon.close {
+  right: auto;
+  left: 0.5em;
+}
+
+._home_main.rtl ._container_notif .ui.icon.message > .icon:not(.close) {
+  margin-left: 0.6em;
+  margin-right: 0.1em;
+}
+
+._home_main ._container_notif .ui.icon.message > .icon:not(.close) {
+  font-size: 2em;
 }
 
 @media (max-width: 1299px) {
@@ -374,6 +481,9 @@
   }
   ._instructions ._line {
     max-width: 450px;
+  }
+  .footer_area ._top {
+    width: 80%;
   }
 }
 
@@ -460,8 +570,25 @@
   ._download {
     height: 320px;
   }
-  .footer_area {
-    padding: 50px 10px;
+
+  @media (max-width: 730px) {
+    .footer_area ._top {
+      flex-direction: column;
+      padding: 40px 0;
+    }
+
+    .footer_area ._top ._links {
+      text-align: center;
+    }
+
+    .footer_area ._top ._links h1 {
+      margin-bottom: 20px;
+    }
+
+    .footer_area ._top ._menu {
+      flex-direction: row;
+      margin-bottom: 20px;
+    }
   }
 
   @media (max-width: 599px) {

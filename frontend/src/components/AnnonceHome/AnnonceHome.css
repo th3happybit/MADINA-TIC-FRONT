@@ -12,7 +12,8 @@
 
 ._annonce_tab.rtl p,
 ._annonce_tab.rtl h4,
-._annonce_tab.rtl h3 {
+._annonce_tab.rtl h3,
+._annonce_tab.rtl h2 {
   font-family: "Cairo", sans-serif;
 }
 
@@ -25,7 +26,8 @@
 }
 
 ._annonce_tab.dark p,
-._annonce_tab.dark h4 {
+._annonce_tab.dark h4,
+._annonce_tab.dark h2 {
   color: var(--primary_text_dark);
 }
 
@@ -72,8 +74,13 @@
   justify-content: space-between;
 }
 
+._annonce_tab h2 {
+  margin-top: 50%;
+  text-align: center;
+}
+
 @media (max-width: 1100px) {
-  ._annonce_tab {
+  ._annonce_section {
     display: none;
   }
 }

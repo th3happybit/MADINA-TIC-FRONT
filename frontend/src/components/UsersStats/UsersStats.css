@@ -20,3 +20,6 @@
 .apexcharts-tooltip-marker {
   background: var(--secondary) !important;
 }
+.apexcharts-text tspan {
+  font-size: 12px !important;
+}

@@ -4,6 +4,7 @@ import { Modal, Button, Icon, Popup } from "semantic-ui-react";
 
 import ConfirmModal from "./ModalConfirmComponent.jsx";
 import RejectComplement from "./ModalRejectComplement.jsx";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const ModalDetailComponent = (props) => {
   const {
@@ -19,7 +20,6 @@ const ModalDetailComponent = (props) => {
     TimeExtract,
     getMonth,
     refresh,
-    helper,
     archive,
   } = props;
   const [open, setOpen] = useState(false);
@@ -99,9 +99,7 @@ const ModalDetailComponent = (props) => {
           refresh();
         } else refresh();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   const updateAnnStatus = (ann) => {
     axios
@@ -125,23 +123,13 @@ const ModalDetailComponent = (props) => {
   };
   const confirmReport = () => {
     const date = new Date();
-    const time = date.toLocaleTimeString();
-    const now =
-      date.getFullYear() +
-      "-" +
-      helper(date.getMonth() + 1) +
-      "-" +
-      helper(date.getDate()) +
-      "T" +
-      time +
-      "+01:00";
     const report = {
       declaration: data.declaration,
       title: data.title,
       desc: data.desc,
       service: data.service,
       status: "validated",
-      validated_at: now,
+      validated_at: date,
     };
     const dec = {
       status: "treated",
@@ -162,8 +150,8 @@ const ModalDetailComponent = (props) => {
     const annonce = {
       title: data.title,
       desc: data.desc,
-      start_at: "2021-06-04T15:05:00",
-      end_at: "2021-06-05T15:05:00",
+      start_at: data.start_at,
+      end_at: data.end_at,
       status: "archived",
     };
     updateAnnStatus(annonce);
@@ -185,9 +173,7 @@ const ModalDetailComponent = (props) => {
             setMorif(res.data.results[0].reason);
           }
         })
-        .catch((err) => {
-          console.log(err.response);
-        });
+        .catch((err) => {});
     }
     if (isRapport) {
       let url = `https://www.madina-tic.ml/api/declarations/${data.declaration}`;
@@ -289,19 +275,33 @@ const ModalDetailComponent = (props) => {
           </div>
           <div className="_content_modal ">
             <div>
-              {isRapport && <p>Title Declaration</p>}
-              {motif && activeFilter === "archived" && <p>motif of rejet</p>}
+              {isRapport && <p>Titre du déclaration</p>}
+              {motif && activeFilter === "archived" && <p>Motif du rejet</p>}
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
-              {files.length > 0 && <p>Files</p>}
+              {files.length > 0 && (
+                <p>{files.length > 1 ? "Fichiers" : "Fichier"}</p>
+              )}
             </div>
             <div
               style={{
                 padding: "0 2rem",
               }}
             >
-              {isRapport && <p>{declaration.title}</p>}
+              {isRapport && (
+                <Link
+                  to={{
+                    pathname:
+                      role === "maire"
+                        ? "/maire/declaration/infos"
+                        : "/service/declaration/infos",
+                    state: { id: declaration.did, token: token },
+                  }}
+                >
+                  <p className="text-active">{declaration.title}</p>
+                </Link>
+              )}
               {motif && activeFilter === "archived" && <p>{motif}</p>}
               {detail.map((elm) => (
                 <p className={elm.value === "desc" ? "_limit_size" : null}>
@@ -350,9 +350,7 @@ const ModalDetailComponent = (props) => {
                             );
                           }}
                         >
-                          {file.src
-                            .slice(11, file.src.length - 12)
-                            .replace(/_/g, " ")}
+                          {file.src.slice(11, file.src.length)}
                         </p>
                       </span>
                     </div>
@@ -371,7 +369,7 @@ const ModalDetailComponent = (props) => {
                 modal
                 button={{ color: "blue", text: "Validate", icon: "checkmark" }}
                 text="Confirmer l'approbation de ce rapport et marquer la déclaration comme terminée?"
-                title="Confirm Approval"
+                title="Confirmer Validation"
                 OnConfirm={confirmReport}
               />
               <RejectComplement
@@ -382,7 +380,7 @@ const ModalDetailComponent = (props) => {
                   icon: "sync alternate",
                 }}
                 text="Confirmer le complément exigeant?"
-                title="Complement Demand"
+                title="Demande de complement"
                 OnConfirm={ComplementDemand}
               />
             </>
@@ -391,9 +389,9 @@ const ModalDetailComponent = (props) => {
             <ConfirmModal
               modal
               disabled={archive ? false : true}
-              button={{ color: "black", text: "Archive", icon: "archive" }}
+              button={{ color: "black", text: "Archiver", icon: "archive" }}
               text="Confirmer l'envoi de ce rapport aux archives?"
-              title="Confirm Archive"
+              title="Confirmer Archive"
               OnConfirm={ArchiveAnnonce}
             />
           )}
@@ -403,9 +401,9 @@ const ModalDetailComponent = (props) => {
             role === "service" && (
               <ConfirmModal
                 modal
-                button={{ color: "black", text: "Archive", icon: "archive" }}
+                button={{ color: "black", text: "Archiver", icon: "archive" }}
                 text="Confirmer l'envoi de ce rapport aux archives?"
-                title="Confirm Archive"
+                title="Confirmer Archive"
                 OnConfirm={ArchiveReport}
               />
             )}

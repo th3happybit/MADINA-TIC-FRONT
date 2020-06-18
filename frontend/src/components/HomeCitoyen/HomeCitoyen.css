@@ -12,11 +12,32 @@
   direction: rtl;
 }
 
+._container_declaration.screen {
+  margin-top: 0 !important;
+  margin-left: 18rem !important;
+  margin-right: 3rem !important;
+  top: 5rem;
+  min-height: 500px !important;
+}
+
+._container_declaration.screen.admin {
+  top : 10rem;
+  margin-left: 19rem !important;
+}
+
+._container_declaration.screen.rtl {
+  margin-left: 3rem !important;
+  margin-right: 18rem !important;
+}
+
+._container_declaration.rtl {
+  direction: rtl;
+}
+
 .gis.rtl,
 .gis.rtl p {
   font-family: "Cairo", sans-serif;
 }
-
 
 .gis.rtl ._container_declaration {
   margin-right: 16rem !important;
@@ -31,7 +52,7 @@ main.dark ._container_declaration p {
   color: var(--primary_text_dark);
 }
 
-main.dark .segment.loading::before {
+main.dark ._container_declaration.segment.loading::before {
   background: transparent !important;
 }
 
@@ -58,7 +79,7 @@ main.dark .segment.loading::before {
 
 .gis.rtl ._contentt {
   padding-right: 5px;
-  padding-left : 0;
+  padding-left: 0;
 }
 
 ._contenttt {
@@ -102,12 +123,26 @@ main.dark .segment.loading::before {
   ._container_declaration {
     margin-right: 5rem !important;
   }
+  .gis.rtl ._container_declaration {
+    margin-left: 5rem !important;
+  }
 }
 
 @media (max-width: 929px) {
-  ._container_declaration {
+  ._container_declaration,
+  .gis.rtl ._container_declaration {
     margin-right: 5rem !important;
     margin-left: 5rem !important;
+  }
+
+  ._container_declaration.screen.rtl {
+    margin-right: 3rem !important;
+  }
+}
+
+@media (max-width : 899px) {
+  ._container_declaration.screen {
+    margin-left: 3rem !important;
   }
 }
 
@@ -115,6 +150,17 @@ main.dark .segment.loading::before {
   ._container_declaration {
     display: flex !important;
     flex-direction: column-reverse !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  ._container_declaration.screen {
+    flex-direction: column !important;
+  }
+
+  .gis.rtl ._container_declaration {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
   }
 
   ._contentt {
@@ -140,15 +186,20 @@ main.dark .segment.loading::before {
     margin-bottom: 5px;
   }
 }
+@media (max-width: 500px) {
+  ._container_declaration,
+  ._container_declaration.screen,
+  ._container_declaration.screen.rtl,
+  ._container_declaration.rtl {
+    margin-right: 1rem !important;
+    margin-left: 1rem !important;
+  }
+}
 
 @media (max-width: 400px) {
   .titre {
     width: 100%;
     padding-top: 9px;
-  }
-  ._container_declaration {
-    margin-right: 1rem !important;
-    margin-left: 1rem !important;
   }
   .status_label {
     width: 150px;
@@ -160,5 +211,8 @@ main.dark .segment.loading::before {
   ._pic {
     width: 100% !important;
     object-fit: cover !important;
+  }
+  ._container_declaration.screen.admin {
+    top : 8rem
   }
 }

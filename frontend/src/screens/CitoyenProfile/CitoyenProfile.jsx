@@ -56,11 +56,9 @@ const CitoyenProfile = (props) => {
         setInfos(res.data);
         setImage(res.data.image);
         setIsLoading(false);
-        console.log(res);
       })
       .catch((err) => {});
   };
-  console.log({ props: props });
   return (
     <>
       {isLogin ? (
@@ -107,7 +105,7 @@ const CitoyenProfile = (props) => {
                         name={
                           languages.isFrench
                             ? "Mettre à jour le mot de passe"
-                            : "تطوير كلمة السر"
+                            : "تحديث كلمة السر"
                         }
                         active={activeItem === "password"}
                         onClick={handleItemClick}
@@ -140,6 +138,7 @@ const CitoyenProfile = (props) => {
               updateImage={updateImage}
               image={image}
               refresh={GetCitoyenInfos}
+              change_language={props.change_language}
             />
           </Container>
         </>

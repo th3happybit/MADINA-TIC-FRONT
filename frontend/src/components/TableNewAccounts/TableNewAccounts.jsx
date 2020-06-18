@@ -37,11 +37,11 @@ const TableNewAccounts = (props) => {
                       url: props.next,
                       method: "get",
                     })
-                    .then((res) => console.log(res))
-                    .catch((err) => console.log(err.response));
+                    .then((res) => {})
+                    .catch((err) => {});
                 }}
               >
-                Fullname
+                Nom complet
               </Table.HeaderCell>
               <Table.HeaderCell
                 width={3}
@@ -53,7 +53,7 @@ const TableNewAccounts = (props) => {
                 width={3}
                 className="medium-text text-default not-bold element_hide_mobile address"
               >
-                Address
+                Adresse
               </Table.HeaderCell>
               <Table.HeaderCell
                 width={3}
@@ -65,7 +65,7 @@ const TableNewAccounts = (props) => {
                 width={3}
                 className="medium-text text-default not-bold"
               >
-                Manage
+                Gérer
               </Table.HeaderCell>
             </Table.Row>
           </Table.Header>

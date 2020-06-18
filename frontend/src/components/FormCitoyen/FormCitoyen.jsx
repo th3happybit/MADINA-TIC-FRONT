@@ -9,7 +9,7 @@ import FormSignup from "./FormSignup.jsx";
 import "./Form.css";
 
 const FormCitoyen = (props) => {
-  const { islogin } = props;
+  const { islogin, isFrench } = props;
   return (
     <div className="_form_login">
       <div className="_login_citoyen_section">
@@ -20,33 +20,69 @@ const FormCitoyen = (props) => {
           }}
         >
           <Logo className="_logo" />
-          <p className="title text-active bold ">MADINA TIC</p>
+          <p className="title text-active bold ">
+            {isFrench ? "MADINA TIC" : "مدينة تيك"}
+          </p>
           {islogin ? (
             <div className="d-flex _margin_vertical_md small text-gray-light">
-              <p>Please enter your email</p>
-              <p>and password to login</p>
+              <p>
+                {isFrench
+                  ? "Veuillez saisir votre email"
+                  : "أدخل بريدك الإلكتروني"}
+              </p>
+              <p>
+                {isFrench
+                  ? "et mot de passe pour se connecter"
+                  : "و كلمة السر لتسجيل الدخول"}
+              </p>
             </div>
           ) : (
             <div className="d-flex _margin_vertical_md small text-gray-light">
-              <p>Welcome to our platform</p>
+              <p>
+                {isFrench
+                  ? "Bienvenue dans Madina-Tic"
+                  : "مرحبا بك في مدينة تيك"}
+              </p>
             </div>
           )}
-          {islogin ? <FormLogin /> : <FormSignup />}
+          {islogin ? (
+            <FormLogin isFrench={isFrench} />
+          ) : (
+            <FormSignup isFrench={isFrench} />
+          )}
           {islogin && (
-            <p className="text-gray-dark semi-bold small">
-              forget your password?{" "}
+            <p
+              className={
+                isFrench
+                  ? "text-gray-dark semi-bold small"
+                  : "text-gray-dark small"
+              }
+            >
+              {isFrench ? "Mot de passe oublié ?" : "هل نسيت كلمة السر ؟"}{" "}
               <a href="/mailVerification" className="text-gray-dark">
                 {" "}
-                <spaan className="underline pointer">Click here</spaan>
+                <spaan className="underline pointer">
+                  {isFrench ? "Cliquez ici" : "انقر هنا"}
+                </spaan>
               </a>
             </p>
           )}
 
           <Divider
             horizontal
-            className="text-gray-dark semi-bold extra-small _margin_vertical_lg"
+            className={
+              isFrench
+                ? "text-gray-dark semi-bold extra-small _margin_vertical_lg"
+                : "text-gray-dark extra-small _margin_vertical_lg"
+            }
           >
-            {islogin ? "You are new here?" : "Already have an account"}
+            {islogin
+              ? isFrench
+                ? "Vous êtes nouveau ici ?"
+                : "هل أنت جديد هنا ؟"
+              : isFrench
+              ? "Vous avez déjà un compte ?"
+              : "هل تملك حسابا ؟"}
           </Divider>
           <div className="d-flex ">
             <Button className="button_secondary" type="submit">
@@ -54,7 +90,13 @@ const FormCitoyen = (props) => {
                 href={!islogin ? "/login" : "/signup"}
                 className="text-white medium-text"
               >
-                {!islogin ? "Login" : "Signup"}
+                {!islogin
+                  ? isFrench
+                    ? "S'identifier"
+                    : "تسجيل الدخول"
+                  : isFrench
+                  ? "S'inscrire"
+                  : "أنشئ حسابا"}
               </a>
             </Button>
           </div>

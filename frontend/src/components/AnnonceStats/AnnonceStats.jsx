@@ -16,11 +16,9 @@ const AnnonceStats = (props) => {
     instance
       .get("announces-statistics/")
       .then((res) => {
-        console.log({ res });
         setData(res.data);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
 
@@ -33,10 +31,10 @@ const AnnonceStats = (props) => {
             type: "pie",
           },
           labels: [
-            "Annonces publiés",
-            "Annonces Supprimés",
-            "Annonces exprirés",
-            "Annonces active",
+            "Annonces publiées",
+            "Annonces supprimées",
+            "Annonces exprirées",
+            "Annonce actives",
           ],
           responsive: [
             {
@@ -80,7 +78,7 @@ const AnnonceStats = (props) => {
     : {};
   return (
     <div className="users_stats">
-      <h1>Annonces Stats</h1>
+      <h1>Statistique des annonces</h1>
       <div id="chart">
         {data && (
           <Chart
