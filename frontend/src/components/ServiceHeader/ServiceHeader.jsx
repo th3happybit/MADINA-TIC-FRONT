@@ -140,7 +140,7 @@ const HeaderService = (props) => {
         setImage(res.data.image);
         setFullname(res.data.first_name + " " + res.data.last_name);
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, [isUploaded]);
 
   useEffect(() => {

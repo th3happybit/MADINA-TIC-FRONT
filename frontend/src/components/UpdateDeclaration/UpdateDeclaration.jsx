@@ -226,7 +226,7 @@ const UpdateDeclaration = (props) => {
             .catch((err) => {
             });
         })
-        .catch((err) => {});
+        .catch((err) => { });
   }, [selectedType]);
   useEffect(() => {
     axios
@@ -357,7 +357,7 @@ const UpdateDeclaration = (props) => {
               flexDirection: "column",
             }}
           >
-            <p className="label_add_dec bold" style={{margin : "1rem 0"}}>
+            <p className="label_add_dec bold" style={{ margin: "1rem 0" }}>
               {languages.isFrench ? "Ajouter photos" : "تحميل الصور"} (
               {languages.isFrench ? "optionnel" : "اختياري"})
             </p>

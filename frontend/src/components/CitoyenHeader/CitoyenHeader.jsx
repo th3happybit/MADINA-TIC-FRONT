@@ -75,17 +75,21 @@ export default function CitoyenHeader(props) {
       });
     });
     channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
+      if (message.status === "draft" || message.status === "archived" || message.status === "not_validated") {
+        return true
+      } else {
+        setIsNotifated(true);
+        return toast({
+          type: "info",
+          icon: "info",
+          title: message.title,
+          description: message.body,
+          time: 5000,
+          onDismiss: () => {
+            setIsNotifated(false);
+          },
+        });
+      }
     });
   }, []);
   useEffect(() => {
@@ -109,7 +113,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setData(res.data.results);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   const { login, isDark } = props;
@@ -131,7 +135,7 @@ export default function CitoyenHeader(props) {
         localStorage.removeItem("token");
         return history.push("/login");
       })
-      .catch((err) => {});
+      .catch((err) => { });
   };
   useEffect(() => {
     setIsNotifated(props.seen);
@@ -170,7 +174,7 @@ export default function CitoyenHeader(props) {
         .then((res) => {
           setIsNotifated(false);
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
   };
   return (
