@@ -11,13 +11,13 @@ main ._commune {
   margin-right: 18rem !important;
 }
 
-._commune.dark .segment{
+._commune.dark .segment {
   background: var(--second_dark);
   color: var(--primary_text_dark);
 }
 
 ._commune.dark .segment.loading::before {
-  background: rgba(10,10,10, .8) !important;
+  background: rgba(10, 10, 10, 0.8) !important;
 }
 
 ._commune.rtl {
@@ -55,5 +55,13 @@ main ._commune {
 @media (max-width: 1200px) {
   ._commune {
     padding: 100px 50px;
+  }
+}
+
+@media (max-width: 899px) {
+  main ._commune,
+  ._commune {
+    margin-right: auto !important;
+    margin-left: auto !important;
   }
 }

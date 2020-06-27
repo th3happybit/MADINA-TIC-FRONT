@@ -14,6 +14,7 @@ const Commue = (props) => {
   const [Data, setData] = useState({});
   const [lang, setLang] = useState(null);
   const [lat, setLat] = useState(null);
+  const [logged, setLogged] = useState(localStorage.getItem("token"));
   const [Loading, setLoading] = useState(true);
   useEffect(() => {
     axios
@@ -61,7 +62,9 @@ const Commue = (props) => {
   ];
   return (
     <div
-      className={`_commune ${isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}
+      className={`_commune ${isFrench ? "" : "rtl"} ${
+        isDark && logged ? "dark" : ""
+      }`}
     >
       <Segment loading={Loading}>
         <section className="_infos">
