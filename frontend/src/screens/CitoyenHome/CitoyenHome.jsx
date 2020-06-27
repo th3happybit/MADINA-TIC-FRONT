@@ -109,7 +109,9 @@ const CitoyenHome = (props) => {
           />
           {annonce && (
             <div
-              className={`_annonce_section ${language.isFrench ? "" : "rtl"}`}
+              className={`_annonce_section ${language.isFrench ? "" : "rtl"} ${
+                props.active === "annonce" ? "_visible" : ""
+              }`}
             >
               <Annonce isFrench={language.isFrench} isDark={isDark} />
             </div>

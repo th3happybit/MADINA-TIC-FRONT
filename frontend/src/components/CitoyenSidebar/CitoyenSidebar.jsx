@@ -48,7 +48,26 @@ const CitoyenSidebar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            {props.isFrench ? "mes déclarations" : "تصريحاتي"}
+            {props.isFrench ? "Mes déclarations" : "تصريحاتي"}
+          </List.Content>
+        </List.Item>
+        <List.Item
+          as="a"
+          href="/citoyen/commune"
+          className={
+            props.active === "commune" ? "active file text" : "file text"
+          }
+        >
+          <List.Icon
+            name="university"
+            className={props.active === "commune" ? "active_ico" : ""}
+          />
+          <List.Content
+            style={{
+              whiteSpace: "nowrap",
+            }}
+          >
+            {props.isFrench ? "Commune" : "البلدية"}
           </List.Content>
         </List.Item>
       </List>
