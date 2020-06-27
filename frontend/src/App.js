@@ -56,6 +56,8 @@ import DashboardMaire from "./components/DashboardMaire/DashboardMaire.jsx";
 import HomeCitoyen from "./components/HomeCitoyen/HomeCitoyen.jsx";
 import InfosScreen from "./components/HomeCitoyen/InfosScreen.jsx";
 import Infos from "./components/ServiceMaireDeclarationInfos/DeclarationInfo.jsx";
+import AdminCommune from "./components/AdminCommune/AdmineCommune.jsx";
+import Commune from "./components/Commune/Commune.jsx";
 
 function App() {
   return (
@@ -168,6 +170,18 @@ function App() {
                   active="home"
                   childComponent={<HomeCitoyen />}
                 />
+              )}
+            />
+            <Route
+              exact
+              path="/home/annonce"
+              component={() => <CitoyenHome annonce active="annonce" />}
+            />
+            <Route
+              exact
+              path="/citoyen/commune"
+              component={() => (
+                <CitoyenHome active="commune" childComponent={<Commune />} />
               )}
             />
             <Route
@@ -415,6 +429,13 @@ function App() {
               )}
             />
             <Route
+              exact
+              path="/admin/commune"
+              component={() => (
+                <Admin active="commune" childComponent={<AdminCommune />} />
+              )}
+            />
+            <Route
               path="/login"
               component={() => <CitoyenAuth islogin={true} />}
             />
@@ -433,6 +454,11 @@ function App() {
               component={() => (
                 <Home content="declaration" active="déclarations" />
               )}
+            />
+            <Route
+              exact
+              path="/commune"
+              component={() => <Home content="commune" active="commune" />}
             />
             <Route
               exact

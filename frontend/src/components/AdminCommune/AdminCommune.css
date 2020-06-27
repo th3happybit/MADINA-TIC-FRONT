@@ -1,0 +1,68 @@
+._admin_commune {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+  width: 95.7%;
+  height: 100%;
+  padding: 2rem !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+._admin_commune .form {
+  margin-top: 40px;
+}
+
+._commune_form .field {
+  width: 380px;
+}
+
+._commune_form .field.disabled {
+  opacity: 1 !important;
+}
+._commune_form .field label {
+  font-size: 14px !important;
+  color: #707070 !important;
+  font-weight: bolder !important;
+}
+
+._commune_form .field.disabled .disabled.input {
+  opacity: 1 !important;
+}
+
+._commune_form .field input,
+._commune_form textarea {
+  font-size: 14px !important;
+  border: none !important;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16) !important;
+  border-radius: 5px !important;
+}
+
+._commune_form .fields > .field {
+  margin-right: 70px !important;
+}
+
+._admin_commune ._action_btns {
+  margin-top: 30px;
+}
+
+._admin_commune ._action_btns .btn_primary {
+  margin-right: 40px;
+}
+
+.btn_primary {
+  width: 120px;
+  background: var(--primary) !important;
+}
+
+.btn_primary:hover {
+  background: var(--primary_darker) !important;
+}
+
+.btn_secondary {
+  width: 120px;
+  background: var(--secondary) !important;
+}
+
+.btn_secondary:hover {
+  background: var(--secondary_darker) !important;
+}

@@ -10,7 +10,6 @@ import iphone2Ar from "../../assets/images/iphoneAr.png";
 import iphoneAr from "../../assets/images/iphone2Ar.png";
 import galaxy from "../../assets/images/android_screenshot.png";
 import badge from "../../assets/images/google_play_badge.png";
-import HeroImg from "../../assets/images/hero_img.png";
 import { ReactComponent as Checkmark } from "../../assets/icons/check_circle.svg";
 import { ReactComponent as Users } from "../../assets/icons/group.svg";
 import { ReactComponent as Announce } from "../../assets/icons/annonce_icon.svg";
@@ -77,7 +76,7 @@ const HomeMain = (props) => {
     setLnameErr(false);
     setMessageErr(false);
     setSubjectErr(false);
-    if (email.length < 1) {
+    if (email.length < 1 || !validateEmail(email)) {
       setemailErr(true);
       err = true;
     }
@@ -197,14 +196,14 @@ const HomeMain = (props) => {
       head: language.isFrench ? "Accessible partout" : "استخدام سهل",
       text: language.isFrench
         ? "Depuis votre PC, smartphone ou tablette."
-        : "من حاسوبك، هاتفك الذكي أو جهازك اللوحي",
+        : "من حاسوبك، هاتفك الذكي أو جهازك اللوحي.",
     },
     {
       comp: Notification,
       head: language.isFrench ? "Notifications en temps réel" : "إشعارات لحظية",
       text: language.isFrench
         ? "Restez à jour grace à notre système de notifications."
-        : "ابق دائما على اطلاع و ذلك بفضل خاصية الإشعارات",
+        : "ابق دائما على اطلاع و ذلك بفضل خاصية الإشعارات.",
     },
     {
       comp: Done,
@@ -213,7 +212,7 @@ const HomeMain = (props) => {
         : "خطوات سهلة و بسيطة",
       text: language.isFrench
         ? "Siganlement en quelques clics seulement."
-        : "صرح بالمشاكل في بضع خطوات فقط",
+        : "صرح بالمشاكل في بضع خطوات فقط.",
     },
     {
       comp: Location,
@@ -222,32 +221,32 @@ const HomeMain = (props) => {
         : "نظام تحديد المواقع",
       text: language.isFrench
         ? "Marquez la zone que vous souhaitez signaler d'un simple clic."
-        : "أضف إحداثيات المنطقة في نقرة واحدة",
+        : "أضف إحداثيات المنطقة في نقرة واحدة.",
     },
     {
       comp: Camera,
       head: language.isFrench ? "Ajouter des photos" : "إضافة الصور",
       text: language.isFrench
         ? "Accompagner vos signalement avec des photos. "
-        : "وثق تصريحاتك بصور للمشاكل",
+        : "وثق تصريحاتك بصور للمشاكل.",
     },
   ];
   const inst = [
     language.isFrench
       ? "Donner les informations et les détails concernant le problème que vous avez rencontré."
-      : "أضف المعلومات و التفاصيل فيما يخص المشكل الذي واجهته",
+      : "أضف المعلومات و التفاصيل فيما يخص المشكل الذي واجهته.",
     language.isFrench
       ? "Le maire va consulter puis réorienter la déclaration vers les services technique."
-      : "بعد اطلاع المسؤول على التصريح، يتم توجيهه نحو المصالح المختصة",
+      : "بعد اطلاع المسؤول على التصريح، يتم توجيهه نحو المصالح المختصة.",
     language.isFrench
       ? "Le service responsable va traiter le problème, ensuite il informe le maire par un rapport."
-      : "تقوم المصلحة المعنية بمعالجة المشكل ثم ترفع تقريرا للمسؤول",
+      : "تقوم المصلحة المعنية بمعالجة المشكل ثم ترفع تقريرا للمسؤول.",
     language.isFrench
       ? "Le maire vérifie et assure que le travail a été bien fait."
-      : "يقوم المسؤول بمعاينة العمل المنجز و يحرص على إتمامه",
+      : "يقوم المسؤول بمعاينة العمل المنجز و يحرص على إتمامه.",
     language.isFrench
       ? "Après la validation du travail, une notification vous sera envoyée."
-      : "يتم إشعاركم بعد التأكد من إتمام العمل",
+      : "يتم إشعاركم بعد التأكد من إتمام العمل.",
   ];
   const footerItems = [
     { text: language.isFrench ? "ACCUEIl" : "الصفحة الرئيسية", link: "/" },
@@ -255,6 +254,7 @@ const HomeMain = (props) => {
       text: language.isFrench ? "Déclarations" : "التصريحات",
       link: "/declaration",
     },
+    { link: "/commune", text: language.isFrench ? "commune" : "البلدية" },
     {
       text: language.isFrench ? "Sinscrire" : "أنشئ حسابا",
       link: "/signup",

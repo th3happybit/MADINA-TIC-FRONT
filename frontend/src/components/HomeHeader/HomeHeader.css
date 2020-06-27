@@ -204,7 +204,7 @@
   text-align: right;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1230px) {
   ._home_nav {
     width: 90%;
   }
@@ -212,7 +212,7 @@
 
 @media (max-width : 1099px){
   ._home_nav {
-    width : 98%
+    width : 95%
   }
 }
 
