@@ -3,10 +3,11 @@ import {
   Container,
   Grid,
   Segment,
-  Message,
   Button,
   List,
   Input,
+  Dropdown,
+  Message,
 } from "semantic-ui-react";
 
 import "./AdminTypes.css";
@@ -18,46 +19,69 @@ const AdminTypes = () => {
   const [data, setData] = useState([]);
   const [add, setAdd] = useState(false);
   const [newType, setNewType] = useState("");
-  const [err, setErr] = useState(false);
+  const [errType, setErrType] = useState(false);
+  const [servErr, setServErr] = useState(false);
+  const [services, setServices] = useState([]);
+  const [next, setNext] = useState(null);
+  const [Loading, setLoading] = useState(true);
+  const [service, setService] = useState(null);
 
   const handleInput = (e, { name, value }) => {
     switch (name) {
       case "new":
-        if (err) setErr(false);
+        if (errType) setErrType(false);
         setNewType(value);
         break;
       default:
         break;
     }
   };
+  const AddType = () => {
+    let instance = Axios.create({
+      baseURL: "https://www.madina-tic.ml/api",
+      responseType: "json",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("admin_token")}`,
+      },
+    });
+    let body = {
+      name: newType,
+      service: service,
+    };
+    instance
+      .post("/declarations_types/", body)
+      .then((res) => {
+        setAdd((prevState) => !prevState);
+        setData((prevState) => [...prevState, res.data]);
+      })
+      .catch((err) => {
+        setAdd((prevState) => !prevState);
+      });
+  };
   const handleAddType = () => {
     if (add) {
-      let instance = Axios.create({
-        baseURL: "https://www.madina-tic.ml/api",
-        responseType: "json",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("admin_token")}`,
-        },
-      });
-      let body = {
-        name: newType,
-      };
-      instance
-        .post("/declarations_types/", body)
-        .then((res) => {
-          setAdd((prevState) => !prevState);
-          setData((prevState) => [...prevState, res.data]);
-        })
-        .catch((err) => {
-          setErr(true);
-          setAdd((prevState) => !prevState);
-        });
+      let err = false;
+      if (newType.length < 6) {
+        setErrType(true);
+        err = true;
+      }
+      if (!service) {
+        setServErr(true);
+        err = true;
+      }
+      if (!err) AddType();
     } else {
       setAdd((prevState) => !prevState);
     }
   };
+  function getServiceName(str) {
+    for (let i = 0; i < services.length; i++) {
+      if (str === services[i].value) return services[i].text;
+    }
+  }
   useEffect(() => {
+    setLoading(true);
     let instance = Axios.create({
       baseURL: "https://www.madina-tic.ml/api",
       responseType: "json",
@@ -71,8 +95,7 @@ const AdminTypes = () => {
       .then((res) => {
         setData(res.data);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, []);
   const refresh = (id) => {
     const newArr = data.filter((elm) => elm.dtid !== id);
@@ -89,6 +112,33 @@ const AdminTypes = () => {
     });
     setData(tempArr);
   };
+  const handle_service = (e, { value }) => {
+    setServErr(false);
+    setService(value);
+  };
+  useEffect(() => {
+    let url = next ? next : "https://www.madina-tic.ml/api/users/?role=Service";
+    Axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("admin_token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.data.next) setNext(res.data.next);
+        else setLoading(false);
+        let arr = services;
+        res.data.results.map((elm) => {
+          let elemnt = {
+            value: elm.uid,
+            text: elm.first_name + " " + elm.last_name,
+          };
+          arr.push(elemnt);
+        });
+        setServices([...arr]);
+      })
+      .catch((res) => {});
+  }, [next]);
   return (
     <div className="_admin_profile">
       <Container fluid>
@@ -97,9 +147,9 @@ const AdminTypes = () => {
             <Grid.Column>
               <div className="profile_seg ">
                 <p className="extra-text text-active bold">
-                  Types des Declarations
+                  Types des Déclarations
                 </p>
-                <Segment className="border-none shadow">
+                <Segment className="border-none shadow" loading={Loading}>
                   <div className="row_t">
                     <Button
                       className={add ? "conf" : "add"}
@@ -115,15 +165,33 @@ const AdminTypes = () => {
                             refresh={refresh}
                             elm={elm}
                             index={index}
+                            options={services}
+                            getName={getServiceName}
                           />
                         ))}
                       {add && (
-                        <Input
-                          type="text"
-                          value={newType}
-                          name="new"
-                          onChange={handleInput}
-                        />
+                        <>
+                          <div className="_type_inputs">
+                            <Input
+                              type="text"
+                              value={newType}
+                              name="new"
+                              onChange={handleInput}
+                              error={errType}
+                            />
+                            <Dropdown
+                              className="_service_input"
+                              style={{ marginLeft: "20px" }}
+                              placeholder="Service ..."
+                              search
+                              selection
+                              scrolling
+                              onChange={handle_service}
+                              options={services}
+                              error={servErr}
+                            />
+                          </div>
+                        </>
                       )}
                     </List>
                   </div>

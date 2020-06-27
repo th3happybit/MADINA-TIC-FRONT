@@ -103,22 +103,9 @@ const Modalredirect = (props) => {
             <p>Confirmation de validation {"&"} redirection</p>
           </div>
           <div className="_redirection_content">
-            <div>
-              <label className="text-default">Redirection à :</label>
-              <Select
-                onClick={() => setServiceErr(false)}
-                className="shadow"
-                placeholder="Service"
-                options={options}
-                onChange={handlechange}
-                error={
-                  serviceErr && {
-                    content: "ce field est obligatoire",
-                    class: "ui pointing label red",
-                  }
-                }
-              />
-            </div>
+            <h2 className="text-default" style={{ marginBottom: "20px" }}>
+              Choix de priorité :
+            </h2>
             <div className="_priority_section">
               <Radio
                 label="Critique"

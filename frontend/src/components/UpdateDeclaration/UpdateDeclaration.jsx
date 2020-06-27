@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { change_mode } from "../../actions/darkAction";
 import { change_language } from "../../actions/languageAction";
-import { languages } from "../../language";
 
 const UpdateDeclaration = (props) => {
   const { languages, isDark } = props;
@@ -20,6 +19,7 @@ const UpdateDeclaration = (props) => {
   const [title, setTitle] = useState("");
   const [titleErr, setTitleErr] = useState(false);
   const [type, setType] = useState("");
+  const [service, setService] = useState("");
   const [typeErr, setTypeErr] = useState(false);
   const [adr, setAdr] = useState("");
   const [adrErr, setAdrErr] = useState(false);
@@ -100,6 +100,7 @@ const UpdateDeclaration = (props) => {
           address: adr,
           dtype: selectedType,
           status: "not_validated",
+          service: service,
           citizen: props.props.location.state.data.citizen,
           modified_at: new Date().toJSON().substr(0, 19) + "+01:00",
         },
@@ -149,8 +150,7 @@ const UpdateDeclaration = (props) => {
             setSucces(true);
           }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     } else if (delP.length > 0) {
       deleteFiles();
     } else {
@@ -171,8 +171,7 @@ const UpdateDeclaration = (props) => {
           setIsLoading(false);
           setSucces(true);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     });
   };
   const handleCoords = (e) => {
@@ -183,7 +182,6 @@ const UpdateDeclaration = (props) => {
     setAdr("");
   };
   useEffect(() => {
-    setLoadingPage(true);
     selectedType &&
       axios
         .create({
@@ -206,6 +204,7 @@ const UpdateDeclaration = (props) => {
               text: elm.name,
               value: elm.name,
               dtid: elm.dtid,
+              service: elm.service,
             });
           });
           setOptions(arr);
@@ -221,12 +220,12 @@ const UpdateDeclaration = (props) => {
             )
             .then((res) => {
               setType(res.data.name);
+              setService(res.data.service);
               setLoadingPage(false);
             })
-            .catch((err) => {
-            });
+            .catch((err) => {});
         })
-        .catch((err) => { });
+        .catch((err) => {});
   }, [selectedType]);
   useEffect(() => {
     axios
@@ -246,9 +245,9 @@ const UpdateDeclaration = (props) => {
         setAdr(res.data.address);
         setAdrGeo(res.data.geo_cord);
         setPictures(res.data.attachments);
+        setService(res.data.service);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, []);
   const handleChange = (e, { name, value }) => {
     switch (name) {
@@ -259,6 +258,7 @@ const UpdateDeclaration = (props) => {
       case "type":
         setTypeErr(false);
         setType(value);
+        change_service(value);
         break;
       case "adr":
         setAdrErr(false);
@@ -272,8 +272,20 @@ const UpdateDeclaration = (props) => {
         break;
     }
   };
+  const change_service = (value) => {
+    options.map((elm) => {
+      if (elm.value === value) {
+        setSelectedType(elm.dtid);
+        setService(elm.service);
+      }
+    });
+  };
   return (
-    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}>
+    <div
+      className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
+    >
       <Segment
         className={`_add_dec ${isDark ? "dark" : ""}`}
         style={{
