@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   Button,
@@ -14,11 +14,29 @@ import RedirectModel from "./ModalRedirection.jsx";
 import ComplementModal from "./ModalComplement.jsx";
 import DeleteModal from "./ModalDelete.jsx";
 import ArchiveModal from "./ModalArchive.jsx";
-import { useEffect } from "react";
+import ReportDetails from "../TestComponent/ModalDetailComponent.jsx";
 
 const ModalD = (props) => {
-  const { title, data, Maire } = props;
+  const { title, data, Maire, getMonth, getStatus } = props;
   const [childs, setChilds] = useState([]);
+  const [report, setReport] = useState(null);
+
+  function TimeExtract(date) {
+    let ConvertedDate,
+      year,
+      month,
+      day,
+      hour,
+      minute = "";
+    year = date.slice(0, 4);
+    month = date.slice(5, 7);
+    day = date.slice(8, 10);
+    hour = date.slice(11, 13);
+    minute = date.slice(14, 16);
+    ConvertedDate =
+      year + " " + getMonth(month) + " " + day + " --- " + hour + ":" + minute;
+    return ConvertedDate;
+  }
   useEffect(() => {
     let instance = axios.create({
       baseURL: "https://www.madina-tic.ml/api/",
@@ -34,6 +52,17 @@ const ModalD = (props) => {
         setChilds(res.data.results);
       })
       .catch((err) => {});
+
+    axios
+      .get(`https://www.madina-tic.ml/api/reports/?declaration=${data.did}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
+      })
+      .then((res) => {
+        setReport(res.data.results[0]);
+      });
   }, []);
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
@@ -139,6 +168,45 @@ const ModalD = (props) => {
                     <p className="_image">Images</p>
                   )
                 : null}
+              {report &&
+                (data.status === "Traitée" ||
+                  data.status === "En cours" ||
+                  data.status === "Archivée") && (
+                  <ReportDetails
+                    fromDeclaration
+                    trigger={
+                      <p className="pointer text-active">
+                        Consulter le rapport d'ici
+                      </p>
+                    }
+                    closeParent={handleclose}
+                    openParent={handleopen}
+                    report={report.rid}
+                    data={report}
+                    detail={[
+                      { text: "Titre Rapport", value: "title" },
+                      { text: "Créé en", value: "created_on" },
+                      { text: "Modifier en", value: "modified_at" },
+                      { text: "Validé en", value: "validated_at" },
+                      { text: "Description", value: "desc" },
+                    ]}
+                    activeFilter={report.status}
+                    isRapport
+                    title={"Rapport"}
+                    // uid={uid}
+                    role={"maire"}
+                    token={"service_token"}
+                    style={{
+                      margin: "0 1rem",
+                    }}
+                    getMonth={getMonth}
+                    TimeExtract={TimeExtract}
+                    getStatus={getStatus}
+                    // ConfirmDeleteModal={ConfirmDeleteModal}
+                    // refresh={refresh}
+                    // helper={helper}
+                  />
+                )}
               {childs.length > 0 && <p className="chlp">"Sous Déclarations"</p>}
             </div>
             <div className="_infos_section">
@@ -290,7 +358,7 @@ const ModalD = (props) => {
                   close={handleclose}
                 />
               </Modal.Content>
-            )}{" "}
+            )}
           </>
         )}
       </Modal.Content>

@@ -143,6 +143,8 @@ const MaireRow = (props) => {
             services: services,
             status: getStatus(status).status,
           }}
+          getMonth={getMonth}
+          getStatus={getStatus}
           Maire
           reject={props.rejectDeclaration}
           archive={props.archiveDeclaration}

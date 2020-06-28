@@ -21,6 +21,8 @@ const ModalDetailComponent = (props) => {
     getMonth,
     refresh,
     archive,
+    trigger,
+    fromDeclaration,
   } = props;
   const [open, setOpen] = useState(false);
   const [declaration, setDeclaration] = useState("");
@@ -244,27 +246,37 @@ const ModalDetailComponent = (props) => {
       closeIcon
       className="_add_account_modal"
       trigger={
-        <>
-          <Button.Group onClick={handleopen} className="infos_button">
-            <Popup
-              content="Plus d'informations"
-              trigger={
-                <Button
-                  icon
-                  className="shadow _hide_on_mobile _infos_btn_desktop"
-                >
-                  <Icon name="info" color="black" />
-                </Button>
-              }
+        fromDeclaration ? (
+          <div
+            onClick={() => {
+              handleopen();
+            }}
+          >
+            {trigger}
+          </div>
+        ) : (
+          <>
+            <Button.Group onClick={handleopen} className="infos_button">
+              <Popup
+                content="Plus d'informations"
+                trigger={
+                  <Button
+                    icon
+                    className="shadow _hide_on_mobile _infos_btn_desktop"
+                  >
+                    <Icon name="info" color="black" />
+                  </Button>
+                }
+              />
+            </Button.Group>
+            <Button
+              onClick={handleopen}
+              color="blue"
+              className="shadow btn_account_detail pointer _primary _hide_on_desktop"
+              content="Plus de détails"
             />
-          </Button.Group>
-          <Button
-            onClick={handleopen}
-            color="blue"
-            className="shadow btn_account_detail pointer _primary _hide_on_desktop"
-            content="Plus de détails"
-          />
-        </>
+          </>
+        )
       }
     >
       <Modal.Content>
@@ -275,8 +287,10 @@ const ModalDetailComponent = (props) => {
           </div>
           <div className="_content_modal ">
             <div>
-              {isRapport && <p>Titre du déclaration</p>}
-              {motif && activeFilter === "archived" && <p>Motif du rejet</p>}
+              {isRapport && !fromDeclaration && <p>Titre du déclaration</p>}
+              {motif && activeFilter === "lack_of_infos" && (
+                <p>Motif du rejet</p>
+              )}
               {detail.map((elm) => (
                 <p>{elm.text}</p>
               ))}
@@ -289,7 +303,7 @@ const ModalDetailComponent = (props) => {
                 padding: "0 2rem",
               }}
             >
-              {isRapport && (
+              {isRapport && !fromDeclaration && (
                 <Link
                   to={{
                     pathname:
@@ -402,7 +416,7 @@ const ModalDetailComponent = (props) => {
               <ConfirmModal
                 modal
                 button={{ color: "black", text: "Archiver", icon: "archive" }}
-                text="Confirmer l'envoi de ce rapport aux archives?"
+                text="Confirmer l'envoi de ce rapport aux archives ?"
                 title="Confirmer Archive"
                 OnConfirm={ArchiveReport}
               />

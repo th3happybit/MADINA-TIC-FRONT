@@ -10,13 +10,31 @@ import {
 } from "semantic-ui-react";
 import axios from "axios";
 import ConfirmModal from "../TestComponent/ModalConfirmComponent.jsx";
+import ReportDetails from "../TestComponent/ModalDetailComponent.jsx";
 
 const ModalD = (props) => {
   const [open, setOpen] = useState(false);
   const [active, setactive] = useState(null);
   const [max, setMax] = useState(null);
   const [children, setChildren] = useState([]);
+  const [report, setReport] = useState({});
 
+  function TimeExtract(date) {
+    let ConvertedDate,
+      year,
+      month,
+      day,
+      hour,
+      minute = "";
+    year = date.slice(0, 4);
+    month = date.slice(5, 7);
+    day = date.slice(8, 10);
+    hour = date.slice(11, 13);
+    minute = date.slice(14, 16);
+    ConvertedDate =
+      year + " " + getMonth(month) + " " + day + " --- " + hour + ":" + minute;
+    return ConvertedDate;
+  }
   const TreatChildren = () => {
     let data = {
       status: "under_treatment",
@@ -42,7 +60,6 @@ const ModalD = (props) => {
         .catch((err) => {});
     });
   };
-
   const TreatDeclaration = () => {
     const data = {
       status: "under_treatment",
@@ -67,25 +84,21 @@ const ModalD = (props) => {
       })
       .catch((err) => {});
   };
-
   const handleopen = () => {
     setOpen(true);
   };
-
   const handleincrement = () => {
     if (active < max) {
       const temp = active + 1;
       setactive(temp);
     }
   };
-
   const handledecrement = () => {
     if (active > 0) {
       const temp = active - 1;
       setactive(temp);
     }
   };
-
   const handleclose = () => {
     setOpen(false);
   };
@@ -109,6 +122,17 @@ const ModalD = (props) => {
         setChildren(res.data.results);
       })
       .catch((err) => {});
+    // Report request
+    axios
+      .get(`https://www.madina-tic.ml/api/reports/?declaration=${did}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        },
+      })
+      .then((res) => {
+        setReport(res.data.results[0]);
+      });
   }, [props.attachements.length]);
 
   const {
@@ -122,6 +146,8 @@ const ModalD = (props) => {
     priority,
     attachements,
     refresh,
+    getMonth,
+    getStatus,
   } = props;
 
   return (
@@ -170,6 +196,44 @@ const ModalD = (props) => {
               <p>Priorité</p>
               <p>Déscription</p>
               {attachements.length > 0 && <p className="_image">Images</p>}
+              {(status === "Traitée" ||
+                status === "En cours" ||
+                status === "Archivée") && (
+                <ReportDetails
+                  fromDeclaration
+                  trigger={
+                    <p className="pointer text-active">
+                      Consulter le rapport d'ici
+                    </p>
+                  }
+                  closeParent={handleclose}
+                  openParent={handleopen}
+                  report={report.rid}
+                  data={report}
+                  detail={[
+                    { text: "Titre Rapport", value: "title" },
+                    { text: "Créé en", value: "created_on" },
+                    { text: "Modifier en", value: "modified_at" },
+                    { text: "Validé en", value: "validated_at" },
+                    { text: "Description", value: "desc" },
+                  ]}
+                  activeFilter={report.status}
+                  isRapport
+                  title={"Rapport"}
+                  // uid={uid}
+                  role={"service"}
+                  token={"service_token"}
+                  style={{
+                    margin: "0 1rem",
+                  }}
+                  getMonth={getMonth}
+                  TimeExtract={TimeExtract}
+                  getStatus={getStatus}
+                  // ConfirmDeleteModal={ConfirmDeleteModal}
+                  // refresh={refresh}
+                  // helper={helper}
+                />
+              )}
             </div>
             <div className="_infos_section">
               <p>{title ? title : "/"}</p>
