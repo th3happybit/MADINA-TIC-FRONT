@@ -5,7 +5,6 @@ import {
   Button,
   Icon,
   ModalContent,
-  Select,
   Radio,
   Message,
 } from "semantic-ui-react";
@@ -15,10 +14,7 @@ import { useEffect } from "react";
 
 const Modalredirect = (props) => {
   const [open, setOpen] = useState(false);
-  const [service, setService] = useState(null);
-  const [options, setOptions] = useState([]);
   const [priority, setPriority] = useState(null);
-  const [serviceErr, setServiceErr] = useState(false);
   const [priorityErr, setPriorityErr] = useState(false);
 
   const handlepriority = (e, { value }) => {
@@ -28,23 +24,15 @@ const Modalredirect = (props) => {
   const handleopen = () => {
     setOpen(true);
   };
-  const handlechange = (e, { value }) => {
-    setServiceErr(false);
-    setService(value);
-  };
   const handlevalidate = () => {
     let error = false;
-    if (!service) {
-      error = true;
-      setServiceErr(true);
-    }
     if (!priority) {
       error = true;
       setPriorityErr(true);
     }
     if (!error) {
       let dt = {};
-      dt["service"] = service;
+      dt["service"] = props.data.service;
       dt["validated_at"] = new Date().toJSON().substr(0, 19) + "+01:00";
       dt["priority"] = priority;
       props.validate(dt, props.data.did);
@@ -54,22 +42,9 @@ const Modalredirect = (props) => {
   };
   const handleclose = () => {
     setPriority(null);
-    setService(null);
-    setServiceErr(false);
     setPriorityErr(false);
     setOpen(false);
   };
-  useEffect(() => {
-    let arr = [];
-    props.services.map((elem, index) => {
-      arr.push({
-        key: index,
-        value: elem.uid,
-        text: elem.first_name + " " + elem.last_name,
-      });
-    });
-    setOptions(arr);
-  }, [props.services]);
   return (
     <Modal
       open={open}

@@ -123,6 +123,7 @@ const MaireRow = (props) => {
             type: editType(dtype),
             dtype: dtype,
             address: address,
+            service: service,
             description: desc,
             attachements: filterAttachments(attachments),
             created_on: created_on

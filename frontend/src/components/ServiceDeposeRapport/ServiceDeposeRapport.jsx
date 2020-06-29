@@ -9,6 +9,7 @@ import {
   Input,
   Transition,
   Modal,
+  Image,
 } from "semantic-ui-react";
 
 import "./ServiceDeposeRapport.css";
@@ -32,6 +33,10 @@ const DeposeRapport = (props) => {
   const [files, setFiles] = useState(null);
   const [fileErr, setFileErr] = useState(false);
   const [maxErr, setMaxErr] = useState(false);
+  const [pictures, setPictures] = useState([]);
+  const [picturesPreview, setPicturesPreview] = useState([]);
+  const [maxImageErr, setMaxImageErr] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [declaration, setDeclaration] = useState(null);
   const [service, setService] = useState(null);
 
@@ -67,10 +72,58 @@ const DeposeRapport = (props) => {
         setService(res.data.uid);
       });
   }, []);
+  useEffect(() => {
+    if (!selectedFile) {
+      setPicturesPreview([]);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPicturesPreview((prevState) => [...prevState, objectUrl]);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
   const removeMessage = () => {
     setMaxErr(false);
     setReqErr(false);
+    setMaxImageErr(false);
     setDuplicateErr(false);
+  };
+  const onSelectFile = (e) => {
+    if (picturesPreview.length < 3) {
+      setMaxImageErr(false);
+      let es = e.target.files[0];
+      if (!e.target.files || e.target.files.length === 0) {
+        setSelectedFile(undefined);
+        return;
+      }
+
+      if (es.type === "image/png" || es.type === "image/jpeg") {
+        setSelectedFile(es);
+        setPictures((prevState) => [...prevState, es]);
+      } else {
+        setFileErr(true);
+      }
+    } else {
+      setMaxImageErr(true);
+    }
+  };
+  const handledeleteImg = (e) => {
+    let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
+    let preview = [];
+    let f = [];
+    picturesPreview.map((elm, index) => {
+      if (index !== indexElm) {
+        preview.push(elm);
+      }
+      return true;
+    });
+    pictures.map((elm, index) => {
+      if (index !== indexElm) {
+        f.push(elm);
+      }
+      return true;
+    });
+    setPictures(f);
+    setPicturesPreview(preview);
   };
   const handleTitle = (e, { value }) => {
     setTitleErr(false);
@@ -120,12 +173,11 @@ const DeposeRapport = (props) => {
       PostReport();
     }
   };
-  const PostFile = (rid) => {
-    setUploadingFile(true);
+  const PostImage = (rid) => {
     const formData = new FormData();
-    files.map((file, index) => {
-      formData.append("src", file);
-      formData.append("filetype", "pdf");
+    pictures.map((image, index) => {
+      formData.append("src", image);
+      formData.append("filetype", "image");
       formData.append("declaration", declaration.did);
       formData.append("report", rid);
     });
@@ -144,14 +196,52 @@ const DeposeRapport = (props) => {
         data: formData,
       })
       .then((res) => {
-        setUploadingFile(false);
+        setPictures(null);
         setSuccessFile(true);
-        setFiles(null);
+        setUploadingFile(false);
       })
       .catch((err) => {
         setReqErr(true);
         setUploadingFile(false);
       });
+  };
+  const PostFile = (rid) => {
+    setUploadingFile(true);
+    if (files) {
+      const formData = new FormData();
+      files.map((file, index) => {
+        formData.append("src", file);
+        formData.append("filetype", "pdf");
+        formData.append("declaration", declaration.did);
+        formData.append("report", rid);
+      });
+      axios
+        .create({
+          headers: {
+            post: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
+            },
+          },
+        })
+        .request({
+          url: "https://www.madina-tic.ml/api/documents/",
+          method: "post",
+          data: formData,
+        })
+        .then((res) => {
+          setFiles(null);
+          if (pictures.length > 0) PostImage(rid);
+          else {
+            setSuccessFile(true);
+            setUploadingFile(false);
+          }
+        })
+        .catch((err) => {
+          setReqErr(true);
+          setUploadingFile(false);
+        });
+    } else PostImage(rid);
   };
   const PostReport = () => {
     setUplaodingData(true);
@@ -178,7 +268,7 @@ const DeposeRapport = (props) => {
       .then((res) => {
         setSuccessData(true);
         setUplaodingData(false);
-        if (files) {
+        if (files || pictures.length > 0) {
           PostFile(res.data.rid);
         } else if (!files) {
           setSuccessFile(true);
@@ -271,11 +361,53 @@ const DeposeRapport = (props) => {
               className="pointer"
               onChange={handleUpload}
             />
+            <p className="text-default" style={{ marginTop: "10px" }}>
+              Ajouter Images ( Optionel )
+            </p>
+            <Button
+              as={"label"}
+              htmlFor="ImagesInput"
+              animated
+              color="blue"
+              className="_primary"
+            >
+              <Button.Content visible content="Télécharger" />
+              <Button.Content hidden>
+                <Icon name="upload" />
+              </Button.Content>
+            </Button>
+            <input
+              id="ImagesInput"
+              style={{ display: "none" }}
+              type="file"
+              accept="image/*"
+              className="pointer"
+              onChange={onSelectFile}
+            />
+            <div className="prev_images_dec">
+              {picturesPreview.map((elm, index) => {
+                return (
+                  <div
+                    style={{
+                      position: "relative",
+                    }}
+                  >
+                    <Image src={elm} key={index} />
+                    <Icon
+                      color="black"
+                      name="delete"
+                      data-id={index}
+                      onClick={handledeleteImg}
+                    />
+                  </div>
+                );
+              })}
+            </div>
             {fileErr && (
               <Message
                 error
                 content={
-                  "Assurez que vous avez télécharger un fichier pds s'il vous plaît"
+                  "Assurez que vous avez télécharger un fichier avec un format correct s'il vous plaît"
                 }
               />
             )}
@@ -314,6 +446,14 @@ const DeposeRapport = (props) => {
                 onClick={removeMessage}
                 error
                 content={"Le maximum est 3 fichiers !"}
+              />
+            </Transition>
+            <Transition visible={maxImageErr} animation="scale" duration={200}>
+              <Message
+                className="pointer"
+                onClick={removeMessage}
+                error
+                content={"Le maximum est 3 images !"}
               />
             </Transition>
             <Transition visible={duplicateErr} animation="scale" duration={200}>

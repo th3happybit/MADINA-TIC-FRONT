@@ -198,42 +198,43 @@ const ModalD = (props) => {
               {attachements.length > 0 && <p className="_image">Images</p>}
               {(status === "Traitée" ||
                 status === "En cours" ||
-                status === "Archivée") && (
-                <ReportDetails
-                  fromDeclaration
-                  trigger={
-                    <p className="pointer text-active">
-                      Consulter le rapport d'ici
-                    </p>
-                  }
-                  closeParent={handleclose}
-                  openParent={handleopen}
-                  report={report.rid}
-                  data={report}
-                  detail={[
-                    { text: "Titre Rapport", value: "title" },
-                    { text: "Créé en", value: "created_on" },
-                    { text: "Modifier en", value: "modified_at" },
-                    { text: "Validé en", value: "validated_at" },
-                    { text: "Description", value: "desc" },
-                  ]}
-                  activeFilter={report.status}
-                  isRapport
-                  title={"Rapport"}
-                  // uid={uid}
-                  role={"service"}
-                  token={"service_token"}
-                  style={{
-                    margin: "0 1rem",
-                  }}
-                  getMonth={getMonth}
-                  TimeExtract={TimeExtract}
-                  getStatus={getStatus}
-                  // ConfirmDeleteModal={ConfirmDeleteModal}
-                  // refresh={refresh}
-                  // helper={helper}
-                />
-              )}
+                status === "Archivée") &&
+                report && (
+                  <ReportDetails
+                    fromDeclaration
+                    trigger={
+                      <p className="pointer text-active">
+                        Consulter le rapport d'ici
+                      </p>
+                    }
+                    closeParent={handleclose}
+                    openParent={handleopen}
+                    report={report.rid}
+                    data={report}
+                    detail={[
+                      { text: "Titre Rapport", value: "title" },
+                      { text: "Créé en", value: "created_on" },
+                      { text: "Modifier en", value: "modified_at" },
+                      { text: "Validé en", value: "validated_at" },
+                      { text: "Description", value: "desc" },
+                    ]}
+                    activeFilter={report.status}
+                    isRapport
+                    title={"Rapport"}
+                    // uid={uid}
+                    role={"service"}
+                    token={"service_token"}
+                    style={{
+                      margin: "0 1rem",
+                    }}
+                    getMonth={getMonth}
+                    TimeExtract={TimeExtract}
+                    getStatus={getStatus}
+                    // ConfirmDeleteModal={ConfirmDeleteModal}
+                    // refresh={refresh}
+                    // helper={helper}
+                  />
+                )}
             </div>
             <div className="_infos_section">
               <p>{title ? title : "/"}</p>

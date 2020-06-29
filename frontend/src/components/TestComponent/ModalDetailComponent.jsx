@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Button, Icon, Popup } from "semantic-ui-react";
+import {
+  Modal,
+  Button,
+  Icon,
+  Popup,
+  Transition,
+  Image,
+} from "semantic-ui-react";
 
 import ConfirmModal from "./ModalConfirmComponent.jsx";
 import RejectComplement from "./ModalRejectComplement.jsx";
@@ -27,6 +34,9 @@ const ModalDetailComponent = (props) => {
   const [open, setOpen] = useState(false);
   const [declaration, setDeclaration] = useState("");
   const [files, setFiles] = useState([]);
+  const [images, setImages] = useState([]);
+  const [active, setactive] = useState(0);
+  const [max, setMax] = useState(null);
   const [motif, setMorif] = useState(null);
   const [children, setChildren] = useState([]);
 
@@ -158,6 +168,21 @@ const ModalDetailComponent = (props) => {
     };
     updateAnnStatus(annonce);
   };
+  const handleincrement = () => {
+    if (active < max) {
+      const temp = active + 1;
+      setactive(temp);
+    }
+  };
+  const handledecrement = () => {
+    if (active > 0) {
+      const temp = active - 1;
+      setactive(temp);
+    }
+  };
+  const handleClick = (e) => {
+    window.open(e.currentTarget.src);
+  };
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
       let instance = axios.create({
@@ -228,12 +253,18 @@ const ModalDetailComponent = (props) => {
         })
         .then((res) => {
           let tempArr = [];
+          let imgArr = [];
           if (res.data.length > 0) {
             res.data.map((elm) => {
               if (elm.filetype === "pdf") {
                 tempArr.push(elm);
               }
+              if (elm.filetype === "image") {
+                imgArr.push(elm);
+              }
             });
+            setMax(imgArr.length - 1);
+            setImages(imgArr);
             setFiles(tempArr);
           }
         })
@@ -296,6 +327,11 @@ const ModalDetailComponent = (props) => {
               ))}
               {files.length > 0 && (
                 <p>{files.length > 1 ? "Fichiers" : "Fichier"}</p>
+              )}
+              {images.length > 0 && (
+                <p style={{ marginTop: "100px" }}>
+                  {files.length > 1 ? "Images" : "Image"}
+                </p>
               )}
             </div>
             <div
@@ -370,6 +406,43 @@ const ModalDetailComponent = (props) => {
                     </div>
                   );
                 })}
+              {images.length > 0 && (
+                <div className="_images_slides _infos_section">
+                  {images.length > 1 && (
+                    <Button
+                      circular
+                      size={window.innerWidth > 660 ? "medium" : "tiny"}
+                      onClick={handledecrement}
+                      className="shadow"
+                      icon={{ name: "chevron left" }}
+                    />
+                  )}
+                  {images.map((element, index) => {
+                    return (
+                      index === active && (
+                        <Transition.Group animation={"browse"} duration={1000}>
+                          <Image
+                            className="pointer"
+                            src={"https://www.madina-tic.ml/" + element.src}
+                            key={index}
+                            rounded
+                            onClick={handleClick}
+                          />
+                        </Transition.Group>
+                      )
+                    );
+                  })}
+                  {images.length > 1 && (
+                    <Button
+                      circular
+                      onClick={handleincrement}
+                      size={window.innerWidth > 660 ? "medium" : "tiny"}
+                      className="shadow"
+                      icon={{ name: "chevron right" }}
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </Modal.Content>

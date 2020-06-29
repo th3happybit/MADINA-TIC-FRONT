@@ -305,6 +305,7 @@ const ModalD = (props) => {
                     dtype: data.dtype,
                     desc: data.description,
                     children: childs.length > 0 ? childs : null,
+                    service: data.service,
                   }}
                   validate={props.validate}
                   services={props.data.services}
