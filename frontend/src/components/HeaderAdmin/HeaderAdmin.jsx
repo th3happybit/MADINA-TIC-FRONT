@@ -61,13 +61,23 @@ const HeaderAdmin = (props) => {
       .catch((err) => {});
   };
 
+  const handle_download = () => {
+    const link = document.createElement("a");
+    link.href = "https://www.madina-tic.ml/api/download-csv-file";
+    link.click();
+  };
+
   return (
     <>
       <header className="_header_admin">
         <div className="row">
           <div className="right_part">
             <div className="profile_img">
-              {" "}
+              <div className={"btn_segment"}>
+                <Button onClick={handle_download}>
+                  Télécharger les données
+                </Button>
+              </div>{" "}
               <div
                 className={
                   active === "account" ? "btn_segment active" : "btn_segment"

@@ -28,8 +28,12 @@ const SidebarHeader = (props) => {
         localStorage.setItem(("admin_token", ""));
         return history.push("/admin/login");
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
+  };
+  const download = () => {
+    const link = document.createElement("a");
+    link.href = "https://www.madina-tic.ml/api/download-csv-file/";
+    link.click();
   };
   const { visible } = props;
   return (
@@ -69,7 +73,7 @@ const SidebarHeader = (props) => {
                 : "medium-text text-default"
             }
           >
-            Add account
+            Ajouter un compte
           </Link>
         </List.Item>
         <List.Item>
@@ -86,14 +90,14 @@ const SidebarHeader = (props) => {
         </List.Item>{" "}
         <List.Item>
           <Link
-            to="/admin/notifications"
+            onClick={download}
             className={
               props.active === "notifications"
                 ? "medium-text text-default text-active"
                 : "medium-text text-default"
             }
           >
-            Notification
+            Télécharger données
           </Link>
         </List.Item>
       </List>

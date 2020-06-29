@@ -62,7 +62,7 @@ const AdminTypes = () => {
   const handleAddType = () => {
     if (add) {
       let err = false;
-      if (newType.length < 6) {
+      if (newType.length < 3) {
         setErrType(true);
         err = true;
       }
