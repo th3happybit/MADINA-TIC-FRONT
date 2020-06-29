@@ -33,23 +33,23 @@ const Commue = (props) => {
       });
   }, []);
 
-  const { isFrench, isDark } = props;
+  const { language, isDark } = props;
 
   const items = [
-    isFrench ? "Commune" : "البلدية",
-    isFrench ? "En Tamazight" : "بالأمازيغية",
-    isFrench ? "Wilaya" : "الولاية",
-    isFrench ? "Daira" : "الدائرة",
-    isFrench ? "Maire" : "رئيس البلدية",
-    isFrench ? "Surface" : "المساحة",
-    isFrench ? "Population" : "عدد السكان",
-    isFrench ? "Altitude" : "الارتفاع عن سطح البحر",
-    isFrench ? "Indicatif" : "بداية الهاتف الثابت",
-    isFrench ? "Description" : "الوصف",
+    language.isFrench ? "Commune" : "البلدية",
+    language.isFrench ? "En Tamazight" : "بالأمازيغية",
+    language.isFrench ? "Wilaya" : "الولاية",
+    language.isFrench ? "Daira" : "الدائرة",
+    language.isFrench ? "Maire" : "رئيس البلدية",
+    language.isFrench ? "Surface" : "المساحة",
+    language.isFrench ? "Population" : "عدد السكان",
+    language.isFrench ? "Altitude" : "الارتفاع عن سطح البحر",
+    language.isFrench ? "Indicatif" : "بداية الهاتف الثابت",
+    language.isFrench ? "Description" : "الوصف",
   ];
 
   const Dataitems = [
-    isFrench ? "name" : "name_ar",
+    language.isFrench ? "name" : "name_ar",
     "name_am",
     "wilaya",
     "daira",
@@ -62,7 +62,7 @@ const Commue = (props) => {
   ];
   return (
     <div
-      className={`_commune ${isFrench ? "" : "rtl"} ${
+      className={`_commune ${language.isFrench ? "" : "rtl"} ${
         isDark && logged ? "dark" : ""
       }`}
     >
@@ -75,17 +75,17 @@ const Commue = (props) => {
                 <p>
                   {Data[Dataitems[index]]}&nbsp;
                   {Dataitems[index] === "population"
-                    ? isFrench
+                    ? language.isFrench
                       ? "Habitants"
                       : "نسمة"
                     : ""}
                   {Dataitems[index] === "surface"
-                    ? isFrench
+                    ? language.isFrench
                       ? "Km ²"
                       : "كم ²"
                     : ""}
                   {Dataitems[index] === "altitude"
-                    ? isFrench
+                    ? language.isFrench
                       ? "mètres"
                       : "متر"
                     : ""}
@@ -99,8 +99,6 @@ const Commue = (props) => {
             defaultCenter={{ lng: lang, lat: lat }}
             center={{ lng: lang, lat: lat }}
             defaultZoom={12}
-            // onChildMouseEnter={this.onChildMouseEnter}
-            // onChildMouseLeave={this.onChildMouseLeave}
           ></GoogleMapReact>
         </section>
       </Segment>
@@ -110,10 +108,12 @@ const Commue = (props) => {
 
 Commue.propTypes = {
   isDark: PropTypes.bool.isRequired,
+  language: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isDark: state.mode.isDark,
+  language: state.language,
 });
 
 export default connect(mapStateToProps)(Commue);

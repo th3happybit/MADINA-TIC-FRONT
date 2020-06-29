@@ -7,8 +7,13 @@
 main ._commune {
   width: 80%;
   padding: 1.4rem 0 !important;
-  margin-left: auto !important;
+  margin-left: 18rem !important;
+  margin-right: auto !important;
+}
+
+main ._commune.rtl {
   margin-right: 18rem !important;
+  margin-left: auto !important;
 }
 
 ._commune.dark .segment {
