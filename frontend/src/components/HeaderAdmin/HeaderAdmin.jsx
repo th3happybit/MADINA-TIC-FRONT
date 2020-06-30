@@ -62,9 +62,22 @@ const HeaderAdmin = (props) => {
   };
 
   const handle_download = () => {
-    const link = document.createElement("a");
-    link.href = "https://www.madina-tic.ml/api/download-csv-file";
-    link.click();
+    axios
+      .get("https://www.madina-tic.ml/api/download-csv-file/", {
+        headers: {
+          "Content-Type": "text/csv",
+          Authorization: `Token ${localStorage.getItem("admin_token")}`,
+        },
+      })
+      .then((res) => {
+        let csvContent = "data:text/csv;charset=utf-8," + res.data;
+        var FileURI = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", FileURI);
+        link.setAttribute("download", "declarations_rapports.csv");
+        document.body.appendChild(link);
+        link.click();
+      });
   };
 
   return (
