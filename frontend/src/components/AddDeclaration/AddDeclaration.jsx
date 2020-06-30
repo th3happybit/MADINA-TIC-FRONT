@@ -33,6 +33,7 @@ const AddDeclaration = (props) => {
   const [uid, setUid] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [dtid, setDtid] = useState(null);
+  const [service, setService] = useState(null);
   const [saveLoading, setSaveLoading] = useState(false);
   const [fileErr, setFileErr] = useState(false);
 
@@ -58,6 +59,7 @@ const AddDeclaration = (props) => {
             text: elm.name,
             value: elm.name,
             dtid: elm.dtid,
+            service: elm.service,
           });
         });
         setOptions(arr);
@@ -96,6 +98,7 @@ const AddDeclaration = (props) => {
             address: adr,
             dtype: dtid,
             citizen: uid,
+            service: service,
           },
         })
         .then((res) => {
@@ -151,6 +154,7 @@ const AddDeclaration = (props) => {
             address: adr,
             dtype: dtid,
             citizen: uid,
+            service: service,
             status: "draft",
           },
         })
@@ -214,7 +218,7 @@ const AddDeclaration = (props) => {
         setIsLoading(false);
         setSucces(true);
       })
-      .catch((err) => {;
+      .catch((err) => {
         setIsLoading(false);
       });
   };
@@ -239,7 +243,12 @@ const AddDeclaration = (props) => {
         })
         .then((res) => {
           let uid = res.data.uid;
-          options.map((elm) => elm.value === type && setDtid(elm.dtid));
+          options.map((elm) => {
+            if (elm.value === type) {
+              setDtid(elm.dtid);
+              setService(elm.service);
+            }
+          });
           setUid(uid);
         })
         .catch((err) => {});

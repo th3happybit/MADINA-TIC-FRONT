@@ -61,13 +61,36 @@ const HeaderAdmin = (props) => {
       .catch((err) => {});
   };
 
+  const handle_download = () => {
+    axios
+      .get("https://www.madina-tic.ml/api/download-csv-file/", {
+        headers: {
+          "Content-Type": "text/csv",
+          Authorization: `Token ${localStorage.getItem("admin_token")}`,
+        },
+      })
+      .then((res) => {
+        let csvContent = "data:text/csv;charset=utf-8," + res.data;
+        var FileURI = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", FileURI);
+        link.setAttribute("download", "declarations_rapports.csv");
+        document.body.appendChild(link);
+        link.click();
+      });
+  };
+
   return (
     <>
       <header className="_header_admin">
         <div className="row">
           <div className="right_part">
             <div className="profile_img">
-              {" "}
+              <div className={"btn_segment"}>
+                <Button onClick={handle_download}>
+                  Télécharger les données
+                </Button>
+              </div>{" "}
               <div
                 className={
                   active === "account" ? "btn_segment active" : "btn_segment"

@@ -1,18 +1,16 @@
 import React, { useState } from "react";
+import ConfirmModal from "../TestComponent/ModalConfirmComponent.jsx";
 import Axios from "axios";
-import {
-  Container,
-  Grid,
-  Segment,
-  Icon,
-  Button,
-  List,
-  Input,
-} from "semantic-ui-react";
+import { Button, List, Input, Dropdown } from "semantic-ui-react";
 const ItemType = (props) => {
-  const { index, elm } = props;
+  const { index, elm, options } = props;
   const [clicked, setClicked] = useState(false);
   const [newName, setnewName] = useState(elm.name);
+  const [service, setService] = useState(elm.service);
+
+  const handle_service = (e, { value }) => {
+    setService(value);
+  };
 
   const deleteItem = () => {
     let instance = Axios.create({
@@ -28,8 +26,7 @@ const ItemType = (props) => {
       .then((res) => {
         props.refresh(elm.dtid);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   const handleUpdate = () => {
     let instance = Axios.create({
@@ -42,6 +39,7 @@ const ItemType = (props) => {
     });
     let body = {
       name: newName,
+      service: service,
     };
     instance
       .patch(`/declarations_types/${elm.dtid}/`, body)
@@ -49,8 +47,7 @@ const ItemType = (props) => {
         props.refreshUpdt(elm.dtid, res.data);
         setClicked((prevState) => !prevState);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
   const handleInput = (e, { name, value }) => {
     switch (name) {
@@ -92,15 +89,31 @@ const ItemType = (props) => {
           </Button>
         )}
       </List.Content>
-      {!clicked && <List.Content>{elm.name}</List.Content>}
+      {!clicked && (
+        <List.Content>
+          <p>Type :&nbsp; {elm.name}</p>
+          <p>Service :&nbsp; {props.getName(elm.service)}</p>
+        </List.Content>
+      )}
       {clicked && (
-        <Input
-          value={newName}
-          name="name"
-          onChange={handleInput}
-          className="inpt_dec_type"
-          type="text"
-        />
+        <>
+          <Input
+            value={newName}
+            name="name"
+            onChange={handleInput}
+            className="inpt_dec_type"
+            type="text"
+          />
+          <Dropdown
+            className="inpt_service_type"
+            search
+            scrolling
+            selection
+            placeholder="service ..."
+            options={options}
+            onChange={handle_service}
+          />
+        </>
       )}
     </List.Item>
   );

@@ -183,6 +183,8 @@ const ServiceDesclarationTable = (props) => {
                         : "/"
                     }
                     status={getStatus(status).status}
+                    getMonth={getMonth}
+                    getStatus={getStatus}
                   />
                   {status === "under_treatment" && (
                     <Link

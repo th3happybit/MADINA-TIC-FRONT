@@ -31,6 +31,7 @@ const HomeHeader = (props) => {
       link: "/declaration",
       text: language.isFrench ? "déclarations" : "التصريحات",
     },
+    { link: "/commune", text: language.isFrench ? "commune" : "البلدية" },
     { link: "/signup", text: language.isFrench ? "s'inscrire" : "أنشئ حسابا" },
     {
       link: "/login",
@@ -49,7 +50,7 @@ const HomeHeader = (props) => {
       onClick: props.handle_annonce,
       text: language.isFrench ? "annonces" : "الإعلانات",
     },
-    { link: "#", text: language.isFrench ? "contact" : "تواصل معنا" },
+    { link: "/commune", text: language.isFrench ? "commune" : "البلدية" },
     { link: "/signup", text: language.isFrench ? "s'inscrire" : "أنشئ حسابا" },
     {
       link: "/login",

@@ -152,19 +152,19 @@ const CitoyenDeclarationInfo = (props) => {
         ret["color"] = "red";
         return ret;
       case "under_treatment":
-        ret["status"] = languages.isFrench ? "In progress" : "في تقدم";
+        ret["status"] = languages.isFrench ? "En cours" : "في تقدم";
         ret["color"] = "yellow";
         return ret;
       case "treated":
-        ret["status"] = languages.isFrench ? "Treated" : "معالجة";
+        ret["status"] = languages.isFrench ? "Traitée" : "معالجة";
         ret["color"] = "green";
         return ret;
       case "archived":
-        ret["status"] = languages.isFrench ? "Archived" : "مؤرشفة";
+        ret["status"] = languages.isFrench ? "Archivée" : "مؤرشفة";
         ret["color"] = "black";
         return ret;
       case "draft":
-        ret["status"] = languages.isFrench ? "Draft" : "مسودة";
+        ret["status"] = languages.isFrench ? "Brouillons" : "مسودة";
         ret["color"] = "gray";
         return ret;
       default:
@@ -352,29 +352,37 @@ const CitoyenDeclarationInfo = (props) => {
                 </Button>
               </>
             )}
-            <Button
-              animated
-              color="red"
-              type="submit"
-              className="action_button delete_button"
-              onClick={deleteDecla}
-            >
-              <Button.Content
-                visible
-                content={languages.isFrench ? "Supprimer" : "حذف"}
-              />
-              <Button.Content icon hidden>
-                {" "}
-                <Icon name="times" />{" "}
-              </Button.Content>
-            </Button>
+            {Data.status &&
+              (Data.status === "not_validated" ||
+                Data.status === "refused" ||
+                Data.status === "archived" ||
+                Data.status === "draft") && (
+                <>
+                  <Button
+                    animated
+                    color="red"
+                    type="submit"
+                    className="action_button delete_button"
+                    onClick={deleteDecla}
+                  >
+                    <Button.Content
+                      visible
+                      content={languages.isFrench ? "Supprimer" : "حذف"}
+                    />
+                    <Button.Content icon hidden>
+                      {" "}
+                      <Icon name="times" />{" "}
+                    </Button.Content>
+                  </Button>
 
-            <Button
-              className="action_button_mobile"
-              icon={{ name: "times" }}
-              color="red"
-              onClick={deleteDecla}
-            />
+                  <Button
+                    className="action_button_mobile"
+                    icon={{ name: "times" }}
+                    color="red"
+                    onClick={deleteDecla}
+                  />
+                </>
+              )}
           </div>
         </>
       ) : (

@@ -1,0 +1,72 @@
+._commune {
+  padding: 100px 150px;
+  width: 100%;
+  height: 100%;
+}
+
+main ._commune {
+  width: 80%;
+  padding: 1.4rem 0 !important;
+  margin-left: 18rem !important;
+  margin-right: auto !important;
+}
+
+main ._commune.rtl {
+  margin-right: 18rem !important;
+  margin-left: auto !important;
+}
+
+._commune.dark .segment {
+  background: var(--second_dark);
+  color: var(--primary_text_dark);
+}
+
+._commune.dark .segment.loading::before {
+  background: rgba(10, 10, 10, 0.8) !important;
+}
+
+._commune.rtl {
+  direction: rtl;
+  font-family: "Cairo", sans-serif;
+}
+
+._commune.rtl h4 {
+  font-family: "Cairo", sans-serif;
+}
+
+._commune h4 {
+  margin: 0 !important;
+}
+
+._commune ._infos {
+  padding: 50px 20px;
+}
+
+._commune ._infos .row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+._commune ._infos .row:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+._commune ._map {
+  background-color: transparent;
+  height: 400px;
+}
+
+@media (max-width: 1200px) {
+  ._commune {
+    padding: 100px 50px;
+  }
+}
+
+@media (max-width: 899px) {
+  main ._commune,
+  ._commune {
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+}

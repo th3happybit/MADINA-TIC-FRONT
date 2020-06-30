@@ -126,6 +126,7 @@ const MaireRow = (props) => {
             type: editType(dtype),
             dtype: dtype,
             address: address,
+            service: service,
             description: desc,
             attachements: filterAttachments(attachments),
             created_on: created_on
@@ -146,6 +147,8 @@ const MaireRow = (props) => {
             services: services,
             status: getStatus(status).status,
           }}
+          getMonth={getMonth}
+          getStatus={getStatus}
           Maire
           reject={props.rejectDeclaration}
           archive={props.archiveDeclaration}

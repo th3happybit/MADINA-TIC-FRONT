@@ -8,6 +8,7 @@ import "./SidebarAdmin.css";
 import { ReactComponent as Dashboard } from "../../assets/icons/dashboard.svg";
 import { ReactComponent as Citoyens } from "../../assets/icons/group.svg";
 import { ReactComponent as Declarations } from "../../assets/icons/Declarations.svg";
+import { ReactComponent as Commune } from "../../assets/icons/Commune.svg";
 
 //? import logo
 import { ReactComponent as Logo } from "../../assets/images/madinatic_logo.svg";
@@ -68,6 +69,21 @@ const SidebarAdmin = (props) => {
               to="/admin/declarations/types"
               name="Types"
               className={props.active === "types" ? "active" : ""}
+            />
+          </div>
+          <div className="d-flex">
+            <Commune
+              className={
+                props.active === "commune"
+                  ? "_sidebar_icons active"
+                  : "_sidebar_icons"
+              }
+            />
+            <Menu.Item
+              as={Link}
+              to="/admin/commune"
+              name="Commune"
+              className={props.active === "commune" ? "active" : ""}
             />
           </div>
         </Menu>

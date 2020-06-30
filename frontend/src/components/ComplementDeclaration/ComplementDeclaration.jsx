@@ -6,14 +6,13 @@ import { ReactComponent as Gps } from "../../assets/icons/gps.svg";
 import Location from "../AddDeclaration/Location.jsx";
 import { useHistory } from "react-router-dom";
 
-import "./ComplementDeclaration.css"
+import "./ComplementDeclaration.css";
 
 //? redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { change_mode } from "../../actions/darkAction";
 import { change_language } from "../../actions/languageAction";
-import { languages } from "../../language";
 
 const ComplementDeclaration = (props) => {
   let history = useHistory();
@@ -22,6 +21,7 @@ const ComplementDeclaration = (props) => {
   const [succes, setSucces] = useState(false);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("");
+  const [service, setService] = useState("");
   const [typeErr, setTypeErr] = useState(false);
   const [adrErr, setAdrErr] = useState(false);
   const [adr, setAdr] = useState("");
@@ -63,6 +63,7 @@ const ComplementDeclaration = (props) => {
           geo_cord: adrGeo,
           address: adr,
           dtype: selectedType,
+          service: service,
           citizen: props.props.location.state.data.citizen,
           status: "not_validated",
         },
@@ -129,8 +130,7 @@ const ComplementDeclaration = (props) => {
             setSucces(true);
           }
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     } else if (delP.length > 0) {
       deleteFiles();
     } else {
@@ -151,8 +151,7 @@ const ComplementDeclaration = (props) => {
           setIsLoading(false);
           setSucces(true);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     });
   };
   const handleCoords = (e) => {
@@ -185,6 +184,7 @@ const ComplementDeclaration = (props) => {
       case "type":
         setTypeErr(false);
         setType(value);
+        change_service(value);
         break;
       case "adr":
         setAdrErr(false);
@@ -209,7 +209,6 @@ const ComplementDeclaration = (props) => {
   };
 
   useEffect(() => {
-    setLoadingPage(true);
     selectedType &&
       axios
         .create({
@@ -232,12 +231,13 @@ const ComplementDeclaration = (props) => {
               text: elm.name,
               value: elm.name,
               dtid: elm.dtid,
+              service: elm.service,
             });
           });
           setOptions(arr);
           axios
             .get(
-              `https://www.madina-tic.ml/api/declarations_types/${selectedType}`,
+              `https://www.madina-tic.ml/api/declarations_types/${selectedType}/`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -247,10 +247,11 @@ const ComplementDeclaration = (props) => {
             )
             .then((res) => {
               setType(res.data.name);
+              setSelectedType(res.data.dtid);
+              setService(res.data.service);
               setLoadingPage(false);
             })
-            .catch((err) => {
-            });
+            .catch((err) => {});
         })
         .catch((err) => {});
   }, [selectedType]);
@@ -275,6 +276,7 @@ const ComplementDeclaration = (props) => {
               setDesctiption(res.data.desc);
               setAdr(res.data.address);
               setAdrGeo(res.data.geo_cord);
+              setService(res.data.service);
               setPictures(res.data.attachments);
             } else {
               setnotLack(false);
@@ -282,8 +284,7 @@ const ComplementDeclaration = (props) => {
               setLoadingPage(false);
             }
           })
-          .catch((err) => {
-          });
+          .catch((err) => {});
         axios
           .get(
             `https://www.madina-tic.ml/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
@@ -297,8 +298,7 @@ const ComplementDeclaration = (props) => {
           .then((res) => {
             setReason(res.data.results[0].reason);
           })
-          .catch((err) => {
-          });
+          .catch((err) => {});
       } else {
         setnotLack(true);
         setnullData(true);
@@ -317,9 +317,24 @@ const ComplementDeclaration = (props) => {
     setPictures((prevState) => [...prevState, objectUrl]);
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
+  const change_service = (value) => {
+    options.map((elm) => {
+      if (elm.value === value) {
+        setSelectedType(elm.dtid);
+        setService(elm.service);
+      }
+    });
+  };
   return (
-    <div className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${isDark ? "dark" : ""}`}>
-      <Segment className={`_add_dec ${isDark ? "dark" : ""}`} loading={loadingPage}>
+    <div
+      className={`container_add_dec ${languages.isFrench ? "" : "rtl"} ${
+        isDark ? "dark" : ""
+      }`}
+    >
+      <Segment
+        className={`_add_dec ${isDark ? "dark" : ""}`}
+        loading={loadingPage}
+      >
         {!nullData && notLack ? (
           <>
             <h3 className="large-title text-default bold _margin_vertical_md">

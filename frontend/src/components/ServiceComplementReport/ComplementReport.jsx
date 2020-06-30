@@ -8,6 +8,7 @@ import {
   Message,
   Icon,
   Input,
+  Image,
 } from "semantic-ui-react";
 import axios from "axios";
 
@@ -39,8 +40,12 @@ const ComplementReport = (props) => {
   const [service, setService] = useState(null);
   const [reason, setReason] = useState();
   const [report, setReport] = useState({});
-  const [allow, setAllow] = useState(false);
   const [nullData, setNulldata] = useState(false);
+  const [pictures, setPictures] = useState([]);
+  const [selectedFile, setSelectedFile] = useState();
+  const [maxImageErr, setMaxImageErr] = useState(false);
+  const [sendP, setsendP] = useState([]);
+  const [delP, setdelP] = useState([]);
 
   let history = useHistory();
 
@@ -88,7 +93,6 @@ const ComplementReport = (props) => {
             setTitle(res.data.title);
             setDescription(res.data.desc);
             if (res.data.status !== "lack_of_info") {
-              setAllow(true);
               setNulldata(true);
             }
           })
@@ -104,7 +108,16 @@ const ComplementReport = (props) => {
             },
           })
           .then((res) => {
-            setFiles(res.data);
+            setFiles(
+              res.data.filter((elm) => {
+                return elm.filetype === "pdf";
+              })
+            );
+            setPictures(
+              res.data.filter((elm) => {
+                return elm.filetype === "image";
+              })
+            );
             if (res.data.length === 0) setZeroFiles(true);
             setLoading(false);
           })
@@ -131,6 +144,14 @@ const ComplementReport = (props) => {
       setNulldata(true);
     }
   }, []);
+  useEffect(() => {
+    if (!selectedFile) {
+      return;
+    }
+    const objectUrl = URL.createObjectURL(selectedFile);
+    setPictures((prevState) => [...prevState, objectUrl]);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedFile]);
 
   const handleTitle = (e, { value }) => {
     setTitleErr(false);
@@ -149,6 +170,36 @@ const ComplementReport = (props) => {
     setMaxErr(false);
     setReqErr(false);
     setDuplicateErr(false);
+  };
+  const handledeleteImg = (e) => {
+    let indexElm = parseInt(e.currentTarget.attributes["data-id"].value);
+    let f = [];
+    let del = delP;
+    pictures.map((elm, index) => {
+      if (index !== indexElm) {
+        f.push(elm);
+      } else {
+        if (elm.src) {
+          del.push(elm.dmid);
+          setdelP(del);
+        }
+      }
+      return true;
+    });
+    setUpload(true);
+    setPictures(f);
+  };
+  const onSelectFile = (e) => {
+    if (pictures.length < 3) {
+      let es = e.target.files[0];
+      if (!e.target.files || e.target.files.length === 0) {
+        setSelectedFile(undefined);
+        return;
+      }
+      setUpload(true);
+      setSelectedFile(es);
+      setsendP((prevState) => [...prevState, es]);
+    } else setMaxImageErr(true);
   };
   const handleUpload = (e) => {
     setFileErr(false);
@@ -218,74 +269,136 @@ const ComplementReport = (props) => {
   };
   const PostFile = (rid) => {
     setUploadingFile(true);
-    const formData = new FormData();
-    var up = false;
-    files.map((file, index) => {
-      if (file.name) {
-        up = true;
-        formData.append("src", file);
-        formData.append("filetype", "pdf");
-        formData.append("declaration", declaration.did);
-        formData.append("report", report.rid);
-      }
-    });
-    if (up)
-      axios
-        .create({
-          headers: {
-            post: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Token ${localStorage.getItem("service_token")}`,
+    if (files.length > 0) {
+      const formData = new FormData();
+      var up = false;
+      files.map((file, index) => {
+        if (file.name) {
+          up = true;
+          formData.append("src", file);
+          formData.append("filetype", "pdf");
+          formData.append("declaration", declaration.did);
+          formData.append("report", report.rid);
+        }
+      });
+      if (up)
+        axios
+          .create({
+            headers: {
+              post: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
+              },
             },
-          },
-        })
-        .request({
-          url: "https://www.madina-tic.ml/api/documents/",
-          method: "post",
-          data: formData,
-        })
-        .then((res) => {
-          setUploadingFile(false);
-          setSuccessFile(true);
-          if (filesD.length > 0) DeleteFile();
-          else setSuccessDel(true);
-        })
-        .catch((err) => {
-          setReqErr(true);
-          setUploadingFile(false);
-        });
-    else {
-      setUploadingFile(false);
-      setSuccessFile(true);
-      if (filesD.length > 0) DeleteFile();
-      else setSuccessDel(true);
+          })
+          .request({
+            url: "https://www.madina-tic.ml/api/documents/",
+            method: "post",
+            data: formData,
+          })
+          .then((res) => {
+            PostImage(rid);
+            setFiles(null);
+          })
+          .catch((err) => {
+            setReqErr(true);
+            setUploadingFile(false);
+          });
+      else {
+        PostImage(rid);
+      }
+    } else {
+      PostImage(rid);
     }
   };
   const DeleteFile = () => {
     setdelFile(true);
-    for (let i = 0; i < filesD.length; i++) {
-      axios
-        .create({
-          headers: {
-            delete: {
-              "content-type": "application/json",
-              Authorization: `Token ${localStorage.getItem("service_token")}`,
+    if (filesD.length > 0)
+      for (let i = 0; i < filesD.length; i++) {
+        axios
+          .create({
+            headers: {
+              delete: {
+                "content-type": "application/json",
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
+              },
             },
-          },
-        })
-        .request({
-          url: `https://www.madina-tic.ml/api/documents/${filesD[i]}/`,
-          method: "delete",
-        })
-        .then((res) => {
-          if (i === filesD.length - 1) {
+          })
+          .request({
+            url: `https://www.madina-tic.ml/api/documents/${filesD[i]}/`,
+            method: "DELETE",
+          })
+          .then((res) => {
+            if (i === filesD.length - 1) {
+              deleteImages();
+              setFilesD([]);
+            }
+          })
+          .catch((err) => {
+            setReqErr(true);
+          });
+      }
+    else deleteImages();
+  };
+  const PostImage = (rid) => {
+    if (sendP.length > 0) {
+      let formData = new FormData();
+      let uplo = false;
+      sendP.map((image) => {
+        uplo = true;
+        formData.append("src", image, image.name);
+        formData.append("filetype", "image");
+        formData.append("declaration", "");
+        formData.append("report", rid);
+      });
+      if (uplo) {
+        axios
+          .create({
+            headers: {
+              post: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Token ${localStorage.getItem("token")}`,
+              },
+            },
+          })
+          .request({
+            url: "https://www.madina-tic.ml/api/documents/",
+            method: "post",
+            data: formData,
+          })
+          .then((res) => {
+            setUploadingFile(false);
+            setSuccessFile(true);
+          })
+          .catch((err) => {});
+      } else {
+        setUploadingFile(false);
+        setSuccessFile(true);
+      }
+    } else {
+      setUploadingFile(false);
+      setSuccessFile(true);
+    }
+  };
+  const deleteImages = () => {
+    if (delP.length > 0)
+      delP.map((elm) => {
+        axios
+          .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((res) => {
             setSuccessDel(true);
             setdelFile(false);
-          }
-        })
-        .catch((err) => {
-          setReqErr(true);
-        });
+          })
+          .catch((err) => {});
+      });
+    else {
+      setSuccessDel(true);
+      setdelFile(false);
     }
   };
   const PostReport = () => {
@@ -315,13 +428,14 @@ const ComplementReport = (props) => {
       .then((res) => {
         setSuccessData(true);
         setUplaodingData(false);
-        if (files.length > 0) {
+        if (files.length > 0 || sendP.length > 0) {
           PostFile(report.rid);
-        } else if (files.length === 0) {
-          if (filesD.length > 0) DeleteFile();
-          else setSuccessDel(true);
+        } else {
+          setUploadingFile(false);
           setSuccessFile(true);
         }
+        if (filesD.length > 0 || delP.length > 0) DeleteFile();
+        else setSuccessDel(true);
       })
       .catch((err) => {
         setUplaodingData(false);
@@ -374,7 +488,7 @@ const ComplementReport = (props) => {
                 error={
                   descErr && {
                     content:
-                    "la déscription doit être au minimum 10 charactères",
+                      "la déscription doit être au minimum 10 charactères",
                     class: "ui basic red label pointing",
                   }
                 }
@@ -420,6 +534,55 @@ const ComplementReport = (props) => {
                   className="pointer"
                   onChange={handleUpload}
                 />
+                <p className="text-default" style={{ marginTop: "10px" }}>
+                  Ajouter Images ( Optionel )
+                </p>
+                <Button
+                  as={"label"}
+                  htmlFor="ImagesInput"
+                  animated
+                  color="blue"
+                  className="_primary"
+                >
+                  <Button.Content visible content="Télécharger" />
+                  <Button.Content hidden>
+                    <Icon name="upload" />
+                  </Button.Content>
+                </Button>
+                <input
+                  id="ImagesInput"
+                  style={{ display: "none" }}
+                  type="file"
+                  accept="image/*"
+                  className="pointer"
+                  onChange={onSelectFile}
+                />
+                <div className="prev_images_dec">
+                  {pictures.map((elm, index) => {
+                    return (
+                      <div
+                        style={{
+                          position: "relative",
+                        }}
+                      >
+                        <Image
+                          src={
+                            elm.src
+                              ? "https://www.madina-tic.ml/" + elm.src
+                              : elm
+                          }
+                          key={index}
+                        />
+                        <Icon
+                          color="black"
+                          name="delete"
+                          data-id={index}
+                          onClick={handledeleteImg}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
                 {fileErr && (
                   <Message
                     error
@@ -457,7 +620,9 @@ const ComplementReport = (props) => {
                     className="pointer"
                     onClick={removeMessage}
                     error
-                    content={"Something went wrong while sending request !"}
+                    content={
+                      "Un erreur s'est produit lors de l'envoi du requête !"
+                    }
                   />
                 </Transition>
                 <Transition visible={maxErr} animation="scale" duration={200}>
@@ -465,7 +630,19 @@ const ComplementReport = (props) => {
                     className="pointer"
                     onClick={removeMessage}
                     error
-                    content={"Maximum is 3 files !"}
+                    content={"Le maximum est 3 fichiers !"}
+                  />
+                </Transition>
+                <Transition
+                  visible={maxImageErr}
+                  animation="scale"
+                  duration={200}
+                >
+                  <Message
+                    className="pointer"
+                    onClick={removeMessage}
+                    error
+                    content={"Le maximum est 3 images !"}
                   />
                 </Transition>
                 <Transition
@@ -478,7 +655,7 @@ const ComplementReport = (props) => {
                     onClick={removeMessage}
                     error
                     content={
-                      "A report is already attached to this declaration !"
+                      "Un rapport est déja attaché à cette déclaration !"
                     }
                   />
                 </Transition>

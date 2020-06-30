@@ -28,9 +28,9 @@
   min-width: 400px;
 }
 .row_t .list {
-  width: 50%;
+  width: 80%;
   padding: 1rem;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--blue_darker);
   font-weight: 600;
   min-height: 50vh;
@@ -53,12 +53,27 @@
 }
 .inpt_dec_type input {
   padding: 0.5rem 1rem !important;
+  font-weight: 600;
+}
+.inpt_dec_type {
+  margin-right: 20px !important;
+  height: 43.43px;
+}
+.selection.dropdown.inpt_service_type {
+  height: 35px !important;
 }
 .row_t .add {
   background-color: var(--primary) !important;
   color: white !important;
   margin: 0 1rem;
 }
-.types_dec input {
-  font-size: 18px;
+
+._type_inputs {
+  display: flex;
+  margin-top: 30px;
+}
+
+._type_inputs ._service_input .visible.menu,
+.inpt_service_type .visible.menu.transition {
+  width: -webkit-fill-available !important;
 }
