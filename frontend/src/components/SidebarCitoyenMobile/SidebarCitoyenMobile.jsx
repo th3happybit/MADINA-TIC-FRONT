@@ -94,6 +94,18 @@ const SidebarCitoyenMobile = (props) => {
         </List.Item>
         <List.Item>
           <Link
+            to="/citoyen/commune"
+            className={
+              props.active === "commune"
+                ? "medium-text text-default text-active"
+                : "medium-text text-default"
+            }
+          >
+            {props.isFrench ? "commune" : "البلدية"}
+          </Link>
+        </List.Item>
+        <List.Item>
+          <Link
             to="/citoyen/profile"
             className={
               props.active === "profile"

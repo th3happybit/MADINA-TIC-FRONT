@@ -348,7 +348,7 @@ const ComplementReport = (props) => {
         uplo = true;
         formData.append("src", image, image.name);
         formData.append("filetype", "image");
-        formData.append("declaration", props.props.props.location.state.did);
+        formData.append("declaration", "");
         formData.append("report", rid);
       });
       if (uplo) {

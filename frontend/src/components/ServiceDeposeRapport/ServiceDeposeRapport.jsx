@@ -178,7 +178,7 @@ const DeposeRapport = (props) => {
     pictures.map((image, index) => {
       formData.append("src", image);
       formData.append("filetype", "image");
-      formData.append("declaration", declaration.did);
+      formData.append("declaration", "");
       formData.append("report", rid);
     });
     axios

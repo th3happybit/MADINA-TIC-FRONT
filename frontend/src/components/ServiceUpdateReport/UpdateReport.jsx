@@ -321,7 +321,7 @@ const UpdateReport = (props) => {
         uplo = true;
         formData.append("src", image, image.name);
         formData.append("filetype", "image");
-        formData.append("declaration", props.props.props.location.state.did);
+        formData.append("declaration", "");
         formData.append("report", rid);
       });
       if (uplo) {
@@ -538,7 +538,14 @@ const UpdateReport = (props) => {
                           position: "relative",
                         }}
                       >
-                        <Image src={elm.src ? "https://www.madina-tic.ml/"+elm.src : elm} key={index} />
+                        <Image
+                          src={
+                            elm.src
+                              ? "https://www.madina-tic.ml/" + elm.src
+                              : elm
+                          }
+                          key={index}
+                        />
                         <Icon
                           color="black"
                           name="delete"
