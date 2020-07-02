@@ -113,7 +113,7 @@ const ModalD = (props) => {
       responseType: "json",
       headers: {
         "content-type": "application/json",
-        Authorization: `Token ${localStorage.getItem("maire_token")}`,
+        Authorization: `Token ${localStorage.getItem("service_token")}`,
       },
     });
     instance
@@ -127,7 +127,7 @@ const ModalD = (props) => {
       .get(`https://www.madina-tic.ml/api/reports/?declaration=${did}`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("maire_token")}`,
+          Authorization: `Token ${localStorage.getItem("service_token")}`,
         },
       })
       .then((res) => {
