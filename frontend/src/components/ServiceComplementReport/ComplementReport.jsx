@@ -357,7 +357,7 @@ const ComplementReport = (props) => {
             headers: {
               post: {
                 "Content-Type": "multipart/form-data",
-                Authorization: `Token ${localStorage.getItem("token")}`,
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
               },
             },
           })
@@ -387,7 +387,7 @@ const ComplementReport = (props) => {
           .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
             headers: {
               "Content-type": "application/json",
-              Authorization: `Token ${localStorage.getItem("token")}`,
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
             },
           })
           .then((res) => {
