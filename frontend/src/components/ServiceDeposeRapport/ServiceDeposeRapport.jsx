@@ -212,7 +212,7 @@ const DeposeRapport = (props) => {
       files.map((file, index) => {
         formData.append("src", file);
         formData.append("filetype", "pdf");
-        formData.append("declaration", declaration.did);
+        formData.append("declaration", "");
         formData.append("report", rid);
       });
       axios

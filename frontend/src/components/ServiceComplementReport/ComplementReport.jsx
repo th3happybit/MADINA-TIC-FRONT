@@ -277,7 +277,7 @@ const ComplementReport = (props) => {
           up = true;
           formData.append("src", file);
           formData.append("filetype", "pdf");
-          formData.append("declaration", declaration.did);
+          formData.append("declaration", "");
           formData.append("report", report.rid);
         }
       });

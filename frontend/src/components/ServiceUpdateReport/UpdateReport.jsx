@@ -250,7 +250,7 @@ const UpdateReport = (props) => {
           up = true;
           formData.append("src", file);
           formData.append("filetype", "pdf");
-          formData.append("declaration", declaration.did);
+          formData.append("declaration", "");
           formData.append("report", rid);
         }
       });
@@ -330,7 +330,7 @@ const UpdateReport = (props) => {
             headers: {
               post: {
                 "Content-Type": "multipart/form-data",
-                Authorization: `Token ${localStorage.getItem("token")}`,
+                Authorization: `Token ${localStorage.getItem("service_token")}`,
               },
             },
           })
@@ -360,7 +360,7 @@ const UpdateReport = (props) => {
           .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
             headers: {
               "Content-type": "application/json",
-              Authorization: `Token ${localStorage.getItem("token")}`,
+              Authorization: `Token ${localStorage.getItem("service_token")}`,
             },
           })
           .then((res) => {
