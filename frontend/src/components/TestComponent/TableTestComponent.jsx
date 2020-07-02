@@ -228,6 +228,7 @@ const TableTestComponent = (props) => {
                       ConfirmDeleteModal={ConfirmDeleteModal}
                       refresh={refresh}
                       helper={helper}
+                      fromDeclaration={false}
                     />
                     {isRapport &&
                       activeFilter === "not_validated" &&
@@ -355,8 +356,7 @@ const TableTestComponent = (props) => {
                               .then((res) => {
                                 refresh();
                               })
-                              .catch((err) => {
-                              });
+                              .catch((err) => {});
                           }}
                         />
                       )}

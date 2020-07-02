@@ -46,6 +46,7 @@ const ServiceDeclaration = (props) => {
       page: page,
       service: sid,
       ordering: "priority",
+      has_parent: false,
     };
     if (term) {
       pa["search"] = term;
@@ -89,8 +90,7 @@ const ServiceDeclaration = (props) => {
           }
           setLoading(false);
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
   };
   const getTypes = (sid) => {
     setLoading(true);
@@ -105,8 +105,7 @@ const ServiceDeclaration = (props) => {
         getData(sid);
         settypes(res.data);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -213,9 +212,7 @@ const ServiceDeclaration = (props) => {
           </div>
         ) : (
           perm && (
-            <p class="zero-data">
-              Désolé, aucun informations à afficher ici
-            </p>
+            <p class="zero-data">Désolé, aucun informations à afficher ici</p>
           )
         )}
       </Segment>

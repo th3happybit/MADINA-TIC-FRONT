@@ -195,7 +195,7 @@ const ModalD = (props) => {
                     title={"Rapport"}
                     // uid={uid}
                     role={"maire"}
-                    token={"service_token"}
+                    token={"maire_token"}
                     style={{
                       margin: "0 1rem",
                     }}
@@ -207,7 +207,9 @@ const ModalD = (props) => {
                     // helper={helper}
                   />
                 )}
-              {childs.length > 0 && <p className="chlp">"Sous Déclarations"</p>}
+              {childs.length > 0 && data.status === "Validée" && (
+                <p className="chlp">"Sous Déclarations"</p>
+              )}
             </div>
             <div className="_infos_section">
               <p>{data.fullname ? data.fullname : null}</p>
@@ -267,7 +269,7 @@ const ModalD = (props) => {
                   )
                 : null}
 
-              {childs.length > 0 && (
+              {childs.length > 0 && data.status === "Validée" && (
                 <div className="childs_dec">
                   {childs.map((elm, index) => (
                     <Childs elm={elm} parent={data.did} />

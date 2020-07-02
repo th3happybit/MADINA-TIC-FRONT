@@ -65,7 +65,8 @@ main ._commune.rtl {
 
 @media (max-width: 899px) {
   main ._commune,
-  ._commune {
+  ._commune,
+  main ._commune.rtl {
     margin-right: auto !important;
     margin-left: auto !important;
   }

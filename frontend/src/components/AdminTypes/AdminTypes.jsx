@@ -125,7 +125,8 @@ const AdminTypes = () => {
       },
     })
       .then((res) => {
-        if (res.data.next) setNext(res.data.next);
+        if (res.data.next)
+          setNext("https" + res.data.next.slice(4, res.data.next.length));
         else setLoading(false);
         let arr = services;
         res.data.results.map((elm) => {
