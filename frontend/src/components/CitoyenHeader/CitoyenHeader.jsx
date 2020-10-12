@@ -32,7 +32,7 @@ export default function CitoyenHeader(props) {
   useEffect(() => {
     const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
       cluster: "eu",
-      authEndpoint: "https://www.madina-tic.ml/api/pusher/auth",
+      authEndpoint: "https://madina-tic.ml/api/pusher/auth",
     });
     var channel = pusher.subscribe("Declaration");
     var annonceChannel = pusher.subscribe("Announce");
@@ -129,7 +129,7 @@ export default function CitoyenHeader(props) {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/logout/",
+        url: "https://madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {
@@ -166,7 +166,7 @@ export default function CitoyenHeader(props) {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/user/",
+          url: "https://madina-tic.ml/api/user/",
           method: "patch",
           data: {
             notif_seen: true,

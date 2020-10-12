@@ -62,7 +62,7 @@ const DeposeRapport = (props) => {
         setDeclaration(res.data);
       });
     axios
-      .get("https://www.madina-tic.ml/api/user", {
+      .get("https://madina-tic.ml/api/user", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -191,7 +191,7 @@ const DeposeRapport = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/documents/",
+        url: "https://madina-tic.ml/api/documents/",
         method: "post",
         data: formData,
       })
@@ -225,7 +225,7 @@ const DeposeRapport = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/documents/",
+          url: "https://madina-tic.ml/api/documents/",
           method: "post",
           data: formData,
         })
@@ -255,7 +255,7 @@ const DeposeRapport = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/reports/",
+        url: "https://madina-tic.ml/api/reports/",
         method: "post",
         data: {
           title,

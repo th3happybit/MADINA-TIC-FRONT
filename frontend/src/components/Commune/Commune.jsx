@@ -18,7 +18,7 @@ const Commue = (props) => {
   const [Loading, setLoading] = useState(true);
   useEffect(() => {
     axios
-      .get("https://www.madina-tic.ml/api/city", {
+      .get("https://madina-tic.ml/api/city", {
         headers: {
           "Content-Type": "application/json",
         },

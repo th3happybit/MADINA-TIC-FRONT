@@ -79,7 +79,7 @@ const HomeCitoyen = (props) => {
   const getTypes = () => {
     if (!props.anonyme)
       axios
-        .get("https://www.madina-tic.ml/api/declarations_types/", {
+        .get("https://madina-tic.ml/api/declarations_types/", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
@@ -169,13 +169,13 @@ const HomeCitoyen = (props) => {
                                 if (element.filetype === "image")
                                   window.open(
                                     !props.anonyme
-                                      ? "http://www.madina-tic.ml" + element.src
+                                      ? "http://madina-tic.ml" + element.src
                                       : element.src
                                   );
                               }}
                               src={
                                 !props.anonyme
-                                  ? "http://www.madina-tic.ml" + element.src
+                                  ? "http://madina-tic.ml" + element.src
                                   : element.src
                               }
                               key={index}
@@ -204,7 +204,7 @@ const HomeCitoyen = (props) => {
                         element.attachments
                           ? element.attachments[0]
                             ? !props.anonyme
-                              ? "http://www.madina-tic.ml" +
+                              ? "http://madina-tic.ml" +
                                 element.attachments[0].src
                               : element.attachments[0].src
                             : ImageStandard
@@ -212,7 +212,7 @@ const HomeCitoyen = (props) => {
                       }
                       onClick={() =>
                         window.open(
-                          "http://www.madina-tic.ml" +
+                          "http://madina-tic.ml" +
                             element.attachments[0].src
                         )
                       }

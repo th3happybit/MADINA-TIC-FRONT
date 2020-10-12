@@ -110,7 +110,7 @@ const CardAdmin = (props) => {
       },
     })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "patch",
         data: formData,
       })
@@ -144,7 +144,7 @@ const CardAdmin = (props) => {
         },
       })
         .request({
-          url: "https://www.madina-tic.ml/api/user/",
+          url: "https://madina-tic.ml/api/user/",
           method: "patch",
           data: formData,
         })
@@ -164,7 +164,7 @@ const CardAdmin = (props) => {
         },
       })
         .request({
-          url: "https://www.madina-tic.ml/api/password/change/",
+          url: "https://madina-tic.ml/api/password/change/",
           method: "post",
           data: {
             new_password1: newPassword,

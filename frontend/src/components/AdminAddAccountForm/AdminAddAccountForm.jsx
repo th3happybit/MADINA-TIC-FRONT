@@ -62,7 +62,7 @@ const AdminAddAccountForm = () => {
       },
     })
       .request({
-        url: "https://www.madina-tic.ml/api/users/",
+        url: "https://madina-tic.ml/api/users/",
         method: "post",
         data: {
           email,

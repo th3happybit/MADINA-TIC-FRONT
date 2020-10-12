@@ -56,7 +56,7 @@ const CitoyenResetpassword = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/password/reset/confirm/",
+          url: "https://madina-tic.ml/api/password/reset/confirm/",
           method: "post",
           data: {
             new_password1: New_Password,

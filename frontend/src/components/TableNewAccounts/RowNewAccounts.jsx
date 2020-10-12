@@ -38,7 +38,7 @@ export default function RowNewAccounts(props) {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/users/" + uid + "/",
+          url: "https://madina-tic.ml/api/users/" + uid + "/",
           method: "patch",
           data: {
             is_approved: true,
@@ -61,7 +61,7 @@ export default function RowNewAccounts(props) {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/users/" + uid + "/",
+          url: "https://madina-tic.ml/api/users/" + uid + "/",
           method: "delete",
           data: {
             uid,

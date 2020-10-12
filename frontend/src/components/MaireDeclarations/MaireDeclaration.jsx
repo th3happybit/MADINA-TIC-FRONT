@@ -44,7 +44,7 @@ const MaireDeclarations = (props) => {
   const fetchRegroupement = () => {
     props.childs.map((elm) => {
       let instance = axios.create({
-        baseURL: "https://www.madina-tic.ml/api/",
+        baseURL: "https://madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "content-type": "application/json",
@@ -145,7 +145,7 @@ const MaireDeclarations = (props) => {
     }
     pa["has_parent"] = false;
     axios
-      .get("https://www.madina-tic.ml/api/declaration_nested/", {
+      .get("https://madina-tic.ml/api/declaration_nested/", {
         params: pa,
         headers: {
           "content-type": "application/json",
@@ -172,7 +172,7 @@ const MaireDeclarations = (props) => {
   const getTypes = () => {
     setLoading(true);
     axios
-      .get("https://www.madina-tic.ml/api/declarations_types/", {
+      .get("https://madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,
@@ -194,7 +194,7 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("https://www.madina-tic.ml/api/declarations/" + did + "/", {
+      .request("https://madina-tic.ml/api/declarations/" + did + "/", {
         method: "patch",
         data: data,
       })
@@ -217,7 +217,7 @@ const MaireDeclarations = (props) => {
           },
         },
       })
-      .request("https://www.madina-tic.ml/api/declarations_rejection/", {
+      .request("https://madina-tic.ml/api/declarations_rejection/", {
         method: "post",
         data: data,
       })
@@ -241,7 +241,7 @@ const MaireDeclarations = (props) => {
         },
       })
       .request(
-        "https://www.madina-tic.ml/api/declarations_complement_demand/",
+        "https://madina-tic.ml/api/declarations_complement_demand/",
         {
           method: "post",
           data: data,

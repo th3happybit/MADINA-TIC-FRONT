@@ -34,7 +34,7 @@ const FormLogin = (props) => {
   const LoginCitoyen = () => {
     setIsLoading(true);
     axios
-      .post("https://www.madina-tic.ml/api/login/", {
+      .post("https://madina-tic.ml/api/login/", {
         email,
         password,
       })
@@ -50,7 +50,7 @@ const FormLogin = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/user/",
+            url: "https://madina-tic.ml/api/user/",
             method: "get",
           })
           .then((res) => {

@@ -8,7 +8,7 @@ const MaireDeclarationTable = (props) => {
 
   useEffect(() => {
     axios
-      .get("https://www.madina-tic.ml/api/users/?role=Service", {
+      .get("https://madina-tic.ml/api/users/?role=Service", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,

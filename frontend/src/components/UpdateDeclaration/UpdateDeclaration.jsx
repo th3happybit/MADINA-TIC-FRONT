@@ -91,7 +91,7 @@ const UpdateDeclaration = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
+        url: `https://madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         method: "patch",
         data: {
           title,
@@ -139,7 +139,7 @@ const UpdateDeclaration = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/documents/",
+          url: "https://madina-tic.ml/api/documents/",
           method: "post",
           data: formData,
         })
@@ -161,7 +161,7 @@ const UpdateDeclaration = (props) => {
   const deleteFiles = () => {
     delP.map((elm) => {
       axios
-        .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
+        .delete(`https://madina-tic.ml/api/documents/${elm}`, {
           headers: {
             "Content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
@@ -193,7 +193,7 @@ const UpdateDeclaration = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/declarations_types/",
+          url: "https://madina-tic.ml/api/declarations_types/",
           method: "get",
         })
         .then((res) => {
@@ -210,7 +210,7 @@ const UpdateDeclaration = (props) => {
           setOptions(arr);
           axios
             .get(
-              `https://www.madina-tic.ml/api/declarations_types/${selectedType}`,
+              `https://madina-tic.ml/api/declarations_types/${selectedType}`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -230,7 +230,7 @@ const UpdateDeclaration = (props) => {
   useEffect(() => {
     axios
       .get(
-        `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
+        `https://madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         {
           headers: {
             "content-type": "application/json",

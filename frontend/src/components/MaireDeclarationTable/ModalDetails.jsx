@@ -39,7 +39,7 @@ const ModalD = (props) => {
   }
   useEffect(() => {
     let instance = axios.create({
-      baseURL: "https://www.madina-tic.ml/api/",
+      baseURL: "https://madina-tic.ml/api/",
       responseType: "json",
       headers: {
         "content-type": "application/json",
@@ -54,7 +54,7 @@ const ModalD = (props) => {
       .catch((err) => {});
 
     axios
-      .get(`https://www.madina-tic.ml/api/reports/?declaration=${data.did}`, {
+      .get(`https://madina-tic.ml/api/reports/?declaration=${data.did}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,

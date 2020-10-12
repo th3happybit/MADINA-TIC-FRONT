@@ -5,7 +5,7 @@ const Consultations = () => {
   return (
     <TestComponent
       title="Rapports"
-      url="https://www.madina-tic.ml/api/reports/"
+      url="https://madina-tic.ml/api/reports/"
       token="service_token"
       role="service"
       isRapport

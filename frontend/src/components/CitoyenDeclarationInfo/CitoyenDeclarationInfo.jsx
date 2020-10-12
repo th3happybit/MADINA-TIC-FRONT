@@ -23,7 +23,7 @@ const CitoyenDeclarationInfo = (props) => {
 
   const deleteDecla = () => {
     axios
-      .delete("https://www.madina-tic.ml/api/declarations/" + id + "/", {
+      .delete("https://madina-tic.ml/api/declarations/" + id + "/", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -39,7 +39,7 @@ const CitoyenDeclarationInfo = (props) => {
     if (did)
       axios
         .get(
-          "https://www.madina-tic.ml/api/declarations/" + String(did) + "/",
+          "https://madina-tic.ml/api/declarations/" + String(did) + "/",
           {
             headers: {
               "content-type": "application/json",
@@ -53,7 +53,7 @@ const CitoyenDeclarationInfo = (props) => {
           if (res.data.status === "lack_of_info")
             axios
               .get(
-                `https://www.madina-tic.ml/api/declarations_complement_demand/`,
+                `https://madina-tic.ml/api/declarations_complement_demand/`,
                 {
                   params: {
                     declaration: did,
@@ -75,7 +75,7 @@ const CitoyenDeclarationInfo = (props) => {
 
   const getTypes = () => {
     axios
-      .get("https://www.madina-tic.ml/api/declarations_types/", {
+      .get("https://madina-tic.ml/api/declarations_types/", {
         headers: {
           "content-type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -96,7 +96,7 @@ const CitoyenDeclarationInfo = (props) => {
           },
         },
       })
-      .request("https://www.madina-tic.ml/api/declarations/" + id + "/", {
+      .request("https://madina-tic.ml/api/declarations/" + id + "/", {
         method: "patch",
         data: {
           title: Data.title,

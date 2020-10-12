@@ -96,7 +96,7 @@ const AnnonceHome = (props) => {
     setLoading(true);
     setAllow(false);
     axios
-      .get("https://www.madina-tic.ml/api/announce_nested/", {
+      .get("https://madina-tic.ml/api/announce_nested/", {
         params: {
           status: "published",
           page: page,

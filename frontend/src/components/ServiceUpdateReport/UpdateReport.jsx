@@ -51,7 +51,7 @@ const UpdateReport = (props) => {
     if (props.props.props.location.state) {
       setLoading(true);
       axios
-        .get("https://www.madina-tic.ml/api/user", {
+        .get("https://madina-tic.ml/api/user", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -63,7 +63,7 @@ const UpdateReport = (props) => {
       if (props.props.props.location.state.did)
         axios
           .get(
-            "https://www.madina-tic.ml/api/declarations/" +
+            "https://madina-tic.ml/api/declarations/" +
               props.props.props.location.state.did +
               "/",
             {
@@ -80,7 +80,7 @@ const UpdateReport = (props) => {
       if (props.props.props.location.state.rid) {
         axios
           .get(
-            `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
+            `https://madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -95,7 +95,7 @@ const UpdateReport = (props) => {
           })
           .catch((err) => {});
         axios
-          .get("https://www.madina-tic.ml/api/documents", {
+          .get("https://madina-tic.ml/api/documents", {
             params: {
               report__rid: props.props.props.location.state.rid,
             },
@@ -265,7 +265,7 @@ const UpdateReport = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/documents/",
+            url: "https://madina-tic.ml/api/documents/",
             method: "post",
             data: formData,
           })
@@ -298,7 +298,7 @@ const UpdateReport = (props) => {
             },
           })
           .request({
-            url: `https://www.madina-tic.ml/api/documents/${filesD[i]}/`,
+            url: `https://madina-tic.ml/api/documents/${filesD[i]}/`,
             method: "DELETE",
           })
           .then((res) => {
@@ -335,7 +335,7 @@ const UpdateReport = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/documents/",
+            url: "https://madina-tic.ml/api/documents/",
             method: "post",
             data: formData,
           })
@@ -357,7 +357,7 @@ const UpdateReport = (props) => {
     if (delP.length > 0)
       delP.map((elm) => {
         axios
-          .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
+          .delete(`https://madina-tic.ml/api/documents/${elm}`, {
             headers: {
               "Content-type": "application/json",
               Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -387,7 +387,7 @@ const UpdateReport = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/reports/${report.rid}/`,
+        url: `https://madina-tic.ml/api/reports/${report.rid}/`,
         method: "put",
         data: {
           title,
@@ -541,7 +541,7 @@ const UpdateReport = (props) => {
                         <Image
                           src={
                             elm.src
-                              ? "https://www.madina-tic.ml/" + elm.src
+                              ? "https://madina-tic.ml/" + elm.src
                               : elm
                           }
                           key={index}

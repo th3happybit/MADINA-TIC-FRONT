@@ -26,7 +26,7 @@ const Service = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/user/",
+          url: "https://madina-tic.ml/api/user/",
           method: "get",
         })
         .then((res) => {

@@ -14,7 +14,7 @@ const ItemType = (props) => {
 
   const deleteItem = () => {
     let instance = Axios.create({
-      baseURL: "https://www.madina-tic.ml/api",
+      baseURL: "https://madina-tic.ml/api",
       responseType: "json",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ const ItemType = (props) => {
   };
   const handleUpdate = () => {
     let instance = Axios.create({
-      baseURL: "https://www.madina-tic.ml/api",
+      baseURL: "https://madina-tic.ml/api",
       responseType: "json",
       headers: {
         "Content-Type": "application/json",
