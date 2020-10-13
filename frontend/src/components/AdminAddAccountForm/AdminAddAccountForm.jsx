@@ -97,7 +97,7 @@ const AdminAddAccountForm = () => {
               setAddressError(element[1][0]);
               break;
             case "role":
-              setRoleError("you must enter a valid role choice");
+              setRoleError("Veuillez choisir un role");
               break;
             default:
               break;
