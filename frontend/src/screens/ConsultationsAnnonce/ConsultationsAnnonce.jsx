@@ -5,7 +5,7 @@ const ConsultationAnnonce = () => {
   return (
     <TestComponent
       title="Annonces"
-      url="https://www.madina-tic.ml/api/announces/"
+      url="https://madina-tic.ml/api/announces/"
       token="service_token"
       role="service"
       isRapport={false}

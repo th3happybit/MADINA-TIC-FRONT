@@ -19,7 +19,7 @@ const InfoScreen = (props) => {
  const getData = (did) => {
   if (did)
    axios
-    .get("https://www.madina-tic.ml/api/declarations/" + String(did) + "/", {
+    .get("https://madina-tic.ml/api/declarations/" + String(did) + "/", {
      headers: {
       "content-type": "application/json",
       Authorization: `Token ${localStorage.getItem("token")}`,
@@ -31,7 +31,7 @@ const InfoScreen = (props) => {
      if (res.data.status === "lack_of_info")
       axios
        .get(
-        `https://www.madina-tic.ml/api/declarations_complement_demand/`,
+        `https://madina-tic.ml/api/declarations_complement_demand/`,
         {
          params: {
           declaration: did,
@@ -55,7 +55,7 @@ const InfoScreen = (props) => {
 
  const getTypes = () => {
   axios
-   .get("https://www.madina-tic.ml/api/declarations_types/", {
+   .get("https://madina-tic.ml/api/declarations_types/", {
     headers: {
      "content-type": "application/json",
      Authorization: `Token ${localStorage.getItem("token")}`,

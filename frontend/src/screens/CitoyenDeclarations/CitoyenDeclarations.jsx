@@ -117,7 +117,7 @@ const CitoyenDeclarations = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -129,7 +129,7 @@ const CitoyenDeclarations = (props) => {
   };
   const getdecTypes = () => {
     axios
-      .get("https://www.madina-tic.ml/api/declarations_types/", {
+      .get("https://madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("token")}`,
@@ -210,7 +210,7 @@ const CitoyenDeclarations = (props) => {
     pa["citizen"] = userid;
 
     axios
-      .get("https://www.madina-tic.ml/api/declarations/", {
+      .get("https://madina-tic.ml/api/declarations/", {
         params: pa,
         headers: {
           "Content-Type": "application/json",
@@ -236,7 +236,7 @@ const CitoyenDeclarations = (props) => {
   const deleteDeclaration = (id) => {
     axios
       .delete(
-        "https://www.madina-tic.ml/api/declarations/" + String(id) + "/",
+        "https://madina-tic.ml/api/declarations/" + String(id) + "/",
         {
           headers: {
             "content-type": "application/json",

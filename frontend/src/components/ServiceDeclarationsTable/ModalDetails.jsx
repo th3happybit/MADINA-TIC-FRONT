@@ -50,7 +50,7 @@ const ModalD = (props) => {
           },
         })
         .request({
-          url: `https://www.madina-tic.ml/api/declarations/${elm.did}/`,
+          url: `https://madina-tic.ml/api/declarations/${elm.did}/`,
           method: "patch",
           data: data,
         })
@@ -74,7 +74,7 @@ const ModalD = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/declarations/${did}/`,
+        url: `https://madina-tic.ml/api/declarations/${did}/`,
         method: "patch",
         data: data,
       })
@@ -109,7 +109,7 @@ const ModalD = (props) => {
       setMax(props.attachements.length - 1);
     }
     let instance = axios.create({
-      baseURL: "https://www.madina-tic.ml/api/",
+      baseURL: "https://madina-tic.ml/api/",
       responseType: "json",
       headers: {
         "content-type": "application/json",
@@ -124,7 +124,7 @@ const ModalD = (props) => {
       .catch((err) => {});
     // Report request
     axios
-      .get(`https://www.madina-tic.ml/api/reports/?declaration=${did}`, {
+      .get(`https://madina-tic.ml/api/reports/?declaration=${did}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("maire_token")}`,

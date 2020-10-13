@@ -68,7 +68,7 @@ const ServiceDeclaration = (props) => {
     }
     if (sid)
       axios
-        .get("https://www.madina-tic.ml/api/declaration_nested/", {
+        .get("https://madina-tic.ml/api/declaration_nested/", {
           params: pa,
           headers: {
             "content-type": "application/json",
@@ -95,7 +95,7 @@ const ServiceDeclaration = (props) => {
   const getTypes = (sid) => {
     setLoading(true);
     axios
-      .get("https://www.madina-tic.ml/api/declarations_types/", {
+      .get("https://madina-tic.ml/api/declarations_types/", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -120,7 +120,7 @@ const ServiceDeclaration = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {

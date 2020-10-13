@@ -48,7 +48,7 @@ const AddDeclaration = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/declarations_types/",
+        url: "https://madina-tic.ml/api/declarations_types/",
         method: "get",
       })
       .then((res) => {
@@ -78,7 +78,7 @@ const AddDeclaration = (props) => {
   useEffect(() => {
     if (uid && !isSave) {
       setIsLoading(true);
-      let url = `https://www.madina-tic.ml/api/declarations/`;
+      let url = `https://madina-tic.ml/api/declarations/`;
       axios
         .create({
           headers: {
@@ -134,7 +134,7 @@ const AddDeclaration = (props) => {
   useEffect(() => {
     if (uid && isSave) {
       setSaveLoading(true);
-      let url = `https://www.madina-tic.ml/api/declarations/`;
+      let url = `https://madina-tic.ml/api/declarations/`;
       axios
         .create({
           headers: {
@@ -210,7 +210,7 @@ const AddDeclaration = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/documents/",
+        url: "https://madina-tic.ml/api/documents/",
         method: "post",
         data: formData,
       })
@@ -227,7 +227,7 @@ const AddDeclaration = (props) => {
       setAdrErr(true);
       setSucces(false);
     } else if (!uid) {
-      let url = `https://www.madina-tic.ml/api/user/`;
+      let url = `https://madina-tic.ml/api/user/`;
       axios
         .create({
           headers: {

@@ -122,7 +122,7 @@ const MaireAnnonce = (props) => {
     }
 
     axios
-      .get("https://www.madina-tic.ml/api/announce_nested/", {
+      .get("https://madina-tic.ml/api/announce_nested/", {
         params: pa,
         headers: {
           "content-type": "application/json",
@@ -155,7 +155,7 @@ const MaireAnnonce = (props) => {
           },
         },
       })
-      .request("https://www.madina-tic.ml/api/announces/" + aid + "/", {
+      .request("https://madina-tic.ml/api/announces/" + aid + "/", {
         method: "patch",
         data: data,
       })
@@ -178,7 +178,7 @@ const MaireAnnonce = (props) => {
           },
         },
       })
-      .request("https://www.madina-tic.ml/api/announces_complement_demand/", {
+      .request("https://madina-tic.ml/api/announces_complement_demand/", {
         method: "post",
         data: data,
       })

@@ -79,7 +79,7 @@ const HomeCitoyen = (props) => {
   const getTypes = () => {
     if (!props.anonyme)
       axios
-        .get("https://www.madina-tic.ml/api/declarations_types/", {
+        .get("https://madina-tic.ml/api/declarations_types/", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,

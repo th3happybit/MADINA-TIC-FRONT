@@ -106,7 +106,7 @@ const FormRegister = (props) => {
   const RegisterUser = () => {
     setIsLoading(true);
     axios
-      .post("https://www.madina-tic.ml/api/registration/", {
+      .post("https://madina-tic.ml/api/registration/", {
         email: email,
         password1: password,
         password2: confirmPassword,

@@ -113,7 +113,7 @@ const TableTestComponent = (props) => {
   const DeleteReport = (report) => {
     let rid = report.rid;
     axios
-      .delete(`https://www.madina-tic.ml/api/reports/${rid}/`, {
+      .delete(`https://madina-tic.ml/api/reports/${rid}/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Token ${localStorage.getItem(token)}`,

@@ -20,7 +20,7 @@ const SidebarHeader = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/logout/",
+        url: "https://madina-tic.ml/api/logout/",
         method: "post",
         // data: { email, password },
       })
@@ -32,7 +32,7 @@ const SidebarHeader = (props) => {
   };
   const download = () => {
     const link = document.createElement("a");
-    link.href = "https://www.madina-tic.ml/api/download-csv-file/";
+    link.href = "https://madina-tic.ml/api/download-csv-file/";
     link.click();
   };
   const { visible } = props;

@@ -28,7 +28,7 @@ const HeaderAdmin = (props) => {
   useEffect(() => {
     const pusher = new Pusher("eb1d3c82c04cfd3f2990", {
       cluster: "eu",
-      authEndpoint: "https://www.madina-tic.ml/api/pusher/auth",
+      authEndpoint: "https://madina-tic.ml/api/pusher/auth",
     });
     var channel = pusher.subscribe("Declaration");
     var rapport_channel = pusher.subscribe("Report");
@@ -72,19 +72,9 @@ const HeaderAdmin = (props) => {
         },
       });
     });
-    channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-    });
+    return()=>{
+      pusher.disconnect();
+    }
   }, []);
 
   useEffect(() => {
@@ -102,7 +92,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -115,7 +105,7 @@ const HeaderAdmin = (props) => {
           setIsNotifated(true);
         }
         let instance = axios.create({
-          baseURL: "http://madina-tic.ml/api/",
+          baseURL: "https://madina-tic.ml/api/",
           responseType: "json",
           headers: {
             "Content-Type": "application/json",
@@ -143,7 +133,7 @@ const HeaderAdmin = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/user/",
+          url: "https://madina-tic.ml/api/user/",
           method: "patch",
           data: {
             notif_seen: true,
@@ -173,7 +163,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/logout/",
+        url: "https://madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {

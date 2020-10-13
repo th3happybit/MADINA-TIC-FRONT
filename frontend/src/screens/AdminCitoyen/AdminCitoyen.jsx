@@ -12,7 +12,7 @@ const AdminCitoyen = (props) => {
   const [isloading, setisloading] = useState(true);
   const [Data, setData] = useState([]);
   const [count, setcount] = useState(0);
-  const [activeFilter, setactiveFilter] = useState("Tout les citoyens");
+  const [activeFilter, setactiveFilter] = useState("Active");
   const [page, setpage] = useState(1);
   const [sort, setsort] = useState("Trier");
   const [term, setterm] = useState("");
@@ -35,7 +35,7 @@ const AdminCitoyen = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/users/" + id + "/",
+        url: "https://madina-tic.ml/api/users/" + id + "/",
         method: "patch",
         data: {
           is_active: true,
@@ -59,7 +59,7 @@ const AdminCitoyen = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/users/" + id + "/",
+        url: "https://madina-tic.ml/api/users/" + id + "/",
         method: "patch",
         data: {
           is_active: false,
@@ -101,7 +101,7 @@ const AdminCitoyen = (props) => {
     pa["role"] = "Client";
 
     axios
-      .get("https://www.madina-tic.ml/api/users/", {
+      .get("https://madina-tic.ml/api/users/", {
         params: pa,
         headers: {
           "Content-Type": "application/json",

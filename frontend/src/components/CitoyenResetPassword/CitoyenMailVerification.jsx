@@ -29,7 +29,7 @@ const CitoyenMailVerification = () => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/password/reset/",
+          url: "https://madina-tic.ml/api/password/reset/",
           method: "post",
           data: { email },
         })

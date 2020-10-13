@@ -38,7 +38,7 @@ const MainForm = () => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/login/",
+        url: "https://madina-tic.ml/api/login/",
         method: "post",
         data: { email, password },
       })
@@ -54,7 +54,7 @@ const MainForm = () => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/user/",
+            url: "https://madina-tic.ml/api/user/",
             method: "get",
           })
           .then((res) => {

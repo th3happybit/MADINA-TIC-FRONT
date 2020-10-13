@@ -21,8 +21,11 @@ import "./CitoyenCard.css";
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 import { languages } from "../../language";
+import Avatar from "../../assets/images/avatar.png";
+
 
 const Card = (props) => {
+  
   const { cit_infos, loading, isFrench, isDark } = props;
   const [isEdit, setEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -250,7 +253,7 @@ const Card = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/user/",
+            url: "https://madina-tic.ml/api/user/",
             method: "patch",
             data: formData,
           })
@@ -293,7 +296,7 @@ const Card = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/password/change/",
+        url: "https://madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,
@@ -335,7 +338,7 @@ const Card = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "patch",
         data: formData,
       })
@@ -399,7 +402,7 @@ const Card = (props) => {
               }}
             >
               <div className="profile">
-                <Image circular src={imageP} alt="" />
+                {!imageP ? <Image circular src={Avatar} alt="" /> : <Image circular src={imageP} alt="" />}
                 <div
                   className={
                     isEdit

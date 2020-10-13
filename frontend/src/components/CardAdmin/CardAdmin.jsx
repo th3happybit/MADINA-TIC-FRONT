@@ -8,6 +8,7 @@ import "./CardAdmin.css";
 
 //? import components
 import MenuProfileMobile from "./MenuProfileMobile.jsx";
+import Avatar from "../../assets/images/avatar.png";
 
 //? import icons
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
@@ -110,7 +111,7 @@ const CardAdmin = (props) => {
       },
     })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "patch",
         data: formData,
       })
@@ -144,7 +145,7 @@ const CardAdmin = (props) => {
         },
       })
         .request({
-          url: "https://www.madina-tic.ml/api/user/",
+          url: "https://madina-tic.ml/api/user/",
           method: "patch",
           data: formData,
         })
@@ -164,7 +165,7 @@ const CardAdmin = (props) => {
         },
       })
         .request({
-          url: "https://www.madina-tic.ml/api/password/change/",
+          url: "https://madina-tic.ml/api/password/change/",
           method: "post",
           data: {
             new_password1: newPassword,
@@ -231,7 +232,7 @@ const CardAdmin = (props) => {
             }}
           >
             <div className="profile_">
-              <Image src={profileImage} />
+              {profileImage ? <Image src={profileImage} /> : <Image src={Avatar} />}
               <div
                 className={
                   isEdit

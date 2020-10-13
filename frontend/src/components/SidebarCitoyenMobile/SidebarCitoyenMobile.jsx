@@ -21,7 +21,7 @@ const SidebarCitoyenMobile = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/logout/",
+        url: "https://madina-tic.ml/api/logout/",
         method: "post",
       })
       .then(() => {

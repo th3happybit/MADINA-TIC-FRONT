@@ -25,7 +25,7 @@ const AdminNewAccounts = () => {
   };
   const getData = () => {
     setIsLoading(true);
-    let url = `https://www.madina-tic.ml/api/users/`;
+    let url = `https://madina-tic.ml/api/users/`;
     axios
       .create({
         headers: {
@@ -56,7 +56,7 @@ const AdminNewAccounts = () => {
   };
   useEffect(() => {
     setIsLoading(true);
-    let url = `https://www.madina-tic.ml/api/users/`;
+    let url = `https://madina-tic.ml/api/users/`;
     axios
       .create({
         headers: {

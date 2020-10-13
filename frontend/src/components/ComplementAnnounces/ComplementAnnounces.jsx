@@ -133,7 +133,7 @@ const ComplementAnnounces = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/announces/${aid}/`,
+        url: `https://madina-tic.ml/api/announces/${aid}/`,
         method: "patch",
         data: formData,
       })
@@ -170,7 +170,7 @@ const ComplementAnnounces = (props) => {
       setAid(props.props.props.location.state.rid);
       axios
         .get(
-          `https://www.madina-tic.ml/api/announces/${props.props.props.location.state.rid}/`,
+          `https://madina-tic.ml/api/announces/${props.props.props.location.state.rid}/`,
           {
             headers: {
               "content-type": "application/json",
@@ -188,7 +188,7 @@ const ComplementAnnounces = (props) => {
         .catch((err) => {});
       axios
         .get(
-          `https://www.madina-tic.ml/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.props.location.state.rid}`,
+          `https://madina-tic.ml/api/announces_complement_demand/?ordering=-created_on&?announce=${props.props.props.location.state.rid}`,
           {
             headers: {
               "content-type": "application/json",

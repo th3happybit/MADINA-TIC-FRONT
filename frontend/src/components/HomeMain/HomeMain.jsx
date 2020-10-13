@@ -108,7 +108,7 @@ const HomeMain = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/create-feedbacks/",
+        url: "https://madina-tic.ml/api/create-feedbacks/",
         method: "post",
         data: {
           sender_first_name: Firstname,
@@ -159,7 +159,7 @@ const HomeMain = (props) => {
 
   useEffect(() => {
     axios
-      .get("https://www.madina-tic.ml/api/declarations-statistics/", {
+      .get("https://madina-tic.ml/api/declarations-statistics/", {
         headers: {
           "Content-type": "application/json",
         },
@@ -180,7 +180,7 @@ const HomeMain = (props) => {
         );
       });
     axios
-      .get("https://www.madina-tic.ml/api/users-statistics/", {
+      .get("https://madina-tic.ml/api/users-statistics/", {
         headers: {
           "Content-type": "application/json",
         },

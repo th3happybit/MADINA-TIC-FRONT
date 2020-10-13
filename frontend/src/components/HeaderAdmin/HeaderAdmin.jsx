@@ -27,7 +27,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/user/",
+        url: "https://madina-tic.ml/api/user/",
         method: "get",
       })
       .then((res) => {
@@ -50,7 +50,7 @@ const HeaderAdmin = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/logout/",
+        url: "https://madina-tic.ml/api/logout/",
         method: "post",
         // data: { email, password },
       })
@@ -63,7 +63,7 @@ const HeaderAdmin = (props) => {
 
   const handle_download = () => {
     axios
-      .get("https://www.madina-tic.ml/api/download-csv-file/", {
+      .get("https://madina-tic.ml/api/download-csv-file/", {
         headers: {
           "Content-Type": "text/csv",
           Authorization: `Token ${localStorage.getItem("admin_token")}`,

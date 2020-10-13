@@ -467,7 +467,7 @@ function App() {
                 <Admin active="types" childComponent={<AdminTypes />} />
               )}
             />
-            <Redirect to="/login" />
+            <Redirect to="/home" />
           </Switch>
         </Router>
       </PersistGate>

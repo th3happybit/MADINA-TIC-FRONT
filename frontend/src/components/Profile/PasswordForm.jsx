@@ -151,7 +151,7 @@ const PasswordForm = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/password/change/",
+        url: "https://madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,

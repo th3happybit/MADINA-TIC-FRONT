@@ -14,6 +14,7 @@ import axios from "axios";
 
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
 
+import Avatar from "../../assets/images/avatar.png";
 import "./Card.css";
 
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
@@ -248,7 +249,7 @@ const Card = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/user/",
+            url: "https://madina-tic.ml/api/user/",
             method: "patch",
             data: formData,
           })
@@ -291,7 +292,7 @@ const Card = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/password/change/",
+        url: "https://madina-tic.ml/api/password/change/",
         method: "post",
         data: {
           old_password: currentPassword.value,
@@ -334,7 +335,7 @@ const Card = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/user/",
+          url: "https://madina-tic.ml/api/user/",
           method: "patch",
           data: formData,
         })
@@ -401,7 +402,7 @@ const Card = (props) => {
               }}
             >
               <div className="profile">
-                <Image circular src={imageP} alt="" />
+                {!imageP ? <Image circular src={Avatar} alt="" /> : <Image circular src={imageP} alt="" />}
                 <div
                   className={
                     isEdit

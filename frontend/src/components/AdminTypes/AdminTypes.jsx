@@ -38,7 +38,7 @@ const AdminTypes = () => {
   };
   const AddType = () => {
     let instance = Axios.create({
-      baseURL: "https://www.madina-tic.ml/api",
+      baseURL: "https://madina-tic.ml/api",
       responseType: "json",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ const AdminTypes = () => {
   useEffect(() => {
     setLoading(true);
     let instance = Axios.create({
-      baseURL: "https://www.madina-tic.ml/api",
+      baseURL: "https://madina-tic.ml/api",
       responseType: "json",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ const AdminTypes = () => {
     setService(value);
   };
   useEffect(() => {
-    let url = next ? next : "https://www.madina-tic.ml/api/users/?role=Service";
+    let url = next ? next : "https://madina-tic.ml/api/users/?role=Service";
     Axios.get(url, {
       headers: {
         "Content-Type": "application/json",

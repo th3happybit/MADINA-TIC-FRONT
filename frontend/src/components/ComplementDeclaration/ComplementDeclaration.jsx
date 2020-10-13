@@ -55,7 +55,7 @@ const ComplementDeclaration = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
+        url: `https://madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
         method: "patch",
         data: {
           title,
@@ -119,7 +119,7 @@ const ComplementDeclaration = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/documents/",
+          url: "https://madina-tic.ml/api/documents/",
           method: "post",
           data: formData,
         })
@@ -141,7 +141,7 @@ const ComplementDeclaration = (props) => {
   const deleteFiles = () => {
     delP.map((elm) => {
       axios
-        .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
+        .delete(`https://madina-tic.ml/api/documents/${elm}`, {
           headers: {
             "Content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("token")}`,
@@ -220,7 +220,7 @@ const ComplementDeclaration = (props) => {
           },
         })
         .request({
-          url: "https://www.madina-tic.ml/api/declarations_types/",
+          url: "https://madina-tic.ml/api/declarations_types/",
           method: "get",
         })
         .then((res) => {
@@ -237,7 +237,7 @@ const ComplementDeclaration = (props) => {
           setOptions(arr);
           axios
             .get(
-              `https://www.madina-tic.ml/api/declarations_types/${selectedType}/`,
+              `https://madina-tic.ml/api/declarations_types/${selectedType}/`,
               {
                 headers: {
                   "content-type": "application/json",
@@ -261,7 +261,7 @@ const ComplementDeclaration = (props) => {
       if (props.props.location.state.data.status === "lack_of_info") {
         axios
           .get(
-            `https://www.madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
+            `https://madina-tic.ml/api/declarations/${props.props.location.state.data.did}/`,
             {
               headers: {
                 "content-type": "application/json",
@@ -287,7 +287,7 @@ const ComplementDeclaration = (props) => {
           .catch((err) => {});
         axios
           .get(
-            `https://www.madina-tic.ml/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
+            `https://madina-tic.ml/api/declarations_complement_demand/?ordering=-created_on&?declaration=${props.props.location.state.data.did}`,
             {
               headers: {
                 "content-type": "application/json",

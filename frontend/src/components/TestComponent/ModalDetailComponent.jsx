@@ -62,7 +62,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: "https://www.madina-tic.ml/api/reports_complement_demand/",
+        url: "https://madina-tic.ml/api/reports_complement_demand/",
         data: demand,
         method: "post",
       })
@@ -81,7 +81,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/declarations/${id}/`,
+        url: `https://madina-tic.ml/api/declarations/${id}/`,
         method: "patch",
         data: dec,
       })
@@ -99,7 +99,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/reports/${data.rid}/`,
+        url: `https://madina-tic.ml/api/reports/${data.rid}/`,
         method: "patch",
         data: rep,
       })
@@ -124,7 +124,7 @@ const ModalDetailComponent = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/announces/${data.aid}/`,
+        url: `https://madina-tic.ml/api/announces/${data.aid}/`,
         method: "patch",
         data: ann,
       })
@@ -186,7 +186,7 @@ const ModalDetailComponent = (props) => {
   useEffect(() => {
     if (role === "service" && activeFilter === "archived" && report) {
       let instance = axios.create({
-        baseURL: "https://www.madina-tic.ml/api/",
+        baseURL: "https://madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "Content-Type": "application/json",
@@ -203,7 +203,7 @@ const ModalDetailComponent = (props) => {
         .catch((err) => {});
     }
     if (isRapport) {
-      let url = `https://www.madina-tic.ml/api/declarations/${data.declaration}`;
+      let url = `https://madina-tic.ml/api/declarations/${data.declaration}`;
       axios
         .create({
           headers: {
@@ -223,7 +223,7 @@ const ModalDetailComponent = (props) => {
         .catch((err) => {});
 
       axios
-        .get(`https://www.madina-tic.ml/api/declarations/`, {
+        .get(`https://madina-tic.ml/api/declarations/`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Token ${localStorage.getItem(token)}`,
@@ -248,7 +248,7 @@ const ModalDetailComponent = (props) => {
           },
         })
         .request({
-          url: `https://www.madina-tic.ml/api/documents/?report__rid=${data.rid}`,
+          url: `https://madina-tic.ml/api/documents/?report__rid=${data.rid}`,
           method: "get",
         })
         .then((res) => {
@@ -396,7 +396,7 @@ const ModalDetailComponent = (props) => {
                           }}
                           onClick={() => {
                             window.open(
-                              "https://www.madina-tic.ml/" + String(file.src)
+                              "https://madina-tic.ml/" + String(file.src)
                             );
                           }}
                         >
@@ -423,7 +423,7 @@ const ModalDetailComponent = (props) => {
                         <Transition.Group animation={"browse"} duration={1000}>
                           <Image
                             className="pointer"
-                            src={"https://www.madina-tic.ml/" + element.src}
+                            src={"https://madina-tic.ml/" + element.src}
                             key={index}
                             rounded
                             onClick={handleClick}

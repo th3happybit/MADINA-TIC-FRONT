@@ -53,7 +53,7 @@ const ComplementReport = (props) => {
     if (props.props.props.location.state) {
       setLoading(true);
       axios
-        .get("https://www.madina-tic.ml/api/user", {
+        .get("https://madina-tic.ml/api/user", {
           headers: {
             "content-type": "application/json",
             Authorization: `Token ${localStorage.getItem("service_token")}`,
@@ -64,7 +64,7 @@ const ComplementReport = (props) => {
         });
       if (props.props.props.location.state.rid) {
         axios
-          .get("https://www.madina-tic.ml/api/reports_complement_demand", {
+          .get("https://madina-tic.ml/api/reports_complement_demand", {
             params: {
               report: props.props.props.location.state.rid,
             },
@@ -80,7 +80,7 @@ const ComplementReport = (props) => {
 
         axios
           .get(
-            `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
+            `https://madina-tic.ml/api/reports/${props.props.props.location.state.rid}`,
             {
               headers: {
                 "content-type": "application/json",
@@ -98,7 +98,7 @@ const ComplementReport = (props) => {
           })
           .catch((err) => {});
         axios
-          .get("https://www.madina-tic.ml/api/documents/", {
+          .get("https://madina-tic.ml/api/documents/", {
             params: {
               report__rid: props.props.props.location.state.rid,
             },
@@ -126,7 +126,7 @@ const ComplementReport = (props) => {
       if (props.props.props.location.state.did)
         axios
           .get(
-            "https://www.madina-tic.ml/api/declarations/" +
+            "https://madina-tic.ml/api/declarations/" +
               props.props.props.location.state.did +
               "/",
             {
@@ -292,7 +292,7 @@ const ComplementReport = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/documents/",
+            url: "https://madina-tic.ml/api/documents/",
             method: "post",
             data: formData,
           })
@@ -325,7 +325,7 @@ const ComplementReport = (props) => {
             },
           })
           .request({
-            url: `https://www.madina-tic.ml/api/documents/${filesD[i]}/`,
+            url: `https://madina-tic.ml/api/documents/${filesD[i]}/`,
             method: "DELETE",
           })
           .then((res) => {
@@ -362,7 +362,7 @@ const ComplementReport = (props) => {
             },
           })
           .request({
-            url: "https://www.madina-tic.ml/api/documents/",
+            url: "https://madina-tic.ml/api/documents/",
             method: "post",
             data: formData,
           })
@@ -384,7 +384,7 @@ const ComplementReport = (props) => {
     if (delP.length > 0)
       delP.map((elm) => {
         axios
-          .delete(`https://www.madina-tic.ml/api/documents/${elm}`, {
+          .delete(`https://madina-tic.ml/api/documents/${elm}`, {
             headers: {
               "Content-type": "application/json",
               Authorization: `Token ${localStorage.getItem("token")}`,
@@ -414,7 +414,7 @@ const ComplementReport = (props) => {
         },
       })
       .request({
-        url: `https://www.madina-tic.ml/api/reports/${props.props.props.location.state.rid}/`,
+        url: `https://madina-tic.ml/api/reports/${props.props.props.location.state.rid}/`,
         method: "put",
         data: {
           title,
@@ -568,7 +568,7 @@ const ComplementReport = (props) => {
                         <Image
                           src={
                             elm.src
-                              ? "https://www.madina-tic.ml/" + elm.src
+                              ? "https://madina-tic.ml/" + elm.src
                               : elm
                           }
                           key={index}

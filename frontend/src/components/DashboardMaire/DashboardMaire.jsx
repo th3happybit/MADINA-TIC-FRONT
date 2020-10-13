@@ -23,7 +23,7 @@ const DashboardMaire = () => {
     setLoading(true);
     let instance = axios.create({
       responseType: "json",
-      baseURL: "https://www.madina-tic.ml/api/",
+      baseURL: "https://madina-tic.ml/api/",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("maire_token")}`,
