@@ -12,7 +12,7 @@ const AdminCitoyen = (props) => {
   const [isloading, setisloading] = useState(true);
   const [Data, setData] = useState([]);
   const [count, setcount] = useState(0);
-  const [activeFilter, setactiveFilter] = useState("Tout les citoyens");
+  const [activeFilter, setactiveFilter] = useState("Active");
   const [page, setpage] = useState(1);
   const [sort, setsort] = useState("Trier");
   const [term, setterm] = useState("");

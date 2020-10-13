@@ -278,6 +278,10 @@ const MaireDeclarations = (props) => {
     };
     updateDecStatus(data, id);
   };
+  const handleAnnule = ()=>{
+    setIsRegroup(false);
+    setRefresh((prevState) => !prevState);
+  }
   const validateDeclaration = (decData, id) => {
     const data = {
       status: "validated",
@@ -387,7 +391,8 @@ const MaireDeclarations = (props) => {
               alignItems: "center",
             }}
           >
-            {activeFilter === "Validée" && (
+            {
+            activeFilter === "Validée" && (
               <Button
                 style={{
                   margin: "0 1rem",
@@ -413,6 +418,16 @@ const MaireDeclarations = (props) => {
                 {isRegroup ? "Confirmer" : "Regrouper"}
               </Button>
             )}
+            {
+              isRegroup && <Button
+              onClick={handleAnnule}
+              style={{
+                marginRight: "1rem",
+                background: "var(--primary)",
+                color: "white",
+              }}
+              content="Annuler" />
+            }
             <Dropdown
               className="icon filter_declaration _mobile"
               icon="angle down"

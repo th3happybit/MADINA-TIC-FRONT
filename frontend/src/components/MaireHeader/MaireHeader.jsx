@@ -72,19 +72,9 @@ const HeaderAdmin = (props) => {
         },
       });
     });
-    channel.bind("Update", function ({ message }) {
-      setIsNotifated(true);
-      return toast({
-        type: "info",
-        icon: "info",
-        title: message.title,
-        description: message.body,
-        time: 5000,
-        onDismiss: () => {
-          setIsNotifated(false);
-        },
-      });
-    });
+    return()=>{
+      pusher.disconnect();
+    }
   }, []);
 
   useEffect(() => {

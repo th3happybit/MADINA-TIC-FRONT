@@ -92,6 +92,9 @@ export default function CitoyenHeader(props) {
         });
       }
     });
+    return ()=>{
+      pusher.disconnect();
+    }
   }, []);
   useEffect(() => {
     getNotif();
@@ -194,16 +197,6 @@ export default function CitoyenHeader(props) {
             </div>
           </Link>
           <div className="form_search_header_citoyen">
-            {login && (
-              <Search
-                input={{
-                  icon: "search",
-                  iconPosition: props.isFrench ? "left" : "right",
-                }}
-                className={props.isFrench ? "_ltr" : "_rtl"}
-                placeholder={props.isFrench ? "chercher" : "بحث"}
-              />
-            )}
           </div>
           {!login && (
             <div className={`not_login_nav ${props.isFrench ? "" : "ar"}`}>

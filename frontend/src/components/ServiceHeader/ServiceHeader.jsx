@@ -87,7 +87,9 @@ const HeaderService = (props) => {
         },
       });
     });
-
+    return()=>{
+      pusher.disconnect();
+    }
 
   }, []);
 

@@ -21,8 +21,11 @@ import "./CitoyenCard.css";
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
 import ValidateUpdatePassword from "../../methods/ValidateDataUpdatePass.js";
 import { languages } from "../../language";
+import Avatar from "../../assets/images/avatar.png";
+
 
 const Card = (props) => {
+  
   const { cit_infos, loading, isFrench, isDark } = props;
   const [isEdit, setEdit] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -399,7 +402,7 @@ const Card = (props) => {
               }}
             >
               <div className="profile">
-                <Image circular src={imageP} alt="" />
+                {!imageP ? <Image circular src={Avatar} alt="" /> : <Image circular src={imageP} alt="" />}
                 <div
                   className={
                     isEdit

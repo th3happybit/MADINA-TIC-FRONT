@@ -8,6 +8,7 @@ import "./CardAdmin.css";
 
 //? import components
 import MenuProfileMobile from "./MenuProfileMobile.jsx";
+import Avatar from "../../assets/images/avatar.png";
 
 //? import icons
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
@@ -231,7 +232,7 @@ const CardAdmin = (props) => {
             }}
           >
             <div className="profile_">
-              <Image src={profileImage} />
+              {profileImage ? <Image src={profileImage} /> : <Image src={Avatar} />}
               <div
                 className={
                   isEdit

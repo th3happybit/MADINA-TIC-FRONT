@@ -14,6 +14,7 @@ import axios from "axios";
 
 import { ReactComponent as Edit } from "../../assets/icons/edit.svg";
 
+import Avatar from "../../assets/images/avatar.png";
 import "./Card.css";
 
 import ValidateDataUpdateProfile from "../../methods/ValidateDataUpdateProfile.js";
@@ -401,7 +402,7 @@ const Card = (props) => {
               }}
             >
               <div className="profile">
-                <Image circular src={imageP} alt="" />
+                {!imageP ? <Image circular src={Avatar} alt="" /> : <Image circular src={imageP} alt="" />}
                 <div
                   className={
                     isEdit
