@@ -80,7 +80,7 @@ const Commune = () => {
   const validate = () => {
     let error = false;
     const namePatt = /^[a-z A-Zàêèéâùò]{6,}$/;
-    const nameArPatt = /^[\u0600-\u06FF]{6,}$/;
+    const nameArPatt = /^[\u0600-\u06FF ]{6,}$/;
     const nameAmPatt = /^[\u2d30-\u2d7F]{6,}$/;
     const indicatifPatt = /^0\d{2}$/;
     const popPatt = /^\d{3,6}$/;
