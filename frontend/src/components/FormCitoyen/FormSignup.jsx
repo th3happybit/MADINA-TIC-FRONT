@@ -24,6 +24,7 @@ const FormRegister = (props) => {
   const [addressError, setAddressErr] = useState(null);
   const [phoneError, setphoneError] = useState(null);
   const [passwordErr, setpasswordErr] = useState(null);
+  const [nationalIdErr, setNationalIdErr] = useState(null);
   //? for messages errors
   const [emailMessage, setEmailMessage] = useState("");
   const [birthdayMessage, setBirthdayMessage] = useState("");
@@ -43,6 +44,7 @@ const FormRegister = (props) => {
         break;
       case "nationalid":
         setNationalId(e.currentTarget.value);
+        setNationalIdErr(null);
         break;
       case "last_name":
         setlast_name(e.currentTarget.value);
@@ -88,17 +90,26 @@ const FormRegister = (props) => {
   };
   //? function called when user submit the form
   const handleSumbit = () => {
+    let err = false;
     if (success) setSuccess(null);
     if (addrress.length <= 4 && addrress.length > 0) {
       setAddressErr(true);
+      err = true;
+    }
+    if (!/^\d{18}$/.test(nationalId)) {
+      setNationalIdErr("Le numéro national doit être 18 chiffres");
     }
     if (!checkPhoneNumber(phone) && phone.length > 0) {
       setphoneError(true);
-    } else if (birthday.length === 0) {
+      err = true;
+    }
+    if (birthday.length === 0) {
       RegisterUser();
     } else if (!checkDate(birthday)) {
       setdateError(true);
-    } else {
+      err = true;
+    }
+    if (!err) {
       RegisterUser();
     }
   };
@@ -344,9 +355,19 @@ const FormRegister = (props) => {
           placeholder={isFrench ? "Numéro nationale" : "رقم التعريف الوطني"}
           type="text"
           size="large"
-          className="_margin_vertical_sm small"
+          className={
+            nationalIdErr
+              ? "input_err _margin_vertical_sm small"
+              : "_margin_vertical_sm small"
+          }
           onChange={handleChangeInput}
         />
+        {nationalIdErr && (
+          <p className="error_inputs_msg">
+            <Icon name="info circle" />
+            {nationalIdErr}
+          </p>
+        )}
       </div>
       <div
         style={{

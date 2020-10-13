@@ -93,7 +93,7 @@ const InfosForm = (props) => {
     });
     if (errors.length > 0) {
       seterror(true);
-      seterrorMessage(language.isFrench ? errors[0].error : errors[0].errorAr);
+      seterrorMessage(isFrench ? errors[0].error : errors[0].errorAr);
     } else {
       UpdateInfosCitoyen();
     }
