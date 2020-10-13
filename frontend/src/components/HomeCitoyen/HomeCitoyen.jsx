@@ -169,13 +169,13 @@ const HomeCitoyen = (props) => {
                                 if (element.filetype === "image")
                                   window.open(
                                     !props.anonyme
-                                      ? "http://madina-tic.ml" + element.src
+                                      ? "https://madina-tic.ml" + element.src
                                       : element.src
                                   );
                               }}
                               src={
                                 !props.anonyme
-                                  ? "http://madina-tic.ml" + element.src
+                                  ? "https://madina-tic.ml" + element.src
                                   : element.src
                               }
                               key={index}
@@ -204,7 +204,7 @@ const HomeCitoyen = (props) => {
                         element.attachments
                           ? element.attachments[0]
                             ? !props.anonyme
-                              ? "http://madina-tic.ml" +
+                              ? "https://madina-tic.ml" +
                                 element.attachments[0].src
                               : element.attachments[0].src
                             : ImageStandard
@@ -212,7 +212,7 @@ const HomeCitoyen = (props) => {
                       }
                       onClick={() =>
                         window.open(
-                          "http://madina-tic.ml" +
+                          "https://madina-tic.ml" +
                             element.attachments[0].src
                         )
                       }

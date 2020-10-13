@@ -102,7 +102,7 @@ export default function CitoyenHeader(props) {
   const getNotif = () => {
     if (props.uid) {
       let instance = axios.create({
-        baseURL: "http://madina-tic.ml/api/",
+        baseURL: "https://madina-tic.ml/api/",
         responseType: "json",
         headers: {
           "Content-Type": "application/json",
