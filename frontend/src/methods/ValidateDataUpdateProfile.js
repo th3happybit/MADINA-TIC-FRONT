@@ -12,7 +12,7 @@ const checkPhoneNumber = (phone) => {
 };
 
 const validateNationalID = (nid) => {
-  const nidPattern = /^[0-9]{10}/;
+  const nidPattern = /^\d{18}/;
   return nidPattern.test(String(nid));
 };
 
@@ -110,7 +110,7 @@ const ValidateDataUpdateProfile = (data) => {
     }
 
     if (national_id.length > 0) {
-      if (!validateNationalID(national_id) || national_id.length > 10) {
+      if (!validateNationalID(national_id)) {
         errors.push({
           id: "national_id",
           error: "Entrez un numéro national valide",
